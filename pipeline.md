@@ -110,9 +110,10 @@ S3_ASSETS_PREFIX=assets
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `components/admin/RichTextEditor.tsx` | Tiptap editor with toolbar: Bold, Italic, H2, H3, Bullet list, Ordered list, Blockquote, Code, Insert Image |
-| 2 | Image in editor | Toolbar "Image" → file picker → upload API → insert as `<img>` at cursor |
-| 3 | `components/admin/BlogForm.tsx` (update) | Replace body textarea with `<RichTextEditor>` |
+| 1 | `components/admin/RichTextEditor.tsx` ✅ | Tiptap editor with toolbar: Bold, Italic, H2, H3, Bullet List, Ordered List, Blockquote, Code Block, HR, Insert Image; active-state highlights on toolbar buttons; word count footer |
+| 2 | Image in editor ✅ | Toolbar camera button → hidden file input → POST `/api/admin/upload` → `editor.commands.setImage()` inserts at cursor; spinner on button during upload; inline error banner on failure |
+| 3 | `components/admin/rich-text-editor.module.css` ✅ | Toolbar with divider groups, active button highlight (orange border), full prose styles for H2/H3/p/ul/ol/blockquote/pre/code/hr/img inside `.proseMirror`, orange focus ring on editor wrap, word count footer |
+| 4 | `components/admin/BlogForm.tsx` ✅ | Body section: textarea + Phase 4c banner replaced with `<RichTextEditor>` wired to `values.bodyHtml` |
 
 **Packages:** `@tiptap/react`, `@tiptap/starter-kit`, `@tiptap/extension-image`
 
@@ -140,5 +141,5 @@ S3_ASSETS_PREFIX=assets
 | Phase 3 — Delete Blog | ✅ Complete | 2026-05-22 |
 | Phase 4a — Form Shell + Metadata | ✅ Complete | 2026-05-22 |
 | Phase 4b — Cover Image Upload | ✅ Complete | 2026-05-22 |
-| Phase 4c — Rich Text Editor | ⏳ Pending | — |
+| Phase 4c — Rich Text Editor | ✅ Complete | 2026-05-22 |
 | Phase 4d — Save + Validation | ⏳ Pending | — |

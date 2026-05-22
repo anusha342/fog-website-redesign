@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Post } from '@/lib/blog';
+import RichTextEditor from './RichTextEditor';
 import styles from './blog-form.module.css';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -491,21 +492,14 @@ export default function BlogForm({ mode, initialPost }: Props) {
           <div className={styles.section}>
             <h2 className={styles.sectionHeading}>Body</h2>
             <div className={styles.field}>
-              <label htmlFor="field-bodyHtml" className={styles.label}>Content</label>
-              {/* TODO Phase 4c: replace textarea with <RichTextEditor /> */}
-              <textarea
-                id="field-bodyHtml"
-                name="bodyHtml"
+              <label className={styles.label}>
+                Content
+                <span className={styles.hint}> — bold, italic, headings, lists, images supported</span>
+              </label>
+              <RichTextEditor
                 value={values.bodyHtml}
-                onChange={handleChange}
-                rows={14}
-                placeholder="<p>Start writing your post here…</p>"
-                className={`${styles.textarea} ${styles.bodyTextarea}`}
+                onChange={(html) => setValues((prev) => ({ ...prev, bodyHtml: html }))}
               />
-              <div className={styles.phaseBanner}>
-                <span className={styles.phaseBadge}>Phase 4c</span>
-                Tiptap rich-text editor (bold, italic, lists, images) coming in Phase 4c.
-              </div>
             </div>
           </div>
 
