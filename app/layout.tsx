@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   },
   description:
     'FOG Technologies engineers immersive location-based entertainment products — HyperGrid, Laser Tag, Laser Spy, and Moments AI — that operators invest in and players love.',
+  metadataBase: new URL('https://futureofgaming.tech'),
   openGraph: {
     siteName: 'FOG Technologies',
     locale: 'en_US',

@@ -42,7 +42,7 @@ const TESTIMONIALS = [
     sub: 'HyperGrid changed how our guests experience entertainment. It is the first thing people mention when they leave.',
     name: 'Sarah Chen',
     role: 'General Manager, Timezone Australia',
-    image: '/images/operators/person-2.jpg',
+    image: '/images/operators/person-2.png',
     logo: '/uploads/timezone-logo.png',
     logoAlt: 'Timezone Logo',
   },
@@ -51,7 +51,7 @@ const TESTIMONIALS = [
     sub: 'Players challenge each other constantly. It drives incredible repeat visits and word-of-mouth we never had before.',
     name: 'Ahmed Al-Rashid',
     role: 'Director, Hopup Entertainment Dubai',
-    image: '/images/operators/person-3.jpg',
+    image: '/images/operators/person-3.png',
     logo: '/uploads/hopup-logo.png',
     logoAlt: 'Hopup Logo',
   },
@@ -113,7 +113,7 @@ interface BlogPost {
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
-export default function HomeClient() {
+export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] }) {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const heroRef      = useRef<HTMLElement>(null);
   const globeRef     = useRef<HTMLDivElement>(null);
@@ -151,7 +151,7 @@ export default function HomeClient() {
   const autoRef  = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Blog
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(initialPosts);
 
   // ── Scroll reveal ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -598,7 +598,15 @@ export default function HomeClient() {
       .then(() => {
         if (!el.isConnected) return;
         try {
+          // Dispose existing root if it exists on the element
+          const existingRoot = (el as any)._am5root;
+          if (existingRoot) {
+            existingRoot.dispose();
+          }
+
           root = am5.Root.new(el);
+          (el as any)._am5root = root; // Store root reference on the element
+
           root.setThemes([am5themes_Animated.new(root)]);
 
           const chart = root.container.children.push(am5map.MapChart.new(root, {
@@ -667,14 +675,6 @@ export default function HomeClient() {
       .catch((e) => console.warn('amCharts load failed', e));
 
     return () => { try { root?.dispose(); } catch (_) {} };
-  }, []);
-
-  // ── Blog posts ───────────────────────────────────────────────────────────
-  useEffect(() => {
-    fetch('/api/blog')
-      .then((r) => r.json())
-      .then((posts: BlogPost[]) => setBlogPosts(posts.slice(0, 3)))
-      .catch(() => {});
   }, []);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -973,9 +973,9 @@ export default function HomeClient() {
           </div>
           <div className={styles.momentsVideoStrip} aria-label="Moments highlights reel">
             <div className={styles.momentsVideoTrack} aria-hidden="true">
-              {[...Array(2)].flatMap(() =>
-                ['clip1.mp4','clip2.mp4','clip3.mp4','clip4.mp4','clip5.mp4'].map((clip, i) => (
-                  <div key={`${clip}-${i}`} className={styles.momentsVideoCard}>
+              {[...Array(2)].flatMap((_, outerIdx) =>
+                ['clip1.mp4','clip2.mp4','clip3.mp4','clip4.mp4','clip5.mp4'].map((clip, innerIdx) => (
+                  <div key={`${outerIdx}-${clip}-${innerIdx}`} className={styles.momentsVideoCard}>
                     <video autoPlay muted loop playsInline>
                       <source src={`/videos/${clip}`} type="video/mp4" />
                     </video>

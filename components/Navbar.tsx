@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
+  const [productsActive, setProductsActive] = useState(false);
   const lastScrollY = useRef(0);
+  const pathname = usePathname();
 
   // Hide navbar on scroll down, show on scroll up
   const handleScroll = useCallback(() => {
@@ -18,7 +21,19 @@ export default function Navbar() {
       setNavHidden(false);
     }
     lastScrollY.current = currentY;
-  }, []);
+
+    // Check if products section is in view (only on home page)
+    if (pathname === '/') {
+      const el = document.getElementById('products-wrapper');
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        // Active if top of section is above 30% of viewport and bottom is below 30%
+        setProductsActive(rect.top < window.innerHeight * 0.3 && rect.bottom > window.innerHeight * 0.3);
+      }
+    } else {
+      setProductsActive(false);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -30,13 +45,6 @@ export default function Navbar() {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
-
-  const scrollToContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const el = document.getElementById('get-in-touch');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setMenuOpen(false);
-  };
 
   return (
     <>
@@ -56,10 +64,10 @@ export default function Navbar() {
         >
           &#x2715;
         </button>
-        <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
-        <Link href="/#products-wrapper" onClick={() => setMenuOpen(false)}>Products</Link>
-        <Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link>
-        <a href="#get-in-touch" onClick={scrollToContact}>Contact</a>
+        <Link href="/about" className={pathname === '/about' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>About</Link>
+        <Link href="/#products-wrapper" className={productsActive ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Products</Link>
+        <Link href="/blog" className={pathname.startsWith('/blog') ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Blog</Link>
+        <Link href="/contact" className={pathname === '/contact' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Contact</Link>
       </div>
 
       {/* NAVBAR */}
@@ -81,15 +89,15 @@ export default function Navbar() {
           </Link>
 
           <ul className="nav-links" role="list">
-            <li><Link href="/#products-wrapper">Products</Link></li>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/blog">Blog</Link></li>
-            <li><a href="#get-in-touch" onClick={scrollToContact}>Contact</a></li>
+            <li><Link href="/#products-wrapper" className={productsActive ? 'nav-active' : ''}>Products</Link></li>
+            <li><Link href="/about" className={pathname === '/about' ? 'nav-active' : ''}>About</Link></li>
+            <li><Link href="/blog" className={pathname.startsWith('/blog') ? 'nav-active' : ''}>Blog</Link></li>
+            <li><Link href="/contact" className={pathname === '/contact' ? 'nav-active' : ''}>Contact</Link></li>
           </ul>
 
-          <button className="nav-cta" id="nav-cta-btn" onClick={scrollToContact}>
+          <Link href="/contact" className="nav-cta">
             Get In Touch
-          </button>
+          </Link>
 
           <button
             className="hamburger"

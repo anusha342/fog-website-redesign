@@ -3,7 +3,7 @@ name: "Sarah Chen"
 company: "Timezone Australia"
 designation: "General Manager"
 rating: 5
-avatar: "/images/operators/person-2.jpg"
+avatar: "/images/operators/person-2.png"
 logo: "/uploads/timezone-logo.png"
 product: "Laser Tag"
 location: "Sydney, Australia"
