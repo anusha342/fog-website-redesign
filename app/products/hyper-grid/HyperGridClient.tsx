@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
@@ -15,7 +15,7 @@ function useScrollReveal() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            e.target.classList.add(styles.isRevealed || 'is-revealed');
+            e.target.classList.add('is-revealed');
             obs.unobserve(e.target);
           }
         });
@@ -28,23 +28,47 @@ function useScrollReveal() {
 }
 
 const MODES = [
-  { name: 'Escape the Lava', img: '/images/hyper-grid/modes/escape-the-lava.jpg' },
-  { name: 'Find that Color', img: '/images/hyper-grid/modes/find-the-color.jpg' },
-  { name: 'Sharp Shooter', img: '/images/hyper-grid/modes/sharp-shooter.jpg' },
+  { name: 'Escape the Lava',       img: '/images/hyper-grid/modes/escape-the-lava.jpg' },
+  { name: 'Find that Color',       img: '/images/hyper-grid/modes/find-the-color.jpg' },
+  { name: 'Sharp Shooter',         img: '/images/hyper-grid/modes/sharp-shooter.jpg' },
   { name: 'Red Light Green Light', img: '/images/hyper-grid/modes/red-light-green-light.jpg' },
-  { name: 'Football', img: '/images/hyper-grid/modes/football.png' },
+  { name: 'Football',              img: '/images/hyper-grid/modes/football.png' },
 ];
 
 const STEPS = [
-  { name: 'Tap the Card', desc: 'Comes integrated with your card reader / coin slot machine.', img: '/images/hyper-grid/hyper-grid-1.png' },
-  { name: 'Select the Game', desc: 'Use our touch-operated software to select your game.', img: '/images/hyper-grid/hyper-grid-2.png' },
-  { name: 'Enter Grid & Watch Tutorial', desc: 'Players enter the grid to start the tutorial video.', img: '/images/hyper-grid/hyper-grid-3.png' },
-  { name: 'Play, Enjoy & Repeat', desc: 'Can you beat the grid?', img: '/images/hyper-grid/hyper-grid-4.png' },
+  { name: 'Tap the Card',           desc: 'Comes integrated with your card reader / coin slot machine.',  img: '/images/hyper-grid/hyper-grid-1.png' },
+  { name: 'Select the Game',        desc: 'Use our touch-operated software to select your game.',          img: '/images/hyper-grid/hyper-grid-2.png' },
+  { name: 'Enter Grid & Tutorial',  desc: 'Players enter the grid and start the tutorial video.',         img: '/images/hyper-grid/hyper-grid-3.png' },
+  { name: 'Play, Enjoy & Repeat',   desc: 'Can you beat the grid? Come back and try again.',              img: '/images/hyper-grid/hyper-grid-4.png' },
+];
+
+const TESTIMONIALS = [
+  {
+    quote:  "FOG's products didn't just fill floor space. They became the anchor attraction.",
+    sub:    'Our revenue per square foot tripled within the first quarter after installation. The ROI spoke for itself.',
+    name:   'Rajiv Mehta',
+    role:   'Operations Director',
+    company:'Masti Zone India',
+    image:  '/images/operators/person-1.jpg',
+    logo:   '/uploads/mastizone-logo.png',
+    logoAlt:'Masti Zone Logo',
+  },
+  {
+    quote:  'The HyperGrid installation transformed our venue overnight.',
+    sub:    'Kids aged 6 to 60 play it. The staff-free operation means we make money even when no one is watching.',
+    name:   'Sarah Chen',
+    role:   'General Manager',
+    company:'FunZone Asia',
+    image:  '/images/operators/person-2.jpg',
+    logo:   '/uploads/mastizone-logo.png',
+    logoAlt:'FunZone Asia Logo',
+  },
 ];
 
 export default function HyperGridClient() {
   useScrollReveal();
 
+  /* ── Video modal ── */
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -66,111 +90,173 @@ export default function HyperGridClient() {
     }
   };
 
-  // Game Modes State
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && isVideoOpen) closeVideo(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isVideoOpen]);
+
+  /* ── Game Modes ── */
   const [activeMode, setActiveMode] = useState(0);
 
-  // Process Steps State
+  /* ── Process Steps ── */
   const [activeStep, setActiveStep] = useState(0);
 
-  // ROI Calculator State
-  const [floor, setFloor] = useState(50);
-  const [footfall, setFootfall] = useState(500);
-  const [hours, setHours] = useState(10);
-  const [ticket, setTicket] = useState(150);
+  /* ── ROI Calculator ── */
+  const [floor,      setFloor]      = useState(50);
+  const [footfall,   setFootfall]   = useState(500);
+  const [hours,      setHours]      = useState(10);
+  const [ticket,     setTicket]     = useState(150);
   const [conversion, setConversion] = useState(15);
 
-  const productCost = floor * 2500;
-  const dailyPlayers = footfall * (conversion / 100);
-  const dailyRevenue = dailyPlayers * ticket;
+  const productCost    = floor * 2500;
+  const dailyPlayers   = footfall * (conversion / 100);
+  const dailyRevenue   = dailyPlayers * ticket;
   const monthlyRevenue = dailyRevenue * 30;
-  const yearlyRevenue = monthlyRevenue * 12;
-  const paybackMonths = monthlyRevenue > 0 ? Math.ceil(productCost / monthlyRevenue) : 0;
-  const fiveYearProfit = (yearlyRevenue * 5) - productCost;
-  const roi = productCost > 0 ? ((fiveYearProfit / productCost) * 100) : 0;
+  const yearlyRevenue  = monthlyRevenue * 12;
+  const paybackMonths  = monthlyRevenue > 0 ? Math.ceil(productCost / monthlyRevenue) : 0;
+  const fiveYearProfit = yearlyRevenue * 5 - productCost;
+  const roi            = productCost > 0 ? (fiveYearProfit / productCost) * 100 : 0;
 
-  useEffect(() => {
-    // We will render charts if Chart.js is loaded
-    if (typeof window !== 'undefined' && (window as any).Chart) {
-      updateCharts();
-    }
-  }, [floor, footfall, hours, ticket, conversion]);
+  const lineChartRef = useRef<any>(null);
+  const barChartRef  = useRef<any>(null);
 
-  const updateCharts = () => {
-    const Chart = (window as any).Chart;
-    const lineCanvas = document.getElementById('chart-cumulative') as HTMLCanvasElement;
-    const barCanvas = document.getElementById('chart-revenue') as HTMLCanvasElement;
-    if (!lineCanvas || !barCanvas) return;
+  const updateChartData = useCallback(() => {
+    if (!lineChartRef.current || !barChartRef.current) return;
 
-    if (!(window as any).lineChartInstance) {
-      (window as any).lineChartInstance = new Chart(lineCanvas.getContext('2d'), {
-        type: 'line',
-        data: {
-          labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
-          datasets: [{
-            data: [],
-            borderColor: '#F05023',
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 0,
-            tension: 0.3,
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } }
-          }
-        }
-      });
-    }
+    lineChartRef.current.data.datasets[0].data = Array.from({ length: 60 }, (_, i) =>
+      ((monthlyRevenue * (i + 1)) - productCost) / 100000
+    );
+    lineChartRef.current.update('none');
 
-    if (!(window as any).barChartInstance) {
-      (window as any).barChartInstance = new Chart(barCanvas.getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
-          datasets: [{
-            data: [],
-            backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'],
-            borderRadius: 3,
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } }
-          }
-        }
-      });
-    }
-
-    const lineChart = (window as any).lineChartInstance;
-    const barChart = (window as any).barChartInstance;
-
-    lineChart.data.datasets[0].data = Array.from({ length: 60 }, (_, i) => ((monthlyRevenue * (i + 1)) - productCost) / 100000);
-    lineChart.update('none');
-
-    barChart.data.datasets[0].data = [
+    barChartRef.current.data.datasets[0].data = [
       productCost / 100000,
       monthlyRevenue / 100000,
       yearlyRevenue / 100000,
-      (yearlyRevenue * 5) / 100000
+      (yearlyRevenue * 5) / 100000,
     ];
-    barChart.update('none');
-  };
+    barChartRef.current.update('none');
+  }, [productCost, monthlyRevenue, yearlyRevenue]);
+
+  const initCharts = useCallback(() => {
+    const Chart = (window as any).Chart;
+    if (!Chart) return;
+
+    const lineCanvas = document.getElementById('chart-cumulative') as HTMLCanvasElement | null;
+    const barCanvas  = document.getElementById('chart-revenue')    as HTMLCanvasElement | null;
+    if (!lineCanvas || !barCanvas) return;
+
+    /* Destroy any stale instances (e.g. StrictMode double-invoke) */
+    const existingLine = Chart.getChart(lineCanvas);
+    if (existingLine) existingLine.destroy();
+    const existingBar = Chart.getChart(barCanvas);
+    if (existingBar) existingBar.destroy();
+
+    const sharedScales = {
+      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+    };
+    const sharedPlugins = {
+      legend: { display: false },
+      tooltip: { backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12 },
+    };
+
+    lineChartRef.current = new Chart(lineCanvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
+        datasets: [{ data: [], borderColor: '#F05023', borderWidth: 2, fill: false, pointRadius: 0, tension: 0.3 }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
+          label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
+          title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1),
+        }}},
+        scales: sharedScales,
+      },
+    });
+
+    barChartRef.current = new Chart(barCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
+        datasets: [{ data: [], backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'], borderRadius: 3 }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y' as const,
+        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
+          label: (ctx: any) => '₹' + ctx.parsed.x.toFixed(1) + 'L',
+        }}},
+        scales: sharedScales,
+      },
+    });
+
+    updateChartData();
+  }, [updateChartData]);
+
+  /* Update chart data whenever inputs change */
+  useEffect(() => {
+    updateChartData();
+  }, [updateChartData]);
+
+  /* Cleanup charts on unmount */
+  useEffect(() => {
+    return () => {
+      lineChartRef.current?.destroy();
+      barChartRef.current?.destroy();
+    };
+  }, []);
+
+  /* ── Testimonials ── */
+  const [tIdx,   setTIdx]   = useState(0);
+  const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
+  const [tImgFading, setTImgFading] = useState(false);
+  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const showTestimonial = useCallback((nextIdx: number) => {
+    setTPhase('exiting');
+    setTImgFading(true);
+    setTimeout(() => {
+      setTIdx(nextIdx);
+      setTPhase('entering');
+      setTImgFading(false);
+      setTimeout(() => setTPhase('visible'), 50);
+    }, 240);
+  }, []);
+
+  const startAuto = useCallback(() => {
+    if (autoRef.current) clearInterval(autoRef.current);
+    autoRef.current = setInterval(() => {
+      setTIdx((prev) => {
+        const next = (prev + 1) % TESTIMONIALS.length;
+        showTestimonial(next);
+        return prev; // actual update happens inside showTestimonial
+      });
+    }, 4000);
+  }, [showTestimonial]);
+
+  useEffect(() => {
+    startAuto();
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
+  }, [startAuto]);
+
+  const t = TESTIMONIALS[tIdx];
+
+  const phaseClass =
+    tPhase === 'exiting'  ? styles.testimonialContentExiting  :
+    tPhase === 'entering' ? styles.testimonialContentEntering :
+    styles.testimonialContentVisible;
 
   return (
     <main className={styles.hypergridPage}>
-      <Script 
-        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
-        strategy="lazyOnload" 
-        onLoad={updateCharts}
+      <Script
+        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+        strategy="lazyOnload"
+        onLoad={initCharts}
       />
 
+      {/* ── HERO ── */}
       <header className={styles.hero}>
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
           <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
@@ -185,26 +271,42 @@ export default function HyperGridClient() {
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">HyperGrid</h1>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
-            <Link href="#what-is-hypergrid" className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('what-is-hypergrid')?.scrollIntoView({ behavior: 'smooth' });
-            }}>Dive &#x2192;</Link>
-            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
+            <a
+              href="#what-is-hypergrid"
+              className={`${styles.hbtn} ${styles.hbtnSolid}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('what-is-hypergrid')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Dive &#x2192;
+            </a>
+            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>
+              &#x25B6;&nbsp; Video
+            </button>
           </div>
         </div>
       </header>
 
-      <div className={`${styles.videoModal} ${isVideoOpen ? styles.open : ''}`} onClick={(e) => {
-        if (e.target === e.currentTarget) closeVideo();
-      }}>
+      {/* ── VIDEO MODAL ── */}
+      <div
+        className={`${styles.videoModal} ${isVideoOpen ? styles.videoModalOpen : ''}`}
+        onClick={(e) => { if (e.target === e.currentTarget) closeVideo(); }}
+        role="dialog"
+        aria-modal="true"
+        aria-label="HyperGrid video player"
+      >
         <div className={styles.videoContainer}>
-          <button className={styles.videoClose} onClick={closeVideo}>&#x2715; Close</button>
+          <button className={styles.videoClose} onClick={closeVideo} aria-label="Close video player">
+            &#x2715; Close
+          </button>
           <video ref={videoRef} controls>
             <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
 
+      {/* ── WHAT IS HYPERGRID ── */}
       <section id="what-is-hypergrid" className={styles.whatSection}>
         <div className={styles.whatInner}>
           <div className={styles.whatImgWrap} data-reveal>
@@ -215,6 +317,7 @@ export default function HyperGridClient() {
               width={1600}
               height={900}
               sizes="100vw"
+              priority
             />
           </div>
           <div className={styles.whatCards} data-reveal>
@@ -231,21 +334,25 @@ export default function HyperGridClient() {
         </div>
       </section>
 
+      {/* ── GAME MODES ── */}
       <section id="game-modes" className={styles.modesV2Section}>
         <div className={styles.modesV2Wrap}>
           <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
+
           <div className={styles.modesV2Left}>
             <div className={styles.modesV2ImgWrap}>
               <Image
                 src={MODES[activeMode].img}
                 alt={MODES[activeMode].name}
-                className={styles.modesV2Img}
                 fill
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <button className={styles.modesVideoBtn} onClick={openVideo}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
+            <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch HyperGrid gameplay video">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
+              </svg>
               Watch Gameplay
             </button>
           </div>
@@ -254,7 +361,7 @@ export default function HyperGridClient() {
             <div className={styles.modesV2Line}></div>
             {MODES.map((m, idx) => (
               <div key={idx}>
-                <div 
+                <div
                   className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
                   onMouseEnter={() => setActiveMode(idx)}
                 >
@@ -268,20 +375,31 @@ export default function HyperGridClient() {
         </div>
       </section>
 
+      {/* ── MOMENTS BENTO ── */}
       <section id="hg-moments" className={styles.momentsSection}>
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
             <h2 className={styles.momentsTitle}>Moments in hypergrid</h2>
           </div>
+
           <div className={styles.momentsBento} data-reveal data-reveal-delay="0.1">
+            {/* Card 1 */}
             <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
               <div className={styles.momentsCardVisual}>
-                <Image src="/images/hyper-grid/hyper-grid-1.png" alt="HyperGrid floor in action" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Image
+                  src="/images/hyper-grid/hyper-grid-1.png"
+                  alt="HyperGrid floor in action"
+                  width={400}
+                  height={300}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
               <div className={styles.momentsCardBody}>
                 <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
               </div>
             </div>
+
+            {/* Card 2 */}
             <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
               <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
                 <h3 className={styles.momentsCardH}>After play scan QR code</h3>
@@ -293,41 +411,52 @@ export default function HyperGridClient() {
                 </div>
                 <div className={styles.momentsChecklist}>
                   <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>Tap to pay &amp; start game</span>
-                  </div>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>Select game mode on screen</span>
-                  </div>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>Auto-capture begins on grid entry</span>
-                  </div>
-                  <div className={styles.momentsCheck}>
-                    <span className={`${styles.momentsCheckIcon} ${styles.momentsCheckIconEmpty}`}></span>
-                    <span>AI highlight clip ready to share</span>
-                  </div>
-                  <div className={styles.momentsCheck}>
-                    <span className={`${styles.momentsCheckIcon} ${styles.momentsCheckIconEmpty}`}></span>
-                    <span>Score synced to leaderboard</span>
-                  </div>
+                  {[
+                    { label: 'Tap to pay & start game',         done: true },
+                    { label: 'Select game mode on screen',      done: true },
+                    { label: 'Auto-capture begins on grid entry', done: true },
+                    { label: 'AI highlight clip ready to share', done: false },
+                    { label: 'Score synced to leaderboard',     done: false },
+                  ].map((item, i) => (
+                    <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
+                      <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
+                        {item.done && (
+                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                            <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                      </span>
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+
+            {/* Card 3 */}
             <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
               <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
                 <div className={styles.momentsIconCircle} aria-hidden="true">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/></svg>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
+                  </svg>
                 </div>
                 <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
                 <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
               </div>
             </div>
+
+            {/* Card 4 */}
             <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
               <div className={styles.momentsCardMedia}>
-                <Image src="/images/hyper-grid/hyper-grid-2.png" alt="HyperGrid gameplay" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Image
+                  src="/images/hyper-grid/hyper-grid-2.png"
+                  alt="HyperGrid gameplay"
+                  width={400}
+                  height={300}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
+                />
               </div>
               <div className={styles.momentsCardBody}>
                 <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
@@ -341,6 +470,7 @@ export default function HyperGridClient() {
         </div>
       </section>
 
+      {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
         <div className={styles.processInner}>
           <div className={styles.processHeader} data-reveal>
@@ -348,9 +478,9 @@ export default function HyperGridClient() {
           </div>
           <div className={styles.processStage}>
             {STEPS.map((s, idx) => (
-              <div 
-                key={idx} 
-                className={`${styles.processSlide} ${activeStep === idx ? styles.processSlideActive : ''}`} 
+              <div
+                key={idx}
+                className={`${styles.processSlide} ${activeStep === idx ? styles.processSlideActive : ''}`}
                 style={{ backgroundImage: `url('${s.img}')` }}
               ></div>
             ))}
@@ -361,9 +491,9 @@ export default function HyperGridClient() {
           </div>
           <div className={styles.processNav}>
             {STEPS.map((s, idx) => (
-              <button 
-                key={idx} 
-                className={`${styles.processBtn} ${activeStep === idx ? styles.processBtnActive : ''}`} 
+              <button
+                key={idx}
+                className={`${styles.processBtn} ${activeStep === idx ? styles.processBtnActive : ''}`}
                 onClick={() => setActiveStep(idx)}
               >
                 <div className={styles.processBtnBody}>
@@ -377,33 +507,44 @@ export default function HyperGridClient() {
         </div>
       </section>
 
+      {/* ── ROI CALCULATOR ── */}
       <section id="roi-calculator" className={styles.calcSection}>
         <div className={styles.calcInner}>
           <div className={styles.calcHeader}>
             <h2 className={styles.sectionTitle} data-reveal>ROI Calculator</h2>
           </div>
+
           <div className={styles.calcGrid}>
+            {/* Left: Input Panel */}
             <div className={styles.calcInputs}>
               <h3 className={styles.calcPanelTitle}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
                 Input Parameters
               </h3>
+
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
                   <label>Floor Area (sq ft)</label>
                   <span className={styles.calcVal}>{floor}</span>
                 </div>
-                <input type="range" className={styles.calcRange} min="25" max="200" value={floor} step="5" onChange={(e) => setFloor(Number(e.target.value))} />
+                <input type="range" className={styles.calcRange} min="25" max="200" value={floor} step="5"
+                  onChange={(e) => setFloor(Number(e.target.value))} />
                 <div className={styles.calcRangeLabels}><span>25 sq ft</span><span>200 sq ft</span></div>
               </div>
+
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
                   <label>Daily Footfall</label>
                   <span className={styles.calcVal}>{footfall}</span>
                 </div>
-                <input type="range" className={styles.calcRange} min="100" max="2000" value={footfall} step="50" onChange={(e) => setFootfall(Number(e.target.value))} />
+                <input type="range" className={styles.calcRange} min="100" max="2000" value={footfall} step="50"
+                  onChange={(e) => setFootfall(Number(e.target.value))} />
                 <div className={styles.calcRangeLabels}><span>100</span><span>2000</span></div>
               </div>
+
               <div className={styles.calcField}>
                 <label className={styles.calcSelectLabel}>Operating Hours</label>
                 <select className={styles.calcSelect} value={hours} onChange={(e) => setHours(Number(e.target.value))}>
@@ -413,33 +554,38 @@ export default function HyperGridClient() {
                   <option value="16">16 hours/day</option>
                 </select>
               </div>
+
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Ticket Price (₹)</label>
-                  <span className={styles.calcVal}>₹{ticket}</span>
+                  <label>Ticket Price (&#8377;)</label>
+                  <span className={styles.calcVal}>&#8377;{ticket}</span>
                 </div>
-                <input type="range" className={styles.calcRange} min="50" max="500" value={ticket} step="10" onChange={(e) => setTicket(Number(e.target.value))} />
-                <div className={styles.calcRangeLabels}><span>₹50</span><span>₹500</span></div>
+                <input type="range" className={styles.calcRange} min="50" max="500" value={ticket} step="10"
+                  onChange={(e) => setTicket(Number(e.target.value))} />
+                <div className={styles.calcRangeLabels}><span>&#8377;50</span><span>&#8377;500</span></div>
               </div>
+
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
                   <label>Conversion Rate (%)</label>
                   <span className={styles.calcVal}>{conversion}%</span>
                 </div>
-                <input type="range" className={styles.calcRange} min="5" max="30" value={conversion} onChange={(e) => setConversion(Number(e.target.value))} />
+                <input type="range" className={styles.calcRange} min="5" max="30" value={conversion}
+                  onChange={(e) => setConversion(Number(e.target.value))} />
                 <div className={styles.calcRangeLabels}><span>5%</span><span>30%</span></div>
               </div>
             </div>
 
+            {/* Right: Results Panel */}
             <div className={styles.calcResults}>
               <div className={styles.calcMetrics}>
                 <div className={styles.calcMetric}>
                   <span className={styles.calcMetricLabel}>Investment</span>
-                  <span className={styles.calcMetricVal}>₹{(productCost / 100000).toFixed(1)}L</span>
+                  <span className={styles.calcMetricVal}>&#8377;{(productCost / 100000).toFixed(1)}L</span>
                 </div>
                 <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
                   <span className={styles.calcMetricLabel}>Monthly Revenue</span>
-                  <span className={styles.calcMetricVal}>₹{(monthlyRevenue / 100000).toFixed(1)}L</span>
+                  <span className={styles.calcMetricVal}>&#8377;{(monthlyRevenue / 100000).toFixed(1)}L</span>
                 </div>
                 <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
                   <span className={styles.calcMetricLabel}>Payback Period</span>
@@ -452,14 +598,15 @@ export default function HyperGridClient() {
               </div>
 
               <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>60-Month Cumulative Profit (₹ Lakhs)</h4>
+                <h4 className={styles.calcChartTitle}>60-Month Cumulative Profit (&#8377; Lakhs)</h4>
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>
                 </div>
+                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero.</p>
               </div>
 
               <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>Revenue Projection (₹ Lakhs)</h4>
+                <h4 className={styles.calcChartTitle}>Revenue Projection (&#8377; Lakhs)</h4>
                 <div className={`${styles.calcChartWrap} ${styles.calcChartWrapBar}`}>
                   <canvas id="chart-revenue"></canvas>
                 </div>
@@ -475,7 +622,9 @@ export default function HyperGridClient() {
                   </div>
                   <div className={styles.calcDailyItem}>
                     <span className={styles.calcDailyLabel}>Daily Revenue</span>
-                    <span className={`${styles.calcDailyVal} ${styles.calcDailyValAccent}`}>₹{Math.round(dailyRevenue).toLocaleString('en-IN')}</span>
+                    <span className={`${styles.calcDailyVal} ${styles.calcDailyValAccent}`}>
+                      &#8377;{Math.round(dailyRevenue).toLocaleString('en-IN')}
+                    </span>
                     <span className={styles.calcDailyUnit}>per day</span>
                   </div>
                   <div className={styles.calcDailyItem}>
@@ -487,12 +636,19 @@ export default function HyperGridClient() {
               </div>
             </div>
           </div>
+
           <div className={styles.calcFooter}>
-            <p className={styles.calcDisclaimer}>These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.</p>
+            <p className={styles.calcDisclaimer}>
+              These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.
+            </p>
+            <Link href="/contact" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
+              Get a Detailed Proposal &nbsp;&#x2192;
+            </Link>
           </div>
         </div>
       </section>
 
+      {/* ── SPECS — MODEL ── */}
       <section id="specs-roi" className={styles.speModelSection}>
         <div className={styles.speModelInner}>
           <h2 className={styles.speModelTitle} data-reveal>Specifications</h2>
@@ -509,12 +665,14 @@ export default function HyperGridClient() {
         </div>
       </section>
 
+      {/* ── SPECS — DATA ── */}
       <section className={styles.speDataSection}>
         <div className={styles.speDataInner}>
           <div className={styles.speDimsCard} data-reveal>
             <h3 className={styles.speAreaTitle}>
               <span className={styles.speAreaLabel}>Area</span>
-              <span className={styles.speAreaNum}>270</span> sqft / <span className={styles.speAreaNum}>25</span> sqm
+              <span className={styles.speAreaNum}>270</span> sqft /&nbsp;
+              <span className={styles.speAreaNum}>25</span> sqm
             </h3>
             <div className={styles.speDimsTable}>
               <div className={styles.speDimsRow}><span>Length</span><span>20.3 FT</span><span>6.4 M</span></div>
@@ -526,14 +684,26 @@ export default function HyperGridClient() {
           <div className={styles.speInfoCards} data-reveal data-reveal-delay="0.1">
             <div className={styles.speInfoCard}>
               <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
                 <span className={styles.speInfoTitle}>Power</span>
               </div>
               <p className={styles.speInfoText}>Average <strong>1.5 KW</strong> and Max 4.5 KW</p>
             </div>
             <div className={styles.speInfoCard}>
               <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/><rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                </svg>
                 <span className={styles.speInfoTitle}>Structure</span>
               </div>
               <p className={styles.speInfoText}>Strong and safe, made with heavy gauge MS and plywood.</p>
@@ -542,10 +712,75 @@ export default function HyperGridClient() {
         </div>
       </section>
 
-      <section id="get-in-touch" className={styles.getInTouchSection}>
-        <ContactForm />
+      {/* ── TESTIMONIALS ── */}
+      <section id="testimonials" className={styles.testimonials} aria-labelledby="test-heading">
+        <div className={styles.testInner}>
+          <button
+            className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
+            aria-label="Previous testimonial"
+            onClick={() => {
+              const next = (tIdx - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+              showTestimonial(next);
+              startAuto();
+            }}
+          >
+            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
+          </button>
+          <button
+            className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
+            aria-label="Next testimonial"
+            onClick={() => {
+              const next = (tIdx + 1) % TESTIMONIALS.length;
+              showTestimonial(next);
+              startAuto();
+            }}
+          >
+            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
+          </button>
+
+          <div
+            className={styles.testGrid}
+            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
+            onMouseLeave={startAuto}
+          >
+            <div className={styles.testImage}>
+              <Image
+                src={t.image}
+                alt={t.name}
+                width={480}
+                height={640}
+                className={`${styles.testPersonImg} ${tImgFading ? styles.testPersonImgFading : ''}`}
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              />
+            </div>
+            <div className={styles.testRight}>
+              <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>&ldquo;</div>
+              <div className={`${styles.testimonialContent} ${phaseClass}`}>
+                <blockquote className={styles.testQuote}>{t.quote}</blockquote>
+                <p className={styles.testSub}>{t.sub}</p>
+                <div className={styles.testDivider} aria-hidden="true" />
+                <p className={styles.testName}>{t.name}</p>
+                <div className={styles.testMetaWrap}>
+                  <Image
+                    src={t.logo}
+                    alt={t.logoAlt}
+                    width={100}
+                    height={100}
+                    className={styles.testZoneLogo}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+                <span className={styles.testRole}>{t.role}, {t.company}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
+      {/* ── GET IN TOUCH ── */}
+      <section id="get-in-touch">
+        <ContactForm />
+      </section>
     </main>
   );
 }
