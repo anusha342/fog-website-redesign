@@ -41,6 +41,22 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 ## Progress Log
 
+### Session 8 — Blog System + Testimonials Infrastructure
+
+- Created `content/blog/the-roi-case-for-led-gaming-floors.md` — sample post with full frontmatter (title, date, excerpt, author, coverImage, category, tags, readTime) and ~600-word body in proper Markdown.
+- Created `content/testimonials/rajiv-mehta.md` and `sarah-chen.md` — sample testimonial files with frontmatter (name, company, designation, rating, avatar, logo, product, location) and body text.
+- Created `lib/blog.ts` — exports `getAllPosts()` (sorted by date desc), `getPostBySlug(slug)` (returns full content + HTML), and `markdownToHtml()` (zero-dependency regex-based converter handles h2/h3, bold/italic, lists, blockquotes, inline code, links, images, paragraphs, HR).
+- Created `lib/testimonials.ts` — exports `getAllTestimonials()` reading `content/testimonials/*.md`.
+- Updated `app/api/blog/route.ts` — now delegates to `getAllPosts()` from lib/blog.ts; returns a flat JSON array (not `{ posts: [...] }`) so `HomeClient.tsx` can consume it directly.
+- Created `app/blog/page.tsx` — Server Component blog listing: dark hero strip + 3-column card grid (cover image via `next/image`, category, title, excerpt, author, date, readTime). Full `metadata` export + Blog/BreadcrumbList JSON-LD.
+- Created `app/blog/page.module.css` — card grid layout (3→2→1 col responsive), hover effects matching site design language.
+- Created `app/blog/[slug]/page.tsx` — Server Component post page: `generateStaticParams` pre-renders all posts at build time; `generateMetadata` pulls per-post SEO from frontmatter; sidebar lists all posts as nav tabs (active post highlighted); prose rendered via `dangerouslySetInnerHTML` from `markdownToHtml()`; `BlogPosting` JSON-LD schema.
+- Created `app/blog/[slug]/page.module.css` — sidebar+content 2-column layout, full prose styles (h2/h3, blockquote, code, lists), responsive (stacks to horizontal scroll tabs on mobile).
+- Created `components/TestimonialCard.tsx` — reusable `<figure>` component accepting a `Testimonial` from lib; renders stars, quote mark, body, divider, avatar (next/image), name, role, product tag.
+- Created `components/testimonial-card.module.css` — card styles with accent top-border hover, star ratings, author avatar.
+- Build: **clean**, `/blog` static, `/blog/[slug]` SSG (pre-rendered for each .md file).
+
+
 ### Session 7 — Home Page Migration
 
 - Rewrote `app/page.tsx` as a Server Component exporting `metadata` (title, description, openGraph, canonical) and injecting a `@graph` JSON-LD block with `Organization`, `WebSite`, and `BreadcrumbList` schemas.

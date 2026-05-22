@@ -1,0 +1,98 @@
+/* ════════════════════════════════════════════
+   TESTIMONIAL CARD — reusable component
+   ════════════════════════════════════════════ */
+
+.card {
+  background: #fff;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  border-top: 3px solid transparent;
+  transition: border-color 250ms, box-shadow 250ms;
+}
+.card:hover {
+  border-top-color: var(--accent, #F05023);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Stars */
+.stars {
+  display: flex;
+  gap: 3px;
+}
+.star {
+  font-size: 14px;
+  color: #e0e0e0;
+}
+.starFilled { color: var(--accent, #F05023); }
+
+/* Quote mark */
+.quoteMark {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--accent, #F05023);
+  margin-bottom: -10px;
+  pointer-events: none;
+}
+
+/* Body */
+.body {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.7;
+  color: #444;
+  flex: 1;
+}
+
+/* Divider */
+.divider {
+  width: 36px;
+  height: 2px;
+  background: var(--accent, #F05023);
+}
+
+/* Author row */
+.author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  background: #e8e8e8;
+}
+.avatar img { object-fit: cover; object-position: center top; }
+.authorInfo { display: flex; flex-direction: column; gap: 2px; }
+.name {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark, #131313);
+}
+.role {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #888;
+}
+.product {
+  display: inline-block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent, #F05023);
+  border: 1px solid rgba(240, 80, 35, 0.3);
+  padding: 3px 10px;
+  margin-top: 6px;
+  align-self: flex-start;
+}
