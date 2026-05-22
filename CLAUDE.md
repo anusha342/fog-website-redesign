@@ -41,6 +41,14 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 ## Progress Log
 
+### Session 10 — Project-Wide SEO Finalization
+
+- Created `app/sitemap.ts` (dynamic sitemap including all blog posts) and `app/robots.ts` (crawler instructions) to maximize search engine discovery.
+- Created `public/llms.txt` — a structured plain-text resource for AI models and search engines describing FOG Technologies and its core products.
+- Audited all pages for SEO compliance: verified exactly one H1 per page, added `.sr-only` utility for visually hidden hero headings, and confirmed unique canonical links.
+- Image SEO: Refactored home page blog cards to use `next/image` with descriptive alt text and updated `next.config.ts` to whitelist external product render domains.
+- Social Metadata: Standardized OpenGraph exports across all pages, adding high-quality preview images, dimensions, and descriptive alt text for better social sharing.
+
 ### Session 9 — Contact Page Migration & API
 
 - Created `app/contact/page.tsx` — Server Component with full SEO metadata and JSON-LD (`BreadcrumbList`, `ContactPage`) schema; renders Hero, Info Strip, and Contact Form.

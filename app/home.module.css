@@ -718,7 +718,7 @@
 }
 .blogCard:hover { outline: 1.5px solid var(--accent); transform: translateY(-4px); }
 .blogCardLink { display: block; text-decoration: none; color: inherit; height: 100%; }
-.blogImg { aspect-ratio: 16/9; background-size: cover; background-position: center; }
+.blogImg { aspect-ratio: 16/9; position: relative; overflow: hidden; }
 .blogBody { padding: var(--sp-24); }
 .blogCat { font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); }
 .blogTitle { font-size: 18px; font-weight: 600; color: var(--text-primary); line-height: 1.4; margin-top: 8px; }

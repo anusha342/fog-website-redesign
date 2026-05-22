@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     title: 'Laser Spy - FOG Technologies',
     description: 'Navigate a web of laser beams without triggering a single alarm. A stealth challenge every player wants to beat — then beat again.',
     url: 'https://futureofgaming.tech/products/laser-spy',
+    images: [{ url: '/images/laser-spy/laser-spy-1.jpg', width: 1200, height: 630, alt: 'Laser Spy Stealth Challenge' }],
   },
   alternates: {
     canonical: 'https://futureofgaming.tech/products/laser-spy',

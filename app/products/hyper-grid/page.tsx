@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     title: 'HyperGrid - FOG Technologies',
     description: 'The modular, sensor-activated LED gaming floor designed to transform any space into a high-intensity multiplayer arena.',
     url: 'https://futureofgaming.tech/products/hyper-grid',
+    images: [{ url: '/images/hyper-grid/hyper-grid-1.png', width: 1200, height: 630, alt: 'HyperGrid LED Gaming Floor' }],
   },
   alternates: {
     canonical: 'https://futureofgaming.tech/products/hyper-grid',

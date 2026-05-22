@@ -699,6 +699,7 @@ export default function HomeClient() {
     <>
       {/* ── HERO ──────────────────────────────────────────────────────── */}
       <section id="hero" className={styles.hero} ref={heroRef} aria-label="Hero">
+        <h1 className="sr-only">FOG Technologies — Future of Gaming</h1>
         <canvas ref={canvasRef} className={styles.heroCanvas} aria-hidden="true" />
         <div className={styles.scanlines} aria-hidden="true" />
 
@@ -1109,10 +1110,19 @@ export default function HomeClient() {
                   className={styles.blogCardLink}
                   aria-label={`Read: ${post.title}`}
                 >
-                  <div
-                    className={styles.blogImg}
-                    style={post.image ? { backgroundImage: `url('${post.image}')`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
-                  />
+                  <div className={styles.blogImg}>
+                    {post.image ? (
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+                      />
+                    ) : (
+                      <div style={{ width: '100%', height: '100%', background: '#1c1c1c' }} />
+                    )}
+                  </div>
                   <div className={styles.blogBody}>
                     <p className={styles.blogCat}>{post.category}</p>
                     <h3 className={styles.blogTitle}>{post.title}</h3>

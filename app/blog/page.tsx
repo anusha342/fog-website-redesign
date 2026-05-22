@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'Industry insights, operator case studies, and product updates from FOG Technologies.',
     url: 'https://futureofgaming.tech/blog',
     siteName: 'FOG Technologies',
-    images: [{ url: '/images/company_logo.png', width: 1200, height: 630 }],
+    images: [{ url: '/images/company_logo.png', width: 1200, height: 630, alt: 'FOG Technologies Blog' }],
     type: 'website',
   },
   alternates: { canonical: 'https://futureofgaming.tech/blog' },

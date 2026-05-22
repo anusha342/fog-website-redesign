@@ -89,6 +89,19 @@ html { scrollbar-width: none; -ms-overflow-style: none; }
 [data-reveal-delay="0.24"] { transition-delay: .24s; }
 [data-reveal-delay="0.3"]  { transition-delay: .3s; }
 
+/* ── ACCESSIBILITY ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* ── NAV ── */
 #navbar {
   position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 1000;

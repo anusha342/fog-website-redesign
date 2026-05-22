@@ -11,7 +11,7 @@ export const metadata: Metadata = {
       'Start your journey with FOG. Premium family entertainment solutions — HyperGrid, Laser Tag, Laser Spy, and Moments AI. Reach out today.',
     url: 'https://futureofgaming.tech/contact',
     type: 'website',
-    images: ['/images/company_logo.png'],
+    images: [{ url: '/images/company_logo.png', width: 1200, height: 630, alt: 'Contact FOG Technologies' }],
   },
   alternates: {
     canonical: 'https://futureofgaming.tech/contact',

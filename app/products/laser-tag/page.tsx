@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     title: 'Laser Tag - FOG Technologies',
     description: 'Next-gen laser combat. Realistic combat-grade laser guns and futuristic sensor vests with haptic feedback inside an interactive arena.',
     url: 'https://futureofgaming.tech/products/laser-tag',
+    images: [{ url: '/images/laser-tag/laser-tag-1.png', width: 1200, height: 630, alt: 'Next-gen Laser Tag Combat' }],
   },
   alternates: {
     canonical: 'https://futureofgaming.tech/products/laser-tag',

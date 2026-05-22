@@ -11,7 +11,7 @@ export const metadata: Metadata = {
       'Premium B2B family entertainment manufacturer. Meet the team behind HyperGrid, Laser Tag, Laser Spy, and Moments AI — operating in 10+ countries.',
     url: 'https://futureofgaming.tech/about',
     type: 'website',
-    images: ['/images/company_logo.png'],
+    images: [{ url: '/images/company_logo.png', width: 1200, height: 630, alt: 'About FOG Technologies' }],
   },
   alternates: {
     canonical: 'https://futureofgaming.tech/about',
