@@ -39,6 +39,10 @@ Each page has its own JS file in _old/. When migrating:
 Family entertainment company. Goal: 10X organic traffic via SEO, AEO, GEO.
 Admin email for contact form: [PUT YOUR EMAIL HERE]
 
+## Pending
+
+- **Post-submit animation (`#get-in-touch`)**: After the user clicks "Send Message" and the API returns success, trigger a section-level animation (design TBD) that reassures the visitor FOG will be in touch. The hook is already in `components/ContactForm.tsx` — `status === 'success'` drives it. Implementation needs a `.submitted` CSS Module class + keyframes in `components/contact-form.module.css`.
+
 ## Progress Log
 
 ### Session 10 — Project-Wide SEO Finalization
