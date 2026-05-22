@@ -41,6 +41,14 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 ## Progress Log
 
+### Session 2 — Home Page CSS Module
+
+- Audited all source files for the home page migration: `_old/index.html`, `_old/css/style.css`, `_old/js/main.js`, `_old/js/hero.js`, `_old/js/globe.js`, and `_old/js/fog-text.js` to understand every section, animation, and interaction.
+- Copied all static assets from `_old/images/` and `_old/uploads/` into `public/images/` and `public/uploads/` so Next.js `next/image` can serve them.
+- Created `app/home.module.css` — a full port of every home-page-specific rule from `_old/css/style.css`, converted to CSS Module conventions (camelCase class names, dynamic state classes like `.scatter`, `.glitch`, `.mbActivated`, `.visible` scoped within the module, compound selectors preserved).
+- Established migration architecture: `app/page.tsx` will be a Server Component (metadata + JSON-LD), delegating all interactive content to a `'use client'` `HomeClient.tsx` — required because Next.js cannot export `metadata` from a Client Component.
+- **Remaining for next session:** write `app/HomeClient.tsx` (Three.js hero, FOG text animation, logo strip marquee, count-up stats, sticky product stack, Moments AI Break, testimonials carousel, amCharts globe, blog card fetch, contact form with country combobox) and the thin `app/page.tsx` wrapper.
+
 ### Session 1 — Shared Layout Foundation
 - Copied custom fonts (`ClashDisplay-Semibold.otf`, `GoogleSans` variable font) to `public/fonts/` and rewrote `app/globals.css` with all global tokens: `@font-face` declarations (including Expansiva base64), CSS custom properties, reset, body defaults, Lenis smooth-scroll hooks, scrollbar hiding, and the `[data-reveal]` scroll-animation system.
 - Created `components/Navbar.tsx` as a `'use client'` component with scroll-hide behaviour (hides on scroll down, reappears on scroll up), mobile menu open/close state with body scroll lock, and smooth-scroll to `#get-in-touch` for the CTA — all internal links use `next/link`, logo uses `next/image`.

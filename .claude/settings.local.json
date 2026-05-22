@@ -6,7 +6,9 @@
       "Bash(cp \"C:/Users/yashm/desktop/website/_old/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf\" C:/Users/yashm/desktop/website/public/fonts/)",
       "Bash(npx next:*)",
       "Bash(ls:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(cp -r \"C:/Users/yashm/desktop/website/_old/images\" \"C:/Users/yashm/desktop/website/public/images\")",
+      "Bash(cp -r \"C:/Users/yashm/desktop/website/_old/uploads\" \"C:/Users/yashm/desktop/website/public/uploads\")"
     ]
   }
 }
