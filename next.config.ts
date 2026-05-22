@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.prod.website-files.com',
       },
+      // S3 hosted assets (cover images, inline blog images)
+      {
+        protocol: 'https',
+        hostname: '*.s3.ap-south-1.amazonaws.com',
+      },
     ],
   },
 };

@@ -37,13 +37,17 @@ RESEND_API_KEY=<already set>
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `app/admin/dashboard/page.tsx` | Landing: Blogs / Testimonials / Logout / Home |
-| 2 | `app/api/admin/blogs/route.ts` (GET) | Lists all `blogs/*.json` from S3, returns metadata array |
-| 3 | `app/admin/blogs/page.tsx` | Blog list table with Edit / Delete icons |
-| 4 | `lib/blog.ts` (update) | Add `getAllPostsFromS3()` and `getPostBySlugFromS3()` |
-| 5 | `app/blog/page.tsx` (update) | Switch to S3 read + `revalidate = 60` |
-| 6 | `app/blog/[slug]/page.tsx` (update) | Switch to S3 read + ISR |
-| 7 | Migration script | One-time: convert existing `.md` posts → JSON → upload to S3 |
+| 1 | `lib/s3.ts` ✅ | S3 client + all CRUD helpers (getAllPostsFromS3, getPostBySlugFromS3, putPostToS3, deletePostFromS3, slugExistsInS3) |
+| 2 | `next.config.ts` ✅ | Added S3 hostname (`*.s3.ap-south-1.amazonaws.com`) to next/image allowed patterns |
+| 3 | `app/api/admin/blogs/route.ts` (GET) ✅ | Lists all `blogs/*.json` from S3, returns metadata array |
+| 4 | `app/api/admin/migrate/route.ts` (POST) ✅ | One-time migration: reads `.md` files, converts to HTML JSON, uploads to S3 |
+| 5 | `app/admin/dashboard/page.tsx` ✅ | Landing: Blogs / Testimonials (greyed) / Migrate button / Logout / Home |
+| 6 | `app/admin/dashboard/MigrateButton.tsx` ✅ | Client component for one-time migration trigger |
+| 7 | `app/admin/dashboard/dashboard.module.css` ✅ | Dashboard styles |
+| 8 | `app/admin/blogs/page.tsx` ✅ | Blog list table with Edit / Delete icons (delete disabled until Phase 3) |
+| 9 | `app/admin/blogs/blogs.module.css` ✅ | Blog list styles |
+| 10 | `app/blog/page.tsx` ✅ | Switched to `getAllPostsFromS3()` + `revalidate = 60` |
+| 11 | `app/blog/[slug]/page.tsx` ✅ | Switched to `getPostBySlugFromS3()` + ISR (`revalidate = 60`, `dynamicParams = true`) |
 
 **Env vars required:**
 ```
@@ -128,7 +132,7 @@ S3_ASSETS_PREFIX=assets
 | Phase | Status | Completed |
 |-------|--------|-----------|
 | Phase 1 — Auth with OTP | ✅ Complete | 2026-05-22 |
-| Phase 2 — Admin Shell + Blog List | ⏳ Pending | — |
+| Phase 2 — Admin Shell + Blog List | ✅ Complete | 2026-05-22 |
 | Phase 3 — Delete Blog | ⏳ Pending | — |
 | Phase 4a — Form Shell + Metadata | ⏳ Pending | — |
 | Phase 4b — Cover Image Upload | ⏳ Pending | — |

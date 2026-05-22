@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPostsFromS3 } from '@/lib/s3';
 import styles from './page.module.css';
+
+// Revalidate every 60 seconds — new posts appear without a redeploy
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Blog — Insights & Updates | FOG Technologies',
@@ -48,8 +51,8 @@ function formatDate(iso: string) {
   }
 }
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPostsFromS3();
 
   return (
     <>

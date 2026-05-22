@@ -2,20 +2,19 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllPosts, getPostBySlug } from '@/lib/blog';
+import { getAllPostsFromS3, getPostBySlugFromS3 } from '@/lib/s3';
 import styles from './page.module.css';
 
-// Pre-render all posts at build time
-export function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
-}
+// ISR: re-render on demand, cache for 60s — new posts appear without a redeploy
+export const revalidate    = 60;
+export const dynamicParams = true;
 
 // Per-post metadata from frontmatter
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlugFromS3(slug);
   if (!post) return { title: 'Post Not Found | FOG Technologies' };
 
   return {
@@ -49,10 +48,10 @@ export default async function BlogPostPage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlugFromS3(slug);
   if (!post) notFound();
 
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPostsFromS3();
 
   const jsonLd = {
     '@context': 'https://schema.org',

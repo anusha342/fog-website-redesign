@@ -12,7 +12,8 @@
       "Bash(npm install:*)",
       "Bash(npm run:*)",
       "Bash(cp middleware.ts proxy.ts)",
-      "Bash(rm middleware.ts)"
+      "Bash(rm middleware.ts)",
+      "Bash(wmic logicaldisk:*)"
     ]
   }
 }
