@@ -41,6 +41,15 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 ## Progress Log
 
+### Session 3 — About Page + Shared Infrastructure
+
+- Fixed pre-existing build error by adding a placeholder `app/nav/[slug]/page.tsx`; created `app/api/blog/route.ts` that reads `content/blog/*.md` files with gray-matter and returns sorted posts (returns empty array gracefully when the directory doesn't exist yet).
+- Extracted the Get In Touch form into a reusable `components/ContactForm.tsx` (`'use client'`) with its own `components/contact-form.module.css` — includes the country searchable combobox, floating labels, auto-grow textarea, all form state, and POST to `/api/contact` with loading/success/error button states; used by About and will be used by Home and Contact pages.
+- Created `app/about/about.module.css` — full port of `_old/css/about.css` to CSS Module conventions, covering all six sections: Hero (dark full-bleed with dot-grid overlay), Awards grid, What Drives Us cards, alternating Timeline (dot + line on desktop), Team avatars, and responsive breakpoints at 1100 px / 640 px.
+- Created `app/about/AboutClient.tsx` (`'use client'`) rendering all five content sections (Hero → Awards → What Drives Us → Timeline → Team) with inline `data-reveal` attributes for scroll animation and the shared `<ContactForm />` at the bottom; hardcoded data arrays keep the component self-contained with no external fetch needed.
+- Created `app/about/page.tsx` as a Server Component exporting `metadata` (SEO title/description, openGraph, canonical) and injecting a `@graph` JSON-LD block with both `BreadcrumbList` (Home → About) and `AboutPage` schema; exactly one H1 in the page (`heroTitle`), all section headings are H2, card sub-headings are H3.
+- **Remaining for next session:** write `app/HomeClient.tsx` (Three.js hero, FOG text, logo strip, count-up stats, sticky product stack, Moments AI Break, testimonials carousel, amCharts globe, blog cards) and update the thin `app/page.tsx` server wrapper with metadata + Organization JSON-LD.
+
 ### Session 2 — Home Page CSS Module
 
 - Audited all source files for the home page migration: `_old/index.html`, `_old/css/style.css`, `_old/js/main.js`, `_old/js/hero.js`, `_old/js/globe.js`, and `_old/js/fog-text.js` to understand every section, animation, and interaction.
