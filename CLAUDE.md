@@ -41,6 +41,22 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 ## Progress Log
 
+### Session 7 — Home Page Migration
+
+- Rewrote `app/page.tsx` as a Server Component exporting `metadata` (title, description, openGraph, canonical) and injecting a `@graph` JSON-LD block with `Organization`, `WebSite`, and `BreadcrumbList` schemas.
+- Created `app/HomeClient.tsx` as a `'use client'` component rendering all home page sections:
+  - **Hero**: Three.js scene (hex grid, orb structure, particle field, speed streaks, scan beam, camera parallax) loaded dynamically via `loadScript` utility.
+  - **FOG text**: hover-to-reveal animation (`FOG` → `FUTURE OF GAMING`) fully ported from `fog-text.js` using `useState` + `useEffect` with `scatter`/`glitch` CSS Module state classes.
+  - **Logo strip**: static marquee with 4× duplicated logos, CSS-driven infinite scroll (no JS).
+  - **About & Numbers**: `IntersectionObserver`-driven count-up animation for 10K/70%/10+ stats, card fade-in with CSS transition.
+  - **Products sticky stack**: 5 sections (`HyperGrid`, `Laser Tag`, `Laser Spy`, `Moments AI Break`, `Moments`) with thumbnail click swap + 6-second auto-advance, `mbActivated` class triggered by `IntersectionObserver`.
+  - **Testimonials carousel**: 3 hardcoded entries, 4-second auto-advance with `exiting`/`entering`/`visible` CSS transition states, prev/next arrows.
+  - **Globe**: amCharts 5 orthographic globe loaded sequentially (am5 → map → geodata → Animated), auto-rotation, pulse dots for 10 cities, pause on hover.
+  - **Blog cards**: fetches from `/api/blog`; renders up to 3 cards, empty state is silent.
+  - **Contact form**: reuses shared `<ContactForm />` component.
+- Build passes with zero TypeScript errors and zero warnings (only expected `metadataBase` advisory).
+
+
 ### Session 6 — Laser Spy Product Page Migration
 - Migrated the Laser Spy product page to `app/products/laser-spy/page.tsx` as a Server Component, appending proper SEO metadata and JSON-LD structured schema (`Product` and `BreadcrumbList`).
 - Processed `_old/css/laser-spy.css` into a Next.js `page.module.css`, converting kebab-case classes to camelCase for modular React application and dropping globally scoped classes where applicable.
