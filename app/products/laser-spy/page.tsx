@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import LaserSpyClient from './LaserSpyClient';
+import { getAllTestimonials } from '@/lib/testimonials';
 
 export const metadata: Metadata = {
   title: 'Laser Spy - FOG Technologies',
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default function LaserSpyPage() {
+  const testimonials = getAllTestimonials();
+
   const jsonLdProduct = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -63,7 +66,7 @@ export default function LaserSpyPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
       />
-      <LaserSpyClient />
+      <LaserSpyClient testimonials={testimonials} />
     </>
   );
 }

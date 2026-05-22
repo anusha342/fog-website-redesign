@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import styles from './page.module.css';
+import type { Testimonial } from '@/lib/testimonials';
 
 /* ── SCROLL REVEAL ── */
 function useScrollReveal() {
@@ -26,6 +27,29 @@ function useScrollReveal() {
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
     els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+/* ── NAV THEME OBSERVER ── */
+function useNavTheme() {
+  useEffect(() => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = (entry.target as HTMLElement).dataset.navTheme || 'dark';
+            navbar.setAttribute('data-theme', theme);
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: '-60px 0px 0px 0px' }
+    );
+
+    document.querySelectorAll('[data-nav-theme]').forEach((s) => obs.observe(s));
     return () => obs.disconnect();
   }, []);
 }
@@ -68,8 +92,13 @@ const STEPS = [
   }
 ];
 
-export default function LaserSpyClient() {
+interface Props {
+  testimonials: Testimonial[];
+}
+
+export default function LaserSpyClient({ testimonials }: Props) {
   useScrollReveal();
+  useNavTheme();
 
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -114,8 +143,36 @@ export default function LaserSpyClient() {
   const fiveYearProfit = (yearlyRevenue * 5) - productCost;
   const roi = productCost > 0 ? ((fiveYearProfit / productCost) * 100) : 0;
 
+  // Testimonials Carousel State
+  const [curTestimonial, setCurTestimonial] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const nextTestimonial = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurTestimonial((prev) => (prev + 1) % testimonials.length);
+      setIsTransitioning(false);
+    }, 300);
+  }, [isTransitioning, testimonials.length]);
+
+  const prevTestimonial = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      setIsTransitioning(false);
+    }, 300);
+  }, [isTransitioning, testimonials.length]);
+
   useEffect(() => {
-    // We will render charts if Chart.js is loaded
+    const timer = setInterval(nextTestimonial, 6000);
+    return () => clearInterval(timer);
+  }, [nextTestimonial]);
+
+  const currentT = testimonials[curTestimonial] || testimonials[0];
+
+  useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).Chart) {
       updateCharts();
     }
@@ -127,66 +184,68 @@ export default function LaserSpyClient() {
     const barCanvas = document.getElementById('chart-revenue') as HTMLCanvasElement;
     if (!lineCanvas || !barCanvas) return;
 
-    if (!(window as any).lineChartInstance) {
-      (window as any).lineChartInstance = new Chart(lineCanvas.getContext('2d'), {
-        type: 'line',
-        data: {
-          labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
-          datasets: [{
-            data: [],
-            borderColor: '#F05023',
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 0,
-            tension: 0.3,
-          }]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } }
+    if ((window as any).lineChartInstance) (window as any).lineChartInstance.destroy();
+    if ((window as any).barChartInstance) (window as any).barChartInstance.destroy();
+
+    (window as any).lineChartInstance = new Chart(lineCanvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
+        datasets: [{
+          data: Array.from({ length: 60 }, (_, i) => ((monthlyRevenue * (i + 1)) - productCost) / 100000),
+          borderColor: '#F05023',
+          borderWidth: 2,
+          fill: false,
+          pointRadius: 0,
+          tension: 0.3,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
+            titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12,
+            callbacks: {
+              label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
+              title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1)
+            }
           }
-        }
-      });
-    }
-
-    if (!(window as any).barChartInstance) {
-      (window as any).barChartInstance = new Chart(barCanvas.getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
-          datasets: [{
-            data: [],
-            backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'],
-            borderRadius: 3,
-          }]
         },
-        options: {
-          responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)' } }
-          }
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } }
         }
-      });
-    }
+      }
+    });
 
-    const lineChart = (window as any).lineChartInstance;
-    const barChart = (window as any).barChartInstance;
-
-    lineChart.data.datasets[0].data = Array.from({ length: 60 }, (_, i) => ((monthlyRevenue * (i + 1)) - productCost) / 100000);
-    lineChart.update('none');
-
-    barChart.data.datasets[0].data = [
-      productCost / 100000,
-      monthlyRevenue / 100000,
-      yearlyRevenue / 100000,
-      (yearlyRevenue * 5) / 100000
-    ];
-    barChart.update('none');
+    (window as any).barChartInstance = new Chart(barCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
+        datasets: [{
+          data: [productCost / 100000, monthlyRevenue / 100000, yearlyRevenue / 100000, (yearlyRevenue * 5) / 100000],
+          backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'],
+          borderRadius: 3,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
+            titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12,
+            callbacks: { label: (ctx: any) => '₹' + ctx.parsed.x.toFixed(1) + 'L' }
+          }
+        },
+        scales: {
+          x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } }
+        }
+      }
+    });
   };
 
   return (
@@ -197,7 +256,8 @@ export default function LaserSpyClient() {
         onLoad={updateCharts}
       />
 
-      <header className={styles.hero}>
+      {/* 1. HERO SECTION */}
+      <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline poster="/images/laser-spy/laser-spy-1.jpg">
           <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
         </video>
@@ -211,15 +271,15 @@ export default function LaserSpyClient() {
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">Laser Spy</h1>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
-            <Link href="#what-is-laserspy" className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={(e) => {
-              e.preventDefault();
+            <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
               document.getElementById('what-is-laserspy')?.scrollIntoView({ behavior: 'smooth' });
-            }}>Discover &#x2192;</Link>
+            }}>Discover &#x2192;</button>
             <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
           </div>
         </div>
       </header>
 
+      {/* VIDEO MODAL */}
       <div className={`${styles.videoModal} ${isVideoOpen ? styles.open : ''}`} onClick={(e) => {
         if (e.target === e.currentTarget) closeVideo();
       }}>
@@ -231,7 +291,8 @@ export default function LaserSpyClient() {
         </div>
       </div>
 
-      <section id="what-is-laserspy" className={styles.whatSection}>
+      {/* 2. WHAT IS LASER SPY */}
+      <section id="what-is-laserspy" className={styles.whatSection} data-nav-theme="light">
         <div className={styles.whatInner}>
           <div className={styles.whatImgWrap} data-reveal>
             <Image
@@ -257,7 +318,8 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section id="challenge-modes" className={styles.modesV2Section}>
+      {/* 3. CHALLENGE MODES */}
+      <section id="challenge-modes" className={styles.modesV2Section} data-nav-theme="dark">
         <div className={styles.modesV2Wrap}>
           <h2 className={styles.modesV2Title} data-reveal>Challenge Modes</h2>
 
@@ -295,7 +357,8 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section id="ls-moments" className={styles.momentsSection}>
+      {/* 3b. MOMENTS */}
+      <section id="ls-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
             <h2 className={styles.momentsTitle}>Moments in Laser Spy</h2>
@@ -372,7 +435,8 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section id="how-it-works" className={styles.processSection}>
+      {/* 4. HOW IT WORKS */}
+      <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
         <div className={styles.processInner}>
           <div className={styles.processHeader} data-reveal>
             <h2 className={styles.processTitle}>Stealth. Precision. Escape.</h2>
@@ -408,7 +472,8 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section id="roi-calculator" className={styles.calcSection}>
+      {/* 5. ROI CALCULATOR */}
+      <section id="roi-calculator" className={styles.calcSection} data-nav-theme="dark">
         <div className={styles.calcInner}>
           <div className={styles.calcHeader}>
             <h2 className={styles.sectionTitle} data-reveal>ROI Calculator</h2>
@@ -488,6 +553,7 @@ export default function LaserSpyClient() {
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>
                 </div>
+                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero.</p>
               </div>
 
               <div className={styles.calcChartCard}>
@@ -519,10 +585,15 @@ export default function LaserSpyClient() {
               </div>
             </div>
           </div>
+          <div className={styles.calcFooter}>
+            <p className={styles.calcDisclaimer}>These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.</p>
+            <Link href="/contact" className={`${styles.hbtn} ${styles.hbtnSolid}`}>Get a Detailed Proposal &nbsp;&#x2192;</Link>
+          </div>
         </div>
       </section>
 
-      <section id="specs-design" className={styles.speModelSection}>
+      {/* 6. ROOM DESIGN */}
+      <section id="specs-design" className={styles.speModelSection} data-nav-theme="dark">
         <div className={styles.speModelInner}>
           <h2 className={styles.speModelTitle} data-reveal>Room Design</h2>
           <p className={styles.speModelBody} data-reveal data-reveal-delay="0.1">
@@ -542,7 +613,8 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section className={styles.speDataSection}>
+      {/* 6b. SPECS SECTION */}
+      <section className={styles.speDataSection} data-nav-theme="dark">
         <div className={styles.speDataInner}>
           
           <div className={styles.speDimsCard} data-reveal>
@@ -578,7 +650,56 @@ export default function LaserSpyClient() {
         </div>
       </section>
 
-      <section id="get-in-touch" className={styles.getInTouchSection}>
+      {/* 7. TESTIMONIALS */}
+      {testimonials.length > 0 && (
+        <section id="testimonials" className={styles.testSection} data-nav-theme="light">
+          <div className={styles.testInner}>
+            <button className={`${styles.testArrowAbs} ${styles.testArrowPrev}`} onClick={prevTestimonial} aria-label="Previous testimonial">
+              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
+            </button>
+            <button className={`${styles.testArrowAbs} ${styles.testArrowNext}`} onClick={nextTestimonial} aria-label="Next testimonial">
+              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
+            </button>
+            
+            <div className={`${styles.testGrid} ${isTransitioning ? styles.testFade : ''}`}>
+              <div className={styles.testImage}>
+                <Image
+                  src={currentT.avatar || '/images/operators/person-1.jpg'}
+                  alt={currentT.name}
+                  className={styles.testPersonImg}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className={styles.testRight}>
+                <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>"</div>
+                <div className={styles.testimonialContent}>
+                  <blockquote className={styles.testQuote}>{currentT.body}</blockquote>
+                  <p className={styles.testSub}>{currentT.location}</p>
+                  <div className={styles.testDivider} aria-hidden="true"></div>
+                  <p className={styles.testName}>{currentT.name}</p>
+                  <div className={styles.testMetaWrap}>
+                    {currentT.logo && (
+                      <Image 
+                        src={currentT.logo} 
+                        alt={currentT.company} 
+                        className={styles.testZoneLogo}
+                        width={100}
+                        height={100}
+                        style={{ objectFit: 'contain' }}
+                      />
+                    )}
+                  </div>
+                  <span className={styles.testRole}>{currentT.designation}, {currentT.company}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 8. GET IN TOUCH FORM */}
+      <section id="get-in-touch" className={styles.getInTouchSection} data-nav-theme="surface">
         <ContactForm />
       </section>
 
