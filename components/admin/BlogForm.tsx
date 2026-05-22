@@ -100,7 +100,8 @@ export default function BlogForm({ mode, initialPost }: Props) {
   const [errors,     setErrors]     = useState<FieldErrors>({});
   const [slugStatus, setSlugStatus] = useState<SlugStatus>('idle');
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(mode === 'edit');
-  const [phaseNote, setPhaseNote]   = useState('');
+  const [saving,    setSaving]    = useState(false);
+  const [saveError, setSaveError] = useState('');
 
   // ── Cover image upload state ──────────────────────────────────────────────
   type UploadStatus = 'idle' | 'uploading' | 'error';
@@ -193,10 +194,11 @@ export default function BlogForm({ mode, initialPost }: Props) {
   }
 
   // ── Submit ────────────────────────────────────────────────────────────────
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setPhaseNote('');
+    setSaveError('');
 
+    // Client-side field validation
     const fieldErrors = validate(values);
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
@@ -209,8 +211,47 @@ export default function BlogForm({ mode, initialPost }: Props) {
       return;
     }
 
-    // Phase 4d: POST /api/admin/blogs (create) or PUT /api/admin/blogs/[slug] (edit)
-    setPhaseNote('Validation passed. Save API will be connected in Phase 4d.');
+    setSaving(true);
+
+    // Build payload — tags split from comma-separated string
+    const payload = {
+      title:      values.title.trim(),
+      slug:       values.slug.trim(),
+      date:       values.date.trim(),
+      author:     values.author.trim(),
+      category:   values.category.trim(),
+      excerpt:    values.excerpt.trim(),
+      coverImage: values.coverImage.trim(),
+      tags:       values.tags.split(',').map((t) => t.trim()).filter(Boolean),
+      readTime:   Number(values.readTime),
+      bodyHtml:   values.bodyHtml,
+    };
+
+    try {
+      const url    = mode === 'edit'
+        ? `/api/admin/blogs/${encodeURIComponent(values.slug)}`
+        : '/api/admin/blogs';
+      const method = mode === 'edit' ? 'PUT' : 'POST';
+
+      const res  = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSaveError(data.error || 'Save failed. Please try again.');
+        setSaving(false);
+        return;
+      }
+
+      // Success — go back to list; the ISR revalidation (60s) will update /blog
+      router.push('/admin/blogs');
+    } catch {
+      setSaveError('Network error. Please check your connection and try again.');
+      setSaving(false);
+    }
   }
 
   const isEdit = mode === 'edit';
@@ -503,20 +544,36 @@ export default function BlogForm({ mode, initialPost }: Props) {
             </div>
           </div>
 
-          {/* Phase note */}
-          {phaseNote && <div className={styles.phaseNote}>{phaseNote}</div>}
+          {/* Save error */}
+          {saveError && (
+            <div className={styles.saveErrorBox}>
+              <span>{saveError}</span>
+              <button
+                type="button"
+                onClick={() => setSaveError('')}
+                className={styles.saveErrorClose}
+                aria-label="Dismiss"
+              >
+                &#10005;
+              </button>
+            </div>
+          )}
 
           {/* ── Actions ─────────────────────────────────────────────────── */}
           <div className={styles.actions}>
             <button
               type="button"
               onClick={() => router.push('/admin/blogs')}
+              disabled={saving}
               className={styles.cancelBtn}
             >
               Cancel
             </button>
-            <button type="submit" className={styles.saveBtn}>
-              {isEdit ? 'Update Post' : 'Save Post'}
+            <button type="submit" disabled={saving} className={styles.saveBtn}>
+              {saving
+                ? <><span className={styles.savingSpinner} /> {isEdit ? 'Updating…' : 'Saving…'}</>
+                : isEdit ? 'Update Post' : 'Save Post'
+              }
             </button>
           </div>
 

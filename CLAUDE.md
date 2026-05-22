@@ -43,6 +43,10 @@ Admin email for contact form: [PUT YOUR EMAIL HERE]
 
 - **Post-submit animation (`#get-in-touch`)**: After the user clicks "Send Message" and the API returns success, trigger a section-level animation (design TBD) that reassures the visitor FOG will be in touch. The hook is already in `components/ContactForm.tsx` — `status === 'success'` drives it. Implementation needs a `.submitted` CSS Module class + keyframes in `components/contact-form.module.css`.
 
+- **Admin panel — Google OAuth login**: The current admin login uses email allowlist + OTP via Resend. Replace or supplement with Google OAuth (`next-auth` or similar) so admins can sign in with their Google account instead of waiting for an OTP email. Track in `pipeline.md`.
+
+- **Admin panel — Testimonials CRUD**: The Testimonials card on the admin dashboard is currently greyed out. Implement full create/edit/delete for testimonials (stored as `testimonials/{slug}.json` in S3), following the same pattern as the blog pipeline.
+
 ## Progress Log
 
 ### Session 10 — Project-Wide SEO Finalization

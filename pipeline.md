@@ -125,10 +125,10 @@ S3_ASSETS_PREFIX=assets
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `app/api/admin/blogs/route.ts` (POST) | Create: validate all fields, write `blogs/{slug}.json` to S3 |
-| 2 | `app/api/admin/blogs/[slug]/route.ts` (PUT) | Update: validate, overwrite JSON in S3 |
-| 3 | Client validation | Highlight empty required fields before API call |
-| 4 | On success | Redirect to `/admin/blogs` — list reflects updated state |
+| 1 | `app/api/admin/blogs/route.ts` (POST) ✅ | Server-validates all required fields; blocks duplicate slugs via `slugExistsInS3`; calls `putPostToS3`; returns 201 |
+| 2 | `app/api/admin/blogs/[slug]/route.ts` (PUT) ✅ | Server-validates fields; checks slug in body matches URL param; verifies post exists before overwriting; calls `putPostToS3` |
+| 3 | `components/admin/BlogForm.tsx` ✅ | `handleSubmit` made async; builds typed payload (tags split from comma string, readTime cast to number); calls POST or PUT; shows spinner + disables buttons during save; on success redirects to `/admin/blogs`; on error shows dismissible save-error banner |
+| 4 | `components/admin/blog-form.module.css` ✅ | Save error banner styles, spinning indicator inside Save button |
 
 ---
 
@@ -142,4 +142,4 @@ S3_ASSETS_PREFIX=assets
 | Phase 4a — Form Shell + Metadata | ✅ Complete | 2026-05-22 |
 | Phase 4b — Cover Image Upload | ✅ Complete | 2026-05-22 |
 | Phase 4c — Rich Text Editor | ✅ Complete | 2026-05-22 |
-| Phase 4d — Save + Validation | ⏳ Pending | — |
+| Phase 4d — Save + Validation | ✅ Complete | 2026-05-22 |

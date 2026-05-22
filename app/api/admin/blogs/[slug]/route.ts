@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getPostBySlugFromS3, deletePostFromS3 } from '@/lib/s3';
+import { getPostBySlugFromS3, deletePostFromS3, putPostToS3 } from '@/lib/s3';
+import type { PostMeta } from '@/lib/blog';
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -12,6 +13,61 @@ export async function GET(_req: Request, { params }: Params) {
     return NextResponse.json(post);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to fetch post';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+/** PUT /api/admin/blogs/[slug] — update an existing post */
+export async function PUT(req: Request, { params }: Params) {
+  try {
+    const { slug } = await params;
+    const body = await req.json() as Record<string, unknown>;
+
+    // Required field check (same rules as POST)
+    const REQUIRED = ['title', 'slug', 'date', 'author', 'category', 'excerpt'] as const;
+    for (const key of REQUIRED) {
+      if (!body[key] || String(body[key]).trim() === '') {
+        return NextResponse.json({ error: `Missing required field: ${key}` }, { status: 400 });
+      }
+    }
+    const rt = Number(body.readTime);
+    if (isNaN(rt) || rt < 1) {
+      return NextResponse.json({ error: 'readTime must be a number >= 1' }, { status: 400 });
+    }
+
+    // Slug in URL must match slug in body — prevents accidental cross-write
+    if (String(body.slug).trim() !== slug) {
+      return NextResponse.json(
+        { error: 'Slug in body does not match URL slug.' },
+        { status: 400 }
+      );
+    }
+
+    // Post must already exist
+    const existing = await getPostBySlugFromS3(slug);
+    if (!existing) {
+      return NextResponse.json({ error: 'Post not found.' }, { status: 404 });
+    }
+
+    const meta: PostMeta = {
+      slug,
+      title:      String(body.title).trim(),
+      date:       String(body.date).trim(),
+      author:     String(body.author).trim(),
+      category:   String(body.category).trim(),
+      excerpt:    String(body.excerpt).trim(),
+      coverImage: String(body.coverImage ?? '').trim(),
+      tags:       Array.isArray(body.tags) ? (body.tags as string[]).map(String) : [],
+      readTime:   Number(body.readTime),
+    };
+
+    const bodyHtml = String(body.bodyHtml ?? '');
+    await putPostToS3(meta, bodyHtml);
+
+    return NextResponse.json({ ok: true, slug });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Failed to update post';
+    console.error('PUT /api/admin/blogs/[slug] error:', message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
