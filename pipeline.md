@@ -82,11 +82,13 @@ S3_ASSETS_PREFIX=assets
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `app/admin/blogs/new/page.tsx` | Create route — renders BlogForm with empty values |
-| 2 | `app/admin/blogs/[slug]/edit/page.tsx` | Edit route — fetches post from S3, passes as initial values |
-| 3 | `app/api/admin/blogs/[slug]/route.ts` (GET) | Returns single post JSON for pre-filling edit form |
-| 4 | `components/admin/BlogForm.tsx` | Form: Title, Slug (auto + editable), Date, Author, Category, Tags, ReadTime, Excerpt |
-| 5 | Slug collision check | On slug blur → GET `/api/admin/blogs/{slug}` → warn if already exists |
+| 1 | `app/admin/blogs/new/page.tsx` ✅ | Create route — renders BlogForm with empty default values |
+| 2 | `app/admin/blogs/[slug]/edit/page.tsx` ✅ | Edit route — server component that fetches post from S3 and passes to BlogForm |
+| 3 | `components/admin/BlogForm.tsx` ✅ | Full form: Title, Slug (auto-gen + editable, locked in edit mode), Date, Read Time, Author, Category, Tags, Excerpt, Cover Image (URL input), Body (textarea placeholder) |
+| 4 | `components/admin/blog-form.module.css` ✅ | Two-column responsive form layout, input error states, slug status indicator, phase banners |
+| 5 | Slug auto-generation ✅ | Generates from title on each keystroke; stops auto-gen once user manually edits slug field |
+| 6 | Slug collision check ✅ | 500ms debounce → GET `/api/admin/blogs/{slug}` → shows Available / Taken / Checking indicator |
+| 7 | Client validation ✅ | All required fields highlighted on submit; scrolls to first error; blocks submit if slug is taken |
 
 ---
 
@@ -96,8 +98,9 @@ S3_ASSETS_PREFIX=assets
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `app/api/admin/upload/route.ts` | Accepts multipart file, streams to S3 `assets/{uuid}-{name}`, returns public S3 URL |
-| 2 | `components/admin/BlogForm.tsx` (update) | Cover image field: pick file → call upload API → show thumbnail + store URL |
+| 1 | `app/api/admin/upload/route.ts` ✅ | Validates type (JPG/PNG/WebP/GIF) and size (max 4 MB), generates `{uuid}-{sanitized-name}` key, uploads to S3 `assets/`, returns public URL |
+| 2 | `components/admin/BlogForm.tsx` ✅ | Cover image section replaced: click-to-upload zone → immediate API upload → spinner during upload → thumbnail preview with Change / Remove buttons → URL fallback input always visible |
+| 3 | `components/admin/blog-form.module.css` ✅ | Upload zone (dashed border, hover highlight), uploading spinner, uploaded preview bar, Change/Remove buttons, URL fallback section |
 
 ---
 
@@ -135,7 +138,7 @@ S3_ASSETS_PREFIX=assets
 | Phase 1 — Auth with OTP | ✅ Complete | 2026-05-22 |
 | Phase 2 — Admin Shell + Blog List | ✅ Complete | 2026-05-22 |
 | Phase 3 — Delete Blog | ✅ Complete | 2026-05-22 |
-| Phase 4a — Form Shell + Metadata | ⏳ Pending | — |
-| Phase 4b — Cover Image Upload | ⏳ Pending | — |
+| Phase 4a — Form Shell + Metadata | ✅ Complete | 2026-05-22 |
+| Phase 4b — Cover Image Upload | ✅ Complete | 2026-05-22 |
 | Phase 4c — Rich Text Editor | ⏳ Pending | — |
 | Phase 4d — Save + Validation | ⏳ Pending | — |
