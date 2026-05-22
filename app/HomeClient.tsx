@@ -63,6 +63,7 @@ const PRODUCTS = [
     num: '01',
     name: 'HyperGrid',
     extraNameCls: '',
+    navTheme: 'light',
     desc: 'A fully modular, grid-based attraction system designed to transform any space into an immersive multiplayer playground.',
     href: '/products/hyper-grid',
     sectionCls: styles.prodHypergrid,
@@ -77,6 +78,7 @@ const PRODUCTS = [
     num: '02',
     name: 'Laser Tag',
     extraNameCls: styles.prodNameLt,
+    navTheme: 'light',
     desc: 'Next-gen laser combat. Full tracking. Full immersion. Zero compromise.',
     href: '/products/laser-tag',
     sectionCls: styles.prodLasertag,
@@ -91,6 +93,7 @@ const PRODUCTS = [
     num: '03',
     name: 'Laser Spy',
     extraNameCls: '',
+    navTheme: undefined,
     desc: 'A stealth challenge every player wants to beat. Then beat again.',
     href: '/products/laser-spy',
     sectionCls: styles.prodLasermaze,
@@ -147,11 +150,31 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
   // Testimonials
   const [tIdx,   setTIdx]   = useState(0);
   const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
-  const tBusy    = useRef(false);
-  const autoRef  = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tBusy       = useRef(false);
+  const autoRef     = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tIdxForAuto = useRef(0); // tracks current idx for the auto-advance interval
 
   // Blog
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(initialPosts);
+
+  // ── Lenis smooth scroll ──────────────────────────────────────────────────
+  useEffect(() => {
+    let animId: number;
+    loadScript('https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js')
+      .then(() => {
+        const LenisClass = (window as any).Lenis;
+        if (!LenisClass) return;
+        const lenis = new LenisClass({ lerp: 0.075, smoothWheel: true });
+        function raf(time: number) { lenis.raf(time); animId = requestAnimationFrame(raf); }
+        animId = requestAnimationFrame(raf);
+        (window as any).__fogLenis = lenis;
+      })
+      .catch(() => {});
+    return () => {
+      cancelAnimationFrame(animId);
+      (window as any).__fogLenis?.destroy?.();
+    };
+  }, []);
 
   // ── Scroll reveal ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -169,6 +192,26 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
     els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  // ── Nav theme (data-nav-theme) ───────────────────────────────────────────
+  useEffect(() => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+    const sections = document.querySelectorAll('[data-nav-theme]');
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = (entry.target as HTMLElement).dataset.navTheme || 'dark';
+            navbar.setAttribute('data-theme', theme);
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: '-60px 0px 0px 0px' }
+    );
+    sections.forEach((s) => obs.observe(s));
     return () => obs.disconnect();
   }, []);
 
@@ -551,9 +594,10 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
   }, []);
 
   // ── Testimonials carousel ────────────────────────────────────────────────
-  const showTestimonial = useCallback((nextIdx: number, dir: 'prev' | 'next') => {
+  const showTestimonial = useCallback((nextIdx: number, _dir: 'prev' | 'next') => {
     if (tBusy.current) return;
     tBusy.current = true;
+    tIdxForAuto.current = nextIdx;
     setTPhase('exiting');
     setTimeout(() => {
       setTIdx(nextIdx);
@@ -570,11 +614,8 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
   const startAuto = useCallback(() => {
     if (autoRef.current) clearInterval(autoRef.current);
     autoRef.current = setInterval(() => {
-      setTIdx((prev) => {
-        const next = (prev + 1) % TESTIMONIALS.length;
-        showTestimonial(next, 'next');
-        return prev;
-      });
+      const next = (tIdxForAuto.current + 1) % TESTIMONIALS.length;
+      showTestimonial(next, 'next');
     }, 4000);
   }, [showTestimonial]);
 
@@ -620,7 +661,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
           polygonSeries.mapPolygons.template.setAll({
             fill: am5.color(0xFFFFFF), fillOpacity: 0.9,
             stroke: am5.color(0x131313), strokeWidth: 0.3,
-            tooltipText: '{name}', interactive: true,
+            tooltipText: '{name}', toggleKey: 'active', interactive: true,
           });
           polygonSeries.mapPolygons.template.states.create('hover', {
             fill: am5.color(0xF05023), fillOpacity: 0.85,
@@ -771,7 +812,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
       </section>
 
       {/* ── LOGO STRIP ────────────────────────────────────────────────── */}
-      <section id="logo-strip" className={styles.logoStrip} aria-label="Our venues">
+      <section id="logo-strip" className={styles.logoStrip} aria-label="Our venues" data-nav-theme="light">
         <div className={styles.marqueeWrap} aria-label="Venue partners">
           <div className={styles.marqueeTrack} aria-hidden="true">
             {[...Array(4)].flatMap(() => [
@@ -802,6 +843,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
         className={styles.aboutNumbers}
         ref={aboutRef}
         aria-label="About FOG"
+        data-nav-theme="light"
       >
         <div className={styles.aboutNumbersInner}>
           <div className={styles.anHeader}>
@@ -868,6 +910,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
               id={`prod-${prod.id}`}
               className={`${styles.productSection} ${prod.sectionCls}`}
               aria-label={`${prod.name} product`}
+              {...(prod.navTheme ? { 'data-nav-theme': prod.navTheme } : {})}
             >
               <div
                 className={styles.prodBg}
@@ -993,6 +1036,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
         id="testimonials"
         className={styles.testimonials}
         aria-labelledby="test-heading"
+        data-nav-theme="light"
       >
         <div className={styles.testInner}>
           <button
@@ -1084,7 +1128,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
       </section>
 
       {/* ── BLOG ──────────────────────────────────────────────────────── */}
-      <section id="blog" className={styles.blog} aria-labelledby="blog-heading">
+      <section id="blog" className={styles.blog} aria-labelledby="blog-heading" data-nav-theme="surface">
         <div className={styles.blogInner}>
           <div className={styles.blogHeader}>
             <div>

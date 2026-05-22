@@ -7,6 +7,36 @@ import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import styles from './page.module.css';
 
+/* ── LENIS SMOOTH SCROLL ── */
+function loadScript(src: string): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.onload = () => resolve(); s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+function useLenis() {
+  useEffect(() => {
+    let animId: number;
+    loadScript('https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js')
+      .then(() => {
+        const LenisClass = (window as any).Lenis;
+        if (!LenisClass) return;
+        const lenis = new LenisClass({ lerp: 0.075, smoothWheel: true });
+        function raf(time: number) { lenis.raf(time); animId = requestAnimationFrame(raf); }
+        animId = requestAnimationFrame(raf);
+        (window as any).__fogLenis = lenis;
+      })
+      .catch(() => {});
+    return () => {
+      cancelAnimationFrame(animId);
+      (window as any).__fogLenis?.destroy?.();
+    };
+  }, []);
+}
+
 /* ── SCROLL REVEAL ── */
 function useScrollReveal() {
   useEffect(() => {
@@ -66,6 +96,7 @@ const TESTIMONIALS = [
 ];
 
 export default function HyperGridClient() {
+  useLenis();
   useScrollReveal();
 
   /* ── Video modal ── */
