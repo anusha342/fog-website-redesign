@@ -69,9 +69,10 @@ S3_ASSETS_PREFIX=assets
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `app/api/admin/blogs/[slug]/route.ts` (DELETE) | Auth-checks JWT, calls `s3.DeleteObject` on `blogs/{slug}.json` |
-| 2 | `components/admin/ConfirmDeleteModal.tsx` | Warning popup: Proceed / Cancel |
-| 3 | `app/admin/blogs/page.tsx` (update) | Wire delete icon → modal → API → remove from list state |
+| 1 | `app/api/admin/blogs/[slug]/route.ts` ✅ | GET (single post for edit form) + DELETE (removes `blogs/{slug}.json` from S3) |
+| 2 | `components/admin/ConfirmDeleteModal.tsx` ✅ | Animated modal: post title + slug preview, "Delete permanently" / "Cancel", Escape key closes, backdrop click closes |
+| 3 | `components/admin/confirm-delete-modal.module.css` ✅ | Modal styles — backdrop blur, slide-up card animation, red delete button |
+| 4 | `app/admin/blogs/page.tsx` ✅ | Delete icon enabled → opens modal → on confirm calls DELETE API → removes from local state (no refetch) |
 
 ---
 
@@ -133,7 +134,7 @@ S3_ASSETS_PREFIX=assets
 |-------|--------|-----------|
 | Phase 1 — Auth with OTP | ✅ Complete | 2026-05-22 |
 | Phase 2 — Admin Shell + Blog List | ✅ Complete | 2026-05-22 |
-| Phase 3 — Delete Blog | ⏳ Pending | — |
+| Phase 3 — Delete Blog | ✅ Complete | 2026-05-22 |
 | Phase 4a — Form Shell + Metadata | ⏳ Pending | — |
 | Phase 4b — Cover Image Upload | ⏳ Pending | — |
 | Phase 4c — Rich Text Editor | ⏳ Pending | — |
