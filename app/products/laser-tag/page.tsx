@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import LaserTagClient from './LaserTagClient';
+import { getAllTestimonials } from '@/lib/testimonials';
 
 export const metadata: Metadata = {
   title: 'Laser Tag - FOG Technologies',
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default function LaserTagPage() {
+  const testimonials = getAllTestimonials();
+
   const jsonLdProduct = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -63,7 +66,7 @@ export default function LaserTagPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
       />
-      <LaserTagClient />
+      <LaserTagClient testimonials={testimonials} />
     </>
   );
 }

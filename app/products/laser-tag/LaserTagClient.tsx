@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import styles from './page.module.css';
+import type { Testimonial } from '@/lib/testimonials';
 
 /* ── SCROLL REVEAL ── */
 function useScrollReveal() {
@@ -14,16 +15,10 @@ function useScrollReveal() {
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            // Check if there is a specific delay set
             const delay = (e.target as HTMLElement).dataset.revealDelay || '0';
             (e.target as HTMLElement).style.transitionDelay = `${delay}s`;
-            // Note: The CSS expects 'revealed' not 'is-revealed' for laser-tag or we might need to adjust it to match.
-            // Actually the CSS migrated uses `[data-reveal].revealed { ... }` or `[data-reveal].is-revealed { ... }`
-            // Looking at the original laser-tag.js: `entry.target.classList.add('revealed');`
-            // Looking at original laser-tag.css: Oh wait, it wasn't in laser-tag.css, it was probably in style.css or globals.css
-            // Our globals.css has `[data-reveal].is-revealed`
+            e.target.classList.add('revealed');
             e.target.classList.add('is-revealed');
-            e.target.classList.add('revealed'); // Just in case
             obs.unobserve(e.target);
           }
         });
@@ -31,6 +26,29 @@ function useScrollReveal() {
       { threshold: 0.12 }
     );
     els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+}
+
+/* ── NAV THEME OBSERVER ── */
+function useNavTheme() {
+  useEffect(() => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const theme = (entry.target as HTMLElement).dataset.navTheme || 'dark';
+            navbar.setAttribute('data-theme', theme);
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: '-60px 0px 0px 0px' }
+    );
+
+    document.querySelectorAll('[data-nav-theme]').forEach((s) => obs.observe(s));
     return () => obs.disconnect();
   }, []);
 }
@@ -57,8 +75,13 @@ const STEPS = [
   { name: 'Share & Return', desc: 'Review your score, claim your highlight clip, and challenge your squad to a rematch.', img: '/images/laser-tag/laser-tag-1.png' }
 ];
 
-export default function LaserTagClient() {
+interface Props {
+  testimonials: Testimonial[];
+}
+
+export default function LaserTagClient({ testimonials }: Props) {
   useScrollReveal();
+  useNavTheme();
 
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,20 +89,16 @@ export default function LaserTagClient() {
   const openVideo = (e?: React.MouseEvent) => {
     e?.preventDefault();
     setIsVideoOpen(true);
-    // document.body.style.overflow = 'hidden';
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(() => {});
-      videoRef.current.muted = false;
     }
   };
 
   const closeVideo = () => {
     setIsVideoOpen(false);
-    // document.body.style.overflow = '';
     if (videoRef.current) {
       videoRef.current.pause();
-      videoRef.current.muted = true;
     }
   };
 
@@ -89,10 +108,40 @@ export default function LaserTagClient() {
   // Process Steps State
   const [activeStep, setActiveStep] = useState(0);
 
+  // Testimonials Carousel State
+  const [curTestimonial, setCurTestimonial] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const nextTestimonial = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurTestimonial((prev) => (prev + 1) % testimonials.length);
+      setIsTransitioning(false);
+    }, 300);
+  }, [isTransitioning, testimonials.length]);
+
+  const prevTestimonial = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+      setIsTransitioning(false);
+    }, 300);
+  }, [isTransitioning, testimonials.length]);
+
+  useEffect(() => {
+    const timer = setInterval(nextTestimonial, 6000);
+    return () => clearInterval(timer);
+  }, [nextTestimonial]);
+
+  const currentT = testimonials[curTestimonial] || testimonials[0];
+
   return (
     <main className={styles.lasertagPage}>
       
-      <header className={styles.hero}>
+      {/* 1. HERO SECTION */}
+      <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
           <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
         </video>
@@ -112,10 +161,9 @@ export default function LaserTagClient() {
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">Laser Tag</h1>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
-            <Link href="#what-is-lasertag" className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={(e) => {
-              e.preventDefault();
+            <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
               document.getElementById('what-is-lasertag')?.scrollIntoView({ behavior: 'smooth' });
-            }}>Explore &#x2192;</Link>
+            }}>Explore &#x2192;</button>
             <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
           </div>
         </div>
@@ -140,6 +188,7 @@ export default function LaserTagClient() {
         </div>
       </header>
 
+      {/* VIDEO MODAL */}
       <div className={`${styles.videoModal} ${isVideoOpen ? styles.open : ''}`} onClick={(e) => {
         if (e.target === e.currentTarget) closeVideo();
       }}>
@@ -151,7 +200,8 @@ export default function LaserTagClient() {
         </div>
       </div>
 
-      <section id="what-is-lasertag" className={styles.whatSection}>
+      {/* 2. WHAT IS LASER TAG */}
+      <section id="what-is-lasertag" className={styles.whatSection} data-nav-theme="light">
         <div className={styles.whatInner}>
           <div className={styles.whatEquipment} data-reveal>
             <div className={styles.whatEquipItem}>
@@ -189,7 +239,8 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section id="game-modes" className={styles.modesSection}>
+      {/* 3. GAME MODES */}
+      <section id="game-modes" className={styles.modesSection} data-nav-theme="dark">
         <div className={styles.modesWrap}>
           <h2 className={styles.modesTitle} data-reveal>Game Modes</h2>
           
@@ -230,7 +281,8 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section id="lt-moments" className={styles.momentsSection}>
+      {/* 4. MOMENTS */}
+      <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
@@ -307,7 +359,8 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section id="how-it-works" className={styles.processSection}>
+      {/* 5. HOW IT WORKS */}
+      <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
         <div className={styles.processInner}>
           <div className={styles.processHeader} data-reveal>
             <h2 className={styles.processTitle}>Fast Setup, Full Immersion</h2>
@@ -343,7 +396,8 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section id="arena-design" className={styles.speModelSection}>
+      {/* 6. ARENA DESIGN */}
+      <section id="arena-design" className={styles.speModelSection} data-nav-theme="dark">
         <div className={styles.speModelInner}>
           <h2 className={styles.speModelTitle} data-reveal>Immersive Arena Design</h2>
           <p className={styles.speModelBody} data-reveal data-reveal-delay="0.1">
@@ -363,7 +417,8 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section className={styles.speDataSection}>
+      {/* 7. ARENA SPECS */}
+      <section className={styles.speDataSection} data-nav-theme="dark">
         <div className={styles.speDataInner}>
           
           <div className={styles.speDimsCard} data-reveal>
@@ -399,7 +454,56 @@ export default function LaserTagClient() {
         </div>
       </section>
 
-      <section id="get-in-touch" className={styles.getInTouchSection}>
+      {/* 8. TESTIMONIALS */}
+      {testimonials.length > 0 && (
+        <section id="testimonials" className={styles.testSection} data-nav-theme="light">
+          <div className={styles.testInner}>
+            <button className={`${styles.testArrowAbs} ${styles.testArrowPrev}`} onClick={prevTestimonial} aria-label="Previous testimonial">
+              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
+            </button>
+            <button className={`${styles.testArrowAbs} ${styles.testArrowNext}`} onClick={nextTestimonial} aria-label="Next testimonial">
+              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
+            </button>
+            
+            <div className={`${styles.testGrid} ${isTransitioning ? styles.testFade : ''}`}>
+              <div className={styles.testImage}>
+                <Image
+                  src={currentT.avatar || '/images/operators/person-1.jpg'}
+                  alt={currentT.name}
+                  className={styles.testPersonImg}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className={styles.testRight}>
+                <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>"</div>
+                <div className={styles.testimonialContent}>
+                  <blockquote className={styles.testQuote}>{currentT.body}</blockquote>
+                  <p className={styles.testSub}>{currentT.location}</p>
+                  <div className={styles.testDivider} aria-hidden="true"></div>
+                  <p className={styles.testName}>{currentT.name}</p>
+                  <div className={styles.testMetaWrap}>
+                    {currentT.logo && (
+                      <Image 
+                        src={currentT.logo} 
+                        alt={currentT.company} 
+                        className={styles.testZoneLogo}
+                        width={100}
+                        height={100}
+                        style={{ objectFit: 'contain' }}
+                      />
+                    )}
+                  </div>
+                  <span className={styles.testRole}>{currentT.designation}, {currentT.company}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 9. CONTACT FORM */}
+      <section id="get-in-touch" className={styles.getInTouchSection} data-nav-theme="surface">
         <ContactForm />
       </section>
 

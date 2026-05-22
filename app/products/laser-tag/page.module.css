@@ -10,7 +10,7 @@
   --lt-cyan-glow: rgba(0, 200, 255, 0.3);
 }
 
-body.lasertagPage {
+.lasertagPage {
   background: var(--lt-dark-bg);
   color: var(--white);
   font-family: 'GoogleSans', sans-serif;
@@ -32,22 +32,6 @@ body.lasertagPage {
   overflow: hidden;
 }
 
-.heroBg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  z-index: 1;
-  transform: scale(1.05);
-  filter: brightness(0.45) contrast(1.1) saturate(1.2);
-  transition: transform 8s ease;
-}
-
-.hero:hover .heroBg {
-  transform: scale(1.08);
-}
-
 .heroOverlay {
   position: absolute;
   inset: 0;
@@ -65,10 +49,10 @@ body.lasertagPage {
   z-index: 4;
   opacity: 0.55;
 }
-.hudCorner-Tl { top: 32px; left: 32px; border-top: 2px solid var(--lt-cyan); border-left: 2px solid var(--lt-cyan); }
-.hudCorner-Tr { top: 32px; right: 32px; border-top: 2px solid var(--lt-cyan); border-right: 2px solid var(--lt-cyan); }
-.hudCorner-Bl { bottom: 32px; left: 32px; border-bottom: 2px solid var(--lt-cyan); border-left: 2px solid var(--lt-cyan); }
-.hudCorner-Br { bottom: 32px; right: 32px; border-bottom: 2px solid var(--lt-cyan); border-right: 2px solid var(--lt-cyan); }
+.hudCornerTl { top: 32px; left: 32px; border-top: 2px solid var(--lt-cyan); border-left: 2px solid var(--lt-cyan); }
+.hudCornerTr { top: 32px; right: 32px; border-top: 2px solid var(--lt-cyan); border-right: 2px solid var(--lt-cyan); }
+.hudCornerBl { bottom: 32px; left: 32px; border-bottom: 2px solid var(--lt-cyan); border-left: 2px solid var(--lt-cyan); }
+.hudCornerBr { bottom: 32px; right: 32px; border-bottom: 2px solid var(--lt-cyan); border-right: 2px solid var(--lt-cyan); }
 
 /* Targeting reticle */
 .reticle {
@@ -97,8 +81,8 @@ body.lasertagPage {
 }
 
 .reticleCross { position: absolute; background: var(--lt-cyan); }
-.reticleCross-H { top: 50%; left: 0; right: 0; height: 1px; margin-top: -0.5px; }
-.reticleCross-V { left: 50%; top: 0; bottom: 0; width: 1px; margin-left: -0.5px; }
+.reticleCrossH { top: 50%; left: 0; right: 0; height: 1px; margin-top: -0.5px; }
+.reticleCrossV { left: 50%; top: 0; bottom: 0; width: 1px; margin-left: -0.5px; }
 
 .heroVideo {
   position: absolute;
@@ -121,16 +105,6 @@ body.lasertagPage {
   gap: 28px;
 }
 
-.heroEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  color: var(--lt-cyan);
-  text-shadow: 0 0 20px var(--lt-cyan-glow);
-}
-
 .heroTitle {
   font-family: 'Expansiva', sans-serif;
   font-weight: 700;
@@ -141,15 +115,6 @@ body.lasertagPage {
   letter-spacing: -2px;
   margin: 0;
   text-shadow: 0 0 60px rgba(0, 200, 255, 0.15), 0 0 120px rgba(0, 200, 255, 0.08);
-}
-
-.heroDesc {
-  font-size: clamp(16px, 2vw, 21px);
-  font-weight: 300;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.7);
-  max-width: 580px;
-  margin: 0 auto;
 }
 
 .heroBtns {
@@ -246,7 +211,7 @@ body.lasertagPage {
 .videoClose:hover { color: var(--white); }
 
 /* ═══════════════════════════════════════
-   2. WHAT IS LASER TAG (mirror hg-what-section)
+   2. WHAT IS LASER TAG
 ═══════════════════════════════════════ */
 .whatSection {
   background: var(--white);
@@ -343,7 +308,7 @@ body.lasertagPage {
 }
 
 /* ═══════════════════════════════════════
-   3. GAME MODES (mirror hg-modes-v2-section)
+   3. GAME MODES
 ═══════════════════════════════════════ */
 .modesSection {
   background: var(--white);
@@ -383,6 +348,7 @@ body.lasertagPage {
   overflow: hidden;
   background: rgba(0, 0, 0, 0.04);
   margin-bottom: 20px;
+  position: relative;
 }
 
 .modesImg {
@@ -393,7 +359,6 @@ body.lasertagPage {
   transition: opacity 300ms ease;
 }
 
-/* Video button */
 .modesVideoBtn {
   display: inline-flex;
   align-items: center;
@@ -416,7 +381,6 @@ body.lasertagPage {
   color: var(--dark);
 }
 
-/* Right list */
 .modesRight { flex: 1; min-width: 0; }
 
 .modesLine {
@@ -436,7 +400,7 @@ body.lasertagPage {
   user-select: none;
 }
 
-.modeItem-Active,
+.modeItemActive,
 .modeItem:hover { opacity: 1; }
 
 .modeItemName {
@@ -445,7 +409,6 @@ body.lasertagPage {
   font-size: clamp(32px, 9vw, 16px);
   line-height: 0.88;
   color: var(--dark);
-  /* text-transform: uppercase; */
   letter-spacing: -0.5px;
   word-spacing: 2px;
   margin: 0;
@@ -502,7 +465,7 @@ body.lasertagPage {
 }
 
 /* ═══════════════════════════════════════
-   4. LASER TAG WITH MOMENTS (mirror hg-moments bento)
+   4. MOMENTS
 ═══════════════════════════════════════ */
 .momentsSection {
   background: var(--white);
@@ -532,15 +495,6 @@ body.lasertagPage {
   letter-spacing: -2px;
 }
 
-.momentsSubtitle {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--gray);
-  margin: 0;
-}
-
-/* Bento grid */
 .momentsBento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -554,14 +508,14 @@ body.lasertagPage {
   flex-direction: column;
 }
 
-.momentsCard-Light {
+.momentsCardLight {
   background: var(--surface);
   border: 1px solid rgba(19, 19, 19, 0.07);
 }
 
-.momentsCard-Dark { background: var(--dark); }
+.momentsCardDark { background: var(--dark); }
 
-.momentsCard-Accent {
+.momentsCardAccent {
   background: linear-gradient(160deg, #001a24 0%, #004d6b 50%, var(--lt-cyan) 100%);
   position: relative;
 }
@@ -572,23 +526,16 @@ body.lasertagPage {
   overflow: hidden;
 }
 
-.momentsCardVisual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .momentsCardBody { padding: 24px 28px 28px; }
 
-.momentsCardBody-Full {
+.momentsCardBodyFull {
   padding: 28px;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.momentsCardBody-Center {
+.momentsCardBodyCenter {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -609,19 +556,8 @@ body.lasertagPage {
   line-height: 1.2;
 }
 
-.momentsCard-Dark .momentsCardH,
-.momentsCard-Accent .momentsCardH { color: var(--white); }
-
-.momentsCardP {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
-  line-height: 1.65;
-  color: var(--gray);
-  margin: 0;
-}
-
-.momentsCard-Dark .momentsCardP { color: rgba(255, 255, 255, 0.45); }
-.momentsCard-Accent .momentsCardP { color: rgba(255, 255, 255, 0.55); }
+.momentsCardDark .momentsCardH,
+.momentsCardAccent .momentsCardH { color: var(--white); }
 
 .momentsCardEyebrow {
   font-family: 'GoogleSans', sans-serif;
@@ -634,7 +570,6 @@ body.lasertagPage {
   display: block;
 }
 
-/* Avatars */
 .momentsAvatars { display: flex; margin: 20px 0 0; }
 
 .momentsAvatar {
@@ -657,7 +592,6 @@ body.lasertagPage {
 .momentsAvatar:nth-child(2) { background: #004d6b; color: var(--white); }
 .momentsAvatar:nth-child(3) { background: #333; color: var(--white); }
 
-/* Checklist */
 .momentsChecklist {
   background: var(--white);
   border: 1px solid rgba(19, 19, 19, 0.08);
@@ -688,7 +622,7 @@ body.lasertagPage {
 
 .momentsCheck:last-child { border-bottom: none; padding-bottom: 0; }
 
-.momentsCheck-Done {
+.momentsCheckDone {
   color: rgba(19, 19, 19, 0.38);
   text-decoration: line-through;
 }
@@ -704,12 +638,11 @@ body.lasertagPage {
   flex-shrink: 0;
 }
 
-.momentsCheckIcon-Empty {
+.momentsCheckIconEmpty {
   background: transparent;
   border: 1.5px solid rgba(19, 19, 19, 0.18);
 }
 
-/* Icon circle */
 .momentsIconCircle {
   width: 76px;
   height: 76px;
@@ -722,20 +655,10 @@ body.lasertagPage {
   flex-shrink: 0;
 }
 
-/* Card 4 */
 .momentsCardMedia {
   flex: 1;
   overflow: hidden;
   min-height: 200px;
-}
-
-.momentsCardMedia img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  opacity: 0.35;
-  mix-blend-mode: luminosity;
 }
 
 .momentsBadge {
@@ -772,11 +695,11 @@ body.lasertagPage {
   .momentsInner { padding: 64px var(--sp-24); }
   .momentsTop { margin-bottom: 40px; }
   .momentsBento { grid-template-columns: 1fr; gap: 8px; }
-  .momentsCardBody-Center { padding: 40px 24px; }
+  .momentsCardBodyCenter { padding: 40px 24px; }
 }
 
 /* ═══════════════════════════════════════
-   5. HOW IT WORKS (mirror hg-process-section)
+   5. HOW IT WORKS
 ═══════════════════════════════════════ */
 .processSection {
   background: var(--surface);
@@ -792,16 +715,6 @@ body.lasertagPage {
 .processHeader {
   text-align: center;
   padding: 0 var(--sp-80) 56px;
-}
-
-.processEyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--accent);
-  margin-bottom: 16px;
-  display: block;
 }
 
 .processTitle {
@@ -832,7 +745,7 @@ body.lasertagPage {
   transition: opacity 600ms ease;
 }
 
-.processSlide-Active { opacity: 1; }
+.processSlideActive { opacity: 1; }
 
 .processOverlay {
   position: absolute;
@@ -863,7 +776,6 @@ body.lasertagPage {
   margin: 0;
 }
 
-/* Step nav */
 .processNav {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -885,7 +797,7 @@ body.lasertagPage {
 .processBtn:last-child { border-right: none; }
 .processBtn:hover { background: #ebebeb; }
 
-.processBtn-Active {
+.processBtnActive {
   background: var(--white);
   border-top-color: var(--lt-cyan);
 }
@@ -930,9 +842,9 @@ body.lasertagPage {
   transition: max-height 350ms ease, opacity 300ms ease;
 }
 
-.processBtn-Active .processBtnNum { color: var(--lt-cyan); }
-.processBtn-Active .processBtnName { color: var(--dark); }
-.processBtn-Active .processBtnDesc { max-height: 80px; opacity: 1; }
+.processBtnActive .processBtnNum { color: var(--lt-cyan); }
+.processBtnActive .processBtnName { color: var(--dark); }
+.processBtnActive .processBtnDesc { max-height: 80px; opacity: 1; }
 .processBtn:hover .processBtnName { color: rgba(19, 19, 19, 0.7); }
 
 @media (max-width: 1023px) {
@@ -945,7 +857,7 @@ body.lasertagPage {
   .processStage { aspect-ratio: 4/3; }
   .processOverlay { padding: 40px 24px 28px; }
   .processHeader { padding: 0 var(--sp-24) 40px; }
-  .processBtn-Active .processBtnDesc { max-height: 120px; }
+  .processBtnActive .processBtnDesc { max-height: 120px; }
 }
 
 @media (max-width: 640px) {
@@ -954,7 +866,7 @@ body.lasertagPage {
 }
 
 /* ═══════════════════════════════════════
-   6. ARENA DESIGN — MODEL (mirror hg-spe-model-section)
+   6. ARENA DESIGN
 ═══════════════════════════════════════ */
 .speModelSection {
   background: radial-gradient(ellipse 120% 80% at 50% 0%, #c73d12 0%, #7a2308 30%, #090909 70%);
@@ -999,7 +911,7 @@ body.lasertagPage {
 }
 
 /* ═══════════════════════════════════════
-   7. ARENA SPECS — DATA (mirror hg-spe-data-section)
+   7. ARENA SPECS
 ═══════════════════════════════════════ */
 .speDataSection {
   background: #0d0d0d;
@@ -1021,7 +933,6 @@ body.lasertagPage {
   align-items: start;
 }
 
-/* Dimensions card */
 .speDimsCard {
   background: rgba(30, 30, 30, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1059,7 +970,6 @@ body.lasertagPage {
   font-weight: 500;
 }
 
-/* Info cards */
 .speInfoCards {
   display: flex;
   flex-direction: column;
@@ -1107,9 +1017,176 @@ body.lasertagPage {
   .speDataInner { padding: 48px var(--sp-24); }
   .speDimsCard { padding: 28px 24px; }
   .speInfoCard { padding: 24px 20px; }
-  .hudCorner { display: none; }
 }
 
+/* ═══════════════════════════════════════
+   8. TESTIMONIALS
+═══════════════════════════════════════ */
+.testSection {
+  background: var(--white);
+  padding: var(--sp-96) var(--sp-80);
+  width: 100%;
+  position: relative;
+}
+
+.testInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.testGrid {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: var(--sp-80);
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 300ms ease;
+}
+
+.testFade {
+  opacity: 0.3;
+}
+
+.testImage {
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+}
+
+.testPersonImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.testRight {
+  position: relative;
+  overflow: hidden;
+}
+
+.testQuoteMark {
+  font-size: 80px;
+  line-height: 1;
+  color: var(--accent);
+  font-family: 'ClashDisplay', serif;
+  margin-bottom: var(--sp-16);
+}
+
+.testimonialContent {
+  position: relative;
+}
+
+.testQuote {
+  font-family: 'ClashDisplay', serif;
+  font-weight: 700;
+  font-size: clamp(24px, 2.8vw, 36px);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.testSub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gray);
+  max-width: 440px;
+  margin-top: var(--sp-16);
+  line-height: 1.6;
+}
+
+.testDivider {
+  width: 48px;
+  height: 2px;
+  background: var(--accent);
+  margin: var(--sp-32) 0;
+}
+
+.testName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.testMetaWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.testZoneLogo {
+  height: 100px;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  margin-top: -20px;
+  display: block;
+  filter: grayscale(1) brightness(0.55);
+  transition: filter 250ms, brightness 250ms;
+}
+
+.testMetaWrap:hover .testZoneLogo {
+  filter: grayscale(1) brightness(0.7);
+}
+
+.testRole {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray);
+  margin-top: 0;
+}
+
+.testArrowAbs {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 64px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 180ms cubic-bezier(.4, 0, .2, 1), border-color 180ms;
+}
+
+.testArrowAbs:hover {
+  background: rgba(240, 80, 35, 0.1);
+  border-color: rgba(240, 80, 35, 0.35);
+}
+
+.testArrowAbs:hover svg { stroke: var(--accent); }
+.testArrowAbs svg {
+  stroke: var(--text-primary);
+  stroke-width: 1.8;
+  fill: none;
+  width: 20px;
+  height: 20px;
+  transition: stroke 180ms;
+}
+
+.testArrowPrev { left: 0; }
+.testArrowNext { right: 0; }
+
+@media (max-width: 1023px) {
+  .testSection { padding: 80px var(--sp-48); }
+  .testGrid { grid-template-columns: 1fr; gap: 40px; }
+  .testImage { aspect-ratio: 16/9; }
+}
+
+@media (max-width: 767px) {
+  .testSection { padding: 64px var(--sp-24); }
+  .testArrowAbs { display: none; }
+}
+
+/* ── BUTTONS ── */
 .hbtn {
   display: inline-flex;
   align-items: center;
@@ -1148,4 +1225,9 @@ body.lasertagPage {
 .hbtnGhost:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: var(--white);
+}
+
+.getInTouchSection {
+  background: var(--surface);
+  width: 100%;
 }
