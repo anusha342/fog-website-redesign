@@ -1,0 +1,215 @@
+/* ══════════════════════════════════════════
+   CONTACT PAGE STYLING
+   ══════════════════════════════════════════ */
+
+body.contact-page {
+  background: #0a0a0a;
+  color: var(--white);
+  font-family: 'GoogleSans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.ct-hero {
+  position: relative;
+  width: 100vw;
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  padding: 0 clamp(24px, 6vw, 96px);
+}
+
+.ct-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 1;
+}
+
+.ct-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(240, 80, 35, 0.07) 0%, transparent 60%);
+  z-index: 2;
+}
+
+/* Dot grid */
+.ct-hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.ct-hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 800px;
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+.ct-hero-eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.ct-hero-title {
+  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
+  font-size: clamp(44px, 6.5vw, 88px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -1.5px;
+  color: var(--white);
+  margin: 0 0 24px;
+}
+
+.ct-hero-desc {
+  font-size: clamp(15px, 1.6vw, 19px);
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.58);
+  max-width: 520px;
+  margin: 0 0 40px;
+}
+
+/* Stats row */
+.ct-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.ct-hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ct-hero-stat-num {
+  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+.ct-hero-stat-lbl {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+}
+
+.ct-hero-stat-sep {
+  width: 1px;
+  height: 36px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* ═══════════════════════════════════════
+   INFO STRIP
+═══════════════════════════════════════ */
+.ct-info-strip {
+  background: #111;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 clamp(24px, 6vw, 96px);
+}
+
+.ct-info-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+.ct-info-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 0;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.ct-info-card:hover { opacity: 0.75; }
+.ct-info-card--plain { cursor: default; }
+.ct-info-card--plain:hover { opacity: 1; }
+
+.ct-info-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 20px 40px;
+  flex-shrink: 0;
+}
+
+.ct-info-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(240, 80, 35, 0.1);
+  border: 1px solid rgba(240, 80, 35, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.ct-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ct-info-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.38);
+}
+
+.ct-info-val {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .ct-info-inner {
+    flex-direction: column;
+  }
+  .ct-info-divider {
+    width: 100%;
+    height: 1px;
+    margin: 0;
+  }
+  .ct-info-card {
+    padding: 20px 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .ct-hero-title { font-size: clamp(36px, 10vw, 60px); }
+  .ct-hero-meta { gap: 16px; }
+  .ct-hero-stat-num { font-size: 22px; }
+}

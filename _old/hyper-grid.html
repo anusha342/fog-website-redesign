@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HyperGrid — FOG Technologies</title>
+<link rel="stylesheet" href="css/style.css?v=1.3">
+<link rel="stylesheet" href="css/hyper-grid.css?v=1.7">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8C8LG3W0TN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-8C8LG3W0TN');
+</script>
+<!-- LogRocket -->
+<script src="https://cdn.lr-ingest.com/LogRocket.min.js" crossorigin="anonymous"></script>
+<script>window.LogRocket && window.LogRocket.init('ghppzy/future-of-gaming');</script>
+</head>
+<body class="hypergrid-page">
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mobile-close" id="mobile-close-btn" aria-label="Close menu">&#x2715;</button>
+  <a href="about.html">About</a>
+  <a href="index.html#products-wrapper">Products</a>
+  <a href="blog.html">Blog</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="FOG Technologies home">
+      <img src="images/company_logo.png" alt="FOG Technologies" class="nav-logo-img">
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#products-wrapper" class="nav-active">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-cta" id="nav-cta-btn">Get In Touch</button>
+    <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- 1. HERO SECTION -->
+<header class="hg-hero">
+  <!-- Looping Background Video -->
+  <video class="hg-hero-video" autoplay muted loop playsinline>
+    <source src="videos/hypergrid-bg/idle.mp4" type="video/mp4">
+  </video>
+  <div class="hg-hero-overlay"></div>
+
+  <!-- HUD corner brackets -->
+  <div class="hud-corner hud-corner--tl" aria-hidden="true"></div>
+  <div class="hud-corner hud-corner--tr" aria-hidden="true"></div>
+  <div class="hud-corner hud-corner--bl" aria-hidden="true"></div>
+  <div class="hud-corner hud-corner--br" aria-hidden="true"></div>
+
+  <div class="hg-hero-content">
+    <!-- <span class="hg-hero-eyebrow" data-reveal>Active Gaming Grid</span> -->
+    <h1 class="hg-hero-title" data-reveal data-reveal-delay="0.1">HyperGrid</h1>
+    <!-- <p class="hg-hero-desc" data-reveal data-reveal-delay="0.15">
+      The modular, sensor-activated LED gaming floor designed to transform any space into a high-intensity multiplayer arena.
+    </p> -->
+    <div class="hg-hero-btns" data-reveal data-reveal-delay="0.2">
+      <a href="#what-is-hypergrid" class="hbtn hbtn-solid" id="hero-btn-dive">Dive &#x2192;</a>
+      <a href="#" class="hbtn hbtn-ghost hg-hero-btn-watch" id="hero-btn-video">&#x25B6;&nbsp; Video</a>
+    </div>
+  </div>
+
+  <!-- <div class="hg-scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"><div class="scroll-dot"></div></div>
+  </div> -->
+</header>
+
+<!-- VIDEO MODAL LIGHTBOX -->
+<div class="hg-video-modal" id="video-modal" role="dialog" aria-modal="true" aria-label="HyperGrid video player">
+  <div class="hg-video-container">
+    <button class="hg-video-close" id="btn-close-video" aria-label="Close video player">&#x2715; Close</button>
+    <video id="modal-video" controls>
+      <source src="videos/hypergrid-bg/idle.mp4" type="video/mp4">
+    </video>
+  </div>
+</div>
+
+<!-- 2. WHAT IS HYPERGRID SECTION -->
+<section id="what-is-hypergrid" class="hg-what-section" data-nav-theme="light">
+  <div class="hg-what-inner">
+    <!-- <h2 class="hg-what-title" data-reveal>What is Hyper Grid?</h2> -->
+    <div class="hg-what-img-wrap" data-reveal>
+      <img
+        src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render.webp"
+        srcset="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render-p-800.webp 800w, https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render-p-1080.webp 1080w, https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render-p-1600.webp 1600w, https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render.webp 10101w"
+        sizes="100vw"
+        alt="HyperGrid by FOG - 3D Render"
+        class="hg-what-img"
+        loading="lazy"
+      >
+    </div>
+    <div class="hg-what-cards" data-reveal>
+      <div class="hg-what-card">
+        <!-- <span class="hg-what-card-num">01</span> -->
+        <p class="hg-what-card-text">Unmanned Multiplayer Turnkey Attraction</p>
+      </div>
+      <div class="hg-what-card">
+        <!-- <span class="hg-what-card-num">02</span> -->
+        <p class="hg-what-card-text">Where Glowing Color Tiles Connect</p>
+      </div>
+      <div class="hg-what-card">
+        <!-- <span class="hg-what-card-num">03</span> -->
+        <p class="hg-what-card-text">To Create a World of Super Fun Games</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. GAME MODES SECTION -->
+<section id="game-modes" class="hg-modes-v2-section" data-nav-theme="dark">
+  <div class="hg-modes-v2-wrap">
+    <h2 class="hg-modes-v2-title" data-reveal>Game Modes</h2>
+
+    <!-- LEFT: sticky preview panel -->
+    <div class="hg-modes-v2-left">
+      <div class="hg-modes-v2-img-wrap">
+        <img
+          id="hg-mode-img"
+          src="images/hyper-grid/modes"
+          alt="Escape the Lava"
+          class="hg-modes-v2-img"
+        >
+      </div>
+      <!-- <p class="hg-modes-v2-meta-name" id="hg-mode-name">Escape the Lava</p> -->
+      <!-- <p class="hg-modes-v2-meta-desc" id="hg-mode-desc">Tiles are turning lava-red. Step on them and you're out. Race across the surviving tiles until only one player remains standing.</p> -->
+      <button class="hg-modes-video-btn" id="modes-btn-video" aria-label="Watch HyperGrid gameplay video">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
+        Watch Gameplay
+      </button>
+    </div>
+
+    <!-- RIGHT: large-type mode list -->
+    <div class="hg-modes-v2-right">
+
+      <div class="hg-modes-v2-line"></div>
+
+      <div class="hg-mode-item hg-mode-item--active" data-mode-idx="0">
+        <h2 class="hg-mode-item-name">Escape the Lava</h2>
+        <span class="hg-mode-item-num">{ 01 }</span>
+      </div>
+
+      <div class="hg-modes-v2-line"></div>
+
+      <div class="hg-mode-item" data-mode-idx="1">
+        <h2 class="hg-mode-item-name">Find that Color</h2>
+        <span class="hg-mode-item-num">{ 02 }</span>
+      </div>
+
+      <div class="hg-modes-v2-line"></div>
+
+      <div class="hg-mode-item" data-mode-idx="2">
+        <h2 class="hg-mode-item-name">Sharp Shooter</h2>
+        <span class="hg-mode-item-num">{ 03 }</span>
+      </div>
+
+      <div class="hg-modes-v2-line"></div>
+
+      <div class="hg-mode-item" data-mode-idx="3">
+        <h2 class="hg-mode-item-name">Red Light Green Light</h2>
+        <span class="hg-mode-item-num">{ 04 }</span>
+      </div>
+
+      <div class="hg-modes-v2-line"></div>
+
+      <div class="hg-mode-item" data-mode-idx="4">
+        <h2 class="hg-mode-item-name">Football</h2>
+        <span class="hg-mode-item-num">{ 05 }</span>
+      </div>
+
+      <div class="hg-modes-v2-line"></div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- 3b. HYPERGRID WITH MOMENTS SECTION -->
+<section id="hg-moments" class="hg-moments-section" data-nav-theme="light">
+  <div class="hg-moments-inner">
+
+    <!-- Centered heading -->
+    <div class="hg-moments-top" data-reveal>
+      <h2 class="hg-moments-title">Moments in hypergrid</h2>
+      <!-- <p class="hg-moments-subtitle">From first tap to AI-generated highlight — every moment of play is captured, scored, and delivered to the player's phone in real time.</p> -->
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="hg-moments-bento" data-reveal data-reveal-delay="0.1">
+
+      <!-- Card 1: image + copy (like the 24/7 card) -->
+      <div class="hg-moments-card hg-moments-card--light">
+        <div class="hg-moments-card-visual">
+          <img src="images/hyper-grid/hyper-grid-1.png" alt="HyperGrid floor in action">
+        </div>
+        <div class="hg-moments-card-body">
+          <h3 class="hg-moments-card-h">Camera positions on hypergrid</h3>
+          <!-- <p class="hg-moments-card-p">HyperGrid runs autonomously day and night. Players tap, select, and play — with zero staff involvement at any step of the journey.</p> -->
+        </div>
+      </div>
+
+      <!-- Card 2: checklist card (like the "Tailored tweaks" card) -->
+      <div class="hg-moments-card hg-moments-card--light">
+        <div class="hg-moments-card-body hg-moments-card-body--full">
+          <h3 class="hg-moments-card-h">After play scan QR code</h3>
+          <!-- <p class="hg-moments-card-p">Customise game modes, ticket pricing, and branding at any time. We provide full support post-launch to keep things running perfectly.</p> -->
+          <div class="hg-moments-avatars">
+            <span class="hg-moments-avatar">EL</span>
+            <span class="hg-moments-avatar">FC</span>
+            <span class="hg-moments-avatar">SS</span>
+            <span class="hg-moments-avatar">RL</span>
+          </div>
+          <div class="hg-moments-checklist">
+            <p class="hg-moments-checklist-title">Player Journey</p>
+            <div class="hg-moments-check hg-moments-check--done">
+              <span class="hg-moments-check-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>Tap to pay &amp; start game</span>
+            </div>
+            <div class="hg-moments-check hg-moments-check--done">
+              <span class="hg-moments-check-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>Select game mode on screen</span>
+            </div>
+            <div class="hg-moments-check hg-moments-check--done">
+              <span class="hg-moments-check-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 5l2.5 2.5L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span>Auto-capture begins on grid entry</span>
+            </div>
+            <div class="hg-moments-check">
+              <span class="hg-moments-check-icon hg-moments-check-icon--empty"></span>
+              <span>AI highlight clip ready to share</span>
+            </div>
+            <div class="hg-moments-check">
+              <span class="hg-moments-check-icon hg-moments-check-icon--empty"></span>
+              <span>Score synced to leaderboard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: dark centered icon card (like "Brand kit at your fingertips") -->
+      <div class="hg-moments-card hg-moments-card--dark">
+        <div class="hg-moments-card-body hg-moments-card-body--center">
+          <div class="hg-moments-icon-circle" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="14" cy="14" r="11" stroke="white" stroke-width="1.5"/></svg>
+          </div>
+          <p class="hg-moments-card-eyebrow">Shareable instantly</p>
+          <h3 class="hg-moments-card-h">Moments gets downloaded locally</h3>
+          <!-- <p class="hg-moments-card-p">AI-curated vertical videos with music and effects, ready to post on Instagram or TikTok. No editing, no effort — just share.</p> -->
+        </div>
+      </div>
+
+      <!-- Card 4: accent gradient card (like the "LYNIQ" card) -->
+      <div class="hg-moments-card hg-moments-card--accent">
+        <div class="hg-moments-card-media">
+          <img src="images/hyper-grid/hyper-grid-2.png" alt="HyperGrid gameplay">
+        </div>
+        <div class="hg-moments-card-body">
+          <h3 class="hg-moments-card-h">Sharable game highlights</h3>
+          <span class="hg-moments-badge">Real-Time Highlights</span>
+        </div>
+        <div class="hg-moments-made-in">
+          <span>By FOG Technologies</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4. HOW IT WORKS SECTION -->
+<section id="how-it-works" class="hg-process-section" data-nav-theme="dark">
+  <div class="hg-process-inner">
+
+    <div class="hg-process-header" data-reveal>
+      <!-- <span class="hg-section-eyebrow">How It Works</span> -->
+      <h2 class="hg-process-title">Easy, Automated &amp; Unmanned</h2>
+    </div>
+
+    <div class="hg-process-stage">
+      <!-- Step background slides — replace src with actual step renders -->
+      <div class="hg-process-slide hg-process-slide--active" data-step-slide="0"
+           style="background-image: url('images/hyper-grid/hyper-grid-1.png')"></div>
+      <div class="hg-process-slide" data-step-slide="1"
+           style="background-image: url('images/hyper-grid/hyper-grid-2.png')"></div>
+      <div class="hg-process-slide" data-step-slide="2"
+           style="background-image: url('images/hyper-grid/hyper-grid-3.png')"></div>
+      <div class="hg-process-slide" data-step-slide="3"
+           style="background-image: url('images/hyper-grid/hyper-grid-4.png')"></div>
+
+      <div class="hg-process-overlay">
+        <h3 class="hg-process-step-name" id="hg-process-name">Tap the Card</h3>
+        <p class="hg-process-step-desc" id="hg-process-desc">Comes integrated with your card reader / coin slot machine.</p>
+      </div>
+    </div>
+
+    <div class="hg-process-nav">
+      <button class="hg-process-btn hg-process-btn--active" data-step-btn="0">
+        <div class="hg-process-btn-body">
+          <span class="hg-process-btn-num">01</span>
+          <span class="hg-process-btn-name">Tap the Card</span>
+          <span class="hg-process-btn-desc">Comes integrated with your card reader / coin slot machine.</span>
+        </div>
+      </button>
+      <button class="hg-process-btn" data-step-btn="1">
+        <div class="hg-process-btn-body">
+          <span class="hg-process-btn-num">02</span>
+          <span class="hg-process-btn-name">Select the Game</span>
+          <span class="hg-process-btn-desc">Use our touch-operated software to select your game.</span>
+        </div>
+      </button>
+      <button class="hg-process-btn" data-step-btn="2">
+        <div class="hg-process-btn-body">
+          <span class="hg-process-btn-num">03</span>
+          <span class="hg-process-btn-name">Enter Grid &amp; Tutorial</span>
+          <span class="hg-process-btn-desc">Players enter the grid and start the tutorial video.</span>
+        </div>
+      </button>
+      <button class="hg-process-btn" data-step-btn="3">
+        <div class="hg-process-btn-body">
+          <span class="hg-process-btn-num">04</span>
+          <span class="hg-process-btn-name">Play, Enjoy &amp; Repeat</span>
+          <span class="hg-process-btn-desc">Can you beat the grid? Come back and try again.</span>
+        </div>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. ROI CALCULATOR SECTION -->
+<section id="roi-calculator" class="hg-calc-section" data-nav-theme="dark">
+  <div class="hg-calc-inner">
+
+    <div class="hg-calc-header">
+      <!-- <span class="hg-section-eyebrow" data-reveal>Investment Analysis</span> -->
+      <h2 class="hg-section-title" data-reveal data-reveal-delay="0.1">ROI Calculator</h2>
+      <!-- <p class="hg-calc-desc" data-reveal data-reveal-delay="0.15">Model your investment returns with our interactive calculator. Adjust the parameters to see how HyperGrid can transform your venue's revenue.</p> -->
+    </div>
+
+    <div class="hg-calc-grid">
+
+      <!-- LEFT: Input Panel -->
+      <div class="hg-calc-inputs">
+        <h3 class="hg-calc-panel-title">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Input Parameters
+        </h3>
+
+        <div class="hg-calc-field">
+          <div class="hg-calc-field-row">
+            <label for="calc-floor">Floor Area (sq ft)</label>
+            <span class="hg-calc-val" id="val-floor">50</span>
+          </div>
+          <input type="range" id="calc-floor" class="hg-calc-range" min="25" max="200" value="50" step="5">
+          <div class="hg-calc-range-labels"><span>25 sq ft</span><span>200 sq ft</span></div>
+        </div>
+
+        <div class="hg-calc-field">
+          <div class="hg-calc-field-row">
+            <label for="calc-footfall">Daily Footfall</label>
+            <span class="hg-calc-val" id="val-footfall">500</span>
+          </div>
+          <input type="range" id="calc-footfall" class="hg-calc-range" min="100" max="2000" value="500" step="50">
+          <div class="hg-calc-range-labels"><span>100</span><span>2000</span></div>
+        </div>
+
+        <div class="hg-calc-field">
+          <label class="hg-calc-select-label" for="calc-hours">Operating Hours</label>
+          <select id="calc-hours" class="hg-calc-select">
+            <option value="8">8 hours/day</option>
+            <option value="10" selected>10 hours/day</option>
+            <option value="12">12 hours/day</option>
+            <option value="16">16 hours/day</option>
+          </select>
+        </div>
+
+        <div class="hg-calc-field">
+          <div class="hg-calc-field-row">
+            <label for="calc-ticket">Ticket Price (&#8377;)</label>
+            <span class="hg-calc-val" id="val-ticket">&#8377;150</span>
+          </div>
+          <input type="range" id="calc-ticket" class="hg-calc-range" min="50" max="500" value="150" step="10">
+          <div class="hg-calc-range-labels"><span>&#8377;50</span><span>&#8377;500</span></div>
+        </div>
+
+        <div class="hg-calc-field">
+          <div class="hg-calc-field-row">
+            <label for="calc-conversion">Conversion Rate (%)</label>
+            <span class="hg-calc-val" id="val-conversion">15%</span>
+          </div>
+          <input type="range" id="calc-conversion" class="hg-calc-range" min="5" max="30" value="15">
+          <div class="hg-calc-range-labels"><span>5%</span><span>30%</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Results Panel -->
+      <div class="hg-calc-results">
+
+        <div class="hg-calc-metrics">
+          <div class="hg-calc-metric">
+            <span class="hg-calc-metric-label">Investment</span>
+            <span class="hg-calc-metric-val" id="m-investment">&#8377;0L</span>
+          </div>
+          <div class="hg-calc-metric hg-calc-metric--accent">
+            <span class="hg-calc-metric-label">Monthly Revenue</span>
+            <span class="hg-calc-metric-val" id="m-monthly">&#8377;0L</span>
+          </div>
+          <div class="hg-calc-metric hg-calc-metric--accent">
+            <span class="hg-calc-metric-label">Payback Period</span>
+            <span class="hg-calc-metric-val" id="m-payback">0 mo</span>
+          </div>
+          <div class="hg-calc-metric hg-calc-metric--green">
+            <span class="hg-calc-metric-label">5-Year ROI</span>
+            <span class="hg-calc-metric-val" id="m-roi">0%</span>
+          </div>
+        </div>
+
+        <div class="hg-calc-chart-card">
+          <h4 class="hg-calc-chart-title">60-Month Cumulative Profit (&#8377; Lakhs)</h4>
+          <div class="hg-calc-chart-wrap">
+            <canvas id="chart-cumulative"></canvas>
+          </div>
+          <p class="hg-calc-chart-note">Break-even occurs when the line crosses zero.</p>
+        </div>
+
+        <div class="hg-calc-chart-card">
+          <h4 class="hg-calc-chart-title">Revenue Projection (&#8377; Lakhs)</h4>
+          <div class="hg-calc-chart-wrap hg-calc-chart-wrap--bar">
+            <canvas id="chart-revenue"></canvas>
+          </div>
+        </div>
+
+        <div class="hg-calc-daily-card">
+          <h4 class="hg-calc-chart-title">Daily Breakdown</h4>
+          <div class="hg-calc-daily-grid">
+            <div class="hg-calc-daily-item">
+              <span class="hg-calc-daily-label">Expected Players</span>
+              <span class="hg-calc-daily-val" id="d-players">0</span>
+              <span class="hg-calc-daily-unit">per day</span>
+            </div>
+            <div class="hg-calc-daily-item">
+              <span class="hg-calc-daily-label">Daily Revenue</span>
+              <span class="hg-calc-daily-val hg-calc-daily-val--accent" id="d-revenue">&#8377;0</span>
+              <span class="hg-calc-daily-unit">per day</span>
+            </div>
+            <div class="hg-calc-daily-item">
+              <span class="hg-calc-daily-label">Games per Hour</span>
+              <span class="hg-calc-daily-val" id="d-hourly">0</span>
+              <span class="hg-calc-daily-unit">avg capacity</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hg-calc-footer">
+          <p class="hg-calc-disclaimer">These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.</p>
+          <a href="contact.html" class="hbtn hbtn-solid">Get a Detailed Proposal &nbsp;&#x2192;</a>
+        </div>
+
+  </div>
+</section>
+
+<!-- 6. SPECS SECTION — MODEL -->
+<section id="specs-roi" class="hg-spe-model-section" data-nav-theme="dark">
+  <div class="hg-spe-model-inner">
+    <h2 class="hg-spe-model-title" data-reveal>Specifications</h2>
+    <div class="hg-spe-model-img-wrap" data-reveal>
+      <img
+        src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_del.png"
+        srcset="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_HG%20Model-p-500.png 500w, https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_HG%20Model-p-800.png 800w, https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_HG%20Model.png 839w"
+        sizes="(max-width: 839px) 100vw, 839px"
+        alt="HyperGrid 3D model with dimensions"
+        class="hg-spe-model-img"
+        loading="lazy"
+      >
+    </div>
+  </div>
+</section>
+
+<!-- 6b. SPECS SECTION — DIMENSIONS + INFO -->
+<section class="hg-spe-data-section" data-nav-theme="dark">
+  <div class="hg-spe-data-inner">
+
+    <!-- Left: Dimensions table -->
+    <div class="hg-spe-dims-card" data-reveal>
+      <h3 class="hg-spe-area-title">
+        <span class="hg-spe-area-label">Area</span>
+        <span class="hg-spe-area-num">270</span> sqft /
+        <span class="hg-spe-area-num">25</span> sqm
+      </h3>
+      <div class="hg-spe-dims-table">
+        <div class="hg-spe-dims-row">
+          <span>Length</span>
+          <span>20.3 FT</span>
+          <span>6.4 M</span>
+        </div>
+        <div class="hg-spe-dims-row">
+          <span>Depth</span>
+          <span>13.3 FT</span>
+          <span>4.1 M</span>
+        </div>
+        <div class="hg-spe-dims-row">
+          <span>Height</span>
+          <span>9.2 FT</span>
+          <span>2.8 M</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Info cards -->
+    <div class="hg-spe-info-cards" data-reveal data-reveal-delay="0.1">
+      <div class="hg-spe-info-card">
+        <div class="hg-spe-info-header">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="hg-spe-info-title">Power</span>
+        </div>
+        <p class="hg-spe-info-text">Average <strong>1.5 KW</strong> and Max 4.5 KW</p>
+      </div>
+      <div class="hg-spe-info-card">
+        <div class="hg-spe-info-header">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="hg-spe-info-title">Structure</span>
+        </div>
+        <p class="hg-spe-info-text">Strong and safe, made with heavy gauge MS and plywood.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 6. LIST OF GAME ZONES SECTION -->
+<section id="testimonials" aria-labelledby="test-heading" data-nav-theme="light">
+  <div class="test-inner">
+    <button class="test-arrow-abs test-arrow-abs--prev" id="test-prev" aria-label="Previous testimonial">
+      <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
+    </button>
+    <button class="test-arrow-abs test-arrow-abs--next" id="test-next" aria-label="Next testimonial">
+      <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
+    </button>
+    <div class="test-grid">
+      <div class="test-image">
+        <img src="images/operators/person-1.jpg" alt="Operator testimonial" class="test-person-img">
+      </div>
+      <div class="test-right">
+        <div class="test-quote-mark" aria-hidden="true" data-reveal>"</div>
+        <div class="testimonial-content">
+          <blockquote class="test-quote" id="test-quote-text">FOG's products didn't just fill floor space. They became the anchor attraction.</blockquote>
+          <p class="test-sub" id="test-sub-text">Our revenue per square foot tripled within the first quarter after installation. The ROI spoke for itself.</p>
+          <div class="test-divider" aria-hidden="true"></div>
+          <p class="test-name" id="test-name-text">Rajiv Mehta</p>
+          <div class="test-meta-wrap">
+            <img src="uploads/mastizone-logo.png" alt="Masti Zone Logo" class="test-zone-logo" id="test-logo-img">
+          </div>
+          <span class="test-role" id="test-role-text">Operations Director, Masti Zone India</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. GET IN TOUCH FORM (Exactly same as Homepage) -->
+<section id="get-in-touch" aria-labelledby="gitch-heading">
+  <div class="gitch-inner">
+
+    <!-- ── LEFT PANEL ── -->
+    <div class="gitch-left">
+      <div class="gitch-left-inner">
+        <!-- <p class="gitch-eyebrow">Let's Connect</p> -->
+        <h2 id="gitch-heading" class="gitch-headline" data-lang-key="gitch-headline">Start Your Journey With FOG.</h2>
+        <p class="gitch-sub" data-lang-key="gitch-sub">Whether you're planning a new venue or expanding an existing one — tell us your vision. We'll engineer it.</p>
+        <div class="gitch-divider"></div>
+        <div class="gitch-contacts">
+          <!-- <a href="tel:+919876543210" class="gitch-contact-item">
+            <div class="gitch-contact-icon">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 3.5A1.5 1.5 0 013.5 2h2.236c.34 0 .64.22.74.544l1.05 3.146a.75.75 0 01-.17.795l-1.27 1.27A12.04 12.04 0 0012.245 13.914l1.27-1.27a.75.75 0 01.794-.17l3.146 1.049c.324.108.544.408.544.748V16.5A1.5 1.5 0 0116.5 18C8.268 18 2 11.732 2 3.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p class="gitch-contact-label">Call Us</p>
+              <p class="gitch-contact-val">+91 98765 43210</p>
+            </div>
+          </a>
+          <a href="mailto:hello@fogstudio.com" class="gitch-contact-item">
+            <div class="gitch-contact-icon">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 013.5 4h13A1.5 1.5 0 0118 5.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 14.5v-9z" stroke="currentColor" stroke-width="1.4"/><path d="M2 6l8 5 8-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <p class="gitch-contact-label">Email Us</p>
+              <p class="gitch-contact-val">hello@fogstudio.com</p>
+            </div>
+          </a> -->
+        </div>
+        <!-- <div class="gitch-stats">
+          <div class="gitch-stat">
+            <span class="gitch-stat-num">24h</span>
+            <span class="gitch-stat-lbl">Response</span>
+          </div>
+          <div class="gitch-stat-sep"></div>
+          <div class="gitch-stat">
+            <span class="gitch-stat-num">200+</span>
+            <span class="gitch-stat-lbl">Venues</span>
+          </div>
+          <div class="gitch-stat-sep"></div>
+          <div class="gitch-stat">
+            <span class="gitch-stat-num">12+</span>
+            <span class="gitch-stat-lbl">Countries</span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- ── RIGHT PANEL: FORM ── -->
+    <div class="gitch-right">
+      <div class="gitch-form-wrap">
+        <div class="gitch-form-header">
+          <h3 class="gitch-form-title" data-lang-key="form-title">Let's Connect</h3>
+          <p class="gitch-form-desc" data-lang-key="form-desc">We review every submission personally. Expect a reply within 24 hours.</p>
+        </div>
+        <form class="gf" id="gitch-form" novalidate>
+          <div class="gf-row">
+            <div class="gf-group">
+              <input type="text" id="gf-first" class="gf-input" placeholder=" " autocomplete="given-name" required>
+              <label for="gf-first" class="gf-label">First Name</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+            <div class="gf-group">
+              <input type="text" id="gf-last" class="gf-input" placeholder=" " autocomplete="family-name" required>
+              <label for="gf-last" class="gf-label">Last Name</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="gf-row">
+            <div class="gf-group">
+              <input type="tel" id="gf-phone" class="gf-input" placeholder=" " autocomplete="tel" required>
+              <label for="gf-phone" class="gf-label">Phone Number</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+            <div class="gf-group">
+              <input type="email" id="gf-email" class="gf-input" placeholder=" " autocomplete="email" required>
+              <label for="gf-email" class="gf-label">Email Address</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="gf-row">
+            <div class="gf-group">
+              <input type="text" id="gf-company" class="gf-input" placeholder=" " autocomplete="organization">
+              <label for="gf-company" class="gf-label">Company Name</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+            <div class="gf-group gf-group--country" id="gf-country-group">
+              <input type="text" id="gf-country-search" class="gf-input" placeholder=" " autocomplete="off" role="combobox" aria-expanded="false" aria-controls="gf-country-list" aria-autocomplete="list">
+              <input type="hidden" id="gf-country-value" name="country" required>
+              <label for="gf-country-search" class="gf-label">Country</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+              <svg class="gf-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <ul id="gf-country-list" class="gf-country-list" role="listbox" aria-label="Countries"></ul>
+            </div>
+          </div>
+          <div class="gf-row">
+            <div class="gf-group gf-group--select">
+              <select id="gf-product" class="gf-select" required>
+                <option value="" disabled selected></option>
+                <option value="hypergrid">HyperGrid</option>
+                <option value="lasertag">Laser Tag</option>
+                <option value="lasermaze">Laser Spy</option>
+                <option value="moments">Moments AI</option>
+                <option value="custom">Custom Solution</option>
+              </select>
+              <label for="gf-product" class="gf-label">Interested In</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+              <svg class="gf-caret" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="gf-group gf-group--textarea">
+              <textarea id="gf-message" class="gf-input gf-textarea" placeholder=" " rows="1"></textarea>
+              <label for="gf-message" class="gf-label">Your Message</label>
+              <span class="gf-bar" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="gf-foot">
+            <p class="gf-note">By submitting you agree to our <a href="#" class="gf-note-link">Privacy Policy</a>. No spam, ever.</p>
+            <button type="submit" class="gf-btn">
+              <span>Send Message</span>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h12M9.5 4l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div id="footer-wrap">
+<footer id="footer" data-nav-theme="surface">
+
+  <div class="footer-top">
+
+    <!-- Col 1: Brand -->
+    <div class="footer-brand">
+      <div class="footer-logo-box">
+        <img src="images/company_logo.png" alt="FOG Technologies" class="footer-logo-img">
+      </div>
+      <!-- <p class="footer-brand-tagline">Engineering immersive experiences that operators invest in and players love.</p> -->
+      <div class="footer-contact-quick">
+        <a href="tel:+919876543210" class="footer-phone-sm">+91 98765 43210</a>
+        <a href="mailto:futureofgamingtech@gmail.com" class="footer-email-sm">contact@futureofgaming.tech</a>
+      </div>
+    </div>
+
+    <!-- Col 2: Navigation -->
+    <div class="footer-nav-block">
+      <div class="footer-nav-col">
+        <!-- <p class="footer-nav-heading">Company</p> -->
+        <a href="index.html#about">About</a>
+        <a href="index.html#products-wrapper">Products</a>
+        <a href="index.html#globe-section">Locations</a>
+        <a href="blog.html">Blog</a>
+        <a href="index.html#footer">Contact</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <div class="footer-nav-col">
+        <!-- <p class="footer-nav-heading">Follow</p> -->
+        <a href="#" rel="noopener noreferrer">LinkedIn</a>
+        <a href="#" rel="noopener noreferrer">Instagram</a>
+        <a href="#" rel="noopener noreferrer">YouTube</a>
+        <a href="https://wa.me/919876543210" rel="noopener noreferrer" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+
+  </div><!-- /.footer-top -->
+
+  <!-- Bottom strip -->
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 FOG Technologies Pvt. Ltd. All rights reserved.</p>
+    <!-- <p class="footer-bottom-tagline">Future of Gaming</p> -->
+    <!-- <a href="mailto:futureofgamingtech@gmail.com" class="footer-bottom-email">futureofgamingtech@gmail.com</a> -->
+  </div>
+
+</footer>
+</div><!-- /#footer-wrap -->
+
+<!-- CDN DEPENDENCIES -->
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- LOCAL SCRIPTS -->
+<script src="js/hyper-grid.js?v=1.1"></script>
+
+<script>
+  document.getElementById('nav-cta-btn').addEventListener('click', function() {
+    document.getElementById('get-in-touch').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  document.querySelectorAll('a[href="#get-in-touch"]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('get-in-touch').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,5 +1,13 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+## Agent Instructions
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+When migrating pages from HTML to Next.js:
+1. Read the original HTML file first
+2. Extract the semantic structure
+3. Create the Next.js component preserving all classes and content
+4. Add metadata export at the top
+5. Do not guess — ask if original intent is unclear
+
+When creating blog infrastructure:
+- Use gray-matter to parse frontmatter
+- Use next/image for all images
+- Generate static pages with generateStaticParams

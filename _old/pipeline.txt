@@ -1,0 +1,19 @@
+Currently only the frontend of the website is coded but now I want to give the website it's backend
+
+Where I am hosting this project
+- On vercel.com
+Additionally I am going to connect the GitHub with vercel so that changes that I make in the connected branch will get reflected on the website
+
+Get in touch form response in any page of website
+- the response of the filled form by the user should get mailed to specific email id's (4-5 mail id's)
+
+User specific details
+Additionally I am going to add the log rocket and google analytics in the website for user specific information like ip-address, browser, etc 
+
+What I am planning to do
+
+1. Build a BLOG.md file from which the content of the blog can be updated, BLOG.md file should have the specific format in which the blog post is written the functionality I want is on updating the BLOG.md file the website should get updated with that specific content.
+Entities in each blog - main display photo, title, content (should have the facility to add photo in between content), read time, category, date of upload (automatic),  
+2. Build a OPERATORS.md file from which the content of the testimonials can be updated, OPERATORS.md file should have the specific format in which each testimonial entry is written, functionality I want is on updating the OPERATORS.md file the website should get updated with that specific content.
+Entities in each testimonial - operator photo, title, content, name, gamezone logo, designation, category
+3. Add the functionality of goeIP in the code such that region specific changes can reflect on logo section, testimonial ordering, language in the website

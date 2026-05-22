@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p C:/Users/yashm/desktop/website/public/fonts C:/Users/yashm/desktop/website/components)",
+      "Bash(cp C:/Users/yashm/desktop/website/_old/fonts/ClashDisplay-Semibold.otf C:/Users/yashm/desktop/website/public/fonts/)",
+      "Bash(cp \"C:/Users/yashm/desktop/website/_old/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf\" C:/Users/yashm/desktop/website/public/fonts/)",
+      "Bash(npx next:*)",
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
