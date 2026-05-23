@@ -1,17 +1,18 @@
 /* ── Rich Text Editor — Admin ─────────────────────────────────────────────── */
 
 .wrap {
-  border: 1px solid #2a2a2a;
+  border: 1.5px solid #d1d5db;
   border-radius: 10px;
   overflow: hidden;
-  background: #0e0e0e;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .wrap:focus-within {
   border-color: #F05023;
+  box-shadow: 0 0 0 3px rgba(240, 80, 35, 0.1);
 }
 
 /* ── Toolbar ──────────────────────────────────────────────────────────────── */
@@ -22,8 +23,8 @@
   flex-wrap: wrap;
   gap: 2px;
   padding: 8px 10px;
-  background: #111;
-  border-bottom: 1px solid #1e1e1e;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .tbtn {
@@ -36,7 +37,7 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: 5px;
-  color: #888;
+  color: #6b7280;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -46,13 +47,13 @@
 }
 
 .tbtn:hover:not(.tbtnDisabled) {
-  background: #1a1a1a;
-  border-color: #2a2a2a;
-  color: #ddd;
+  background: #f0f2f5;
+  border-color: #d1d5db;
+  color: #111827;
 }
 
 .tbtnActive {
-  background: #1e1e1e;
+  background: #fff7ed;
   border-color: #F05023 !important;
   color: #F05023 !important;
 }
@@ -66,7 +67,7 @@
   display: inline-block;
   width: 1px;
   height: 18px;
-  background: #2a2a2a;
+  background: #e5e7eb;
   margin: 0 4px;
   flex-shrink: 0;
 }
@@ -75,7 +76,7 @@
   display: inline-block;
   width: 12px;
   height: 12px;
-  border: 2px solid #333;
+  border: 2px solid #e5e7eb;
   border-top-color: #F05023;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
@@ -91,16 +92,16 @@
   justify-content: space-between;
   gap: 8px;
   padding: 8px 14px;
-  background: rgba(192, 57, 43, 0.08);
-  border-bottom: 1px solid rgba(192, 57, 43, 0.2);
+  background: #fef2f2;
+  border-bottom: 1px solid #fecaca;
   font-size: 12px;
-  color: #e05555;
+  color: #dc2626;
 }
 
 .imgErrClose {
   background: none;
   border: none;
-  color: #e05555;
+  color: #dc2626;
   cursor: pointer;
   font-size: 11px;
   padding: 0 2px;
@@ -119,7 +120,6 @@
 }
 
 .editorContent {
-  /* The EditorContent wrapper — make it fill the area */
   height: 100%;
 }
 
@@ -130,7 +130,7 @@
   outline: none;
   font-size: 15px;
   line-height: 1.75;
-  color: #d0d0d0;
+  color: #111827;
   font-family: 'Google Sans', sans-serif;
   caret-color: #F05023;
 }
@@ -138,7 +138,7 @@
 /* Placeholder when editor is empty */
 .proseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
-  color: #333;
+  color: #c0c8d4;
   pointer-events: none;
   float: left;
   height: 0;
@@ -151,7 +151,7 @@
 .proseMirror h2 {
   font-size: 20px;
   font-weight: 700;
-  color: #fff;
+  color: #111827;
   margin: 1.6em 0 0.4em;
   letter-spacing: -0.2px;
 }
@@ -159,17 +159,17 @@
 .proseMirror h3 {
   font-size: 17px;
   font-weight: 600;
-  color: #e8e8e8;
+  color: #1f2937;
   margin: 1.4em 0 0.3em;
 }
 
 .proseMirror p {
   margin: 0.75em 0;
-  color: #c8c8c8;
+  color: #374151;
 }
 
-.proseMirror strong { color: #f0f0f0; font-weight: 700; }
-.proseMirror em     { font-style: italic; color: #c0c0c0; }
+.proseMirror strong { color: #111827; font-weight: 700; }
+.proseMirror em     { font-style: italic; color: #4b5563; }
 
 .proseMirror ul,
 .proseMirror ol {
@@ -182,7 +182,7 @@
 
 .proseMirror li {
   margin: 0.3em 0;
-  color: #c8c8c8;
+  color: #374151;
   line-height: 1.7;
 }
 
@@ -192,13 +192,13 @@
   border-left: 3px solid #F05023;
   padding-left: 16px;
   margin: 1em 0;
-  color: #888;
+  color: #6b7280;
   font-style: italic;
 }
 
 .proseMirror pre {
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
   border-radius: 6px;
   padding: 14px 16px;
   overflow-x: auto;
@@ -208,17 +208,17 @@
 .proseMirror code {
   font-family: 'Courier New', monospace;
   font-size: 13px;
-  color: #e8a87c;
+  color: #d97706;
 }
 
 .proseMirror pre code {
-  color: #c8c8c8;
+  color: #374151;
   font-size: 13px;
 }
 
 .proseMirror hr {
   border: none;
-  border-top: 1px solid #2a2a2a;
+  border-top: 1px solid #e5e7eb;
   margin: 2em 0;
 }
 
@@ -228,7 +228,7 @@
   border-radius: 6px;
   display: block;
   margin: 1em 0;
-  border: 1px solid #2a2a2a;
+  border: 1px solid #e5e7eb;
 }
 
 /* Selected image highlight */
@@ -241,13 +241,13 @@
 
 .footer {
   padding: 6px 14px;
-  background: #111;
-  border-top: 1px solid #1a1a1a;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: flex-end;
 }
 
 .wordCount {
   font-size: 11px;
-  color: #444;
+  color: #9ca3af;
 }
