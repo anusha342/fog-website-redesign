@@ -326,9 +326,22 @@ app/admin/dashboard/page.tsx                       ← enable testimonials card 
 | 1     | S3 helpers + types                 | ✅ Complete  | 2026-05-23 |
 | 2     | API routes (admin CRUD)            | ✅ Complete  | 2026-05-23 |
 | 3     | `TestimonialForm` component        | ✅ Complete  | 2026-05-23 |
-| 4     | Admin pages (list / new / edit)    | ⏳ Pending   | —          |
+| 4     | Admin pages (list / new / edit)    | ✅ Complete  | 2026-05-23 |
 | 5     | Enable dashboard card              | ⏳ Pending   | —          |
 | 6     | Public site integration (S3 read)  | ⏳ Pending   | —          |
+
+### Phase 4 — Done (2026-05-23)
+
+**Files created:**
+- `app/admin/testimonials/page.tsx` — `'use client'` list page; fetches `GET /api/admin/testimonials` on mount; table columns: Name (+ slug), Company, Product (blue badge), Actions (✏ edit / 🗑 delete); uses `<ConfirmDeleteModal entityLabel="testimonial">`; empty state with CTA; footer with count + "View site ↗"
+- `app/admin/testimonials/testimonials.module.css` — same light theme as `blogs.module.css`; `.productBadge` styled blue (`#f0f9ff` bg, `#0369a1` text) to visually distinguish from blog's grey category badge; Company column hidden on mobile (≤600 px)
+- `app/admin/testimonials/new/page.tsx` — Server Component; renders `<TestimonialForm mode="create" />`
+- `app/admin/testimonials/[slug]/edit/page.tsx` — async Server Component; fetches testimonial by slug from S3 server-side; passes as `initialTestimonial` to `<TestimonialForm mode="edit">`; `notFound()` on missing slug
+
+**Files updated:**
+- `components/admin/ConfirmDeleteModal.tsx` — added optional `entityLabel?: string` prop (default `'post'`); heading and warning copy now interpolate the label; backwards-compatible — existing blog delete modal unchanged
+
+---
 
 ### Phase 3 — Done (2026-05-23)
 

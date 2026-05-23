@@ -4,14 +4,15 @@ import { useEffect, useRef } from 'react';
 import styles from './confirm-delete-modal.module.css';
 
 interface Props {
-  title: string;
-  slug:  string;
-  onConfirm: () => void;
-  onCancel:  () => void;
-  loading:   boolean;
+  title:        string;
+  slug:         string;
+  onConfirm:    () => void;
+  onCancel:     () => void;
+  loading:      boolean;
+  entityLabel?: string; // e.g. 'post' (default) or 'testimonial'
 }
 
-export default function ConfirmDeleteModal({ title, slug, onConfirm, onCancel, loading }: Props) {
+export default function ConfirmDeleteModal({ title, slug, onConfirm, onCancel, loading, entityLabel = 'post' }: Props) {
   const cancelBtnRef = useRef<HTMLButtonElement>(null);
 
   // Auto-focus cancel on open (safer default)
@@ -40,7 +41,7 @@ export default function ConfirmDeleteModal({ title, slug, onConfirm, onCancel, l
         </div>
 
         {/* Copy */}
-        <h2 id="delete-modal-heading" className={styles.heading}>Delete this post?</h2>
+        <h2 id="delete-modal-heading" className={styles.heading}>Delete this {entityLabel}?</h2>
         <p className={styles.body}>
           You are about to permanently delete:
         </p>
@@ -49,7 +50,7 @@ export default function ConfirmDeleteModal({ title, slug, onConfirm, onCancel, l
           <span className={styles.postSlug}>{slug}</span>
         </div>
         <p className={styles.warning}>
-          This action <strong>cannot be undone</strong>. The post will be removed from S3 and will no longer appear on the public blog.
+          This action <strong>cannot be undone</strong>. The {entityLabel} will be removed from S3 and will no longer appear on the site.
         </p>
 
         {/* Actions */}
