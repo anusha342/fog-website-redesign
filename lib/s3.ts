@@ -147,6 +147,29 @@ export async function getAllTestimonialsFromS3(): Promise<TestimonialMeta[]> {
   return testimonials.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** List all testimonials from S3 including body — used by the public site. */
+export async function getAllTestimonialsWithBodyFromS3(): Promise<Testimonial[]> {
+  const s3   = getS3();
+  const list = await s3.send(new ListObjectsV2Command({
+    Bucket: bucket(),
+    Prefix: `${testimonialsPrefix()}/`,
+  }));
+
+  if (!list.Contents?.length) return [];
+
+  const testimonials = await Promise.all(
+    list.Contents
+      .filter((obj) => obj.Key?.endsWith('.json'))
+      .map(async (obj) => {
+        const res  = await s3.send(new GetObjectCommand({ Bucket: bucket(), Key: obj.Key! }));
+        const text = await streamToString(res.Body as NodeJS.ReadableStream);
+        return JSON.parse(text) as Testimonial;
+      })
+  );
+
+  return testimonials.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /** Fetch a single testimonial (full, including body) by slug. Returns null if not found. */
 export async function getTestimonialBySlugFromS3(slug: string): Promise<Testimonial | null> {
   const s3 = getS3();

@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LaserTagPage() {
-  const testimonials = getAllTestimonials();
+export default async function LaserTagPage() {
+  const testimonials = await getAllTestimonials();
 
   const jsonLdProduct = {
     '@context': 'https://schema.org',

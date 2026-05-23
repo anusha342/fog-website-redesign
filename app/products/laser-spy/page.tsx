@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LaserSpyPage() {
-  const testimonials = getAllTestimonials();
+export default async function LaserSpyPage() {
+  const testimonials = await getAllTestimonials();
 
   const jsonLdProduct = {
     '@context': 'https://schema.org',

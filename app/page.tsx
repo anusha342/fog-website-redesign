@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import HomeClient from './HomeClient';
 import { getAllPosts } from '@/lib/blog';
+import { getAllTestimonialsWithBodyFromS3 } from '@/lib/s3';
+
+export const revalidate = 60; // ISR — re-render at most every 60 s
 
 export const metadata: Metadata = {
   title: 'FOG Technologies — Future of Gaming',
@@ -50,7 +53,7 @@ const jsonLd = {
   ],
 };
 
-export default function HomePage() {
+export default async function HomePage() {
   const posts = getAllPosts().map((p) => ({
     id:       p.slug,
     title:    p.title,
@@ -61,13 +64,15 @@ export default function HomePage() {
     excerpt:  p.excerpt,
   })).slice(0, 3);
 
+  const testimonials = await getAllTestimonialsWithBodyFromS3();
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <HomeClient initialPosts={posts} />
+      <HomeClient initialPosts={posts} initialTestimonials={testimonials} />
     </>
   );
 }

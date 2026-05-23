@@ -328,7 +328,24 @@ app/admin/dashboard/page.tsx                       ← enable testimonials card 
 | 3     | `TestimonialForm` component        | ✅ Complete  | 2026-05-23 |
 | 4     | Admin pages (list / new / edit)    | ✅ Complete  | 2026-05-23 |
 | 5     | Enable dashboard card              | ✅ Complete  | 2026-05-23 |
-| 6     | Public site integration (S3 read)  | ⏳ Pending   | —          |
+| 6     | Public site integration (S3 read)  | ✅ Complete  | 2026-05-23 |
+
+### Phase 6 — Done (2026-05-23)
+
+**Files created:**
+- `app/api/testimonials/route.ts` *(new)* — public, no-auth `GET`; calls `getAllTestimonialsWithBodyFromS3()`; `export const revalidate = 60` for ISR
+
+**Files updated:**
+- `lib/s3.ts` — added `getAllTestimonialsWithBodyFromS3(): Promise<Testimonial[]>`; identical list logic to `getAllTestimonialsFromS3()` but does NOT strip `body` — needed because the admin metadata function strips body for efficiency
+- `lib/testimonials.ts` — removed filesystem dependencies (`fs`, `path`, `gray-matter`); `getAllTestimonials()` is now `async` and delegates to `getAllTestimonialsWithBodyFromS3()`
+- `app/products/laser-tag/page.tsx` — added `async` + `await getAllTestimonials()` (two-token change)
+- `app/products/laser-spy/page.tsx` — same
+- `app/page.tsx` — made `async`; added `export const revalidate = 60`; fetches `getAllTestimonialsWithBodyFromS3()` server-side; passes as `initialTestimonials` prop to `HomeClient`
+- `app/HomeClient.tsx` — added `Testimonial` import; defined `TestimonialSlide` interface + `toSlide()` mapper (`body → quote`, `designation + company → role`, `avatar → image` with fallback); replaced hardcoded `TESTIMONIALS` constant with `useMemo` over `initialTestimonials.map(toSlide)`; updated all `TESTIMONIALS.length` refs to `testimonials.length`; testimonials section now conditionally rendered (hidden if S3 returns empty); logo render made conditional (guarded by `t.logo &&`); removed the `t.sub` paragraph that no longer has a data source
+
+**Key decision:** `getAllTestimonialsWithBodyFromS3` is a separate function (not a change to Phase 1's `getAllTestimonialsFromS3`) — the admin list intentionally strips body to avoid sending quote text over the wire on every admin list load.
+
+---
 
 ### Phase 5 — Done (2026-05-23)
 

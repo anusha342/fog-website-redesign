@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
+import type { Testimonial } from '@/lib/testimonials';
 import styles from './home.module.css';
 
 // ── CDN globals ──────────────────────────────────────────────────────────────
@@ -26,36 +27,26 @@ function loadScript(src: string): Promise<void> {
   });
 }
 
-// ── Static data ──────────────────────────────────────────────────────────────
-const TESTIMONIALS = [
-  {
-    quote: "FOG's products didn't just fill floor space. They became the anchor attraction.",
-    sub: "Our revenue per square foot tripled within the first quarter after installation. The ROI spoke for itself.",
-    name: 'Rajiv Mehta',
-    role: 'Operations Director, Masti Zone India',
-    image: '/images/operators/person-1.jpg',
-    logo: '/uploads/mastizone-logo.png',
-    logoAlt: 'Masti Zone Logo',
-  },
-  {
-    quote: 'The repeat player rate speaks for itself — guests keep coming back every single week.',
-    sub: 'HyperGrid changed how our guests experience entertainment. It is the first thing people mention when they leave.',
-    name: 'Sarah Chen',
-    role: 'General Manager, Timezone Australia',
-    image: '/images/operators/person-2.png',
-    logo: '/uploads/timezone-logo.png',
-    logoAlt: 'Timezone Logo',
-  },
-  {
-    quote: 'Within 6 months, Laser Spy paid for itself completely. The queues never stop.',
-    sub: 'Players challenge each other constantly. It drives incredible repeat visits and word-of-mouth we never had before.',
-    name: 'Ahmed Al-Rashid',
-    role: 'Director, Hopup Entertainment Dubai',
-    image: '/images/operators/person-3.png',
-    logo: '/uploads/hopup-logo.png',
-    logoAlt: 'Hopup Logo',
-  },
-];
+// ── Testimonial slide shape (mapped from S3 Testimonial) ─────────────────────
+interface TestimonialSlide {
+  quote:   string;
+  name:    string;
+  role:    string;
+  image:   string;
+  logo:    string;
+  logoAlt: string;
+}
+
+function toSlide(t: Testimonial): TestimonialSlide {
+  return {
+    quote:   t.body,
+    name:    t.name,
+    role:    [t.designation, t.company].filter(Boolean).join(', '),
+    image:   t.avatar || '/images/operators/person-1.jpg',
+    logo:    t.logo   || '',
+    logoAlt: t.company,
+  };
+}
 
 const PRODUCTS = [
   {
@@ -116,7 +107,13 @@ interface BlogPost {
 }
 
 // ── Component ────────────────────────────────────────────────────────────────
-export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] }) {
+export default function HomeClient({
+  initialPosts,
+  initialTestimonials,
+}: {
+  initialPosts:        BlogPost[];
+  initialTestimonials: Testimonial[];
+}) {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const heroRef      = useRef<HTMLElement>(null);
   const globeRef     = useRef<HTMLDivElement>(null);
@@ -147,7 +144,9 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
   const [counts, setCounts] = useState({ dailyPlayers: 0, repeatRate: 0, countries: 0 });
   const countsTriggered = useRef(false);
 
-  // Testimonials
+  // Testimonials — mapped from S3 data passed as a server-side prop
+  const testimonials = useMemo(() => initialTestimonials.map(toSlide), [initialTestimonials]);
+
   const [tIdx,   setTIdx]   = useState(0);
   const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
   const tBusy       = useRef(false);
@@ -614,10 +613,10 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
   const startAuto = useCallback(() => {
     if (autoRef.current) clearInterval(autoRef.current);
     autoRef.current = setInterval(() => {
-      const next = (tIdxForAuto.current + 1) % TESTIMONIALS.length;
+      const next = (tIdxForAuto.current + 1) % testimonials.length;
       showTestimonial(next, 'next');
     }, 4000);
-  }, [showTestimonial]);
+  }, [showTestimonial, testimonials.length]);
 
   useEffect(() => {
     startAuto();
@@ -733,7 +732,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
     }));
   }
 
-  const t = TESTIMONIALS[tIdx];
+  const t = testimonials[tIdx] ?? null;
 
   // ── Render ───────────────────────────────────────────────────────────────
   return (
@@ -1031,7 +1030,8 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
 
       </div>{/* /#products-wrapper */}
 
-      {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
+      {/* ── TESTIMONIALS — only rendered when S3 has at least one entry ─── */}
+      {testimonials.length > 0 && t && (
       <section
         id="testimonials"
         className={styles.testimonials}
@@ -1043,7 +1043,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
             className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
             aria-label="Previous testimonial"
             onClick={() => {
-              const next = (tIdx - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+              const next = (tIdx - 1 + testimonials.length) % testimonials.length;
               showTestimonial(next, 'prev');
               startAuto();
             }}
@@ -1054,7 +1054,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
             className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
             aria-label="Next testimonial"
             onClick={() => {
-              const next = (tIdx + 1) % TESTIMONIALS.length;
+              const next = (tIdx + 1) % testimonials.length;
               showTestimonial(next, 'next');
               startAuto();
             }}
@@ -1089,18 +1089,19 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
                 }`}
               >
                 <blockquote className={styles.testQuote}>{t.quote}</blockquote>
-                <p className={styles.testSub}>{t.sub}</p>
                 <div className={styles.testDivider} aria-hidden="true" />
                 <p className={styles.testName}>{t.name}</p>
                 <div className={styles.testMetaWrap}>
-                  <Image
-                    src={t.logo}
-                    alt={t.logoAlt}
-                    width={100}
-                    height={100}
-                    className={styles.testZoneLogo}
-                    style={{ objectFit: 'contain' }}
-                  />
+                  {t.logo && (
+                    <Image
+                      src={t.logo}
+                      alt={t.logoAlt}
+                      width={100}
+                      height={100}
+                      className={styles.testZoneLogo}
+                      style={{ objectFit: 'contain' }}
+                    />
+                  )}
                 </div>
                 <span className={styles.testRole}>{t.role}</span>
               </div>
@@ -1108,6 +1109,7 @@ export default function HomeClient({ initialPosts }: { initialPosts: BlogPost[] 
           </div>
         </div>
       </section>
+      )}
 
       {/* ── GLOBE ─────────────────────────────────────────────────────── */}
       <section id="globe-section" className={styles.globeSection} aria-label="Global footprint">
