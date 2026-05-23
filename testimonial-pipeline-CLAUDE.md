@@ -325,10 +325,24 @@ app/admin/dashboard/page.tsx                       ← enable testimonials card 
 |-------|------------------------------------|-------------|------------|
 | 1     | S3 helpers + types                 | ✅ Complete  | 2026-05-23 |
 | 2     | API routes (admin CRUD)            | ✅ Complete  | 2026-05-23 |
-| 3     | `TestimonialForm` component        | ⏳ Pending   | —          |
+| 3     | `TestimonialForm` component        | ✅ Complete  | 2026-05-23 |
 | 4     | Admin pages (list / new / edit)    | ⏳ Pending   | —          |
 | 5     | Enable dashboard card              | ⏳ Pending   | —          |
 | 6     | Public site integration (S3 read)  | ⏳ Pending   | —          |
+
+### Phase 3 — Done (2026-05-23)
+
+**Files created:**
+- `components/admin/TestimonialForm.tsx` — `'use client'` form component; 4 sections: Person Details (name → auto-slug, slug w/ availability check, designation, company, location, product `<select>`), Quote (textarea + char count), Avatar upload, Company Logo upload; shared `UploadBlock` inner component avoids duplicating the upload zone JSX; uploads POST to `/api/admin/upload?folder=testimonials`; on success redirects to `/admin/testimonials`
+- `components/admin/testimonial-form.module.css` — identical light theme to `blog-form.module.css`; adds `.select` class (matches `.input` styling with a custom caret via `background-image` SVG); avatar/logo preview height set to 160 px; full responsive breakpoint at 640 px
+
+**Key decisions:**
+- `UploadBlock` is an inner component (not a separate file) — only used here
+- Product field is a `<select>` constrained to the 5 FOG catalogue entries
+- Body textarea has a 400-char soft limit with colour warning (no hard cap)
+- Avatar and logo both route to `testimonials/assets/` via `?folder=testimonials`
+
+---
 
 ### Phase 2 — Done (2026-05-23)
 
