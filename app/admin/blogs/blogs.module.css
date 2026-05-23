@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
-  background: #0a0a0a;
-  padding: 32px 24px;
+  background: #f0f2f5;
+  padding: 32px 24px 80px;
   font-family: 'Google Sans', sans-serif;
 }
 
@@ -28,26 +28,27 @@
 }
 
 .backLink {
-  font-size: 12px;
-  color: #555;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .backLink:hover {
-  color: #aaa;
+  color: #F05023;
 }
 
 .heading {
   font-size: 22px;
   font-weight: 700;
-  color: #fff;
+  color: #111827;
   margin: 0;
 }
 
 .newBtn {
   background: #F05023;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   padding: 10px 18px;
@@ -55,12 +56,13 @@
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
   white-space: nowrap;
 }
 
 .newBtn:hover {
   background: #d94418;
+  box-shadow: 0 4px 12px rgba(240, 80, 35, 0.3);
 }
 
 /* State boxes */
@@ -74,7 +76,7 @@
 
 .stateText {
   font-size: 14px;
-  color: #555;
+  color: #6b7280;
   margin: 0;
 }
 
@@ -82,7 +84,7 @@
   display: inline-block;
   width: 24px;
   height: 24px;
-  border: 2px solid #2a2a2a;
+  border: 2px solid #e5e7eb;
   border-top-color: #F05023;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
@@ -93,8 +95,8 @@
 }
 
 .errorBox {
-  background: rgba(224, 85, 85, 0.06);
-  border: 1px solid rgba(224, 85, 85, 0.2);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: 10px;
   padding: 20px 24px;
   display: flex;
@@ -104,28 +106,36 @@
 }
 
 .errorBox p {
-  color: #e05555;
+  color: #dc2626;
   font-size: 13px;
   margin: 0;
 }
 
 .retryBtn {
   background: transparent;
-  border: 1px solid rgba(224, 85, 85, 0.4);
-  color: #e05555;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
   border-radius: 6px;
   padding: 6px 14px;
   font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.retryBtn:hover {
+  background: #fee2e2;
 }
 
 /* Table */
 .tableWrap {
-  background: #111;
-  border: 1px solid #1e1e1e;
+  background: #ffffff;
+  border: 1.5px solid #e0e3e8;
   border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .table {
@@ -138,15 +148,15 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: #444;
+  color: #9ca3af;
   padding: 12px 20px;
   text-align: left;
-  background: #0e0e0e;
-  border-bottom: 1px solid #1e1e1e;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .row {
-  border-bottom: 1px solid #161616;
+  border-bottom: 1px solid #f3f4f6;
   transition: background 0.15s;
 }
 
@@ -155,7 +165,7 @@
 }
 
 .row:hover {
-  background: #141414;
+  background: #fafafa;
 }
 
 .td {
@@ -166,21 +176,21 @@
 .postTitle {
   font-size: 14px;
   font-weight: 500;
-  color: #e0e0e0;
+  color: #111827;
   margin-bottom: 3px;
 }
 
 .postSlug {
   font-size: 11px;
-  color: #444;
+  color: #9ca3af;
   font-family: monospace;
 }
 
 .catBadge {
   display: inline-block;
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
-  color: #888;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
   font-size: 11px;
   font-weight: 500;
   padding: 3px 10px;
@@ -190,7 +200,7 @@
 
 .dateText {
   font-size: 12px;
-  color: #555;
+  color: #6b7280;
   white-space: nowrap;
 }
 
@@ -208,19 +218,20 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
   border-radius: 7px;
-  color: #888;
+  color: #6b7280;
   font-size: 13px;
   text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
   cursor: pointer;
 }
 
 .editBtn:hover {
   border-color: #F05023;
   color: #F05023;
+  background: #fff7ed;
 }
 
 .deleteBtn {
@@ -229,18 +240,19 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
   border-radius: 7px;
-  color: #888;
+  color: #6b7280;
   font-size: 13px;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
 
 .deleteBtn:hover:not(:disabled) {
-  border-color: #e05555;
-  color: #e05555;
+  border-color: #dc2626;
+  color: #dc2626;
+  background: #fef2f2;
 }
 
 .deleteBtn:disabled {
@@ -258,18 +270,19 @@
 
 .count {
   font-size: 12px;
-  color: #444;
+  color: #9ca3af;
 }
 
 .viewSiteLink {
   font-size: 12px;
-  color: #555;
+  color: #6b7280;
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.2s;
 }
 
 .viewSiteLink:hover {
-  color: #aaa;
+  color: #F05023;
 }
 
 @media (max-width: 600px) {

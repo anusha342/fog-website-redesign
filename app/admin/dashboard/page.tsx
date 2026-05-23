@@ -3,7 +3,8 @@ import { jwtVerify } from 'jose';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import styles from './dashboard.module.css';
-import MigrateButton from './MigrateButton';
+import BackToHomeButton from '@/components/admin/BackToHomeButton';
+// import MigrateButton from './MigrateButton';
 
 async function getAdminEmail(): Promise<string> {
   const store = await cookies();
@@ -32,9 +33,9 @@ export default async function DashboardPage() {
             <h1 className={styles.title}>Admin Panel</h1>
             <p className={styles.meta}>Signed in as <span>{email}</span></p>
           </div>
-          <form action="/api/admin/logout" method="POST">
+          {/* <form action="/api/admin/logout" method="POST">
             <button type="submit" className={styles.logoutBtn}>Sign out</button>
-          </form>
+          </form> */}
         </div>
 
         {/* Nav cards */}
@@ -54,19 +55,19 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Migration (one-time utility) */}
-        <div className={styles.utilSection}>
+        {/* One-time Migration — commented out after initial migration completed */}
+        {/* <div className={styles.utilSection}>
           <h2 className={styles.utilHeading}>One-time Migration</h2>
           <p className={styles.utilDesc}>
             Upload all existing <code>.md</code> blog files from <code>content/blog/</code> to S3.
             Run this once — it is safe to re-run (it overwrites).
           </p>
           <MigrateButton />
-        </div>
+        </div> */}
 
         {/* Footer */}
         <div className={styles.footer}>
-          <Link href="/" className={styles.homeLink}>&#x2190; Back to website</Link>
+          <BackToHomeButton />
         </div>
 
       </div>

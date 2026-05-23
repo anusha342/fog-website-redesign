@@ -101,7 +101,7 @@ function VerifyForm() {
         <h1 className={styles.heading}>Check your email</h1>
         <p className={styles.subtext}>
           We sent a 6-digit OTP to<br />
-          <strong style={{ color: '#fff' }}>{email}</strong>
+          <strong style={{ color: '#111827' }}>{email}</strong>
         </p>
 
         <form onSubmit={handleVerify} className={styles.form}>

@@ -132,6 +132,27 @@ S3_ASSETS_PREFIX=assets
 
 ---
 
+---
+
+## Phase 5 — Admin UX Hardening
+
+**Goal:** Remove site navbar from admin pages, add logout-guarded "Back to Home", intercept URL-bar navigation away from admin.
+
+| # | File | Purpose |
+|---|------|---------|
+| 1 | `components/ClientLayout.tsx` ✅ | Client component wrapping root layout — hides `<Navbar>` and `<Footer>` on all `/admin/*` routes |
+| 2 | `app/layout.tsx` ✅ | Updated to use `ClientLayout` instead of rendering Navbar/Footer directly |
+| 3 | `proxy.ts` ✅ | (a) Protects `/admin/*` routes — redirects unauthenticated users to `/admin`. (b) Intercepts logged-in admins navigating to any public route → redirects to `/admin/logout-confirm?redirect=<path>` (Next.js 16 renamed middleware → proxy) |
+| 4 | `components/admin/LogoutConfirmModal.tsx` ✅ | Reusable modal: "You'll be logged out" warning with Cancel / Proceed buttons |
+| 5 | `components/admin/logout-confirm-modal.module.css` ✅ | Light-theme modal styles — white card, backdrop blur, orange Proceed button |
+| 6 | `app/admin/logout-confirm/page.tsx` ✅ | Full-page confirmation shown when middleware redirects; Proceed → logout + navigate to original destination; Cancel → `/admin/dashboard` |
+| 7 | `components/admin/BackToHomeButton.tsx` ✅ | Client component rendered in dashboard footer — opens LogoutConfirmModal; on Proceed calls logout API then pushes to `/` |
+| 8 | `app/admin/dashboard/page.tsx` ✅ | Added BackToHomeButton; commented out MigrateButton section (migration complete) |
+| 9 | All admin CSS files ✅ | Rethemed to light mode (white cards, `#f0f2f5` page bg, `#111827` text, `#F05023` orange accents, `#d1d5db` borders) — `dashboard.module.css`, `blogs.module.css`, `admin.module.css`, `blog-form.module.css`, `rich-text-editor.module.css` |
+| 10 | `blog-form.module.css` ✅ | Top padding reduced from 96px back to 32px (navbar no longer rendered on admin pages) |
+
+---
+
 ## Progress Tracker
 
 | Phase | Status | Completed |
@@ -143,3 +164,4 @@ S3_ASSETS_PREFIX=assets
 | Phase 4b — Cover Image Upload | ✅ Complete | 2026-05-22 |
 | Phase 4c — Rich Text Editor | ✅ Complete | 2026-05-22 |
 | Phase 4d — Save + Validation | ✅ Complete | 2026-05-22 |
+| Phase 5 — Admin UX Hardening | ✅ Complete | 2026-05-23 |

@@ -1,20 +1,20 @@
-/* ── Admin Panel — Shared Styles ─────────────────────────────────────────── */
+/* ── Admin Panel — Shared Styles (Login & Verify) ─────────────────────────── */
 
 /* Page wrapper */
 .adminPage {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: #f0f2f5;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px 24px;
   font-family: 'Google Sans', sans-serif;
 }
 
 /* Login / verify card */
 .card {
-  background: #111;
-  border: 1px solid #222;
+  background: #ffffff;
+  border: 1.5px solid #e0e3e8;
   border-radius: 16px;
   padding: 48px 40px;
   width: 100%;
@@ -23,6 +23,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 .logo {
@@ -33,14 +34,14 @@
 .heading {
   font-size: 22px;
   font-weight: 600;
-  color: #fff;
+  color: #111827;
   margin: 0;
   letter-spacing: -0.3px;
 }
 
 .subtext {
   font-size: 13px;
-  color: #666;
+  color: #6b7280;
   text-align: center;
   margin: 0 0 24px;
   line-height: 1.5;
@@ -56,61 +57,66 @@
 
 .label {
   font-size: 12px;
-  font-weight: 500;
-  color: #aaa;
+  font-weight: 600;
+  color: #374151;
   margin-bottom: 4px;
   display: block;
 }
 
 .input {
   width: 100%;
-  background: #1a1a1a;
-  border: 1px solid #2a2a2a;
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;
   border-radius: 8px;
   padding: 12px 14px;
   font-size: 14px;
-  color: #fff;
+  color: #111827;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 .input:focus {
   border-color: #F05023;
+  box-shadow: 0 0 0 3px rgba(240, 80, 35, 0.1);
 }
 
 .input::placeholder {
-  color: #444;
+  color: #c0c8d4;
 }
 
 /* OTP input group */
 .otpHint {
   font-size: 12px;
-  color: #555;
+  color: #6b7280;
   text-align: center;
 }
 
 .otpHint span {
   color: #F05023;
+  font-weight: 500;
 }
 
 /* Primary button */
 .btn {
   width: 100%;
   background: #F05023;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   padding: 13px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, opacity 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
   margin-top: 4px;
+  font-family: inherit;
 }
 
 .btn:hover:not(:disabled) {
   background: #d94418;
+  box-shadow: 0 4px 12px rgba(240, 80, 35, 0.3);
 }
 
 .btn:disabled {
@@ -122,8 +128,8 @@
 .btnGhost {
   width: 100%;
   background: transparent;
-  color: #666;
-  border: 1px solid #222;
+  color: #374151;
+  border: 1.5px solid #d1d5db;
   border-radius: 8px;
   padding: 11px;
   font-size: 13px;
@@ -131,54 +137,60 @@
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
   margin-top: 2px;
+  font-family: inherit;
 }
 
-.btnGhost:hover {
-  border-color: #444;
-  color: #aaa;
+.btnGhost:hover:not(:disabled) {
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.btnGhost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Error */
 .error {
   font-size: 12px;
-  color: #e05555;
+  color: #dc2626;
   margin: 0;
   padding: 8px 12px;
-  background: rgba(224, 85, 85, 0.08);
+  background: #fef2f2;
   border-radius: 6px;
-  border: 1px solid rgba(224, 85, 85, 0.2);
+  border: 1px solid #fecaca;
 }
 
 /* Success */
 .success {
   font-size: 12px;
-  color: #55c080;
+  color: #16a34a;
   margin: 0;
   padding: 8px 12px;
-  background: rgba(85, 192, 128, 0.08);
+  background: #f0fdf4;
   border-radius: 6px;
-  border: 1px solid rgba(85, 192, 128, 0.2);
+  border: 1px solid #bbf7d0;
 }
 
 /* Divider */
 .divider {
   width: 100%;
   border: none;
-  border-top: 1px solid #1e1e1e;
+  border-top: 1px solid #e5e7eb;
   margin: 8px 0;
 }
 
 /* Back link */
 .backLink {
   font-size: 12px;
-  color: #555;
+  color: #6b7280;
   text-decoration: none;
   text-align: center;
   transition: color 0.2s;
 }
 
 .backLink:hover {
-  color: #aaa;
+  color: #F05023;
 }
 
 @media (max-width: 480px) {
