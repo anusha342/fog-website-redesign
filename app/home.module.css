@@ -422,7 +422,7 @@
 .prodName {
   font-family: 'ClashDisplay', serif;
   font-weight: 700;
-  font-size: clamp(48px, 5.5vw, 72px);
+  font-size: clamp(56px, 6vw, 80px);
   text-transform: uppercase;
   color: var(--white);
   line-height: 1;
@@ -451,19 +451,23 @@
 .prodBg {
   position: absolute;
   inset: 0;
-  background-size: 85% auto;
+  background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
-  z-index: 1;
+  z-index: 0;
   transition: opacity 0.2s ease;
 }
-.prodOverlay { position: absolute; inset: 0; background: #000000; z-index: 0; }
+.prodOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #000 0%, #000 36%, rgba(0,0,0,0.5) 46%, transparent 56%);
+  z-index: 1;
+}
 .prodThumbs { position: absolute; bottom: 56px; right: 64px; display: flex; gap: var(--sp-8); z-index: 2; }
 .prodThumb { width: 116px; height: 72px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 200ms cubic-bezier(.4,0,.2,1); background: none; padding: 0; }
 .prodThumb img { width: 100%; height: 100%; object-fit: cover; }
 .prodThumbActive { border-color: var(--white); transform: scale(1.06); }
 .prodThumb:not(.prodThumbActive) { opacity: 0.55; filter: brightness(0.65); }
-.prodNameLt { font-size: clamp(36px, 4.8vw, 64px); }
 
 /* ── MOMENTS BG ── */
 .momentsBg { position: absolute; inset: 0; z-index: 0; background: var(--dark); overflow: hidden; }
@@ -613,7 +617,7 @@
 
 .mbSub {
   font-family: 'GoogleSans', sans-serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 300;
   color: var(--gray);
   max-width: 540px;
@@ -632,13 +636,24 @@
 
 /* ── TESTIMONIALS ── */
 .testimonials { background: var(--white); padding: var(--sp-96) var(--sp-80); width: 100%; position: relative; }
-.testInner { max-width: 1440px; margin: 0 auto; position: relative; }
-.testGrid { display: grid; grid-template-columns: 40% 1fr; gap: var(--sp-80); align-items: center; overflow: hidden; }
+.testInner { max-width: 1440px; margin: 0 auto; }
+.testHeading {
+  font-family: 'ClashDisplay', serif;
+  font-weight: 700;
+  font-size: clamp(40px, 4.5vw, 63px);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: var(--sp-48);
+}
+.testControls { display: flex; align-items: center; gap: 16px; }
+.testGrid { flex: 1; min-width: 0; display: grid; grid-template-columns: 36% 1fr; gap: var(--sp-80); align-items: center; overflow: hidden; }
 .testImage { aspect-ratio: 3/4; position: relative; overflow: hidden; }
-.testPersonImg { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.testPersonImg { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(1) contrast(1.05); transition: opacity 0.2s ease; }
+.testPersonImgFading { opacity: 0; }
 .testRight { position: relative; overflow: hidden; }
 .testQuoteMark { font-size: 80px; line-height: 1; color: var(--accent); font-family: 'ClashDisplay', serif; margin-bottom: var(--sp-16); }
-.testQuote { font-family: 'ClashDisplay', serif; font-weight: 700; font-size: clamp(24px, 2.8vw, 36px); text-transform: uppercase; color: var(--text-primary); line-height: 1.2; }
+.testQuote { font-family: 'ClashDisplay', serif; font-weight: 400; font-size: 30px; color: var(--text-primary); line-height: 1.35; }
 .testSub { font-size: 16px; font-weight: 300; color: var(--gray); max-width: 440px; margin-top: var(--sp-16); line-height: 1.6; }
 .testDivider { width: 48px; height: 2px; background: var(--accent); margin: var(--sp-32) 0; }
 .testName { font-size: 16px; font-weight: 600; color: var(--text-primary); }
@@ -652,18 +667,11 @@
 .testimonialContent.entering { opacity: 0; transform: translateX(48px); }
 .testimonialContent.visible { opacity: 1; transform: translateX(0); }
 
-/* Photo fade */
-.testPersonImg { transition: opacity 0.2s ease; }
-.testPersonImgFading { opacity: 0; }
-
-/* Glass arrows */
+/* Arrows — flex siblings of the grid, no absolute positioning */
 .testArrowAbs {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   width: 44px;
   height: 64px;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -677,8 +685,6 @@
 .testArrowAbs:hover { background: rgba(240,80,35,0.1); border-color: rgba(240,80,35,0.35); }
 .testArrowAbs:hover svg { stroke: var(--accent); }
 .testArrowAbs svg { stroke: var(--text-primary); stroke-width: 1.8; fill: none; width: 20px; height: 20px; transition: stroke 180ms; }
-.testArrowPrev { left: 0; }
-.testArrowNext { right: 0; }
 
 /* ── GLOBE ── */
 .globeSection { position: relative; width: 100%; height: 100vh; background: var(--dark); overflow: hidden; }

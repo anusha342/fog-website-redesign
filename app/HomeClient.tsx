@@ -68,7 +68,7 @@ const PRODUCTS = [
     id: 'lasertag',
     num: '02',
     name: 'Laser Tag',
-    extraNameCls: styles.prodNameLt,
+    extraNameCls: '',
     navTheme: 'light',
     desc: 'Next-gen laser combat. Full tracking. Full immersion. Zero compromise.',
     href: '/products/laser-tag',
@@ -918,7 +918,7 @@ export default function HomeClient({
               />
               <div className={styles.prodOverlay} aria-hidden="true" />
               <div className={styles.prodText}>
-                <span className={styles.prodNum}>{prod.num}</span>
+                {/* <span className={styles.prodNum}>{prod.num}</span> */}
                 <h2 className={`${styles.prodName} ${prod.extraNameCls}`}>{prod.name}</h2>
                 <p className={styles.prodDesc}>{prod.desc}</p>
                 <Link href={prod.href} className={styles.prodBtn}>
@@ -983,8 +983,8 @@ export default function HomeClient({
             </h2>
 
             <p className={styles.mbSub}>
-              Our proprietary AI system that captures, scores, and
-              <br />delivers every player&rsquo;s best moment &mdash; automatically.
+              Our proprietary AI system that
+              <br />delivers every player&rsquo;s best moment automatically.
             </p>
 
             <div className={styles.mbTags} aria-hidden="true">
@@ -1006,12 +1006,12 @@ export default function HomeClient({
           <div className={styles.momentsBg} aria-hidden="true" />
           <div className={styles.prodOverlayMoments} aria-hidden="true" />
           <div className={styles.prodText}>
-            <span className={styles.prodNum}>04</span>
-            <h2 className={styles.prodName} style={{ fontSize: 'clamp(56px,6vw,80px)' }}>Moments</h2>
-            <p className={styles.prodDesc}>AI-powered highlight capture. Every player leaves with their story.</p>
-            <Link href="/products/moments" className={styles.prodBtn}>
+            {/* <span className={styles.prodNum}>04</span> */}
+            <h2 className={styles.prodName}>Moments</h2>
+            <p className={styles.prodDesc}>AI-powered highlight capture. <br/> Every player leaves with their story.</p>
+            {/* <Link href="/products/moments" className={styles.prodBtn}>
               Learn More &#x2192;
-            </Link>
+            </Link> */}
           </div>
           <div className={styles.momentsVideoStrip} aria-label="Moments highlights reel">
             <div className={styles.momentsVideoTrack} aria-hidden="true">
@@ -1039,8 +1039,14 @@ export default function HomeClient({
         data-nav-theme="light"
       >
         <div className={styles.testInner}>
+          <h2 id="test-heading" className={styles.testHeading}>What operators say</h2>
+          <div
+            className={styles.testControls}
+            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
+            onMouseLeave={startAuto}
+          >
           <button
-            className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
+            className={styles.testArrowAbs}
             aria-label="Previous testimonial"
             onClick={() => {
               const next = (tIdx - 1 + testimonials.length) % testimonials.length;
@@ -1050,22 +1056,9 @@ export default function HomeClient({
           >
             <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14" /></svg>
           </button>
-          <button
-            className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
-            aria-label="Next testimonial"
-            onClick={() => {
-              const next = (tIdx + 1) % testimonials.length;
-              showTestimonial(next, 'next');
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14" /></svg>
-          </button>
 
           <div
             className={styles.testGrid}
-            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
-            onMouseLeave={startAuto}
           >
             <div className={styles.testImage}>
               <Image
@@ -1106,8 +1099,21 @@ export default function HomeClient({
                 <span className={styles.testRole}>{t.role}</span>
               </div>
             </div>
-          </div>
-        </div>
+          </div>{/* /testGrid */}
+
+          <button
+            className={styles.testArrowAbs}
+            aria-label="Next testimonial"
+            onClick={() => {
+              const next = (tIdx + 1) % testimonials.length;
+              showTestimonial(next, 'next');
+              startAuto();
+            }}
+          >
+            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14" /></svg>
+          </button>
+          </div>{/* /testControls */}
+        </div>{/* /testInner */}
       </section>
       )}
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { TestimonialMeta } from '@/lib/testimonials';
 import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal';
-import MigrateTestimonialsButton from '@/components/admin/MigrateTestimonialsButton';
+// import MigrateTestimonialsButton from '@/components/admin/MigrateTestimonialsButton';
 import styles from './testimonials.module.css';
 
 export default function AdminTestimonialsPage() {
@@ -179,15 +179,15 @@ export default function AdminTestimonialsPage() {
           </div>
         )}
 
-        {/* Migrate .md files section */}
-        <div className={styles.utilSection}>
+        {/* Migrate .md files section — temporarily disabled */}
+        {/* <div className={styles.utilSection}>
           <h2 className={styles.utilHeading}>Import from .md files</h2>
           <p className={styles.utilDesc}>
-            Read all <code>content/testimonials/*.md</code> files and upload them to S3.
+            Read all content/testimonials/*.md files and upload them to S3.
             Existing testimonials with the same slug will be overwritten.
           </p>
           <MigrateTestimonialsButton onMigrated={loadTestimonials} />
-        </div>
+        </div> */}
 
         {/* Footer */}
         <div className={styles.footer}>
