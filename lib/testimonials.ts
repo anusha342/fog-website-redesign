@@ -4,16 +4,22 @@ import matter from 'gray-matter';
 
 const TESTIMONIALS_DIR = path.join(process.cwd(), 'content', 'testimonials');
 
-export interface Testimonial {
-  slug: string;
-  name: string;
-  company: string;
+/** Metadata stored in S3 (no body). Used for admin list views. */
+export interface TestimonialMeta {
+  slug:        string;
+  name:        string;
+  company:     string;
   designation: string;
-  rating: number;
-  avatar: string;
-  logo: string;
-  product: string;
-  location: string;
+  /** Always 5 from admin form; kept so TestimonialCard star display keeps working. */
+  rating:      number;
+  avatar:      string;
+  logo:        string;
+  product:     string;
+  location:    string;
+}
+
+/** Full testimonial including the quote body. */
+export interface Testimonial extends TestimonialMeta {
   body: string;
 }
 
