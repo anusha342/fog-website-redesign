@@ -19,7 +19,7 @@ function getS3() {
 
 function bucket()       { return process.env.S3_BUCKET_NAME!; }
 function blogsPrefix()  { return process.env.S3_BLOGS_PREFIX  || 'blogs'; }
-function assetsPrefix() { return process.env.S3_ASSETS_PREFIX || 'assets'; }
+function assetsPrefix() { return process.env.S3_ASSETS_PREFIX || `${blogsPrefix()}/assets`; }
 
 async function streamToString(stream: NodeJS.ReadableStream): Promise<string> {
   const chunks: Buffer[] = [];

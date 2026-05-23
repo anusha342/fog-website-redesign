@@ -2,7 +2,7 @@
 
 ## Storage Architecture
 - **Blogs** stored as `blogs/{slug}.json` in S3 — fields: title, slug, date, excerpt, author, coverImage (S3 URL), category, tags, readTime, bodyHtml
-- **Images** stored in S3 `assets/` folder — publicly readable via bucket policy
+- **Images** stored in S3 `blogs/assets/` folder — publicly readable via bucket policy
 - **Public blog pages** read from S3 with ISR (`revalidate = 60`) — no redeploy needed when content changes
 - **Auth** uses stateless JWT cookies (OTP token short-lived 10min, admin session 7 days)
 

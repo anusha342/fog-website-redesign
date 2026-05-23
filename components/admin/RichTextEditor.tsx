@@ -216,7 +216,7 @@ export default function RichTextEditor({ value, onChange }: Props) {
           disabled={imgUploading}
           title="Insert image"
         >
-          {imgUploading ? <span className={styles.miniSpinner} /> : '&#128247;'}
+          {imgUploading ? <span className={styles.miniSpinner} /> : 'Upload Image'}
         </TBtn>
 
       </div>

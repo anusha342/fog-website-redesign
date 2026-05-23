@@ -49,7 +49,8 @@ export async function POST(req: Request) {
 
     const bucket = process.env.S3_BUCKET_NAME!;
     const region = process.env.AWS_REGION || 'ap-south-1';
-    const prefix = process.env.S3_ASSETS_PREFIX || 'assets';
+    const blogsPrefix = process.env.S3_BLOGS_PREFIX || 'blogs';
+    const prefix = process.env.S3_ASSETS_PREFIX || `${blogsPrefix}/assets`;
 
     const uuid     = randomUUID();
     const safeName = sanitizeName(file.name) || 'image';
