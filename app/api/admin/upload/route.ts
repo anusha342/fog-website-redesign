@@ -49,8 +49,18 @@ export async function POST(req: Request) {
 
     const bucket = process.env.S3_BUCKET_NAME!;
     const region = process.env.AWS_REGION || 'ap-south-1';
-    const blogsPrefix = process.env.S3_BLOGS_PREFIX || 'blogs';
-    const prefix = process.env.S3_ASSETS_PREFIX || `${blogsPrefix}/assets`;
+
+    // Optional ?folder=testimonials routes assets to testimonials/assets/
+    const url    = new URL(req.url);
+    const folder = url.searchParams.get('folder');
+    let prefix: string;
+    if (folder === 'testimonials') {
+      const testimonialsBase = process.env.S3_TESTIMONIALS_PREFIX || 'testimonials';
+      prefix = `${testimonialsBase}/assets`;
+    } else {
+      const blogsBase = process.env.S3_BLOGS_PREFIX || 'blogs';
+      prefix = process.env.S3_ASSETS_PREFIX || `${blogsBase}/assets`;
+    }
 
     const uuid     = randomUUID();
     const safeName = sanitizeName(file.name) || 'image';
@@ -66,8 +76,8 @@ export async function POST(req: Request) {
       ContentType: file.type,
     }));
 
-    const url = `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
-    return NextResponse.json({ url, key });
+    const publicUrl = `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
+    return NextResponse.json({ url: publicUrl, key });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Upload failed';
     console.error('POST /api/admin/upload error:', message);

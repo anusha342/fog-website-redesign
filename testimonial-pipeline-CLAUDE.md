@@ -324,11 +324,30 @@ app/admin/dashboard/page.tsx                       ← enable testimonials card 
 | Phase | Description                        | Status      | Session    |
 |-------|------------------------------------|-------------|------------|
 | 1     | S3 helpers + types                 | ✅ Complete  | 2026-05-23 |
-| 2     | API routes (admin CRUD)            | ⏳ Pending   | —          |
+| 2     | API routes (admin CRUD)            | ✅ Complete  | 2026-05-23 |
 | 3     | `TestimonialForm` component        | ⏳ Pending   | —          |
 | 4     | Admin pages (list / new / edit)    | ⏳ Pending   | —          |
 | 5     | Enable dashboard card              | ⏳ Pending   | —          |
 | 6     | Public site integration (S3 read)  | ⏳ Pending   | —          |
+
+### Phase 2 — Done (2026-05-23)
+
+**Files changed:**
+- `app/api/admin/testimonials/route.ts` *(new)* — `GET` lists all testimonials from S3 (metadata only); `POST` validates required fields, blocks duplicate slugs, writes full `Testimonial` object to S3, returns 201
+- `app/api/admin/testimonials/[slug]/route.ts` *(new)* — `GET` fetches single testimonial for edit form; `PUT` validates, checks slug match + existence, overwrites; `DELETE` checks existence then removes from S3
+- `app/api/admin/upload/route.ts` *(updated)* — reads optional `?folder=testimonials` query param; when present, routes uploads to `testimonials/assets/` instead of `blogs/assets/`; renamed inner `url` → `publicUrl` to avoid variable shadow
+
+**Endpoints live:**
+```
+GET    /api/admin/testimonials
+POST   /api/admin/testimonials
+GET    /api/admin/testimonials/[slug]
+PUT    /api/admin/testimonials/[slug]
+DELETE /api/admin/testimonials/[slug]
+POST   /api/admin/upload?folder=testimonials   (avatar / logo)
+```
+
+---
 
 ### Phase 1 — Done (2026-05-23)
 
