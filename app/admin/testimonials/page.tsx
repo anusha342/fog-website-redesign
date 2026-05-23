@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import type { TestimonialMeta } from '@/lib/testimonials';
 import ConfirmDeleteModal from '@/components/admin/ConfirmDeleteModal';
+import MigrateTestimonialsButton from '@/components/admin/MigrateTestimonialsButton';
 import styles from './testimonials.module.css';
 
 export default function AdminTestimonialsPage() {
@@ -14,7 +15,9 @@ export default function AdminTestimonialsPage() {
   const [deleting,      setDeleting]      = useState(false);
   const [deleteError,   setDeleteError]   = useState('');
 
-  useEffect(() => {
+  const loadTestimonials = useCallback(() => {
+    setLoading(true);
+    setError('');
     fetch('/api/admin/testimonials')
       .then((r) => r.json())
       .then((data) => {
@@ -24,6 +27,10 @@ export default function AdminTestimonialsPage() {
       .catch(() => setError('Network error. Could not load testimonials.'))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, [loadTestimonials]);
 
   async function handleDeleteConfirm() {
     if (!pendingDelete) return;
@@ -171,6 +178,16 @@ export default function AdminTestimonialsPage() {
             <button onClick={() => setDeleteError('')} className={styles.retryBtn}>Dismiss</button>
           </div>
         )}
+
+        {/* Migrate .md files section */}
+        <div className={styles.utilSection}>
+          <h2 className={styles.utilHeading}>Import from .md files</h2>
+          <p className={styles.utilDesc}>
+            Read all <code>content/testimonials/*.md</code> files and upload them to S3.
+            Existing testimonials with the same slug will be overwritten.
+          </p>
+          <MigrateTestimonialsButton onMigrated={loadTestimonials} />
+        </div>
 
         {/* Footer */}
         <div className={styles.footer}>

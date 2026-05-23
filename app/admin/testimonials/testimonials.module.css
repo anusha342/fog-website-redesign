@@ -287,6 +287,72 @@
   color: #F05023;
 }
 
+/* Utility / migrate section */
+.utilSection {
+  background: #ffffff;
+  border: 1.5px solid #e0e3e8;
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.utilHeading {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 6px;
+}
+
+.utilDesc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 16px;
+}
+
+.migrateBtn {
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.migrateBtn:hover:not(:disabled) {
+  background: #1f2937;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.migrateBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.utilSuccess {
+  font-size: 13px;
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
+.utilError {
+  font-size: 13px;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 0;
+}
+
 @media (max-width: 600px) {
   .topBar { flex-direction: column; align-items: flex-start; }
   .th:nth-child(2),
