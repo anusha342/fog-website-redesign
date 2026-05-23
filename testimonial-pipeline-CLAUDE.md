@@ -327,8 +327,15 @@ app/admin/dashboard/page.tsx                       ← enable testimonials card 
 | 2     | API routes (admin CRUD)            | ✅ Complete  | 2026-05-23 |
 | 3     | `TestimonialForm` component        | ✅ Complete  | 2026-05-23 |
 | 4     | Admin pages (list / new / edit)    | ✅ Complete  | 2026-05-23 |
-| 5     | Enable dashboard card              | ⏳ Pending   | —          |
+| 5     | Enable dashboard card              | ✅ Complete  | 2026-05-23 |
 | 6     | Public site integration (S3 read)  | ⏳ Pending   | —          |
+
+### Phase 5 — Done (2026-05-23)
+
+**Files updated:**
+- `app/admin/dashboard/page.tsx` — replaced the greyed-out `<div className={cardDisabled}>` testimonials card with a live `<Link href="/admin/testimonials">` using the same `.card` class; swapped the `cardBadge` "Soon" element for `cardArrow` "→" matching the Blogs card pattern exactly
+
+---
 
 ### Phase 4 — Done (2026-05-23)
 

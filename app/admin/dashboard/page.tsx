@@ -47,12 +47,12 @@ export default async function DashboardPage() {
             <span className={styles.cardArrow}>&#x2192;</span>
           </Link>
 
-          <div className={`${styles.card} ${styles.cardDisabled}`}>
+          <Link href="/admin/testimonials" className={styles.card}>
             <span className={styles.cardIcon}>&#9733;</span>
             <span className={styles.cardLabel}>Testimonials</span>
-            <span className={styles.cardDesc}>Coming in a future phase</span>
-            <span className={styles.cardBadge}>Soon</span>
-          </div>
+            <span className={styles.cardDesc}>Create, edit &amp; delete testimonials</span>
+            <span className={styles.cardArrow}>&#x2192;</span>
+          </Link>
         </div>
 
         {/* One-time Migration — commented out after initial migration completed */}
