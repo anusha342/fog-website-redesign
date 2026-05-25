@@ -1009,213 +1009,236 @@
 
 /* ── HOW IT WORKS / PROCESS STEPS SECTION ── */
 .processSection {
-  background: var(--surface);
+  background: #090909;
   width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.processInner {
+.processWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   max-width: 1440px;
   margin: 0 auto;
-  padding-top: 88px;
+  width: 100%;
+  padding: 56px 36px 32px;
+  box-sizing: border-box;
+}
+
+.processEyebrow {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1.1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--hg-neon-orange);
+  margin-bottom: 12px;
 }
 
 .processHeader {
-  text-align: left;
-  padding: 0 var(--sp-80) 56px;
+  flex-shrink: 0;
+  margin-bottom: 28px;
 }
 
 .processTitle {
   font-family: 'ClashDisplay', sans-serif;
-  font-weight: 600;
-  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 56px);
   text-transform: uppercase;
-  color: var(--dark);
+  color: #fff;
   letter-spacing: -0.5px;
   margin: 0;
   line-height: 1.05;
 }
 
-.processStage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/7;
-  overflow: hidden;
-  margin-bottom: 50px;
+.processBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.processSlide {
+.processStageWrap {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.processStageImg {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.processStageGradient {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 600ms ease;
-}
-
-.processSlideActive {
-  opacity: 1;
-}
-
-.processOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
-  padding: 48px 56px 44px;
+  background:
+    linear-gradient(to right, rgba(9,9,9,0.55) 0%, transparent 18%, transparent 82%, rgba(9,9,9,0.55) 100%),
+    linear-gradient(to bottom, transparent 20%, rgba(9,9,9,0.5) 65%, #090909 100%);
+  z-index: 1;
   pointer-events: none;
 }
 
-.processStepName {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(20px, 2.6vw, 36px);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--white);
-  margin: 0 0 10px;
-  letter-spacing: -0.5px;
+.processCards {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: -52px;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 8px;
 }
 
-.processStepDesc {
+.processCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: default;
+  transform: translateY(0);
+  transition:
+    transform 380ms cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.processCard:hover {
+  transform: translateY(-10px);
+}
+
+.processCardImgWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 4px;
+  overflow: hidden;
+  background: #111;
+  flex-shrink: 0;
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+
+.processCard:hover .processCardImgWrap {
+  border-color: rgba(240, 80, 35, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(240, 80, 35, 0.18),
+    0 20px 48px rgba(240, 80, 35, 0.18);
+}
+
+.processCardImg {
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(.25, .46, .45, .94);
+}
+
+.processCard:hover .processCardImg {
+  transform: scale(1.06);
+}
+
+/* Step badge — overlaid top-left corner of image */
+.processCardStep {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--hg-neon-orange);
+  background: rgba(9, 9, 9, 0.82);
+  border: 1px solid rgba(240, 80, 35, 0.55);
+  border-radius: 3px;
+  padding: 3px 8px;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  transition: background 300ms ease, border-color 300ms ease;
+}
+
+.processCard:hover .processCardStep {
+  background: rgba(240, 80, 35, 0.15);
+  border-color: rgba(240, 80, 35, 0.9);
+}
+
+.processCardName {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(13px, 1.3vw, 17px);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: -0.2px;
+  line-height: 1.1;
+  margin: 0;
+  transition: text-shadow 300ms ease;
+}
+
+.processCard:hover .processCardName {
+  text-shadow: 0 0 28px rgba(240, 80, 35, 0.35);
+}
+
+.processCardDesc {
   font-family: 'GoogleSans', sans-serif;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.55);
-  max-width: 400px;
-  line-height: 1.5;
+  font-size: clamp(11px, 0.95vw, 13px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.55;
   margin: 0;
 }
 
-.processNav {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.processBtn {
-  display: block;
-  padding: 28px 32px 32px;
-  background: var(--surface);
-  border: none;
-  border-right: 1px solid rgba(0, 0, 0, 0.07);
-  border-top: 3px solid transparent;
-  cursor: pointer;
-  text-align: left;
-  transition: background 200ms ease, border-color 200ms ease;
-}
-
-.processBtn:last-child {
-  border-right: none;
-}
-
-.processBtn:hover {
-  background: #ebebeb;
-}
-
-.processBtnActive {
-  background: var(--white);
-  border-top-color: var(--accent);
-}
-
-.processBtnBody {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.processBtnNum {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2.5px;
-  color: var(--gray);
-  transition: color 200ms;
-  display: block;
-}
-
-.processBtnName {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(13px, 1.1vw, 16px);
-  font-weight: 600;
-  text-transform: uppercase;
-  color: rgba(19, 19, 19, 0.35);
-  letter-spacing: 0.2px;
-  line-height: 1.2;
-  display: block;
-  transition: color 200ms;
-}
-
-.processBtnDesc {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
-  color: var(--gray);
-  line-height: 1.55;
-  display: block;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 350ms ease, opacity 300ms ease;
-}
-
-.processBtnActive .processBtnNum {
-  color: var(--accent);
-}
-
-.processBtnActive .processBtnName {
-  color: var(--dark);
-}
-
-.processBtnActive .processBtnDesc {
-  max-height: 80px;
-  opacity: 1;
-}
-
-.processBtn:hover .processBtnName {
-  color: rgba(19, 19, 19, 0.7);
+@media (prefers-reduced-motion: reduce) {
+  .processCard,
+  .processCardImgWrap,
+  .processCardImg,
+  .processCardStep,
+  .processCardName {
+    transition: none;
+  }
+  .processCard:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 1023px) {
-  .processHeader {
-    padding: 0 var(--sp-48) 48px;
+  .processSection {
+    height: auto;
+    min-height: 100vh;
   }
-  .processNav {
+  .processWrap {
+    padding: 56px 28px 40px;
+  }
+  .processCards {
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 24px;
   }
-  .processBtn {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  .processStageWrap {
+    flex: none;
+    aspect-ratio: 16/7;
   }
 }
 
 @media (max-width: 767px) {
-  .processStage {
-    aspect-ratio: 4/3;
+  .processWrap {
+    padding: 48px 20px 32px;
   }
-  .processNav {
+  .processCards {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
   }
-  .processBtn {
-    padding: 18px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-  .processOverlay {
-    padding: 40px 24px 28px;
-  }
-  .processHeader {
-    padding-bottom: 32px;
+  .processStageWrap {
+    aspect-ratio: 16/9;
   }
 }
 
-@media (max-width: 640px) {
-  .processHeader {
-    padding: 0 var(--sp-24) 40px;
-  }
-  .processNav {
+@media (max-width: 480px) {
+  .processCards {
     grid-template-columns: 1fr;
-  }
-  .processBtn {
-    padding: 22px 24px 24px;
-  }
-  .processBtnActive .processBtnDesc {
-    max-height: 120px;
   }
 }
 

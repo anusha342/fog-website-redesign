@@ -81,7 +81,7 @@ Work is done **section by section, page by page** in this order:
 | 2 | What is HyperGrid (full-width 3D render + 3 descriptor cards) | Done |
 | 3 | Game Modes (sticky image panel + interactive modes list) | Done |
 | 4 | Moments Bento Grid (mixed card layout) | Done |
-| 5 | How It Works (process steps carousel with image swap) | Pending |
+| 5 | How It Works (process steps carousel with image swap) | Done |
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Pending |
 | 7 | Specifications (3D model + dimension + tech spec cards) | Pending |
 | 8 | Testimonials Carousel (auto-advance, phase-based animations) | Pending |
@@ -107,6 +107,19 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 5: How It Works (Easy, Automated & Operator-Free)
+- Section bg: `#090909` (dark, matches rest of page)
+- **Layout:** `height: 100vh`, flex column — header (flex-shrink:0) + body (flex:1, flex-col)
+- **Stage image:** `hyper-grid-5.jpg` fills flex:1 via `next/image fill`, `object-position: center 30%`, rounded corners; gradient overlay (sides + bottom) fades image to black at bottom edges
+- **Cards:** 4 static cards in `repeat(4, 1fr)` grid, `margin-top: -52px` to overlap gradient fade area — cards float over the darkened bottom of the image
+  - Each card: white-bordered image frame (`aspect-ratio: 4/3`, 1px rgba border), orange `STEP 0X` eyebrow, ClashDisplay 700 title, GoogleSans 300 desc
+  - Card images from `/images/hyper-grid/automated/card-1.png` through `card-4.png`
+  - `data-reveal` stagger 0.1/0.2/0.3/0.4s
+- **Removed:** all carousel logic (`activeStep` state, `processNav`, `processBtn` navigation, `processSlide`/`processSlideActive` — section is now fully static)
+- Section eyebrow "04 — How It Works" — GoogleSans 500, orange, 4px tracking — consistent with sections 2, 3, 4
+- Title "Easy, Automated & Operator-Free" — `clamp(28px, 4vw, 56px)`, ClashDisplay 700, uppercase, white — matches all other section titles exactly
+- Responsive: ≤1023px stage drops `flex:1` → `aspect-ratio: 16/7`, cards switch to 2-col grid; ≤767px stage `aspect-ratio: 16/9`; ≤480px single column
 
 ### HyperGrid — Section 4: Moments in HyperGrid
 - Section bg: `var(--surface)` — unchanged

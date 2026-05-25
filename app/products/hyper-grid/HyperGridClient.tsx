@@ -66,10 +66,10 @@ const MODES = [
 ];
 
 const STEPS = [
-  { name: 'Tap the Card',           desc: 'Comes integrated with your card reader / coin slot machine.',  img: '/images/hyper-grid/hyper-grid-1.png' },
-  { name: 'Select the Game',        desc: 'Use our touch-operated software to select your game.',          img: '/images/hyper-grid/hyper-grid-2.png' },
-  { name: 'Enter Grid & Tutorial',  desc: 'Players enter the grid and start the tutorial video.',         img: '/images/hyper-grid/hyper-grid-3.png' },
-  { name: 'Play, Enjoy & Repeat',   desc: 'Can you beat the grid? Come back and try again.',              img: '/images/hyper-grid/hyper-grid-4.png' },
+  { name: 'Tap the Card',    desc: 'Comes integrated with your card reader / coin slot machine.',  img: '/images/hyper-grid/automated/card-1.png' },
+  { name: 'Select the Game', desc: 'Use our touch operated software to select your game.',          img: '/images/hyper-grid/automated/card-2.png' },
+  { name: 'Enter the Grid',  desc: 'Players enter the grid to start the tutorial video.',           img: '/images/hyper-grid/automated/card-3.png' },
+  { name: 'Watch Tutorial',  desc: 'Learn how to play with our super simple tutorial videos.',      img: '/images/hyper-grid/automated/card-4.png' },
 ];
 
 const TESTIMONIALS = [
@@ -129,9 +129,6 @@ export default function HyperGridClient() {
 
   /* ── Game Modes ── */
   const [activeMode, setActiveMode] = useState(0);
-
-  /* ── Process Steps ── */
-  const [activeStep, setActiveStep] = useState(0);
 
   /* ── ROI Calculator ── */
   const [floor,      setFloor]      = useState(50);
@@ -588,37 +585,42 @@ export default function HyperGridClient() {
 
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
-        <div className={styles.processInner}>
-          <div className={styles.processHeader} data-reveal>
-            <h2 className={styles.processTitle}>Easy, Automated &amp; Unmanned</h2>
+        <div className={styles.processWrap}>
+          <div className={styles.processHeader}>
+            <span className={styles.processEyebrow} data-reveal>04 — How It Works</span>
+            <h2 className={styles.processTitle} data-reveal data-reveal-delay="0.1">
+              Easy, Automated &amp; Operator-Free
+            </h2>
           </div>
-          <div className={styles.processStage}>
-            {STEPS.map((s, idx) => (
-              <div
-                key={idx}
-                className={`${styles.processSlide} ${activeStep === idx ? styles.processSlideActive : ''}`}
-                style={{ backgroundImage: `url('${s.img}')` }}
-              ></div>
-            ))}
-            <div className={styles.processOverlay}>
-              <h3 className={styles.processStepName}>{STEPS[activeStep].name}</h3>
-              <p className={styles.processStepDesc}>{STEPS[activeStep].desc}</p>
+          <div className={styles.processBody}>
+            <div className={styles.processStageWrap}>
+              <Image
+                src="/images/hyper-grid/hyper-grid-6.png"
+                alt="HyperGrid automated floor gaming system in action"
+                fill
+                className={styles.processStageImg}
+                sizes="100vw"
+              />
+              <div className={styles.processStageGradient} />
             </div>
-          </div>
-          <div className={styles.processNav}>
-            {STEPS.map((s, idx) => (
-              <button
-                key={idx}
-                className={`${styles.processBtn} ${activeStep === idx ? styles.processBtnActive : ''}`}
-                onClick={() => setActiveStep(idx)}
-              >
-                <div className={styles.processBtnBody}>
-                  <span className={styles.processBtnNum}>0{idx + 1}</span>
-                  <span className={styles.processBtnName}>{s.name}</span>
-                  <span className={styles.processBtnDesc}>{s.desc}</span>
+            <div className={styles.processCards}>
+              {STEPS.map((s, idx) => (
+                <div key={idx} className={styles.processCard} data-reveal data-reveal-delay={`${0.1 * (idx + 1)}`}>
+                  <div className={styles.processCardImgWrap}>
+                    <Image
+                      src={s.img}
+                      alt={s.name}
+                      fill
+                      className={styles.processCardImg}
+                      sizes="25vw"
+                    />
+                    <span className={styles.processCardStep} aria-hidden="true">0{idx + 1}</span>
+                  </div>
+                  <h3 className={styles.processCardName}>{s.name}</h3>
+                  <p className={styles.processCardDesc}>{s.desc}</p>
                 </div>
-              </button>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
