@@ -181,7 +181,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       {/* 1. HERO SECTION */}
       <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+          <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay} aria-hidden="true"></div>
 
