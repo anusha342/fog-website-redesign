@@ -1243,6 +1243,81 @@
 .testArrowPrev { left: 0; }
 .testArrowNext { right: 0; }
 
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+
+/* ── Hero ── */
+@media (max-width: 767px) {
+  .hudCornerTl, .hudCornerTr, .hudCornerBl, .hudCornerBr { display: none; }
+  .heroBtns { flex-direction: column; align-items: center; gap: 12px; }
+  .heroDesc { font-size: clamp(15px, 4.5vw, 18px); }
+}
+
+/* ── Modes: 640px supplement ── */
+@media (max-width: 640px) {
+  .modesV2Section { padding: 56px 24px 64px; }
+  .modesV2Left { flex-direction: column; }
+  .modesV2ImgWrap { width: 100%; }
+  .modeItemName { font-size: clamp(28px, 8vw, 48px); letter-spacing: -1px; }
+}
+
+/* ── How It Works: 767px ── */
+@media (max-width: 767px) {
+  .processStage { aspect-ratio: 4/3; }
+  .processOverlay { padding: 32px 24px 24px; }
+  .processHeader { padding: 0 var(--sp-24) 40px; }
+  .processBtnActive .processBtnDesc { max-height: 120px; }
+}
+
+@media (max-width: 640px) {
+  .processNav { grid-template-columns: 1fr; }
+  .processBtn { padding: 22px 24px 24px; }
+}
+
+/* ── ROI Calculator ── */
+@media (max-width: 1023px) {
+  .calcInner { padding: 64px var(--sp-48); }
+  .calcGrid { grid-template-columns: 1fr; gap: 32px; }
+  .calcInputs { position: static; }
+  .calcMetrics { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .calcInner { padding: 48px var(--sp-24); }
+  .calcHeader { margin-bottom: 40px; }
+  .calcMetrics { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .calcMetricVal { font-size: clamp(18px, 5vw, 24px); }
+  .calcChartWrap { height: 180px; }
+  .calcDailyGrid { grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+}
+
+/* ── Specs ── */
+@media (max-width: 1023px) {
+  .speModelInner { padding: 56px var(--sp-48) 0; }
+  .speDataInner { grid-template-columns: 1fr; padding: 56px var(--sp-48); }
+}
+
+@media (max-width: 767px) {
+  .speModelInner { padding: 48px var(--sp-24) 0; }
+  .speDataInner { padding: 48px var(--sp-24); }
+  .speDimsCard { padding: 28px 24px; }
+  .speInfoCard { padding: 24px 20px; }
+  .speModelBody { font-size: 15px; }
+}
+
+/* ── Testimonials ── */
+@media (max-width: 1023px) {
+  .testSection { padding: 80px var(--sp-48); }
+  .testGrid { grid-template-columns: 1fr; gap: 40px; }
+  .testImage { display: none; }
+}
+
+@media (max-width: 767px) {
+  .testSection { padding: 64px var(--sp-24); }
+  .testArrowAbs { display: none; }
+}
+
 /* ── BUTTONS ── */
 .hbtn {
   display: inline-flex;

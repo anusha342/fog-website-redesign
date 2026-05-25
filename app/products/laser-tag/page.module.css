@@ -295,6 +295,14 @@
   margin: 0;
 }
 
+/* ── Hero mobile ── */
+@media (max-width: 767px) {
+  .hudCorner { display: none; }
+  .heroQr { display: none; }
+  .heroBtns { flex-direction: column; align-items: center; gap: 12px; }
+}
+
+/* ── What section ── */
 @media (max-width: 767px) {
   .whatSection { padding: 64px var(--sp-24) 0; }
   .whatEquipment { grid-template-columns: 1fr; }
