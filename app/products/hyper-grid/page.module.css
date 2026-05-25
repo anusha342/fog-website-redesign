@@ -675,26 +675,92 @@
 .momentsTop {
   text-align: left;
   max-width: 680px;
-  margin-bottom: 60px;
+  margin-bottom: 64px;
 }
 
+/* Eyebrow — consistent with other sections */
+.momentsEyebrow {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 12px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--hg-neon-orange);
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+/* Title — matches modesV2Title exactly */
 .momentsTitle {
   font-family: 'ClashDisplay', sans-serif;
-  font-weight: 600;
-  font-size: clamp(40px, 6vw, 52px);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 56px);
   text-transform: uppercase;
   color: var(--dark);
-  line-height: 1.0;
-  margin: 0 0 20px;
+  line-height: 1.05;
+  margin: 0;
   letter-spacing: -0.5px;
-  word-spacing: 6px;
 }
 
+/* Step-flow bento grid */
 .momentsBento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  align-items: stretch;
+  gap: 0 20px;
+  align-items: start;
+}
+
+/* Individual step wrapper */
+.momentsStep {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Cascade offset for steps 2 & 4 — editorial stagger */
+.momentsStepOffset {
+  margin-top: 56px;
+}
+
+/* Connector line drawn across grid gap to next step */
+.momentsStep:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 9px; /* align with dot center */
+  left: calc(100% + 1px);
+  width: calc(20px - 2px); /* matches gap minus small margin */
+  height: 1.5px;
+  background: linear-gradient(to right, var(--hg-neon-orange), rgba(240, 80, 35, 0.25));
+}
+
+/* Step label row */
+.momentsStepLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(240, 80, 35, 0.18);
+}
+
+.momentsStepDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hg-neon-orange);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(240, 80, 35, 0.55);
+}
+
+.momentsStepText {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--hg-neon-orange);
+  line-height: 1;
 }
 
 .momentsCard {
@@ -912,28 +978,33 @@
 }
 
 @media (max-width: 1023px) {
-  .momentsInner {
-    padding: 80px var(--sp-48);
-  }
+  .momentsInner { padding: 80px var(--sp-48); }
   .momentsBento {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  /* Reset cascade offsets on 2-col — let natural flow work */
+  .momentsStepOffset { margin-top: 0; }
+  /* Restore connector for 2-col: only show on col 1 (steps 1 & 3 → 2 & 4) */
+  .momentsStep:not(:last-child)::after { display: none; }
+  .momentsStep:nth-child(odd):not(:last-child)::after {
+    display: block;
+    top: 9px;
+    left: calc(100% + 1px);
+    width: 19px;
   }
 }
 
 @media (max-width: 767px) {
-  .momentsInner {
-    padding: 64px var(--sp-24);
-  }
-  .momentsTop {
-    margin-bottom: 40px;
-  }
+  .momentsInner { padding: 64px var(--sp-24); }
+  .momentsTop { margin-bottom: 40px; }
   .momentsBento {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 32px;
   }
-  .momentsCardBodyCenter {
-    padding: 40px 24px;
-  }
+  .momentsStepOffset { margin-top: 0; }
+  .momentsStep::after { display: none; }
+  .momentsCardBodyCenter { padding: 40px 24px; }
 }
 
 /* ── HOW IT WORKS / PROCESS STEPS SECTION ── */

@@ -468,93 +468,120 @@ export default function HyperGridClient() {
       <section id="hg-moments" className={styles.momentsSection}>
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
-            <h2 className={styles.momentsTitle}>Moments in hypergrid</h2>
+            <span className={styles.momentsEyebrow}>03 — Moments</span>
+            <h2 className={styles.momentsTitle}>Moments in HyperGrid</h2>
           </div>
 
-          <div className={styles.momentsBento} data-reveal data-reveal-delay="0.1">
-            {/* Card 1 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={styles.momentsCardVisual}>
-                <Image
-                  src="/images/hyper-grid/hyper-grid-1.png"
-                  alt="HyperGrid floor in action"
-                  width={400}
-                  height={300}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
-              </div>
-            </div>
+          <div className={styles.momentsBento}>
 
-            {/* Card 2 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
-                <h3 className={styles.momentsCardH}>After play scan QR code</h3>
-                <div className={styles.momentsAvatars}>
-                  <span className={styles.momentsAvatar}>EL</span>
-                  <span className={styles.momentsAvatar}>FC</span>
-                  <span className={styles.momentsAvatar}>SS</span>
-                  <span className={styles.momentsAvatar}>RL</span>
+            {/* Step 1 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.1">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 01</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={styles.momentsCardVisual}>
+                  <Image
+                    src="/images/hyper-grid/hyper-grid-1.png"
+                    alt="HyperGrid floor in action"
+                    width={400}
+                    height={300}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
-                <div className={styles.momentsChecklist}>
-                  <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                  {[
-                    { label: 'Tap to pay & start game',         done: true },
-                    { label: 'Select game mode on screen',      done: true },
-                    { label: 'Auto-capture begins on grid entry', done: true },
-                    { label: 'AI highlight clip ready to share', done: false },
-                    { label: 'Score synced to leaderboard',     done: false },
-                  ].map((item, i) => (
-                    <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
-                      <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
-                        {item.done && (
-                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                            <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        )}
-                      </span>
-                      <span>{item.label}</span>
-                    </div>
-                  ))}
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
                 </div>
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
-                <div className={styles.momentsIconCircle} aria-hidden="true">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
-                  </svg>
+            {/* Step 2 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.2">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 02</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
+                  <h3 className={styles.momentsCardH}>After play scan QR code</h3>
+                  <div className={styles.momentsAvatars}>
+                    <span className={styles.momentsAvatar}>EL</span>
+                    <span className={styles.momentsAvatar}>FC</span>
+                    <span className={styles.momentsAvatar}>SS</span>
+                    <span className={styles.momentsAvatar}>RL</span>
+                  </div>
+                  <div className={styles.momentsChecklist}>
+                    <p className={styles.momentsChecklistTitle}>Player Journey</p>
+                    {[
+                      { label: 'Tap to pay & start game',          done: true },
+                      { label: 'Select game mode on screen',       done: true },
+                      { label: 'Auto-capture begins on grid entry', done: true },
+                      { label: 'AI highlight clip ready to share', done: false },
+                      { label: 'Score synced to leaderboard',      done: false },
+                    ].map((item, i) => (
+                      <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
+                        <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
+                          {item.done && (
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          )}
+                        </span>
+                        <span>{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
-                <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
               </div>
             </div>
 
-            {/* Card 4 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
-              <div className={styles.momentsCardMedia}>
-                <Image
-                  src="/images/hyper-grid/hyper-grid-2.png"
-                  alt="HyperGrid gameplay"
-                  width={400}
-                  height={300}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
-                />
+            {/* Step 3 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.3">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 03</span>
               </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
-                <span className={styles.momentsBadge}>Real-Time Highlights</span>
-              </div>
-              <div className={styles.momentsMadeIn}>
-                <span>By FOG Technologies</span>
+              <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
+                  <div className={styles.momentsIconCircle} aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
+                    </svg>
+                  </div>
+                  <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
+                  <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
+                </div>
               </div>
             </div>
+
+            {/* Step 4 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.4">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 04</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
+                <div className={styles.momentsCardMedia}>
+                  <Image
+                    src="/images/hyper-grid/hyper-grid-2.png"
+                    alt="HyperGrid gameplay"
+                    width={400}
+                    height={300}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
+                  />
+                </div>
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
+                  <span className={styles.momentsBadge}>Real-Time Highlights</span>
+                </div>
+                <div className={styles.momentsMadeIn}>
+                  <span>By FOG Technologies</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

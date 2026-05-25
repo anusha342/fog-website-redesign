@@ -80,7 +80,7 @@ Work is done **section by section, page by page** in this order:
 | 1 | Hero (cinematic video BG `/videos/hypergrid-bg-video.mp4`, HUD brackets, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
 | 2 | What is HyperGrid (full-width 3D render + 3 descriptor cards) | Done |
 | 3 | Game Modes (sticky image panel + interactive modes list) | Done |
-| 4 | Moments Bento Grid (mixed card layout) | Pending |
+| 4 | Moments Bento Grid (mixed card layout) | Done |
 | 5 | How It Works (process steps carousel with image swap) | Pending |
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Pending |
 | 7 | Specifications (3D model + dimension + tech spec cards) | Pending |
@@ -107,6 +107,21 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 4: Moments in HyperGrid
+- Section bg: `var(--surface)` — unchanged
+- Title position: left-aligned, unchanged
+- **Text consistency fixes:**
+  - `momentsTitle` `font-weight: 600` → `700`, `font-size: clamp(40px,6vw,52px)` → `clamp(28px,4vw,56px)` — now matches `modesV2Title` exactly
+  - `word-spacing: 6px` removed, `margin-bottom: 20px` removed (title margin-bottom was wrong — moved to `momentsTop`)
+  - `momentsTop margin-bottom: 60px` → `64px` (matches section header rhythm)
+- Added section eyebrow "03 — Moments" — GoogleSans 500, orange, 4px tracking — consistent with sections 2 and 3
+- **Step-flow layout:** Each card wrapped in `.momentsStep` with `.momentsStepLabel` (orange dot + "Step 01/02/03/04" text) above it
+  - Connector line drawn via `.momentsStep:not(:last-child)::after` pseudo-element in the 20px grid gap — linear-gradient from orange to transparent
+  - Step label has `border-bottom: 1px solid rgba(240,80,35,0.18)` as visual baseline
+  - `.momentsStepOffset` applied to steps 2 & 4 → `margin-top: 56px` — editorial cascade: 1 at top, 2 lower, 3 at top, 4 lower — not a plain equal grid per ui-ux-CLAUDE.md
+  - Individual `data-reveal` on each step with 0.1/0.2/0.3/0.4s stagger — removed container data-reveal
+- Responsive: 2-col at ≤1023px (cascade reset, connectors on odd columns only), 1-col at ≤767px (all offsets reset, connectors hidden)
 
 ### HyperGrid — Section 3: Game Modes
 - Layout: `grid-template-columns: 60fr 40fr` with `gap: 0 48px` — image panel fills ~60% of 1440px container, text panel takes ~40%; section padding kept at `36px` sides so effective split at 1440px ≈ 792px image / 528px text
