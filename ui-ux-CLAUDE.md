@@ -82,7 +82,7 @@ Work is done **section by section, page by page** in this order:
 | 3 | Game Modes (sticky image panel + interactive modes list) | Done |
 | 4 | Moments Bento Grid (mixed card layout) | Done |
 | 5 | How It Works (process steps carousel with image swap) | Done |
-| 6 | ROI Calculator (slider inputs + Chart.js output) | Pending |
+| 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
 | 7 | Specifications (3D model + dimension + tech spec cards) | Pending |
 | 8 | Testimonials Carousel (auto-advance, phase-based animations) | Pending |
 | 9 | Get In Touch (shared ContactForm, product pre-selected) | Pending |
@@ -107,6 +107,22 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 6: ROI Calculator
+- Section bg: `#fff` (white — intentional contrast against the dark sections before/after)
+- **Layout:** `height: 100vh`, flex column — header (flex-shrink:0) + body (flex:1, `grid-template-columns: 300px 1fr`) + footer (flex-shrink:0)
+- Section eyebrow "05 — ROI Calculator" — GoogleSans 500, orange, 4px tracking — consistent with all sections
+- Title "Your Returns, Calculated" — `clamp(28px, 4vw, 56px)`, ClashDisplay 700, uppercase, **dark (#131313)** — white section means dark title
+- **Input panel (left):** `#f7f7f7` bg, 1px border, fields separated by subtle divider lines, labels `rgba(19,19,19,0.55)`, value in orange, range `accent-color: orange`, select on white bg with dark border
+- **KPI strip (4 chips):** `repeat(4, 1fr)` grid
+  - Total Investment, Monthly Revenue, Payback Period: `#f4f4f4` bg, dark value
+  - Monthly Revenue + Payback: orange accent value
+  - 5-Year ROI: **dark (#131313) hero chip** with `#22c55e` green value — the number B2B buyers care most about
+- **Chart:** fills `flex:1` via flex chain — `calcChartArea (flex:1, flex-col)` → `calcChartWrap (flex:1, position:relative)` → `<canvas>` fills via `maintainAspectRatio: false`
+  - Chart colors updated to white-mode: `rgba(19,19,19,0.05)` grid, dark ticks, GoogleSans font
+  - Orange line (2.5px) with subtle orange fill above zero (break-even visual)
+- **Removed:** bar chart (`chart-revenue` canvas), `barChartRef`, daily breakdown section — noise for B2B audience
+- Footer: disclaimer left + CTA right — space-between layout
 
 ### HyperGrid — Section 5: How It Works (Easy, Automated & Operator-Free)
 - Section bg: `#090909` (dark, matches rest of page)

@@ -147,76 +147,55 @@ export default function HyperGridClient() {
   const roi            = productCost > 0 ? (fiveYearProfit / productCost) * 100 : 0;
 
   const lineChartRef = useRef<any>(null);
-  const barChartRef  = useRef<any>(null);
 
   const updateChartData = useCallback(() => {
-    if (!lineChartRef.current || !barChartRef.current) return;
-
+    if (!lineChartRef.current) return;
     lineChartRef.current.data.datasets[0].data = Array.from({ length: 60 }, (_, i) =>
       ((monthlyRevenue * (i + 1)) - productCost) / 100000
     );
     lineChartRef.current.update('none');
-
-    barChartRef.current.data.datasets[0].data = [
-      productCost / 100000,
-      monthlyRevenue / 100000,
-      yearlyRevenue / 100000,
-      (yearlyRevenue * 5) / 100000,
-    ];
-    barChartRef.current.update('none');
-  }, [productCost, monthlyRevenue, yearlyRevenue]);
+  }, [productCost, monthlyRevenue]);
 
   const initCharts = useCallback(() => {
     const Chart = (window as any).Chart;
     if (!Chart) return;
 
     const lineCanvas = document.getElementById('chart-cumulative') as HTMLCanvasElement | null;
-    const barCanvas  = document.getElementById('chart-revenue')    as HTMLCanvasElement | null;
-    if (!lineCanvas || !barCanvas) return;
+    if (!lineCanvas) return;
 
-    /* Destroy any stale instances (e.g. StrictMode double-invoke) */
     const existingLine = Chart.getChart(lineCanvas);
     if (existingLine) existingLine.destroy();
-    const existingBar = Chart.getChart(barCanvas);
-    if (existingBar) existingBar.destroy();
 
-    const sharedScales = {
-      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
-      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+    const scales = {
+      x: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.4)', font: { size: 10, family: 'GoogleSans' } }, border: { display: false } },
+      y: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.4)', font: { size: 10, family: 'GoogleSans' }, callback: (v: any) => '₹' + v + 'L' }, border: { display: false } },
     };
-    const sharedPlugins = {
+    const plugins = {
       legend: { display: false },
-      tooltip: { backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12 },
+      tooltip: { backgroundColor: '#131313', borderColor: 'rgba(19,19,19,0.15)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12, callbacks: {
+        label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
+        title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1),
+      }},
     };
 
     lineChartRef.current = new Chart(lineCanvas.getContext('2d'), {
       type: 'line',
       data: {
         labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
-        datasets: [{ data: [], borderColor: '#F05023', borderWidth: 2, fill: false, pointRadius: 0, tension: 0.3 }],
+        datasets: [{
+          data: [],
+          borderColor: '#F05023',
+          borderWidth: 2.5,
+          fill: { target: 'origin', above: 'rgba(240,80,35,0.07)', below: 'rgba(240,80,35,0)' },
+          pointRadius: 0,
+          tension: 0.4,
+        }],
       },
       options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
-          label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
-          title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1),
-        }}},
-        scales: sharedScales,
-      },
-    });
-
-    barChartRef.current = new Chart(barCanvas.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
-        datasets: [{ data: [], backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'], borderRadius: 3 }],
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, indexAxis: 'y' as const,
-        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
-          label: (ctx: any) => '₹' + ctx.parsed.x.toFixed(1) + 'L',
-        }}},
-        scales: sharedScales,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins,
+        scales,
       },
     });
 
@@ -230,10 +209,7 @@ export default function HyperGridClient() {
 
   /* Cleanup charts on unmount */
   useEffect(() => {
-    return () => {
-      lineChartRef.current?.destroy();
-      barChartRef.current?.destroy();
-    };
+    return () => { lineChartRef.current?.destroy(); };
   }, []);
 
   /* ── Testimonials ── */
@@ -627,30 +603,26 @@ export default function HyperGridClient() {
 
       {/* ── ROI CALCULATOR ── */}
       <section id="roi-calculator" className={styles.calcSection}>
-        <div className={styles.calcInner}>
+        <div className={styles.calcWrap}>
+
           <div className={styles.calcHeader}>
-            <h2 className={styles.sectionTitle} data-reveal>ROI Calculator</h2>
+            <span className={styles.calcEyebrow} data-reveal>05 — ROI Calculator</span>
+            <h2 className={styles.calcTitle} data-reveal data-reveal-delay="0.1">
+              Your Returns, Calculated
+            </h2>
           </div>
 
-          <div className={styles.calcGrid}>
-            {/* Left: Input Panel */}
+          <div className={styles.calcBody}>
+            {/* Left: Inputs */}
             <div className={styles.calcInputs}>
-              <h3 className={styles.calcPanelTitle}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                Input Parameters
-              </h3>
-
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Floor Area (sq ft)</label>
-                  <span className={styles.calcVal}>{floor}</span>
+                  <label>Floor Area</label>
+                  <span className={styles.calcVal}>{floor} sq ft</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="25" max="200" value={floor} step="5"
                   onChange={(e) => setFloor(Number(e.target.value))} />
-                <div className={styles.calcRangeLabels}><span>25 sq ft</span><span>200 sq ft</span></div>
+                <div className={styles.calcRangeLabels}><span>25</span><span>200 sq ft</span></div>
               </div>
 
               <div className={styles.calcField}>
@@ -660,22 +632,22 @@ export default function HyperGridClient() {
                 </div>
                 <input type="range" className={styles.calcRange} min="100" max="2000" value={footfall} step="50"
                   onChange={(e) => setFootfall(Number(e.target.value))} />
-                <div className={styles.calcRangeLabels}><span>100</span><span>2000</span></div>
+                <div className={styles.calcRangeLabels}><span>100</span><span>2,000</span></div>
               </div>
 
               <div className={styles.calcField}>
                 <label className={styles.calcSelectLabel}>Operating Hours</label>
                 <select className={styles.calcSelect} value={hours} onChange={(e) => setHours(Number(e.target.value))}>
-                  <option value="8">8 hours/day</option>
-                  <option value="10">10 hours/day</option>
-                  <option value="12">12 hours/day</option>
-                  <option value="16">16 hours/day</option>
+                  <option value="8">8 hours / day</option>
+                  <option value="10">10 hours / day</option>
+                  <option value="12">12 hours / day</option>
+                  <option value="16">16 hours / day</option>
                 </select>
               </div>
 
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Ticket Price (&#8377;)</label>
+                  <label>Ticket Price</label>
                   <span className={styles.calcVal}>&#8377;{ticket}</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="50" max="500" value={ticket} step="10"
@@ -685,7 +657,7 @@ export default function HyperGridClient() {
 
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Conversion Rate (%)</label>
+                  <label>Conversion Rate</label>
                   <span className={styles.calcVal}>{conversion}%</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="5" max="30" value={conversion}
@@ -694,70 +666,46 @@ export default function HyperGridClient() {
               </div>
             </div>
 
-            {/* Right: Results Panel */}
-            <div className={styles.calcResults}>
-              <div className={styles.calcMetrics}>
-                <div className={styles.calcMetric}>
-                  <span className={styles.calcMetricLabel}>Investment</span>
-                  <span className={styles.calcMetricVal}>&#8377;{(productCost / 100000).toFixed(1)}L</span>
+            {/* Right: Output */}
+            <div className={styles.calcOutput}>
+
+              {/* KPI strip */}
+              <div className={styles.calcKpis}>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Total Investment</span>
+                  <span className={styles.calcKpiVal}>&#8377;{(productCost / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Monthly Revenue</span>
-                  <span className={styles.calcMetricVal}>&#8377;{(monthlyRevenue / 100000).toFixed(1)}L</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Monthly Revenue</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiOrange}`}>&#8377;{(monthlyRevenue / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Payback Period</span>
-                  <span className={styles.calcMetricVal}>{paybackMonths} mo</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Payback Period</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiOrange}`}>{paybackMonths} mo</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricGreen}`}>
-                  <span className={styles.calcMetricLabel}>5-Year ROI</span>
-                  <span className={styles.calcMetricVal}>{roi.toFixed(0)}%</span>
+                <div className={`${styles.calcKpi} ${styles.calcKpiHero}`}>
+                  <span className={styles.calcKpiLabel}>5-Year ROI</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiGreen}`}>{roi.toFixed(0)}%</span>
                 </div>
               </div>
 
-              <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>60-Month Cumulative Profit (&#8377; Lakhs)</h4>
+              {/* Chart */}
+              <div className={styles.calcChartArea}>
+                <div className={styles.calcChartMeta}>
+                  <span className={styles.calcChartLabel}>5-Year Cumulative Profit</span>
+                  <span className={styles.calcChartNote}>Break-even when the line crosses zero</span>
+                </div>
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>
                 </div>
-                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero.</p>
               </div>
 
-              <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>Revenue Projection (&#8377; Lakhs)</h4>
-                <div className={`${styles.calcChartWrap} ${styles.calcChartWrapBar}`}>
-                  <canvas id="chart-revenue"></canvas>
-                </div>
-              </div>
-
-              <div className={styles.calcDailyCard}>
-                <h4 className={styles.calcChartTitle}>Daily Breakdown</h4>
-                <div className={styles.calcDailyGrid}>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Expected Players</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers)}</span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Daily Revenue</span>
-                    <span className={`${styles.calcDailyVal} ${styles.calcDailyValAccent}`}>
-                      &#8377;{Math.round(dailyRevenue).toLocaleString('en-IN')}
-                    </span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Games per Hour</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers / hours)}</span>
-                    <span className={styles.calcDailyUnit}>avg capacity</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           <div className={styles.calcFooter}>
             <p className={styles.calcDisclaimer}>
-              These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.
+              Indicative estimates based on industry averages. Actual results vary by location and operations.
             </p>
             <Link href="/contact" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
               Get a Detailed Proposal &nbsp;&#x2192;
