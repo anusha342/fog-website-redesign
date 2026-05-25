@@ -290,7 +290,7 @@ export default function HyperGridClient() {
       {/* ── HERO ── */}
       <header className={styles.hero}>
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+          <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay}></div>
 
@@ -299,9 +299,15 @@ export default function HyperGridClient() {
         <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true"></div>
         <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true"></div>
 
+        <div className={styles.heroScroll} aria-hidden="true">
+          <div className={styles.heroScrollChevron}></div>
+        </div>
+
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">HyperGrid</h1>
-          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
+          <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">LED Interactive Floor Gaming</span>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">HyperGrid</h1>
+          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Where the floor becomes the game</p>
+          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
             <a
               href="#what-is-hypergrid"
               className={`${styles.hbtn} ${styles.hbtnSolid}`}
@@ -332,7 +338,7 @@ export default function HyperGridClient() {
             &#x2715; Close
           </button>
           <video ref={videoRef} controls>
-            <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+            <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -340,26 +346,66 @@ export default function HyperGridClient() {
       {/* ── WHAT IS HYPERGRID ── */}
       <section id="what-is-hypergrid" className={styles.whatSection}>
         <div className={styles.whatInner}>
-          <div className={styles.whatImgWrap} data-reveal>
+          <h2 className={styles.whatHeading} data-reveal>What Is HyperGrid?</h2>
+          <div className={styles.whatHeroImgWrap} data-reveal data-reveal-delay="0.08">
             <Image
-              src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render.webp"
-              alt="HyperGrid by FOG - 3D Render"
-              className={styles.whatImg}
+              src="/images/hyper-grid/hyper-grid-6.png"
+              alt="HyperGrid LED interactive floor gaming installation"
+              className={styles.whatHeroImgEl}
               width={1600}
-              height={900}
+              height={668}
               sizes="100vw"
               priority
             />
           </div>
-          <div className={styles.whatCards} data-reveal>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Unmanned Multiplayer Turnkey Attraction</p>
-            </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Where Glowing Color Tiles Connect</p>
-            </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>To Create a World of Super Fun Games</p>
+          <div className={styles.whatFrame} data-reveal data-reveal-delay="0.1">
+            <span className={styles.whatFrameBadge} aria-hidden="true">Hyper Grid</span>
+            <div className={styles.whatCards}>
+              <div data-reveal data-reveal-delay="0.15">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap1}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/1st-card.png"
+                      alt="HyperGrid arcade-style installation in a family entertainment venue"
+                      className={styles.whatPolaroidImg}
+                      width={792}
+                      height={799}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>Arcade Style Turnkey Attraction</p>
+                </div>
+              </div>
+              <div data-reveal data-reveal-delay="0.25">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap2}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/2nd-card.png"
+                      alt="Glowing color LED tiles of the HyperGrid floor"
+                      className={styles.whatPolaroidImg}
+                      width={789}
+                      height={803}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>Where Glowing Color Tiles Connect</p>
+                </div>
+              </div>
+              <div data-reveal data-reveal-delay="0.35">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap3}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/3rd-card.png"
+                      alt="Players enjoying games on the HyperGrid floor"
+                      className={styles.whatPolaroidImg}
+                      width={783}
+                      height={799}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>To Create a World of Games</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

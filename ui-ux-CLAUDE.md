@@ -63,13 +63,29 @@ B2B — venue operators, investors, and entertainment business owners evaluating
 
 Work is done **section by section, page by page** in this order:
 
-1. Home page — section by section top to bottom
-2. Product pages (HyperGrid → Laser Tag → Laser Spy) — section by section
-3. About page — section by section
-4. Contact page — section by section
-5. Blog listing + Blog post — section by section
+1. Product pages (HyperGrid → Laser Tag → Laser Spy) — section by section 
+2. About page — section by section
+3. Contact page — section by section
+4. Blog listing + Blog post — section by section
+5. Home page — section by section top to bottom
 
 **After every section is completed**, a summary of what was changed is appended to the `## Session Log` section at the bottom of this file. This log is the source of truth for what has been done and what design decisions were made, so the next session can maintain visual consistency.
+
+---
+
+## HyperGrid Product Page — Section Map
+
+| # | Section | Status |
+|---|---|---|
+| 1 | Hero (cinematic video BG `/videos/hypergrid-bg-video.mp4`, HUD brackets, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
+| 2 | What is HyperGrid (full-width 3D render + 3 descriptor cards) | Done |
+| 3 | Game Modes (sticky image panel + interactive modes list) | Pending |
+| 4 | Moments Bento Grid (mixed card layout) | Pending |
+| 5 | How It Works (process steps carousel with image swap) | Pending |
+| 6 | ROI Calculator (slider inputs + Chart.js output) | Pending |
+| 7 | Specifications (3D model + dimension + tech spec cards) | Pending |
+| 8 | Testimonials Carousel (auto-advance, phase-based animations) | Pending |
+| 9 | Get In Touch (shared ContactForm, product pre-selected) | Pending |
 
 ---
 
@@ -91,3 +107,30 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 2: What is HyperGrid (v2 redesign)
+- Section background changed to `#090909` (dark-first, consistent with rest of page)
+- Added `"WHAT IS HYPERGRID?"` heading in ClashDisplay 700, uppercase, white
+- Replaced full-width 3D render + dark info cards with a neon tech frame design matching client reference:
+  - Frame: cyan (`--hg-neon-cyan`) left/right/bottom borders, orange top border, double inner-line effect via `::before` pseudo-element, multi-layer `box-shadow` glow
+  - `"HYPER GRID"` badge centered at top of frame — orange neon border + glow, ClashDisplay 700, 6px letter-spacing
+- 3 polaroid-style photo cards (editorial collage layout):
+  - Cards: `#f8f8f0` white frame, `padding: 10px 10px 48px` (classic polaroid bottom-weight), deep shadow stack
+  - Images: `hyper-grid-5.jpg`, `modes/find-the-color.jpg`, `hyper-grid-1.png`
+  - Rotations: −2.5° / +1.5° / −1.5° via separate CSS classes (`.whatCardWrap1/2/3`)
+  - Hover: rotate to 0° + `translateY(-10px)`, spring cubic-bezier — `prefers-reduced-motion` guard
+- `data-reveal` placed on plain wrapper divs above the rotation divs to prevent transform conflicts
+- Card stagger: 0.15s / 0.25s / 0.35s delays
+- Captions below each polaroid in ClashDisplay 700 uppercase white on dark background
+- Mobile: rotations reset to 0deg, inner frame double-lines hidden, single-column layout
+
+### HyperGrid — Section 1: Hero
+- Video source corrected to `/videos/hypergrid-bg-video.mp4` (background + modal)
+- Added cinematic multi-layer gradient overlay (radial + linear) for video depth — video stays visible in upper half, pulls to near-black at lower third where text sits
+- Fixed hero positioning: replaced `justify-content: center` + `margin-top: 480px` hack with `justify-content: flex-end` on `.hero` + `align-self: flex-end` + `padding-bottom: clamp(64px, 8vh, 120px)` on `.heroContent` — text anchors to lower third correctly across all viewport heights
+- Added eyebrow label "LED Interactive Floor Gaming" — GoogleSans, 500 weight, `#F05023`, 4px letter-spacing, uppercase — gives B2B visitors instant product category context before reading the title
+- Added sub-headline "Where the floor becomes the game" — GoogleSans 300 weight, `rgba(255,255,255,0.55)`, below title
+- Staggered `data-reveal` delays: eyebrow 0s → title 0.12s → sub 0.22s → buttons 0.32s
+- HUD corners: added `@keyframes hudDraw` (scale 0.6 → 1, opacity 0 → 0.55) with staggered delays (0.4–0.7s), spring cubic-bezier — wrapped in `prefers-reduced-motion` guard
+- Added bobbing scroll chevron at hero bottom — `@keyframes scrollBob`, opacity + 6px Y travel, `prefers-reduced-motion` guard
+- Button hover: replaced generic `transition: all` with explicit property list; added `-2px translateY` lift on all `.hbtn`; solid variant glow `rgba(240,80,35,0.45)`, ghost variant `rgba(255,255,255,0.12)`
