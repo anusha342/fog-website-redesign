@@ -5,7 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import styles from './page.module.css';
+import type { Testimonial } from '@/lib/testimonials';
 
 /* ── LENIS SMOOTH SCROLL ── */
 function loadScript(src: string): Promise<void> {
@@ -66,36 +68,17 @@ const MODES = [
 ];
 
 const STEPS = [
-  { name: 'Tap the Card',           desc: 'Comes integrated with your card reader / coin slot machine.',  img: '/images/hyper-grid/hyper-grid-1.png' },
-  { name: 'Select the Game',        desc: 'Use our touch-operated software to select your game.',          img: '/images/hyper-grid/hyper-grid-2.png' },
-  { name: 'Enter Grid & Tutorial',  desc: 'Players enter the grid and start the tutorial video.',         img: '/images/hyper-grid/hyper-grid-3.png' },
-  { name: 'Play, Enjoy & Repeat',   desc: 'Can you beat the grid? Come back and try again.',              img: '/images/hyper-grid/hyper-grid-4.png' },
+  { name: 'Tap the Card',    desc: 'Comes integrated with your card reader / coin slot machine.',  img: '/images/hyper-grid/automated/card-1.png' },
+  { name: 'Select the Game', desc: 'Use our touch operated software to select your game.',          img: '/images/hyper-grid/automated/card-2.png' },
+  { name: 'Enter the Grid',  desc: 'Players enter the grid to start the tutorial video.',           img: '/images/hyper-grid/automated/card-3.png' },
+  { name: 'Watch Tutorial',  desc: 'Learn how to play with our super simple tutorial videos.',      img: '/images/hyper-grid/automated/card-4.png' },
 ];
 
-const TESTIMONIALS = [
-  {
-    quote:  "FOG's products didn't just fill floor space. They became the anchor attraction.",
-    sub:    'Our revenue per square foot tripled within the first quarter after installation. The ROI spoke for itself.',
-    name:   'Rajiv Mehta',
-    role:   'Operations Director',
-    company:'Masti Zone India',
-    image:  '/images/operators/person-1.jpg',
-    logo:   '/uploads/mastizone-logo.png',
-    logoAlt:'Masti Zone Logo',
-  },
-  {
-    quote:  'The HyperGrid installation transformed our venue overnight.',
-    sub:    'Kids aged 6 to 60 play it. The staff-free operation means we make money even when no one is watching.',
-    name:   'Sarah Chen',
-    role:   'General Manager',
-    company:'FunZone Asia',
-    image:  '/images/operators/person-2.jpg',
-    logo:   '/uploads/mastizone-logo.png',
-    logoAlt:'FunZone Asia Logo',
-  },
-];
+interface Props {
+  testimonials: Testimonial[];
+}
 
-export default function HyperGridClient() {
+export default function HyperGridClient({ testimonials }: Props) {
   useLenis();
   useScrollReveal();
 
@@ -130,8 +113,30 @@ export default function HyperGridClient() {
   /* ── Game Modes ── */
   const [activeMode, setActiveMode] = useState(0);
 
-  /* ── Process Steps ── */
-  const [activeStep, setActiveStep] = useState(0);
+  /* ── How It Works — button-triggered sequential glide ── */
+  const [processAnimStep, setProcessAnimStep] = useState(-1);
+  const [processPlaying, setProcessPlaying] = useState(false);
+  const processTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => { processTimersRef.current.forEach(clearTimeout); };
+  }, []);
+
+  function handleProcessPlay() {
+    if (processPlaying) return;
+    setProcessPlaying(true);
+    setProcessAnimStep(-1);
+    processTimersRef.current.forEach(clearTimeout);
+    // BL(0) → TL(1) → TR(2) → BR(3), each 2 s, 3× glide distance
+    processTimersRef.current = [
+      setTimeout(() => setProcessAnimStep(0), 100),
+      setTimeout(() => setProcessAnimStep(1), 2100),
+      setTimeout(() => setProcessAnimStep(2), 4100),
+      setTimeout(() => setProcessAnimStep(3), 6100),
+      setTimeout(() => { setProcessAnimStep(4); setProcessPlaying(false); }, 8100),
+    ];
+  }
 
   /* ── ROI Calculator ── */
   const [floor,      setFloor]      = useState(50);
@@ -150,76 +155,55 @@ export default function HyperGridClient() {
   const roi            = productCost > 0 ? (fiveYearProfit / productCost) * 100 : 0;
 
   const lineChartRef = useRef<any>(null);
-  const barChartRef  = useRef<any>(null);
 
   const updateChartData = useCallback(() => {
-    if (!lineChartRef.current || !barChartRef.current) return;
-
+    if (!lineChartRef.current) return;
     lineChartRef.current.data.datasets[0].data = Array.from({ length: 60 }, (_, i) =>
       ((monthlyRevenue * (i + 1)) - productCost) / 100000
     );
     lineChartRef.current.update('none');
-
-    barChartRef.current.data.datasets[0].data = [
-      productCost / 100000,
-      monthlyRevenue / 100000,
-      yearlyRevenue / 100000,
-      (yearlyRevenue * 5) / 100000,
-    ];
-    barChartRef.current.update('none');
-  }, [productCost, monthlyRevenue, yearlyRevenue]);
+  }, [productCost, monthlyRevenue]);
 
   const initCharts = useCallback(() => {
     const Chart = (window as any).Chart;
     if (!Chart) return;
 
     const lineCanvas = document.getElementById('chart-cumulative') as HTMLCanvasElement | null;
-    const barCanvas  = document.getElementById('chart-revenue')    as HTMLCanvasElement | null;
-    if (!lineCanvas || !barCanvas) return;
+    if (!lineCanvas) return;
 
-    /* Destroy any stale instances (e.g. StrictMode double-invoke) */
     const existingLine = Chart.getChart(lineCanvas);
     if (existingLine) existingLine.destroy();
-    const existingBar = Chart.getChart(barCanvas);
-    if (existingBar) existingBar.destroy();
 
-    const sharedScales = {
-      x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
-      y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
+    const scales = {
+      x: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.4)', font: { size: 10, family: 'GoogleSans' } }, border: { display: false } },
+      y: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.4)', font: { size: 10, family: 'GoogleSans' }, callback: (v: any) => '₹' + v + 'L' }, border: { display: false } },
     };
-    const sharedPlugins = {
+    const plugins = {
       legend: { display: false },
-      tooltip: { backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12 },
+      tooltip: { backgroundColor: '#131313', borderColor: 'rgba(19,19,19,0.15)', borderWidth: 1, titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12, callbacks: {
+        label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
+        title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1),
+      }},
     };
 
     lineChartRef.current = new Chart(lineCanvas.getContext('2d'), {
       type: 'line',
       data: {
         labels: Array.from({ length: 60 }, (_, i) => ((i + 1) % 12 === 0 ? 'Y' + ((i + 1) / 12) : '')),
-        datasets: [{ data: [], borderColor: '#F05023', borderWidth: 2, fill: false, pointRadius: 0, tension: 0.3 }],
+        datasets: [{
+          data: [],
+          borderColor: '#F05023',
+          borderWidth: 2.5,
+          fill: { target: 'origin', above: 'rgba(240,80,35,0.07)', below: 'rgba(240,80,35,0)' },
+          pointRadius: 0,
+          tension: 0.4,
+        }],
       },
       options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
-          label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
-          title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1),
-        }}},
-        scales: sharedScales,
-      },
-    });
-
-    barChartRef.current = new Chart(barCanvas.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
-        datasets: [{ data: [], backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'], borderRadius: 3 }],
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, indexAxis: 'y' as const,
-        plugins: { ...sharedPlugins, tooltip: { ...sharedPlugins.tooltip, callbacks: {
-          label: (ctx: any) => '₹' + ctx.parsed.x.toFixed(1) + 'L',
-        }}},
-        scales: sharedScales,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins,
+        scales,
       },
     });
 
@@ -233,51 +217,9 @@ export default function HyperGridClient() {
 
   /* Cleanup charts on unmount */
   useEffect(() => {
-    return () => {
-      lineChartRef.current?.destroy();
-      barChartRef.current?.destroy();
-    };
+    return () => { lineChartRef.current?.destroy(); };
   }, []);
 
-  /* ── Testimonials ── */
-  const [tIdx,   setTIdx]   = useState(0);
-  const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
-  const [tImgFading, setTImgFading] = useState(false);
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const showTestimonial = useCallback((nextIdx: number) => {
-    setTPhase('exiting');
-    setTImgFading(true);
-    setTimeout(() => {
-      setTIdx(nextIdx);
-      setTPhase('entering');
-      setTImgFading(false);
-      setTimeout(() => setTPhase('visible'), 50);
-    }, 240);
-  }, []);
-
-  const startAuto = useCallback(() => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    autoRef.current = setInterval(() => {
-      setTIdx((prev) => {
-        const next = (prev + 1) % TESTIMONIALS.length;
-        showTestimonial(next);
-        return prev; // actual update happens inside showTestimonial
-      });
-    }, 4000);
-  }, [showTestimonial]);
-
-  useEffect(() => {
-    startAuto();
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [startAuto]);
-
-  const t = TESTIMONIALS[tIdx];
-
-  const phaseClass =
-    tPhase === 'exiting'  ? styles.testimonialContentExiting  :
-    tPhase === 'entering' ? styles.testimonialContentEntering :
-    styles.testimonialContentVisible;
 
   return (
     <main className={styles.hypergridPage}>
@@ -290,7 +232,7 @@ export default function HyperGridClient() {
       {/* ── HERO ── */}
       <header className={styles.hero}>
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+          <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay}></div>
 
@@ -299,9 +241,15 @@ export default function HyperGridClient() {
         <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true"></div>
         <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true"></div>
 
+        <div className={styles.heroScroll} aria-hidden="true">
+          <div className={styles.heroScrollChevron}></div>
+        </div>
+
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">HyperGrid</h1>
-          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
+          <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">LED Interactive Floor Gaming</span>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">HyperGrid</h1>
+          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Where the floor becomes the game</p>
+          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
             <a
               href="#what-is-hypergrid"
               className={`${styles.hbtn} ${styles.hbtnSolid}`}
@@ -332,7 +280,7 @@ export default function HyperGridClient() {
             &#x2715; Close
           </button>
           <video ref={videoRef} controls>
-            <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+            <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
           </video>
         </div>
       </div>
@@ -340,26 +288,66 @@ export default function HyperGridClient() {
       {/* ── WHAT IS HYPERGRID ── */}
       <section id="what-is-hypergrid" className={styles.whatSection}>
         <div className={styles.whatInner}>
-          <div className={styles.whatImgWrap} data-reveal>
+          <h2 className={styles.whatHeading} data-reveal>What Is HyperGrid?</h2>
+          <div className={styles.whatHeroImgWrap} data-reveal data-reveal-delay="0.08">
             <Image
-              src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render.webp"
-              alt="HyperGrid by FOG - 3D Render"
-              className={styles.whatImg}
+              src="/images/hyper-grid/hyper-grid-6.png"
+              alt="HyperGrid LED interactive floor gaming installation"
+              className={styles.whatHeroImgEl}
               width={1600}
-              height={900}
+              height={668}
               sizes="100vw"
               priority
             />
           </div>
-          <div className={styles.whatCards} data-reveal>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Unmanned Multiplayer Turnkey Attraction</p>
-            </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Where Glowing Color Tiles Connect</p>
-            </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>To Create a World of Super Fun Games</p>
+          <div className={styles.whatFrame} data-reveal data-reveal-delay="0.1">
+            <span className={styles.whatFrameBadge} aria-hidden="true">Hyper Grid</span>
+            <div className={styles.whatCards}>
+              <div data-reveal data-reveal-delay="0.15">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap1}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/1st-card.png"
+                      alt="HyperGrid arcade-style installation in a family entertainment venue"
+                      className={styles.whatPolaroidImg}
+                      width={792}
+                      height={799}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>Arcade Style Turnkey Attraction</p>
+                </div>
+              </div>
+              <div data-reveal data-reveal-delay="0.25">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap2}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/2nd-card.png"
+                      alt="Glowing color LED tiles of the HyperGrid floor"
+                      className={styles.whatPolaroidImg}
+                      width={789}
+                      height={803}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>Where Glowing Color Tiles Connect</p>
+                </div>
+              </div>
+              <div data-reveal data-reveal-delay="0.35">
+                <div className={`${styles.whatCardWrap} ${styles.whatCardWrap3}`}>
+                  <div className={styles.whatPolaroid}>
+                    <Image
+                      src="/images/hyper-grid/what-is-hypergrid/3rd-card.png"
+                      alt="Players enjoying games on the HyperGrid floor"
+                      className={styles.whatPolaroidImg}
+                      width={783}
+                      height={799}
+                      sizes="(max-width: 767px) 90vw, 28vw"
+                    />
+                  </div>
+                  <p className={styles.whatCardCaption}>To Create a World of Games</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -368,40 +356,52 @@ export default function HyperGridClient() {
       {/* ── GAME MODES ── */}
       <section id="game-modes" className={styles.modesV2Section}>
         <div className={styles.modesV2Wrap}>
-          <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
 
-          <div className={styles.modesV2Left}>
-            <div className={styles.modesV2ImgWrap}>
-              <Image
-                src={MODES[activeMode].img}
-                alt={MODES[activeMode].name}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch HyperGrid gameplay video">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
-              </svg>
-              Watch Gameplay
-            </button>
+          {/* Full-width header — matches whatHeading position */}
+          <div className={styles.modesV2Header}>
+            <span className={styles.modesEyebrow} data-reveal>02 — Game Modes</span>
+            <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
           </div>
 
-          <div className={styles.modesV2Right}>
-            <div className={styles.modesV2Line}></div>
-            {MODES.map((m, idx) => (
-              <div key={idx}>
-                <div
-                  className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
-                  onMouseEnter={() => setActiveMode(idx)}
-                >
-                  <h3 className={styles.modeItemName}>{m.name}</h3>
-                  <span className={styles.modeItemNum}>{`{ 0${idx + 1} }`}</span>
-                </div>
-                <div className={styles.modesV2Line}></div>
+          {/* 60 / 40 body — fills remaining viewport height */}
+          <div className={styles.modesV2Body}>
+
+            {/* Left — image panel, 60% */}
+            <div className={styles.modesV2Left}>
+              <div className={styles.modesV2ImgWrap}>
+                <Image
+                  src={MODES[activeMode].img}
+                  alt={MODES[activeMode].name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
-            ))}
+              <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch HyperGrid gameplay video">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                  <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
+                </svg>
+                Watch Gameplay
+              </button>
+            </div>
+
+            {/* Right — mode list, 40% */}
+            <div className={styles.modesV2Right}>
+              <div className={styles.modesV2Line}></div>
+              {MODES.map((m, idx) => (
+                <div key={idx}>
+                  <div
+                    className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
+                    onMouseEnter={() => setActiveMode(idx)}
+                  >
+                    <h3 className={styles.modeItemName}>{m.name}</h3>
+                    <span className={styles.modeItemNum}>0{idx + 1}</span>
+                  </div>
+                  <div className={styles.modesV2Line}></div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
@@ -410,160 +410,263 @@ export default function HyperGridClient() {
       <section id="hg-moments" className={styles.momentsSection}>
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
-            <h2 className={styles.momentsTitle}>Moments in hypergrid</h2>
+            <span className={styles.momentsEyebrow}>03 — Moments</span>
+            <h2 className={styles.momentsTitle}>Moments in HyperGrid</h2>
           </div>
 
-          <div className={styles.momentsBento} data-reveal data-reveal-delay="0.1">
-            {/* Card 1 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={styles.momentsCardVisual}>
-                <Image
-                  src="/images/hyper-grid/hyper-grid-1.png"
-                  alt="HyperGrid floor in action"
-                  width={400}
-                  height={300}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-              </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
-              </div>
-            </div>
+          <div className={styles.momentsBento}>
 
-            {/* Card 2 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
-                <h3 className={styles.momentsCardH}>After play scan QR code</h3>
-                <div className={styles.momentsAvatars}>
-                  <span className={styles.momentsAvatar}>EL</span>
-                  <span className={styles.momentsAvatar}>FC</span>
-                  <span className={styles.momentsAvatar}>SS</span>
-                  <span className={styles.momentsAvatar}>RL</span>
+            {/* Step 1 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.1">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 01</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={styles.momentsCardVisual}>
+                  <Image
+                    src="/images/hyper-grid/hyper-grid-1.png"
+                    alt="HyperGrid floor in action"
+                    width={400}
+                    height={300}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
                 </div>
-                <div className={styles.momentsChecklist}>
-                  <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                  {[
-                    { label: 'Tap to pay & start game',         done: true },
-                    { label: 'Select game mode on screen',      done: true },
-                    { label: 'Auto-capture begins on grid entry', done: true },
-                    { label: 'AI highlight clip ready to share', done: false },
-                    { label: 'Score synced to leaderboard',     done: false },
-                  ].map((item, i) => (
-                    <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
-                      <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
-                        {item.done && (
-                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                            <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        )}
-                      </span>
-                      <span>{item.label}</span>
-                    </div>
-                  ))}
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
                 </div>
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
-                <div className={styles.momentsIconCircle} aria-hidden="true">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                    <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
-                  </svg>
+            {/* Step 2 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.2">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 02</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
+                  <h3 className={styles.momentsCardH}>After play scan QR code</h3>
+                  <div className={styles.momentsAvatars}>
+                    <span className={styles.momentsAvatar}>EL</span>
+                    <span className={styles.momentsAvatar}>FC</span>
+                    <span className={styles.momentsAvatar}>SS</span>
+                    <span className={styles.momentsAvatar}>RL</span>
+                  </div>
+                  <div className={styles.momentsChecklist}>
+                    <p className={styles.momentsChecklistTitle}>Player Journey</p>
+                    {[
+                      { label: 'Tap to pay & start game',          done: true },
+                      { label: 'Select game mode on screen',       done: true },
+                      { label: 'Auto-capture begins on grid entry', done: true },
+                      { label: 'AI highlight clip ready to share', done: false },
+                      { label: 'Score synced to leaderboard',      done: false },
+                    ].map((item, i) => (
+                      <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
+                        <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
+                          {item.done && (
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          )}
+                        </span>
+                        <span>{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
-                <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
               </div>
             </div>
 
-            {/* Card 4 */}
-            <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
-              <div className={styles.momentsCardMedia}>
-                <Image
-                  src="/images/hyper-grid/hyper-grid-2.png"
-                  alt="HyperGrid gameplay"
-                  width={400}
-                  height={300}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
-                />
+            {/* Step 3 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.3">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 03</span>
               </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
-                <span className={styles.momentsBadge}>Real-Time Highlights</span>
-              </div>
-              <div className={styles.momentsMadeIn}>
-                <span>By FOG Technologies</span>
+              <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
+                  <div className={styles.momentsIconCircle} aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
+                    </svg>
+                  </div>
+                  <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
+                  <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
+                </div>
               </div>
             </div>
+
+            {/* Step 4 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.4">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 04</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
+                <div className={styles.momentsCardMedia}>
+                  <Image
+                    src="/images/hyper-grid/hyper-grid-2.png"
+                    alt="HyperGrid gameplay"
+                    width={400}
+                    height={300}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
+                  />
+                </div>
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
+                  <span className={styles.momentsBadge}>Real-Time Highlights</span>
+                </div>
+                <div className={styles.momentsMadeIn}>
+                  <span>By FOG Technologies</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
-        <div className={styles.processInner}>
-          <div className={styles.processHeader} data-reveal>
-            <h2 className={styles.processTitle}>Easy, Automated &amp; Unmanned</h2>
-          </div>
-          <div className={styles.processStage}>
-            {STEPS.map((s, idx) => (
-              <div
-                key={idx}
-                className={`${styles.processSlide} ${activeStep === idx ? styles.processSlideActive : ''}`}
-                style={{ backgroundImage: `url('${s.img}')` }}
-              ></div>
-            ))}
-            <div className={styles.processOverlay}>
-              <h3 className={styles.processStepName}>{STEPS[activeStep].name}</h3>
-              <p className={styles.processStepDesc}>{STEPS[activeStep].desc}</p>
-            </div>
-          </div>
-          <div className={styles.processNav}>
-            {STEPS.map((s, idx) => (
-              <button
-                key={idx}
-                className={`${styles.processBtn} ${activeStep === idx ? styles.processBtnActive : ''}`}
-                onClick={() => setActiveStep(idx)}
-              >
-                <div className={styles.processBtnBody}>
-                  <span className={styles.processBtnNum}>0{idx + 1}</span>
-                  <span className={styles.processBtnName}>{s.name}</span>
-                  <span className={styles.processBtnDesc}>{s.desc}</span>
-                </div>
-              </button>
-            ))}
+
+        {/* ── Header strip ── */}
+        <div className={styles.processHeaderWrap}>
+          <div className={styles.processHeaderInner}>
+            <span className={styles.processEyebrow} data-reveal>04 — How It Works</span>
+            <h2 className={styles.processTitle} data-reveal data-reveal-delay="0.1">
+              Easy, Automated &amp; Operator-Free
+            </h2>
+            <p className={styles.processSub} data-reveal data-reveal-delay="0.15">
+              Crowd-Pulling Profit Machine
+            </p>
           </div>
         </div>
+
+        {/* ── Photo canvas — constrained to 1440px ── */}
+        <div className={styles.processCanvas}>
+          <Image
+            src="/images/hyper-grid/hyper-grid-6.png"
+            alt="HyperGrid automated floor gaming system in action"
+            fill
+            className={styles.processBg}
+            sizes="(max-width: 1440px) 100vw, 1440px"
+          />
+          <div className={styles.processInner}>
+
+          {/* dimmed = non-active units fade during playback */}
+          {(() => {
+            const dimming = processPlaying && processAnimStep >= 0 && processAnimStep < 4;
+            const dim = (active: boolean) => dimming && !active ? styles.processUnitDimmed : '';
+            return (
+              <>
+                {/* Step 02 — TOP LEFT — glides right */}
+                <div className={`${styles.processUnit} ${styles.unitTopLeft} ${processAnimStep === 1 ? styles.animGlideRight : ''} ${dim(processAnimStep === 1)}`}>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 02</span>
+                    <h3 className={styles.boxTitle}>Select the Game</h3>
+                    <p className={styles.boxDesc}>Use our touch operated software to select your game.</p>
+                  </div>
+                  <div className={styles.arrowRight} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="2,2 11,11 2,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="14,2 23,11 14,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Step 04 — TOP RIGHT — glides left */}
+                <div className={`${styles.processUnit} ${styles.unitTopRight} ${processAnimStep === 2 ? styles.animGlideLeft : ''} ${dim(processAnimStep === 2)}`}>
+                  <div className={styles.arrowLeft} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 04</span>
+                    <h3 className={styles.boxTitle}>Watch Tutorial</h3>
+                    <p className={styles.boxDesc}>Learn how to play with our super simple tutorial videos.</p>
+                  </div>
+                </div>
+
+                {/* Step 01 — BOTTOM LEFT — glides up */}
+                <div className={`${styles.processUnit} ${styles.unitBottomLeft} ${processAnimStep === 0 ? styles.animGlideUp : ''} ${dim(processAnimStep === 0)}`}>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 01</span>
+                    <h3 className={styles.boxTitle}>Tap the Card</h3>
+                    <p className={styles.boxDesc}>Comes integrated with your card reader / coin slot machine.</p>
+                  </div>
+                  <div className={styles.arrowUp} aria-hidden="true">
+                    <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+                      <polyline points="2,28 11,19 20,28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="2,16 11,7 20,16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Step 03 — BOTTOM RIGHT — glides left */}
+                <div className={`${styles.processUnit} ${styles.unitBottomRight} ${processAnimStep === 3 ? styles.animGlideLeft : ''} ${dim(processAnimStep === 3)}`}>
+                  <div className={styles.arrowLeft} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 03</span>
+                    <h3 className={styles.boxTitle}>Enter the Grid</h3>
+                    <p className={styles.boxDesc}>Players enter the grid to start the tutorial video.</p>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+
+          </div>{/* /processInner */}
+        </div>{/* /processCanvas */}
+
+        {/* ── Click to Play — below photo, centered ── */}
+        <div className={styles.processFooter}>
+          <button
+            className={`${styles.processPlayBtn}${processPlaying ? ' ' + styles.processPlayBtnPlaying : ''}`}
+            onClick={handleProcessPlay}
+            disabled={processPlaying}
+          >
+            {processPlaying ? 'Playing…' : processAnimStep === 4 ? 'Play Again' : 'Click to Play'}
+            {!processPlaying && (
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                <polygon points="2,1 11,6 2,11" />
+              </svg>
+            )}
+          </button>
+        </div>
+
       </section>
 
       {/* ── ROI CALCULATOR ── */}
       <section id="roi-calculator" className={styles.calcSection}>
-        <div className={styles.calcInner}>
+        <div className={styles.calcWrap}>
+
           <div className={styles.calcHeader}>
-            <h2 className={styles.sectionTitle} data-reveal>ROI Calculator</h2>
+            <span className={styles.calcEyebrow} data-reveal>05 — ROI Calculator</span>
+            <h2 className={styles.calcTitle} data-reveal data-reveal-delay="0.1">
+              Your Returns, Calculated
+            </h2>
           </div>
 
-          <div className={styles.calcGrid}>
-            {/* Left: Input Panel */}
+          <div className={styles.calcBody}>
+            {/* Left: Inputs */}
             <div className={styles.calcInputs}>
-              <h3 className={styles.calcPanelTitle}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/>
-                  <path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-                Input Parameters
-              </h3>
-
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Floor Area (sq ft)</label>
-                  <span className={styles.calcVal}>{floor}</span>
+                  <label>Floor Area</label>
+                  <span className={styles.calcVal}>{floor} sq ft</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="25" max="200" value={floor} step="5"
                   onChange={(e) => setFloor(Number(e.target.value))} />
-                <div className={styles.calcRangeLabels}><span>25 sq ft</span><span>200 sq ft</span></div>
+                <div className={styles.calcRangeLabels}><span>25</span><span>200 sq ft</span></div>
               </div>
 
               <div className={styles.calcField}>
@@ -573,22 +676,22 @@ export default function HyperGridClient() {
                 </div>
                 <input type="range" className={styles.calcRange} min="100" max="2000" value={footfall} step="50"
                   onChange={(e) => setFootfall(Number(e.target.value))} />
-                <div className={styles.calcRangeLabels}><span>100</span><span>2000</span></div>
+                <div className={styles.calcRangeLabels}><span>100</span><span>2,000</span></div>
               </div>
 
               <div className={styles.calcField}>
                 <label className={styles.calcSelectLabel}>Operating Hours</label>
                 <select className={styles.calcSelect} value={hours} onChange={(e) => setHours(Number(e.target.value))}>
-                  <option value="8">8 hours/day</option>
-                  <option value="10">10 hours/day</option>
-                  <option value="12">12 hours/day</option>
-                  <option value="16">16 hours/day</option>
+                  <option value="8">8 hours / day</option>
+                  <option value="10">10 hours / day</option>
+                  <option value="12">12 hours / day</option>
+                  <option value="16">16 hours / day</option>
                 </select>
               </div>
 
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Ticket Price (&#8377;)</label>
+                  <label>Ticket Price</label>
                   <span className={styles.calcVal}>&#8377;{ticket}</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="50" max="500" value={ticket} step="10"
@@ -598,7 +701,7 @@ export default function HyperGridClient() {
 
               <div className={styles.calcField}>
                 <div className={styles.calcFieldRow}>
-                  <label>Conversion Rate (%)</label>
+                  <label>Conversion Rate</label>
                   <span className={styles.calcVal}>{conversion}%</span>
                 </div>
                 <input type="range" className={styles.calcRange} min="5" max="30" value={conversion}
@@ -607,70 +710,46 @@ export default function HyperGridClient() {
               </div>
             </div>
 
-            {/* Right: Results Panel */}
-            <div className={styles.calcResults}>
-              <div className={styles.calcMetrics}>
-                <div className={styles.calcMetric}>
-                  <span className={styles.calcMetricLabel}>Investment</span>
-                  <span className={styles.calcMetricVal}>&#8377;{(productCost / 100000).toFixed(1)}L</span>
+            {/* Right: Output */}
+            <div className={styles.calcOutput}>
+
+              {/* KPI strip */}
+              <div className={styles.calcKpis}>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Total Investment</span>
+                  <span className={styles.calcKpiVal}>&#8377;{(productCost / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Monthly Revenue</span>
-                  <span className={styles.calcMetricVal}>&#8377;{(monthlyRevenue / 100000).toFixed(1)}L</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Monthly Revenue</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiOrange}`}>&#8377;{(monthlyRevenue / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Payback Period</span>
-                  <span className={styles.calcMetricVal}>{paybackMonths} mo</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Payback Period</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiOrange}`}>{paybackMonths} mo</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricGreen}`}>
-                  <span className={styles.calcMetricLabel}>5-Year ROI</span>
-                  <span className={styles.calcMetricVal}>{roi.toFixed(0)}%</span>
+                <div className={`${styles.calcKpi} ${styles.calcKpiHero}`}>
+                  <span className={styles.calcKpiLabel}>5-Year ROI</span>
+                  <span className={`${styles.calcKpiVal} ${styles.calcKpiGreen}`}>{roi.toFixed(0)}%</span>
                 </div>
               </div>
 
-              <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>60-Month Cumulative Profit (&#8377; Lakhs)</h4>
+              {/* Chart */}
+              <div className={styles.calcChartArea}>
+                <div className={styles.calcChartMeta}>
+                  <span className={styles.calcChartLabel}>5-Year Cumulative Profit</span>
+                  <span className={styles.calcChartNote}>Break-even when the line crosses zero</span>
+                </div>
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>
                 </div>
-                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero.</p>
               </div>
 
-              <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>Revenue Projection (&#8377; Lakhs)</h4>
-                <div className={`${styles.calcChartWrap} ${styles.calcChartWrapBar}`}>
-                  <canvas id="chart-revenue"></canvas>
-                </div>
-              </div>
-
-              <div className={styles.calcDailyCard}>
-                <h4 className={styles.calcChartTitle}>Daily Breakdown</h4>
-                <div className={styles.calcDailyGrid}>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Expected Players</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers)}</span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Daily Revenue</span>
-                    <span className={`${styles.calcDailyVal} ${styles.calcDailyValAccent}`}>
-                      &#8377;{Math.round(dailyRevenue).toLocaleString('en-IN')}
-                    </span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Games per Hour</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers / hours)}</span>
-                    <span className={styles.calcDailyUnit}>avg capacity</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
           <div className={styles.calcFooter}>
             <p className={styles.calcDisclaimer}>
-              These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.
+              Indicative estimates based on industry averages. Actual results vary by location and operations.
             </p>
             <Link href="/contact" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
               Get a Detailed Proposal &nbsp;&#x2192;
@@ -685,7 +764,7 @@ export default function HyperGridClient() {
           <h2 className={styles.speModelTitle} data-reveal>Specifications</h2>
           <div className={styles.speModelImgWrap} data-reveal>
             <Image
-              src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_del.png"
+              src="/images/hyper-grid/specs/specs-1.png"
               alt="HyperGrid 3D model with dimensions"
               className={styles.speModelImg}
               width={839}
@@ -744,74 +823,10 @@ export default function HyperGridClient() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section id="testimonials" className={styles.testimonials} aria-labelledby="test-heading">
-        <div className={styles.testInner}>
-          <button
-            className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
-            aria-label="Previous testimonial"
-            onClick={() => {
-              const next = (tIdx - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
-              showTestimonial(next);
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
-          </button>
-          <button
-            className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
-            aria-label="Next testimonial"
-            onClick={() => {
-              const next = (tIdx + 1) % TESTIMONIALS.length;
-              showTestimonial(next);
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
-          </button>
-
-          <div
-            className={styles.testGrid}
-            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
-            onMouseLeave={startAuto}
-          >
-            <div className={styles.testImage}>
-              <Image
-                src={t.image}
-                alt={t.name}
-                width={480}
-                height={640}
-                className={`${styles.testPersonImg} ${tImgFading ? styles.testPersonImgFading : ''}`}
-                style={{ objectFit: 'cover', objectPosition: 'center top' }}
-              />
-            </div>
-            <div className={styles.testRight}>
-              <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>&ldquo;</div>
-              <div className={`${styles.testimonialContent} ${phaseClass}`}>
-                <blockquote className={styles.testQuote}>{t.quote}</blockquote>
-                <p className={styles.testSub}>{t.sub}</p>
-                <div className={styles.testDivider} aria-hidden="true" />
-                <p className={styles.testName}>{t.name}</p>
-                <div className={styles.testMetaWrap}>
-                  <Image
-                    src={t.logo}
-                    alt={t.logoAlt}
-                    width={100}
-                    height={100}
-                    className={styles.testZoneLogo}
-                    style={{ objectFit: 'contain' }}
-                  />
-                </div>
-                <span className={styles.testRole}>{t.role}, {t.company}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsCarousel testimonials={testimonials} />
 
       {/* ── GET IN TOUCH ── */}
-      <section id="get-in-touch">
-        <ContactForm />
-      </section>
+      <ContactForm defaultProduct="hypergrid" />
     </main>
   );
 }

@@ -32,21 +32,33 @@ const COUNTRIES = [
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
-export default function ContactForm() {
+interface ContactFormProps {
+  defaultProduct?: string;
+}
+
+export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName,  setLastName]  = useState('');
   const [phone,     setPhone]     = useState('');
   const [email,     setEmail]     = useState('');
   const [company,   setCompany]   = useState('');
-  const [product,   setProduct]   = useState('');
+  const [product,   setProduct]   = useState(defaultProduct);
   const [message,   setMessage]   = useState('');
 
   const [countrySearch, setCountrySearch] = useState('');
   const [countryValue,  setCountryValue]  = useState('');
   const [countryOpen,   setCountryOpen]   = useState(false);
 
-  const [selectFilled, setSelectFilled] = useState(false);
+  const [selectFilled, setSelectFilled] = useState(!!defaultProduct);
   const [status, setStatus] = useState<Status>('idle');
+
+  // Update product if prop changes
+  useEffect(() => {
+    if (defaultProduct) {
+      setProduct(defaultProduct);
+      setSelectFilled(true);
+    }
+  }, [defaultProduct]);
 
   const textareaRef  = useRef<HTMLTextAreaElement>(null);
   const countryRef   = useRef<HTMLDivElement>(null);
@@ -158,6 +170,7 @@ export default function ContactForm() {
         {/* ── LEFT PANEL ── */}
         <div className={styles.left}>
           <div className={styles.leftInner}>
+            <p className={styles.eyebrow}>Get In Touch</p>
             <h2 className={styles.headline}>Start Your Journey&nbsp;With FOG.</h2>
             <p className={styles.sub}>
               Whether you&rsquo;re planning a new venue or expanding an existing one &mdash; tell us your vision. We&rsquo;ll engineer it.

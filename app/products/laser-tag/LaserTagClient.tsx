@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -146,34 +147,6 @@ export default function LaserTagClient({ testimonials }: Props) {
   // Process Steps State
   const [activeStep, setActiveStep] = useState(0);
 
-  // Testimonials Carousel State
-  const [curTestimonial, setCurTestimonial] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const nextTestimonial = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurTestimonial((prev) => (prev + 1) % testimonials.length);
-      setIsTransitioning(false);
-    }, 300);
-  }, [isTransitioning, testimonials.length]);
-
-  const prevTestimonial = useCallback(() => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-      setIsTransitioning(false);
-    }, 300);
-  }, [isTransitioning, testimonials.length]);
-
-  useEffect(() => {
-    const timer = setInterval(nextTestimonial, 6000);
-    return () => clearInterval(timer);
-  }, [nextTestimonial]);
-
-  const currentT = testimonials[curTestimonial] || testimonials[0];
 
   return (
     <main className={styles.lasertagPage}>
@@ -181,7 +154,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       {/* 1. HERO SECTION */}
       <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/hypergrid-bg/idle.mp4" type="video/mp4" />
+          <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay} aria-hidden="true"></div>
 
@@ -493,57 +466,10 @@ export default function LaserTagClient({ testimonials }: Props) {
       </section>
 
       {/* 8. TESTIMONIALS */}
-      {testimonials.length > 0 && (
-        <section id="testimonials" className={styles.testSection} data-nav-theme="light">
-          <div className={styles.testInner}>
-            <button className={`${styles.testArrowAbs} ${styles.testArrowPrev}`} onClick={prevTestimonial} aria-label="Previous testimonial">
-              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
-            </button>
-            <button className={`${styles.testArrowAbs} ${styles.testArrowNext}`} onClick={nextTestimonial} aria-label="Next testimonial">
-              <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
-            </button>
-            
-            <div className={`${styles.testGrid} ${isTransitioning ? styles.testFade : ''}`}>
-              <div className={styles.testImage}>
-                <Image
-                  src={currentT.avatar || '/images/operators/person-1.jpg'}
-                  alt={currentT.name}
-                  className={styles.testPersonImg}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div className={styles.testRight}>
-                <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>"</div>
-                <div className={styles.testimonialContent}>
-                  <blockquote className={styles.testQuote}>{currentT.body}</blockquote>
-                  <p className={styles.testSub}>{currentT.location}</p>
-                  <div className={styles.testDivider} aria-hidden="true"></div>
-                  <p className={styles.testName}>{currentT.name}</p>
-                  <div className={styles.testMetaWrap}>
-                    {currentT.logo && (
-                      <Image 
-                        src={currentT.logo} 
-                        alt={currentT.company} 
-                        className={styles.testZoneLogo}
-                        width={100}
-                        height={100}
-                        style={{ objectFit: 'contain' }}
-                      />
-                    )}
-                  </div>
-                  <span className={styles.testRole}>{currentT.designation}, {currentT.company}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      <TestimonialsCarousel testimonials={testimonials} />
 
-      {/* 9. CONTACT FORM */}
-      <section id="get-in-touch" className={styles.getInTouchSection} data-nav-theme="surface">
-        <ContactForm />
-      </section>
+      {/* 9. GET IN TOUCH FORM */}
+      <ContactForm defaultProduct="lasertag" />
 
     </main>
   );
