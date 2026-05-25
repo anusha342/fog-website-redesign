@@ -158,6 +158,7 @@ export default function ContactForm() {
         {/* ── LEFT PANEL ── */}
         <div className={styles.left}>
           <div className={styles.leftInner}>
+            <p className={styles.eyebrow}>Get In Touch</p>
             <h2 className={styles.headline}>Start Your Journey&nbsp;With FOG.</h2>
             <p className={styles.sub}>
               Whether you&rsquo;re planning a new venue or expanding an existing one &mdash; tell us your vision. We&rsquo;ll engineer it.

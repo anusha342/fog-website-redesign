@@ -85,7 +85,7 @@ Work is done **section by section, page by page** in this order:
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
 | 7 | Specifications (3D model + dimension + tech spec cards) | Done |
 | 8 | Testimonials Carousel (auto-advance, phase-based animations) | Done |
-| 9 | Get In Touch (shared ContactForm, product pre-selected) | Pending |
+| 9 | Get In Touch (shared ContactForm, product pre-selected) | Done |
 
 ---
 
@@ -107,6 +107,21 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 9: Get In Touch (shared ContactForm)
+- **Column split:** `400px 1fr` → `1fr 1fr` — equal halves at all widths; border-right divider `rgba(255,255,255,0.05)` separates panels
+- **Section bg:** `#0d0d0d` with subtle `40px` dot-grid (`rgba(255,255,255,0.03)`) — matches specs section pattern for visual continuity
+- **Dark-first form:** Right panel changed from `#fff` to `rgba(255,255,255,0.02)` — almost imperceptible against left panel, form reads as one unified dark block
+- **Input/label styling (dark):** border-bottom `rgba(255,255,255,.1)`, input text `rgba(255,255,255,.85)`, floating label `rgba(255,255,255,.28)` — focused label snaps to orange per site accent
+- **`labelFloatFilled`:** corrected from `rgba(0,0,0,.4)` → `rgba(255,255,255,.35)` (was invisible on dark bg)
+- **Select options:** `background: #1a1a1a` — OS-native dark background in dropdown
+- **Country dropdown:** bg `#1a1a1a`, border `rgba(255,255,255,.08)`, li text `rgba(255,255,255,.6)` — hover orange tint
+- **Button:** changed from dark bg (`var(--dark)`) to `var(--accent)` orange fill — CTA must stand out on dark; hover darkens to `#d44415` + `-2px translateY` lift
+- **Eyebrow:** `"Get In Touch"` added above headline — GoogleSans 500, orange, 4px tracking — consistent with all section eyebrows
+- **Headline:** `clamp(38px,3.8vw,56px)` → `clamp(28px,3vw,48px)` — fits properly in 50% column width
+- **formTitle:** `clamp(24px,2.8vw,38px)` → `clamp(22px,2.2vw,32px)` — right panel text no longer overflows in equal-width column
+- **formDesc:** color `var(--gray)` (dark on white) → `rgba(255,255,255,.38)`, weight `300`, max-width `380px`
+- **Padding adjustments:** left `padding: 80px 56px` → `80px 64px`; right `padding: 80px 96px 80px 80px` → `80px 72px 80px 64px` — balanced for equal-column layout
 
 ### Testimonials Section — Universal Updates
 - **CMS Integration:** Switched all product pages (HyperGrid, Laser Tag, Laser Spy) and Home page to fetch testimonials from central markdown files (`content/testimonials/`) for data integrity.
