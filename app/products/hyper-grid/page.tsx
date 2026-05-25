@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import HyperGridClient from './HyperGridClient';
+import { getAllTestimonials } from '@/lib/testimonials';
 
 export const metadata: Metadata = {
   title: 'HyperGrid - FOG Technologies',
@@ -15,12 +16,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HyperGridPage() {
+export default async function HyperGridPage() {
+  const testimonials = await getAllTestimonials();
+
   const jsonLdProduct = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: 'HyperGrid',
-    image: 'https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/698b86846f2426ee6d001eb3_8afbe6ee30ff3449d3bfa4a401310e02_HyperGrid%20by%20FOG%20-%203D%20Render.webp',
+    image: 'https://futureofgaming.tech/images/hyper-grid/hyper-grid-1.png',
     description: 'The modular, sensor-activated LED gaming floor designed to transform any space into a high-intensity multiplayer arena.',
     brand: {
       '@type': 'Brand',
@@ -63,7 +66,7 @@ export default function HyperGridPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
       />
-      <HyperGridClient />
+      <HyperGridClient testimonials={testimonials} />
     </>
   );
 }
