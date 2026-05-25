@@ -1245,3 +1245,41 @@
 
 /* ── BUTTONS ── */
 .hbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  height: 52px;
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 300ms cubic-bezier(.4, 0, .2, 1);
+  cursor: pointer;
+}
+
+.hbtnSolid {
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid var(--accent);
+}
+
+.hbtnSolid:hover {
+  background: #c93d18;
+  border-color: #c93d18;
+  box-shadow: 0 0 32px rgba(240, 80, 35, .55);
+}
+
+.hbtnGhost {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.hbtnGhost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--white);
+}

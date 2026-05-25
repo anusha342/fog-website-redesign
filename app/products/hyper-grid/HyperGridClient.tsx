@@ -531,7 +531,7 @@ export default function HyperGridClient({ testimonials }: Props) {
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
 
-        {/* ── Dark header strip — no background image ── */}
+        {/* ── Header strip ── */}
         <div className={styles.processHeaderWrap}>
           <div className={styles.processHeaderInner}>
             <span className={styles.processEyebrow} data-reveal>04 — How It Works</span>
@@ -541,96 +541,108 @@ export default function HyperGridClient({ testimonials }: Props) {
             <p className={styles.processSub} data-reveal data-reveal-delay="0.15">
               Crowd-Pulling Profit Machine
             </p>
-            <button
-              className={`${styles.processPlayBtn}${processPlaying ? ' ' + styles.processPlayBtnPlaying : ''}`}
-              onClick={handleProcessPlay}
-              disabled={processPlaying}
-              data-reveal
-              data-reveal-delay="0.2"
-            >
-              {processPlaying ? 'Playing…' : processAnimStep === 4 ? 'Play Again' : 'Click to Play'}
-              {!processPlaying && (
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-                  <polygon points="2,1 11,6 2,11" />
-                </svg>
-              )}
-            </button>
           </div>
         </div>
 
-        {/* ── Canvas — full-bleed BG + 4 floating boxes ── */}
+        {/* ── Photo canvas — constrained to 1440px ── */}
         <div className={styles.processCanvas}>
           <Image
             src="/images/hyper-grid/hyper-grid-6.png"
             alt="HyperGrid automated floor gaming system in action"
             fill
             className={styles.processBg}
-            sizes="100vw"
+            sizes="(max-width: 1440px) 100vw, 1440px"
           />
-          <div className={styles.processVignette} aria-hidden="true" />
           <div className={styles.processInner}>
 
-          {/* Step 1 — TOP LEFT — right arrow → glide right */}
-          <div className={`${styles.processUnit} ${styles.unitTopLeft} ${processAnimStep === 1 ? styles.animGlideRight : ''}`}>
-            <div className={styles.processBox}>
-              <span className={styles.boxStep}>Step 01</span>
-              <h3 className={styles.boxTitle}>Tap the Card</h3>
-              <p className={styles.boxDesc}>Comes integrated with your card reader / coin slot machine.</p>
-            </div>
-            <div className={styles.arrowRight} aria-hidden="true">
-              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
-                <polyline points="2,2 11,11 2,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="14,2 23,11 14,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </div>
+          {/* dimmed = non-active units fade during playback */}
+          {(() => {
+            const dimming = processPlaying && processAnimStep >= 0 && processAnimStep < 4;
+            const dim = (active: boolean) => dimming && !active ? styles.processUnitDimmed : '';
+            return (
+              <>
+                {/* Step 02 — TOP LEFT — glides right */}
+                <div className={`${styles.processUnit} ${styles.unitTopLeft} ${processAnimStep === 1 ? styles.animGlideRight : ''} ${dim(processAnimStep === 1)}`}>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 02</span>
+                    <h3 className={styles.boxTitle}>Select the Game</h3>
+                    <p className={styles.boxDesc}>Use our touch operated software to select your game.</p>
+                  </div>
+                  <div className={styles.arrowRight} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="2,2 11,11 2,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="14,2 23,11 14,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
 
-          {/* Step 4 — TOP RIGHT — left arrow ← glide left */}
-          <div className={`${styles.processUnit} ${styles.unitTopRight} ${processAnimStep === 2 ? styles.animGlideLeft : ''}`}>
-            <div className={styles.arrowLeft} aria-hidden="true">
-              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
-                <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <div className={styles.processBox}>
-              <span className={styles.boxStep}>Step 04</span>
-              <h3 className={styles.boxTitle}>Watch Tutorial</h3>
-              <p className={styles.boxDesc}>Learn how to play with our super simple tutorial videos.</p>
-            </div>
-          </div>
+                {/* Step 04 — TOP RIGHT — glides left */}
+                <div className={`${styles.processUnit} ${styles.unitTopRight} ${processAnimStep === 2 ? styles.animGlideLeft : ''} ${dim(processAnimStep === 2)}`}>
+                  <div className={styles.arrowLeft} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 04</span>
+                    <h3 className={styles.boxTitle}>Watch Tutorial</h3>
+                    <p className={styles.boxDesc}>Learn how to play with our super simple tutorial videos.</p>
+                  </div>
+                </div>
 
-          {/* Step 2 — BOTTOM LEFT — up arrow ↑ glide up */}
-          <div className={`${styles.processUnit} ${styles.unitBottomLeft} ${processAnimStep === 0 ? styles.animGlideUp : ''}`}>
-            <div className={styles.processBox}>
-              <span className={styles.boxStep}>Step 02</span>
-              <h3 className={styles.boxTitle}>Select the Game</h3>
-              <p className={styles.boxDesc}>Use our touch operated software to select your game.</p>
-            </div>
-            <div className={styles.arrowUp} aria-hidden="true">
-              <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
-                <polyline points="2,28 11,19 20,28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="2,16 11,7 20,16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </div>
+                {/* Step 01 — BOTTOM LEFT — glides up */}
+                <div className={`${styles.processUnit} ${styles.unitBottomLeft} ${processAnimStep === 0 ? styles.animGlideUp : ''} ${dim(processAnimStep === 0)}`}>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 01</span>
+                    <h3 className={styles.boxTitle}>Tap the Card</h3>
+                    <p className={styles.boxDesc}>Comes integrated with your card reader / coin slot machine.</p>
+                  </div>
+                  <div className={styles.arrowUp} aria-hidden="true">
+                    <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+                      <polyline points="2,28 11,19 20,28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="2,16 11,7 20,16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
 
-          {/* Step 3 — BOTTOM RIGHT — left arrow ← glide left */}
-          <div className={`${styles.processUnit} ${styles.unitBottomRight} ${processAnimStep === 3 ? styles.animGlideLeft : ''}`}>
-            <div className={styles.arrowLeft} aria-hidden="true">
-              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
-                <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <div className={styles.processBox}>
-              <span className={styles.boxStep}>Step 03</span>
-              <h3 className={styles.boxTitle}>Enter the Grid</h3>
-              <p className={styles.boxDesc}>Players enter the grid to start the tutorial video.</p>
-            </div>
-          </div>{/* /unitBottomRight */}
+                {/* Step 03 — BOTTOM RIGHT — glides left */}
+                <div className={`${styles.processUnit} ${styles.unitBottomRight} ${processAnimStep === 3 ? styles.animGlideLeft : ''} ${dim(processAnimStep === 3)}`}>
+                  <div className={styles.arrowLeft} aria-hidden="true">
+                    <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                      <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                  <div className={styles.processBox}>
+                    <span className={styles.boxStep}>Step 03</span>
+                    <h3 className={styles.boxTitle}>Enter the Grid</h3>
+                    <p className={styles.boxDesc}>Players enter the grid to start the tutorial video.</p>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+
           </div>{/* /processInner */}
         </div>{/* /processCanvas */}
+
+        {/* ── Click to Play — below photo, centered ── */}
+        <div className={styles.processFooter}>
+          <button
+            className={`${styles.processPlayBtn}${processPlaying ? ' ' + styles.processPlayBtnPlaying : ''}`}
+            onClick={handleProcessPlay}
+            disabled={processPlaying}
+          >
+            {processPlaying ? 'Playing…' : processAnimStep === 4 ? 'Play Again' : 'Click to Play'}
+            {!processPlaying && (
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                <polygon points="2,1 11,6 2,11" />
+              </svg>
+            )}
+          </button>
+        </div>
+
       </section>
 
       {/* ── ROI CALCULATOR ── */}

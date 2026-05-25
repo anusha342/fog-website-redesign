@@ -108,6 +108,15 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
+### HyperGrid — Section 5: How It Works — v4 white section redesign
+- **Section colour:** Background changed from `#090909` to `#ffffff`; `processHeaderWrap` border updated to `rgba(0,0,0,0.08)`; `processTitle` colour `#fff` → `#0a0a0a`; `processSub` colour `rgba(255,255,255,0.42)` → `rgba(0,0,0,0.42)` — consistent with white-section text colour roles in `design-CLAUDE.md`
+- **Photo constrained to content width:** `processCanvas` removed from the flex-fill layout; now `max-width: 1440px; margin: 48px auto 0; aspect-ratio: 16/7` — photo sits within the same 1440px column as all other section content; `next/image fill` retained within the constrained container
+- **"Click to Play" button relocated:** Moved out of `processHeaderWrap` and into a new `processFooter` div rendered after `processCanvas`; `display: flex; justify-content: center; padding: 40px ... 64px` — button is centred, well-spaced below the photo; border and text colour updated to dark (`rgba(0,0,0,0.22)` / `rgba(0,0,0,0.8)`) to read on white background
+- **Active-unit highlight / non-active dimming:** New `.processUnitDimmed { opacity: 0.18 }` class; `processUnit` gains `transition: opacity 0.35s ease`; dimming logic computed inline with IIFE — when `processPlaying && processAnimStep 0–3`, every unit except the currently animating one receives `processUnitDimmed`; units restore to full opacity at step 4 (done) or when idle; makes the glide animation unambiguous
+- **Vignette removed:** `processVignette` div and all associated CSS (`radial-gradient` + two `linear-gradient` layers) deleted — image reads clean, no dark gradient overlay
+- **Build fix:** Missing `</div>` for `processCanvas` wrapper added (was silently unclosed, causing a Turbopack JSX parse error introduced in a prior session)
+- **Responsive:** `processSection` no longer `height: 100vh`; `processHeaderInner` padding unchanged; `processInner` still hidden ≤1023px; `processFooter` padding collapses to `32px 20px 48px` ≤767px
+
 ### Get In Touch Section — Universal Design Unification
 - **Shared Component:** Updated `ContactForm.tsx` to handle a `defaultProduct` prop for contextual pre-selection.
 - **Contact Page Refactor:** Completely removed duplicated form logic/markup in `ContactClient.tsx` in favor of the shared component.
