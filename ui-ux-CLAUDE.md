@@ -83,8 +83,8 @@ Work is done **section by section, page by page** in this order:
 | 4 | Moments Bento Grid (mixed card layout) | Done |
 | 5 | How It Works (process steps carousel with image swap) | Done |
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
-| 7 | Specifications (3D model + dimension + tech spec cards) | Pending |
-| 8 | Testimonials Carousel (auto-advance, phase-based animations) | Pending |
+| 7 | Specifications (3D model + dimension + tech spec cards) | Done |
+| 8 | Testimonials Carousel (auto-advance, phase-based animations) | Done |
 | 9 | Get In Touch (shared ContactForm, product pre-selected) | Pending |
 
 ---
@@ -97,7 +97,7 @@ Work is done **section by section, page by page** in this order:
 | 2 | Logo Strip (marquee) | Pending |
 | 3 | About & Numbers (stats cards) | Pending |
 | 4 | Products Sticky Stack (5 product sections) | Pending |
-| 5 | Testimonials Carousel | Pending |
+| 5 | Testimonials Carousel | Done |
 | 6 | Globe | Pending |
 | 7 | Blog Cards | Pending |
 | 8 | Get In Touch (contact form) | Pending |
@@ -107,6 +107,22 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Testimonials Section — Universal Updates
+- **CMS Integration:** Switched all product pages (HyperGrid, Laser Tag, Laser Spy) and Home page to fetch testimonials from central markdown files (`content/testimonials/`) for data integrity.
+- **Image Fixes:** Replaced all broken CDN and incorrect local paths (e.g., `.jpg` vs `.png`) with verified local assets from `/images/operators/`.
+- **Sarah Chen Asset:** Specifically corrected `person-2.jpg` to `person-2.png` to resolve 404 errors.
+- **HyperGrid Client:** Refactored to accept testimonials as props, removing hardcoded data and ensuring UI/UX consistency across all product lines.
+
+### HyperGrid — Section 7: Specifications (Alignment Fix)
+- **Grid Layout:** Updated `.speDataInner` to `align-items: stretch` to ensure the left dimensions card and the right info cards column always share the same height.
+- **Card Scaling:** Applied `flex: 1` to `.speInfoCard` elements within the right column to distribute vertical space evenly, matching the visual weight of the left panel.
+- **JSON-LD:** Fixed 403 error by replacing external CDN image with local `/images/hyper-grid/hyper-grid-1.png`.
+
+### HyperGrid — Section 7: Specifications
+- **Model image:** replaced CDN URL with local `/images/hyper-grid/specs/specs-1.png`
+- **Data section column split:** `grid-template-columns: 1fr 1fr` → `3fr 2fr` — left dims card takes ~60%, right info cards ~40%, matching reference image proportions
+- No other changes made to this section
 
 ### HyperGrid — Section 6: ROI Calculator
 - Section bg: `#fff` (white — intentional contrast against the dark sections before/after)

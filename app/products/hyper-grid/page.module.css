@@ -1296,13 +1296,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .speDimsCard {
   background: rgba(30, 30, 30, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 40px 40px 36px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .speAreaTitle {
@@ -1329,6 +1332,8 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  flex: 1;
+  justify-content: center;
 }
 
 .speDimsRow {
@@ -1347,12 +1352,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
 }
 
 .speInfoCard {
   background: rgba(30, 30, 30, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 28px 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .speInfoHeader {

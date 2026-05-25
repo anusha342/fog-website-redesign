@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import styles from './page.module.css';
+import type { Testimonial } from '@/lib/testimonials';
 
 /* ── LENIS SMOOTH SCROLL ── */
 function loadScript(src: string): Promise<void> {
@@ -72,32 +73,25 @@ const STEPS = [
   { name: 'Watch Tutorial',  desc: 'Learn how to play with our super simple tutorial videos.',      img: '/images/hyper-grid/automated/card-4.png' },
 ];
 
-const TESTIMONIALS = [
-  {
-    quote:  "FOG's products didn't just fill floor space. They became the anchor attraction.",
-    sub:    'Our revenue per square foot tripled within the first quarter after installation. The ROI spoke for itself.',
-    name:   'Rajiv Mehta',
-    role:   'Operations Director',
-    company:'Masti Zone India',
-    image:  '/images/operators/person-1.jpg',
-    logo:   '/uploads/mastizone-logo.png',
-    logoAlt:'Masti Zone Logo',
-  },
-  {
-    quote:  'The HyperGrid installation transformed our venue overnight.',
-    sub:    'Kids aged 6 to 60 play it. The staff-free operation means we make money even when no one is watching.',
-    name:   'Sarah Chen',
-    role:   'General Manager',
-    company:'FunZone Asia',
-    image:  '/images/operators/person-2.jpg',
-    logo:   '/uploads/mastizone-logo.png',
-    logoAlt:'FunZone Asia Logo',
-  },
-];
+interface Props {
+  testimonials: Testimonial[];
+}
 
-export default function HyperGridClient() {
+export default function HyperGridClient({ testimonials }: Props) {
   useLenis();
   useScrollReveal();
+
+  // Map CMS testimonials to local shape
+  const slides = testimonials.map(t => ({
+    quote:   t.body,
+    sub:     t.location,
+    name:    t.name,
+    role:    t.designation,
+    company: t.company,
+    image:   t.avatar || '/images/operators/person-1.jpg',
+    logo:    t.logo || '',
+    logoAlt: t.company + ' Logo',
+  }));
 
   /* ── Video modal ── */
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -231,21 +225,22 @@ export default function HyperGridClient() {
 
   const startAuto = useCallback(() => {
     if (autoRef.current) clearInterval(autoRef.current);
+    if (!slides.length) return;
     autoRef.current = setInterval(() => {
       setTIdx((prev) => {
-        const next = (prev + 1) % TESTIMONIALS.length;
+        const next = (prev + 1) % slides.length;
         showTestimonial(next);
         return prev; // actual update happens inside showTestimonial
       });
     }, 4000);
-  }, [showTestimonial]);
+  }, [showTestimonial, slides.length]);
 
   useEffect(() => {
     startAuto();
     return () => { if (autoRef.current) clearInterval(autoRef.current); };
   }, [startAuto]);
 
-  const t = TESTIMONIALS[tIdx];
+  const t = slides[tIdx];
 
   const phaseClass =
     tPhase === 'exiting'  ? styles.testimonialContentExiting  :
@@ -720,7 +715,7 @@ export default function HyperGridClient() {
           <h2 className={styles.speModelTitle} data-reveal>Specifications</h2>
           <div className={styles.speModelImgWrap} data-reveal>
             <Image
-              src="https://cdn.prod.website-files.com/67345881cc5e3033153f6d9b/68068f2c15a3011d2632b6a5_9e761d89a9ee93f9c2344b7e77ec4e34_del.png"
+              src="/images/hyper-grid/specs/specs-1.png"
               alt="HyperGrid 3D model with dimensions"
               className={styles.speModelImg}
               width={839}
@@ -779,13 +774,14 @@ export default function HyperGridClient() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
+      {slides.length > 0 && t && (
       <section id="testimonials" className={styles.testimonials} aria-labelledby="test-heading">
         <div className={styles.testInner}>
           <button
             className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
             aria-label="Previous testimonial"
             onClick={() => {
-              const next = (tIdx - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+              const next = (tIdx - 1 + slides.length) % slides.length;
               showTestimonial(next);
               startAuto();
             }}
@@ -796,7 +792,7 @@ export default function HyperGridClient() {
             className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
             aria-label="Next testimonial"
             onClick={() => {
-              const next = (tIdx + 1) % TESTIMONIALS.length;
+              const next = (tIdx + 1) % slides.length;
               showTestimonial(next);
               startAuto();
             }}
@@ -827,14 +823,16 @@ export default function HyperGridClient() {
                 <div className={styles.testDivider} aria-hidden="true" />
                 <p className={styles.testName}>{t.name}</p>
                 <div className={styles.testMetaWrap}>
-                  <Image
-                    src={t.logo}
-                    alt={t.logoAlt}
-                    width={100}
-                    height={100}
-                    className={styles.testZoneLogo}
-                    style={{ objectFit: 'contain' }}
-                  />
+                  {t.logo && (
+                    <Image
+                      src={t.logo}
+                      alt={t.logoAlt}
+                      width={100}
+                      height={100}
+                      className={styles.testZoneLogo}
+                      style={{ objectFit: 'contain' }}
+                    />
+                  )}
                 </div>
                 <span className={styles.testRole}>{t.role}, {t.company}</span>
               </div>
@@ -842,6 +840,7 @@ export default function HyperGridClient() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ── GET IN TOUCH ── */}
       <section id="get-in-touch">
