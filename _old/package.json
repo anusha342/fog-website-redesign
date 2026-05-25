@@ -1,8 +1,0 @@
-{
-  "name": "future-of-gaming",
-  "version": "1.0.0",
-  "private": true,
-  "dependencies": {
-    "resend": "^3.0.0"
-  }
-}
