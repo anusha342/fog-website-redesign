@@ -100,7 +100,7 @@ Work is done **section by section, page by page** in this order:
 | 5 | Testimonials Carousel | Done |
 | 6 | Globe | Pending |
 | 7 | Blog Cards | Pending |
-| 8 | Get In Touch (contact form) | Pending |
+| 8 | Get In Touch (contact form) | Done |
 
 ---
 
@@ -108,7 +108,15 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
-### HyperGrid — Section 9: Get In Touch (shared ContactForm)
+### Get In Touch Section — Universal Design Unification
+- **Shared Component:** Updated `ContactForm.tsx` to handle a `defaultProduct` prop for contextual pre-selection.
+- **Contact Page Refactor:** Completely removed duplicated form logic/markup in `ContactClient.tsx` in favor of the shared component.
+- **Design Parity:** Standardized all forms to use the premium dark-themed design originally implemented for HyperGrid.
+- **Product Integrations:** Updated HyperGrid, Laser Tag, and Laser Spy clients to use the component with automatic product pre-selection (`hypergrid`, `lasertag`, `lasermaze`).
+- **Cleanup:** Removed manual CSS overrides in product pages that forced inconsistent light/surface themes on the contact section.
+
+### Testimonials Section — Universal Updates
+
 - **Column split:** `400px 1fr` → `1fr 1fr` — equal halves at all widths; border-right divider `rgba(255,255,255,0.05)` separates panels
 - **Section bg:** `#0d0d0d` with subtle `40px` dot-grid (`rgba(255,255,255,0.03)`) — matches specs section pattern for visual continuity
 - **Dark-first form:** Right panel changed from `#fff` to `rgba(255,255,255,0.02)` — almost imperceptible against left panel, form reads as one unified dark block
@@ -154,6 +162,41 @@ Work is done **section by section, page by page** in this order:
   - Orange line (2.5px) with subtle orange fill above zero (break-even visual)
 - **Removed:** bar chart (`chart-revenue` canvas), `barChartRef`, daily breakdown section — noise for B2B audience
 - Footer: disclaimer left + CTA right — space-between layout
+
+### Shared Testimonials Component — Universal Design Unification (v2)
+- **Created `components/TestimonialsCarousel.tsx`** — self-contained shared component; takes `testimonials: Testimonial[]` + optional `heading?` prop
+- **Carousel logic:** `tBusy` ref prevents race conditions; `tIdxForAuto` ref tracks current index inside setInterval; phase transitions: exiting → entering → visible (double rAF for CSS timing accuracy)
+- **Design:** Exactly mirrors home page — white bg, ClashDisplay `clamp(40px,4.5vw,63px)` heading, `36%/1fr` photo+text grid, grayscale photo, 80px quote mark, orange divider, ClashDisplay quote at 30px, arrow siblings via `.testControls` flex row
+- **All pages updated:** HyperGrid, Laser Tag, Laser Spy, Home — all now use `<TestimonialsCarousel testimonials={...} />`; removed all inline carousel state/callbacks from each client component
+- **Home page cleanup:** Removed `toSlide` mapping function, `TestimonialSlide` interface, `tIdx/tPhase/tBusy/autoRef` state, `showTestimonial/startAuto` callbacks, `tContentRef/tImgRef` refs, unused `useCallback/useMemo` imports
+
+### HyperGrid — Section 5: How It Works (Easy, Automated & Operator-Free) — v3 header/canvas split
+- **Split layout:** Section is `flex-column, 100vh`
+  - **`.processHeaderWrap`** — `flex-shrink: 0`, bg `#090909`, `border-bottom: rgba(255,255,255,0.05)` — title area has NO background image, consistent with dark-first aesthetic
+  - **`.processCanvas`** — `flex: 1`, `position: relative` — houses the full-bleed `hyper-grid-6.png` BG + vignette + 4 floating boxes
+  - Content max-width: 1440px via `.processHeaderInner`; canvas extends full viewport width
+- **"Click to Play" button** — ghost style (`transparent bg, rgba(255,255,255,0.22) border`), hover fills orange; positioned after subtitle in header strip
+- **Animation trigger changed:** IntersectionObserver removed → button click calls `handleProcessPlay()`; sequential timers: BL → TL → TR → BR, each 2 s window
+- **Glide distance:** 3× → `33px` (was 11px) in all three keyframes (`hgGlideRight/Left/Up`)
+- **Button states:** "Click to Play" (idle) → "Playing…" (disabled, 0.45 opacity) → "Play Again" (after step 4 done)
+- **Responsive ≤1023px:** `.processCanvas` reverts to `aspect-ratio: 16/7`, `.processInner` hidden (boxes not shown on small screens)
+
+### HyperGrid — Section 5: How It Works (Easy, Automated & Operator-Free) — v2 redesign
+- **Layout:** Full `100vh` section — background image (`hyper-grid-6.png`) fills entire section via `next/image fill`; all content floats absolutely above it
+- **Vignette:** 3-layer gradient overlay — radial ellipse kills corners/edges, LR linear gradient deeply darkens left/right thirds, TB gradient lightens top/darkens bottom; centre stays clear showing the room
+- **4 step units — absolutely positioned in quadrants:**
+  - Top-left (Step 1 — Tap the Card): `top: 34%`, `left: 3vw` — flex row, right-facing double-chevron arrow on right → glides right
+  - Top-right (Step 4 — Watch Tutorial): `top: 30%`, `right: 3vw` — flex row, left-facing chevron on left → glides left
+  - Bottom-left (Step 2 — Select the Game): `bottom: 10%`, `left: 3vw` — flex column, up-facing chevron below box → glides up
+  - Bottom-right (Step 3 — Enter the Grid): `bottom: 10%`, `right: 3vw` — flex row, left-facing chevron on left → glides left
+- **Box style:** `rgba(0,0,0,0.70)` bg, `1px rgba(255,255,255,0.18)` border, `backdrop-filter: blur(2px)`; orange step eyebrow, ClashDisplay 700 uppercase title, GoogleSans 300 uppercase desc at `rgba(255,255,255,0.52)`
+- **Arrow SVGs:** Hand-drawn double-chevron polylines in orange (`var(--hg-neon-orange)`) — right `»`, left `«`, up `∧∧`
+- **Sequential glide animation (IntersectionObserver triggered at 35% threshold, runs once):**
+  - BL first (0.3s after reveal), TL second (+2s), TR third (+4s), BR last (+6s)
+  - Each unit runs its direction keyframe (`hgGlideUp/Right/Left`) for exactly 2s, 1 iteration — oscillates ±11px twice then stops
+  - `prefers-reduced-motion` guard disables all animations
+- **Subtitle:** "Crowd-Pulling Profit Machine" — GoogleSans 300, 3px tracking, `rgba(255,255,255,0.42)` — added below title
+- **Responsive ≤1023px:** Section reverts to `height: auto; min-height: 100vh`, processInner becomes `position: relative` flex column, all arrow elements hidden, boxes stack as full-width rows
 
 ### HyperGrid — Section 5: How It Works (Easy, Automated & Operator-Free)
 - Section bg: `#090909` (dark, matches rest of page)

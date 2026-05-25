@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import type { Testimonial } from '@/lib/testimonials';
 import styles from './home.module.css';
 
@@ -27,26 +28,6 @@ function loadScript(src: string): Promise<void> {
   });
 }
 
-// ── Testimonial slide shape (mapped from S3 Testimonial) ─────────────────────
-interface TestimonialSlide {
-  quote:   string;
-  name:    string;
-  role:    string;
-  image:   string;
-  logo:    string;
-  logoAlt: string;
-}
-
-function toSlide(t: Testimonial): TestimonialSlide {
-  return {
-    quote:   t.body,
-    name:    t.name,
-    role:    [t.designation, t.company].filter(Boolean).join(', '),
-    image:   t.avatar || '/images/operators/person-1.jpg',
-    logo:    t.logo   || '',
-    logoAlt: t.company,
-  };
-}
 
 const PRODUCTS = [
   {
@@ -119,8 +100,6 @@ export default function HomeClient({
   const globeRef     = useRef<HTMLDivElement>(null);
   const aboutRef     = useRef<HTMLElement>(null);
   const mbBreakRef   = useRef<HTMLElement>(null);
-  const tContentRef  = useRef<HTMLDivElement>(null);
-  const tImgRef      = useRef<HTMLImageElement>(null);
 
   // FOG text state
   const [scattered,    setScattered]    = useState(false);
@@ -144,14 +123,7 @@ export default function HomeClient({
   const [counts, setCounts] = useState({ dailyPlayers: 0, repeatRate: 0, countries: 0 });
   const countsTriggered = useRef(false);
 
-  // Testimonials — mapped from S3 data passed as a server-side prop
-  const testimonials = useMemo(() => initialTestimonials.map(toSlide), [initialTestimonials]);
-
-  const [tIdx,   setTIdx]   = useState(0);
-  const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
-  const tBusy       = useRef(false);
-  const autoRef     = useRef<ReturnType<typeof setInterval> | null>(null);
-  const tIdxForAuto = useRef(0); // tracks current idx for the auto-advance interval
+  // (testimonials carousel delegated to shared TestimonialsCarousel component)
 
   // Blog
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(initialPosts);
@@ -592,36 +564,6 @@ export default function HomeClient({
     return () => timers.forEach((t) => { if (t) clearInterval(t); });
   }, []);
 
-  // ── Testimonials carousel ────────────────────────────────────────────────
-  const showTestimonial = useCallback((nextIdx: number, _dir: 'prev' | 'next') => {
-    if (tBusy.current) return;
-    tBusy.current = true;
-    tIdxForAuto.current = nextIdx;
-    setTPhase('exiting');
-    setTimeout(() => {
-      setTIdx(nextIdx);
-      setTPhase('entering');
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          setTPhase('visible');
-          setTimeout(() => { tBusy.current = false; }, 280);
-        });
-      });
-    }, 220);
-  }, []);
-
-  const startAuto = useCallback(() => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    autoRef.current = setInterval(() => {
-      const next = (tIdxForAuto.current + 1) % testimonials.length;
-      showTestimonial(next, 'next');
-    }, 4000);
-  }, [showTestimonial, testimonials.length]);
-
-  useEffect(() => {
-    startAuto();
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [startAuto]);
 
   // ── amCharts globe ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -731,8 +673,6 @@ export default function HomeClient({
       [prodId]: { bg: prod.thumbs[idx].bg, pos: prod.thumbs[idx].pos },
     }));
   }
-
-  const t = testimonials[tIdx] ?? null;
 
   // ── Render ───────────────────────────────────────────────────────────────
   return (
@@ -1030,92 +970,8 @@ export default function HomeClient({
 
       </div>{/* /#products-wrapper */}
 
-      {/* ── TESTIMONIALS — only rendered when S3 has at least one entry ─── */}
-      {testimonials.length > 0 && t && (
-      <section
-        id="testimonials"
-        className={styles.testimonials}
-        aria-labelledby="test-heading"
-        data-nav-theme="light"
-      >
-        <div className={styles.testInner}>
-          <h2 id="test-heading" className={styles.testHeading}>What operators say</h2>
-          <div
-            className={styles.testControls}
-            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
-            onMouseLeave={startAuto}
-          >
-          <button
-            className={styles.testArrowAbs}
-            aria-label="Previous testimonial"
-            onClick={() => {
-              const next = (tIdx - 1 + testimonials.length) % testimonials.length;
-              showTestimonial(next, 'prev');
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14" /></svg>
-          </button>
-
-          <div
-            className={styles.testGrid}
-          >
-            <div className={styles.testImage}>
-              <Image
-                ref={tImgRef as any}
-                src={t.image}
-                alt={t.name}
-                width={480}
-                height={640}
-                className={styles.testPersonImg}
-                style={{ objectFit: 'cover', objectPosition: 'center top' }}
-              />
-            </div>
-            <div className={styles.testRight}>
-              <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>&ldquo;</div>
-              <div
-                ref={tContentRef}
-                className={`${styles.testimonialContent} ${
-                  tPhase === 'exiting'  ? styles.exiting  :
-                  tPhase === 'entering' ? styles.entering :
-                  styles.visible ?? ''
-                }`}
-              >
-                <blockquote className={styles.testQuote}>{t.quote}</blockquote>
-                <div className={styles.testDivider} aria-hidden="true" />
-                <p className={styles.testName}>{t.name}</p>
-                <div className={styles.testMetaWrap}>
-                  {t.logo && (
-                    <Image
-                      src={t.logo}
-                      alt={t.logoAlt}
-                      width={100}
-                      height={100}
-                      className={styles.testZoneLogo}
-                      style={{ objectFit: 'contain' }}
-                    />
-                  )}
-                </div>
-                <span className={styles.testRole}>{t.role}</span>
-              </div>
-            </div>
-          </div>{/* /testGrid */}
-
-          <button
-            className={styles.testArrowAbs}
-            aria-label="Next testimonial"
-            onClick={() => {
-              const next = (tIdx + 1) % testimonials.length;
-              showTestimonial(next, 'next');
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14" /></svg>
-          </button>
-          </div>{/* /testControls */}
-        </div>{/* /testInner */}
-      </section>
-      )}
+      {/* ── TESTIMONIALS ── */}
+      <TestimonialsCarousel testimonials={initialTestimonials} />
 
       {/* ── GLOBE ─────────────────────────────────────────────────────── */}
       <section id="globe-section" className={styles.globeSection} aria-label="Global footprint">

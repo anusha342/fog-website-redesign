@@ -1,0 +1,175 @@
+/* ════════════════════════════════════════════
+   TESTIMONIALS CAROUSEL — shared across all pages
+   Mirrors home page design exactly
+   ════════════════════════════════════════════ */
+
+.testimonials {
+  background: var(--white);
+  padding: var(--sp-96) var(--sp-80);
+  width: 100%;
+  position: relative;
+}
+
+.testInner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.testHeading {
+  font-family: 'ClashDisplay', serif;
+  font-weight: 700;
+  font-size: clamp(40px, 4.5vw, 63px);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: var(--sp-48);
+}
+
+/* Controls row: prev arrow + grid + next arrow */
+.testControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.testGrid {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 36% 1fr;
+  gap: var(--sp-80);
+  align-items: center;
+  overflow: hidden;
+}
+
+.testImage {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  overflow: hidden;
+}
+
+.testPersonImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: grayscale(1) contrast(1.05);
+  transition: opacity 0.2s ease;
+}
+
+.testRight {
+  position: relative;
+  overflow: hidden;
+}
+
+.testQuoteMark {
+  font-size: 80px;
+  line-height: 1;
+  color: var(--accent);
+  font-family: 'ClashDisplay', serif;
+  margin-bottom: var(--sp-16);
+}
+
+.testQuote {
+  font-family: 'ClashDisplay', serif;
+  font-weight: 400;
+  font-size: 30px;
+  color: var(--text-primary);
+  line-height: 1.35;
+}
+
+.testDivider {
+  width: 48px;
+  height: 2px;
+  background: var(--accent);
+  margin: var(--sp-32) 0;
+}
+
+.testName {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.testMetaWrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.testZoneLogo {
+  height: 100px;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  margin-top: -20px;
+  display: block;
+  filter: grayscale(1) brightness(0.55);
+  transition: filter 250ms;
+}
+
+.testRole {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray);
+  margin-top: 0;
+}
+
+/* Slide transitions */
+.testimonialContent {
+  transition: opacity 0.22s ease, transform 0.28s ease;
+}
+.testimonialContent.exiting  { opacity: 0; transform: translateX(-48px); }
+.testimonialContent.entering { opacity: 0; transform: translateX(48px); }
+.testimonialContent.visible  { opacity: 1; transform: translateX(0); }
+
+/* Prev / Next arrows — flex siblings of the grid */
+.testArrowAbs {
+  flex-shrink: 0;
+  width: 44px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background 180ms, border-color 180ms;
+}
+.testArrowAbs:hover {
+  background: rgba(240, 80, 35, 0.1);
+  border-color: rgba(240, 80, 35, 0.35);
+}
+.testArrowAbs:hover svg { stroke: var(--accent); }
+.testArrowAbs svg {
+  stroke: var(--text-primary);
+  stroke-width: 1.8;
+  fill: none;
+  width: 20px;
+  height: 20px;
+  transition: stroke 180ms;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  .testimonials { padding: var(--sp-80) var(--sp-48); }
+  .testGrid { gap: var(--sp-48); }
+}
+
+@media (max-width: 1023px) {
+  .testimonials { padding: 64px var(--sp-48); }
+  .testGrid { grid-template-columns: 40% 1fr; gap: 40px; }
+  .testQuote { font-size: 26px; }
+}
+
+@media (max-width: 767px) {
+  .testimonials { padding: 56px 24px; }
+  .testGrid { grid-template-columns: 1fr; }
+  .testImage { display: none; }
+  .testArrowAbs { width: 36px; height: 52px; }
+  .testQuote { font-size: 22px; }
+}

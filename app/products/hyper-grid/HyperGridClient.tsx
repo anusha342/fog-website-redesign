@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -81,18 +82,6 @@ export default function HyperGridClient({ testimonials }: Props) {
   useLenis();
   useScrollReveal();
 
-  // Map CMS testimonials to local shape
-  const slides = testimonials.map(t => ({
-    quote:   t.body,
-    sub:     t.location,
-    name:    t.name,
-    role:    t.designation,
-    company: t.company,
-    image:   t.avatar || '/images/operators/person-1.jpg',
-    logo:    t.logo || '',
-    logoAlt: t.company + ' Logo',
-  }));
-
   /* ── Video modal ── */
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -123,6 +112,31 @@ export default function HyperGridClient({ testimonials }: Props) {
 
   /* ── Game Modes ── */
   const [activeMode, setActiveMode] = useState(0);
+
+  /* ── How It Works — button-triggered sequential glide ── */
+  const [processAnimStep, setProcessAnimStep] = useState(-1);
+  const [processPlaying, setProcessPlaying] = useState(false);
+  const processTimersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => { processTimersRef.current.forEach(clearTimeout); };
+  }, []);
+
+  function handleProcessPlay() {
+    if (processPlaying) return;
+    setProcessPlaying(true);
+    setProcessAnimStep(-1);
+    processTimersRef.current.forEach(clearTimeout);
+    // BL(0) → TL(1) → TR(2) → BR(3), each 2 s, 3× glide distance
+    processTimersRef.current = [
+      setTimeout(() => setProcessAnimStep(0), 100),
+      setTimeout(() => setProcessAnimStep(1), 2100),
+      setTimeout(() => setProcessAnimStep(2), 4100),
+      setTimeout(() => setProcessAnimStep(3), 6100),
+      setTimeout(() => { setProcessAnimStep(4); setProcessPlaying(false); }, 8100),
+    ];
+  }
 
   /* ── ROI Calculator ── */
   const [floor,      setFloor]      = useState(50);
@@ -206,46 +220,6 @@ export default function HyperGridClient({ testimonials }: Props) {
     return () => { lineChartRef.current?.destroy(); };
   }, []);
 
-  /* ── Testimonials ── */
-  const [tIdx,   setTIdx]   = useState(0);
-  const [tPhase, setTPhase] = useState<'visible' | 'exiting' | 'entering'>('visible');
-  const [tImgFading, setTImgFading] = useState(false);
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const showTestimonial = useCallback((nextIdx: number) => {
-    setTPhase('exiting');
-    setTImgFading(true);
-    setTimeout(() => {
-      setTIdx(nextIdx);
-      setTPhase('entering');
-      setTImgFading(false);
-      setTimeout(() => setTPhase('visible'), 50);
-    }, 240);
-  }, []);
-
-  const startAuto = useCallback(() => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    if (!slides.length) return;
-    autoRef.current = setInterval(() => {
-      setTIdx((prev) => {
-        const next = (prev + 1) % slides.length;
-        showTestimonial(next);
-        return prev; // actual update happens inside showTestimonial
-      });
-    }, 4000);
-  }, [showTestimonial, slides.length]);
-
-  useEffect(() => {
-    startAuto();
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [startAuto]);
-
-  const t = slides[tIdx];
-
-  const phaseClass =
-    tPhase === 'exiting'  ? styles.testimonialContentExiting  :
-    tPhase === 'entering' ? styles.testimonialContentEntering :
-    styles.testimonialContentVisible;
 
   return (
     <main className={styles.hypergridPage}>
@@ -556,44 +530,107 @@ export default function HyperGridClient({ testimonials }: Props) {
 
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
-        <div className={styles.processWrap}>
-          <div className={styles.processHeader}>
+
+        {/* ── Dark header strip — no background image ── */}
+        <div className={styles.processHeaderWrap}>
+          <div className={styles.processHeaderInner}>
             <span className={styles.processEyebrow} data-reveal>04 — How It Works</span>
             <h2 className={styles.processTitle} data-reveal data-reveal-delay="0.1">
               Easy, Automated &amp; Operator-Free
             </h2>
-          </div>
-          <div className={styles.processBody}>
-            <div className={styles.processStageWrap}>
-              <Image
-                src="/images/hyper-grid/hyper-grid-6.png"
-                alt="HyperGrid automated floor gaming system in action"
-                fill
-                className={styles.processStageImg}
-                sizes="100vw"
-              />
-              <div className={styles.processStageGradient} />
-            </div>
-            <div className={styles.processCards}>
-              {STEPS.map((s, idx) => (
-                <div key={idx} className={styles.processCard} data-reveal data-reveal-delay={`${0.1 * (idx + 1)}`}>
-                  <div className={styles.processCardImgWrap}>
-                    <Image
-                      src={s.img}
-                      alt={s.name}
-                      fill
-                      className={styles.processCardImg}
-                      sizes="25vw"
-                    />
-                    <span className={styles.processCardStep} aria-hidden="true">0{idx + 1}</span>
-                  </div>
-                  <h3 className={styles.processCardName}>{s.name}</h3>
-                  <p className={styles.processCardDesc}>{s.desc}</p>
-                </div>
-              ))}
-            </div>
+            <p className={styles.processSub} data-reveal data-reveal-delay="0.15">
+              Crowd-Pulling Profit Machine
+            </p>
+            <button
+              className={`${styles.processPlayBtn}${processPlaying ? ' ' + styles.processPlayBtnPlaying : ''}`}
+              onClick={handleProcessPlay}
+              disabled={processPlaying}
+              data-reveal
+              data-reveal-delay="0.2"
+            >
+              {processPlaying ? 'Playing…' : processAnimStep === 4 ? 'Play Again' : 'Click to Play'}
+              {!processPlaying && (
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                  <polygon points="2,1 11,6 2,11" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* ── Canvas — full-bleed BG + 4 floating boxes ── */}
+        <div className={styles.processCanvas}>
+          <Image
+            src="/images/hyper-grid/hyper-grid-6.png"
+            alt="HyperGrid automated floor gaming system in action"
+            fill
+            className={styles.processBg}
+            sizes="100vw"
+          />
+          <div className={styles.processVignette} aria-hidden="true" />
+          <div className={styles.processInner}>
+
+          {/* Step 1 — TOP LEFT — right arrow → glide right */}
+          <div className={`${styles.processUnit} ${styles.unitTopLeft} ${processAnimStep === 1 ? styles.animGlideRight : ''}`}>
+            <div className={styles.processBox}>
+              <span className={styles.boxStep}>Step 01</span>
+              <h3 className={styles.boxTitle}>Tap the Card</h3>
+              <p className={styles.boxDesc}>Comes integrated with your card reader / coin slot machine.</p>
+            </div>
+            <div className={styles.arrowRight} aria-hidden="true">
+              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                <polyline points="2,2 11,11 2,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="14,2 23,11 14,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          {/* Step 4 — TOP RIGHT — left arrow ← glide left */}
+          <div className={`${styles.processUnit} ${styles.unitTopRight} ${processAnimStep === 2 ? styles.animGlideLeft : ''}`}>
+            <div className={styles.arrowLeft} aria-hidden="true">
+              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className={styles.processBox}>
+              <span className={styles.boxStep}>Step 04</span>
+              <h3 className={styles.boxTitle}>Watch Tutorial</h3>
+              <p className={styles.boxDesc}>Learn how to play with our super simple tutorial videos.</p>
+            </div>
+          </div>
+
+          {/* Step 2 — BOTTOM LEFT — up arrow ↑ glide up */}
+          <div className={`${styles.processUnit} ${styles.unitBottomLeft} ${processAnimStep === 0 ? styles.animGlideUp : ''}`}>
+            <div className={styles.processBox}>
+              <span className={styles.boxStep}>Step 02</span>
+              <h3 className={styles.boxTitle}>Select the Game</h3>
+              <p className={styles.boxDesc}>Use our touch operated software to select your game.</p>
+            </div>
+            <div className={styles.arrowUp} aria-hidden="true">
+              <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+                <polyline points="2,28 11,19 20,28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="2,16 11,7 20,16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+
+          {/* Step 3 — BOTTOM RIGHT — left arrow ← glide left */}
+          <div className={`${styles.processUnit} ${styles.unitBottomRight} ${processAnimStep === 3 ? styles.animGlideLeft : ''}`}>
+            <div className={styles.arrowLeft} aria-hidden="true">
+              <svg width="30" height="22" viewBox="0 0 30 22" fill="none">
+                <polyline points="28,2 19,11 28,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="16,2 7,11 16,20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <div className={styles.processBox}>
+              <span className={styles.boxStep}>Step 03</span>
+              <h3 className={styles.boxTitle}>Enter the Grid</h3>
+              <p className={styles.boxDesc}>Players enter the grid to start the tutorial video.</p>
+            </div>
+          </div>{/* /unitBottomRight */}
+          </div>{/* /processInner */}
+        </div>{/* /processCanvas */}
       </section>
 
       {/* ── ROI CALCULATOR ── */}
@@ -774,78 +811,10 @@ export default function HyperGridClient({ testimonials }: Props) {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      {slides.length > 0 && t && (
-      <section id="testimonials" className={styles.testimonials} aria-labelledby="test-heading">
-        <div className={styles.testInner}>
-          <button
-            className={`${styles.testArrowAbs} ${styles.testArrowPrev}`}
-            aria-label="Previous testimonial"
-            onClick={() => {
-              const next = (tIdx - 1 + slides.length) % slides.length;
-              showTestimonial(next);
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="11,4 6,9 11,14"/></svg>
-          </button>
-          <button
-            className={`${styles.testArrowAbs} ${styles.testArrowNext}`}
-            aria-label="Next testimonial"
-            onClick={() => {
-              const next = (tIdx + 1) % slides.length;
-              showTestimonial(next);
-              startAuto();
-            }}
-          >
-            <svg viewBox="0 0 18 18" aria-hidden="true"><polyline points="7,4 12,9 7,14"/></svg>
-          </button>
-
-          <div
-            className={styles.testGrid}
-            onMouseEnter={() => { if (autoRef.current) clearInterval(autoRef.current); }}
-            onMouseLeave={startAuto}
-          >
-            <div className={styles.testImage}>
-              <Image
-                src={t.image}
-                alt={t.name}
-                width={480}
-                height={640}
-                className={`${styles.testPersonImg} ${tImgFading ? styles.testPersonImgFading : ''}`}
-                style={{ objectFit: 'cover', objectPosition: 'center top' }}
-              />
-            </div>
-            <div className={styles.testRight}>
-              <div className={styles.testQuoteMark} aria-hidden="true" data-reveal>&ldquo;</div>
-              <div className={`${styles.testimonialContent} ${phaseClass}`}>
-                <blockquote className={styles.testQuote}>{t.quote}</blockquote>
-                <p className={styles.testSub}>{t.sub}</p>
-                <div className={styles.testDivider} aria-hidden="true" />
-                <p className={styles.testName}>{t.name}</p>
-                <div className={styles.testMetaWrap}>
-                  {t.logo && (
-                    <Image
-                      src={t.logo}
-                      alt={t.logoAlt}
-                      width={100}
-                      height={100}
-                      className={styles.testZoneLogo}
-                      style={{ objectFit: 'contain' }}
-                    />
-                  )}
-                </div>
-                <span className={styles.testRole}>{t.role}, {t.company}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
+      <TestimonialsCarousel testimonials={testimonials} />
 
       {/* ── GET IN TOUCH ── */}
-      <section id="get-in-touch">
-        <ContactForm />
-      </section>
+      <ContactForm defaultProduct="hypergrid" />
     </main>
   );
 }
