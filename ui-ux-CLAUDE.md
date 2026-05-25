@@ -79,7 +79,7 @@ Work is done **section by section, page by page** in this order:
 |---|---|---|
 | 1 | Hero (cinematic video BG `/videos/hypergrid-bg-video.mp4`, HUD brackets, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
 | 2 | What is HyperGrid (full-width 3D render + 3 descriptor cards) | Done |
-| 3 | Game Modes (sticky image panel + interactive modes list) | Pending |
+| 3 | Game Modes (sticky image panel + interactive modes list) | Done |
 | 4 | Moments Bento Grid (mixed card layout) | Pending |
 | 5 | How It Works (process steps carousel with image swap) | Pending |
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Pending |
@@ -107,6 +107,28 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid — Section 3: Game Modes
+- Layout: `grid-template-columns: 60fr 40fr` with `gap: 0 48px` — image panel fills ~60% of 1440px container, text panel takes ~40%; section padding kept at `36px` sides so effective split at 1440px ≈ 792px image / 528px text
+- Title moved into right panel (was spanning both columns) — left panel is now clean, image-only
+- Added section eyebrow "02 — Game Modes" — GoogleSans 500, orange, 4px letter-spacing, consistent with section 2 eyebrow style
+- Image aspect-ratio: `2/1` → `3/2` — taller at 60% width = more visual presence (~528px tall at 1440px)
+- Sticky top: `220px` → `100px` — image locks closer to viewport top while scrolling through mode list
+- `modesVideoBtn` hover: added `translateY(-2px)` lift, explicit transition properties — consistent with hero buttons
+- **Text consistency fixes per design-CLAUDE.md:**
+  - `modesV2Title` `font-weight: 600` → `700` (ClashDisplay headings must be 700)
+  - `modeItemName` `font-weight: 100` → `300` (design system minimum for subtext)
+  - `modeItem` inactive `opacity: 0.22` → `0.28` (more readable, less stark)
+  - Mode number format `{ 01 }` → `01` (clean, matches site numbering convention)
+  - `modesVideoBtn` `font-weight: 700` → `500` (UI label weight per design system)
+  - `modesV2Line` opacity `0.1` → `0.12` (slightly more visible divider)
+- Section bottom padding: `18px` → `100px`
+- Responsive: `60fr 40fr` holds to 1199px, stacks to single column at ≤900px
+- **v2 update:** Section height set to `100vh` using `display: flex` chain — wrap fills section, body grid fills wrap, image fills body cell
+- Title + eyebrow moved out of right panel into full-width `modesV2Header` above body grid — matches `whatHeading` size exactly (`clamp(28px, 4vw, 56px)`, `700`, uppercase, `margin-bottom: 40px`)
+- `aspect-ratio` removed from `modesV2ImgWrap`; replaced with `height: 100%` so image fills full body height
+- "Watch Gameplay" button now overlaid bottom-left on image (`position: absolute`) with dark blur backdrop — image panel is now fully uninterrupted
+- Responsive ≤900px: section reverts to `min-height: 100vh`, single column, image gets `aspect-ratio: 16/9`, button reverts to static position
 
 ### HyperGrid — Section 2: What is HyperGrid (v2 redesign)
 - Section background changed to `#090909` (dark-first, consistent with rest of page)

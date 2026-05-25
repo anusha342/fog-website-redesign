@@ -414,40 +414,52 @@ export default function HyperGridClient() {
       {/* ── GAME MODES ── */}
       <section id="game-modes" className={styles.modesV2Section}>
         <div className={styles.modesV2Wrap}>
-          <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
 
-          <div className={styles.modesV2Left}>
-            <div className={styles.modesV2ImgWrap}>
-              <Image
-                src={MODES[activeMode].img}
-                alt={MODES[activeMode].name}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch HyperGrid gameplay video">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
-                <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
-              </svg>
-              Watch Gameplay
-            </button>
+          {/* Full-width header — matches whatHeading position */}
+          <div className={styles.modesV2Header}>
+            <span className={styles.modesEyebrow} data-reveal>02 — Game Modes</span>
+            <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
           </div>
 
-          <div className={styles.modesV2Right}>
-            <div className={styles.modesV2Line}></div>
-            {MODES.map((m, idx) => (
-              <div key={idx}>
-                <div
-                  className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
-                  onMouseEnter={() => setActiveMode(idx)}
-                >
-                  <h3 className={styles.modeItemName}>{m.name}</h3>
-                  <span className={styles.modeItemNum}>{`{ 0${idx + 1} }`}</span>
-                </div>
-                <div className={styles.modesV2Line}></div>
+          {/* 60 / 40 body — fills remaining viewport height */}
+          <div className={styles.modesV2Body}>
+
+            {/* Left — image panel, 60% */}
+            <div className={styles.modesV2Left}>
+              <div className={styles.modesV2ImgWrap}>
+                <Image
+                  src={MODES[activeMode].img}
+                  alt={MODES[activeMode].name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
-            ))}
+              <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch HyperGrid gameplay video">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                  <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
+                </svg>
+                Watch Gameplay
+              </button>
+            </div>
+
+            {/* Right — mode list, 40% */}
+            <div className={styles.modesV2Right}>
+              <div className={styles.modesV2Line}></div>
+              {MODES.map((m, idx) => (
+                <div key={idx}>
+                  <div
+                    className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
+                    onMouseEnter={() => setActiveMode(idx)}
+                  >
+                    <h3 className={styles.modeItemName}>{m.name}</h3>
+                    <span className={styles.modeItemNum}>0{idx + 1}</span>
+                  </div>
+                  <div className={styles.modesV2Line}></div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
