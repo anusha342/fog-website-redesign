@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getAllPostsFromS3, getPostBySlugFromS3 } from '@/lib/s3';
+import PostTocClient from './PostTocClient';
 import styles from './page.module.css';
 
 // ISR: re-render on demand, cache for 60s — new posts appear without a redeploy
@@ -44,6 +45,37 @@ function formatDate(iso: string) {
   }
 }
 
+/** Extract h2/h3 headings from rendered HTML, returning slug-safe IDs + text */
+function extractHeadings(html: string) {
+  const headings: { id: string; text: string; level: number }[] = [];
+  const re = /<h([23])[^>]*>([\s\S]*?)<\/h[23]>/gi;
+  let match;
+  while ((match = re.exec(html)) !== null) {
+    const level = parseInt(match[1], 10);
+    const text = match[2].replace(/<[^>]+>/g, '').trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+    if (id) headings.push({ id, text, level });
+  }
+  return headings;
+}
+
+/** Inject id attributes into h2/h3 tags so anchor links resolve */
+function injectHeadingIds(html: string): string {
+  return html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/gi, (_, level, attrs, content) => {
+    const text = content.replace(/<[^>]+>/g, '').trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+    return `<h${level}${attrs} id="${id}">${content}</h${level}>`;
+  });
+}
+
 export default async function BlogPostPage(
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -52,6 +84,10 @@ export default async function BlogPostPage(
   if (!post) notFound();
 
   const allPosts = await getAllPostsFromS3();
+  const morePosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
+
+  const processedHtml = injectHeadingIds(post.contentHtml);
+  const headings = extractHeadings(post.contentHtml);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -77,87 +113,112 @@ export default async function BlogPostPage(
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ── HERO ── */}
-      {/* <section className={styles.pageHero} aria-label="Post header">
-        <div className={styles.pageHeroInner}>
-          <p className={styles.postEyebrow}>{post.category}</p>
-          <h1 className={styles.postTitle}>{post.title}</h1>
-          <p className={styles.postHeroMeta}>
-            <span>{post.author}</span>
-            <span aria-hidden="true">&middot;</span>
-            <span>{formatDate(post.date)}</span>
-            <span aria-hidden="true">&middot;</span>
-            <span>{post.readTime} min read</span>
-          </p>
-          {post.tags.length > 0 && (
-            <div className={styles.postTags} aria-label="Tags">
-              {post.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>{tag}</span>
-              ))}
+      <section className={styles.postPage}>
+        <div className={styles.postContainer}>
+
+          {/* ── BACK BUTTON ── */}
+          <div className={styles.backRow}>
+            <Link href="/blog" className={styles.backBtn}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+              </svg>
+              Back to Blog
+            </Link>
+          </div>
+
+          {/* ── HEADER: meta + title + excerpt ── */}
+          <header className={styles.postHeader}>
+            <div className={styles.postMeta}>
+              {post.category && (
+                <span className={styles.metaCategory}>{post.category}</span>
+              )}
+              <span className={styles.metaDate}>{formatDate(post.date)}</span>
+              {post.readTime && (
+                <span className={styles.metaReadTime}>{post.readTime} min read</span>
+              )}
+            </div>
+            <h1 className={styles.postTitle}>{post.title}</h1>
+            {post.excerpt && (
+              <p className={styles.postExcerpt}>{post.excerpt}</p>
+            )}
+          </header>
+
+          {/* ── COVER IMAGE ── */}
+          {post.coverImage && (
+            <div className={styles.postCover}>
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                fill
+                priority
+                sizes="(max-width: 1440px) 100vw, 1440px"
+              />
             </div>
           )}
-        </div>
-      </section> */}
 
-      {/* ── SIDEBAR + CONTENT ── */}
-      <div className={styles.layout}>
+          {/* ── TWO-COLUMN LAYOUT ── */}
+          <div className={styles.postLayout}>
 
-        {/* Sidebar: all posts as navigation tabs */}
-        <nav className={styles.tabs} aria-label="Blog posts">
-          <div className={styles.tabsInner}>
-            {allPosts.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/blog/${p.slug}`}
-                className={`${styles.tab} ${p.slug === slug ? styles.tabActive : ''}`}
-                aria-current={p.slug === slug ? 'page' : undefined}
-              >
-                <span className={styles.tabCat}>{p.category}</span>
-                <span className={styles.tabTitle}>{p.title}</span>
-                <span className={styles.tabMeta}>
-                  {formatDate(p.date)}&nbsp;&middot;&nbsp;{p.readTime}&nbsp;min
-                </span>
-              </Link>
-            ))}
+            {/* Left panel — ToC + progress + share + CTA */}
+            <PostTocClient headings={headings} slug={slug} />
+
+            {/* Right — prose + end CTA */}
+            <article className={styles.prose}>
+              <div
+                className={styles.postBody}
+                dangerouslySetInnerHTML={{ __html: processedHtml }}
+              />
+
+              {/* <div className={styles.postCta}>
+                <p className={styles.ctaLabel}>
+                  Ready to bring FOG to your venue?
+                </p>
+                <Link href="/#get-in-touch" className={styles.ctaBtn}>
+                  Get In Touch &#x2192;
+                </Link>
+              </div> */}
+            </article>
+
           </div>
-        </nav>
 
-        {/* Post content */}
-        <article className={styles.content}>
-          <div className={styles.contentInner}>
-
-            {/* Cover image */}
-            {post.coverImage && (
-              <div className={styles.postCover}>
-                <Image
-                  src={post.coverImage}
-                  alt={post.title}
-                  fill
-                  priority
-                  sizes="(max-width: 960px) 100vw, calc(100vw - 320px)"
-                />
+          {/* ── MORE POSTS ── */}
+          {morePosts.length > 0 && (
+            <section className={styles.morePosts} aria-label="More articles">
+              <h2 className={styles.morePostsTitle}>More from the Blog</h2>
+              <div className={styles.morePostsGrid}>
+                {morePosts.map((p) => (
+                  <Link
+                    key={p.slug}
+                    href={`/blog/${p.slug}`}
+                    className={styles.morePostCard}
+                  >
+                    <div className={styles.morePostImg}>
+                      {p.coverImage ? (
+                        <Image
+                          src={p.coverImage}
+                          alt={p.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      ) : (
+                        <div className={styles.morePostImgFallback} />
+                      )}
+                    </div>
+                    <div className={styles.morePostBody}>
+                      {p.category && (
+                        <span className={styles.morePostCategory}>{p.category}</span>
+                      )}
+                      <h3 className={styles.morePostTitle}>{p.title}</h3>
+                      <span className={styles.morePostReadMore}>Read More &rarr;</span>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            )}
+            </section>
+          )}
 
-            {/* Prose body */}
-            <div
-              className={styles.postBody}
-              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-            />
-
-            {/* End CTA */}
-            <div className={styles.postCta}>
-              <p className={styles.ctaLabel}>
-                Ready to bring FOG to your venue?
-              </p>
-              <Link href="/#get-in-touch" className={styles.ctaBtn}>
-                Get In Touch &#x2192;
-              </Link>
-            </div>
-
-          </div>
-        </article>
-      </div>
+        </div>
+      </section>
     </>
   );
 }
