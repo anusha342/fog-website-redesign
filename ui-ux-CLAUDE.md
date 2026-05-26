@@ -109,7 +109,7 @@ Work is done **section by section, page by page** in this order:
 | 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Pending |
 | 2 | What is Laser Tag (split layout — gun + vest equipment photos left, 3 descriptor cards right) | Pending |
 | 3 | Game Modes (sticky image panel + interactive modes list, Watch Gameplay overlay button) | Done |
-| 4 | Moments Bento Grid (4-card mixed layout — arena photo, player journey checklist, shareable video, highlights badge) | Pending |
+| 4 | Moments Bento Grid (4-card mixed layout — arena photo, player journey checklist, shareable video, highlights badge) | Done |
 | 5 | How It Works (process steps — image stage + overlaid name/desc + 4 nav buttons below) | Pending |
 | 6 | Arena Design (full-width arena render + area copy) | Pending |
 | 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Pending |
@@ -136,6 +136,28 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Section 4: Moments Bento Grid
+- **Source of truth:** Exact structural and visual port of HyperGrid Moments section — step-flow layout, card types, grid rhythm, and all animation classes are identical; only content (text, images, checklist items) belongs to Laser Tag
+- **Section bg:** `var(--surface)` = `#F5F5F5` — corrected from old `var(--white)`; creates same tonal zone as HyperGrid moments
+- **Inner padding:** `80px var(--sp-80) 80px` — normalised from old `100px var(--sp-80)` (matches HyperGrid spec)
+- **Header block:** `momentsTop` — left-aligned (`text-align: left; margin-bottom: 64px`) replacing old `text-align: center; margin: 0 auto 64px`
+- **Eyebrow added:** `"04 — Moments"` — GoogleSans 500, `var(--accent)` orange, 4px tracking, `clamp(10px,1vw,13px)` — was missing entirely from LT
+- **Title corrected:** ClashDisplay **700**, `clamp(28px,4vw,56px)`, uppercase, `letter-spacing: -0.5px`, `line-height: 1.05` — was wrong weight (600), wrong size (`clamp(40px,6vw,52px)`), and wrong letter-spacing (`-2px`)
+- **Step wrappers added:** Each card now wrapped in `momentsStep` div containing `momentsStepLabel` (orange dot + "Step 0X" text); `data-reveal` moved from single `momentsBento` container to each `momentsStep` with stagger `0.1/0.2/0.3/0.4s` — was a flat container with one single reveal
+- **Editorial stagger:** `momentsStepOffset` (`margin-top: 56px`) applied to steps 2 & 4 — 1 high, 2 low, 3 high, 4 low cascade
+- **Connector lines:** `momentsStep:not(:last-child)::after` — 1.5px orange-to-transparent gradient across the 20px gap; aligns at `top: 9px` (dot centre)
+- **Step label row:** `momentsStepLabel` — orange dot (`9px`, glow `box-shadow: 0 0 8px rgba(240,80,35,0.55)`) + "Step 0X" text (GoogleSans 500, 11px, 3px tracking, orange)
+- **Bento gap:** `gap: 12px` (uniform) → `gap: 0 20px` (horizontal only) — vertical rhythm is owned by the step cascade offsets, not the gap
+- **Accent card gradient:** `#001a24 → #004d6b → var(--lt-cyan)` (cyan) → `#1a0a05 → #7a2308 → var(--accent)` (orange/brand) — unifies with site-wide orange accent language
+- **Avatar colours:** `var(--lt-cyan)` base → `var(--accent)` orange base; nth-child(2) `#1a0a05`; nth-child(3) `#7a2308` — matches HyperGrid staggered dark tones
+- **Check icon bg:** `var(--lt-cyan)` → `var(--accent)` — consistent accent colour
+- **Icon circle bg:** `var(--lt-cyan)` → `var(--accent)`
+- **Checklist refactored:** Hardcoded `div` repeats → `.map()` over data array (same pattern as HyperGrid) — preserves exact LT content (Book session, Select game mode, AI capture, Highlight clip, Leaderboard rank)
+- **Accent card image:** Added `opacity: 0.35; mixBlendMode: 'luminosity'` inline — matches HyperGrid's desaturated image treatment on the accent card
+- **momentsCardMedia:** Added `position: relative` (was missing in LT)
+- **Responsive 1023px:** 2-col grid with `gap: 20px`; `momentsStepOffset` reset; connector lines hidden except col-1 odd steps
+- **Responsive 767px:** 1-col, `gap: 32px` (was `8px`); all offsets and connectors reset
 
 ### Laser Tag — Section 3: Game Modes
 - **Source of truth:** Exact structural and visual port of HyperGrid Game Modes V2 — layout, motion, and type spec are identical; only content (mode names, images, section eyebrow number) belongs to Laser Tag
