@@ -455,57 +455,151 @@
 }
 
 /* ═══════════════════════════════════════
-   4. TIMELINE
+   4. TIMELINE — THE FOG JOURNEY
 ═══════════════════════════════════════ */
 .timeline {
-  background: #ffffff;
+  background: var(--surface);
   width: 100%;
   padding: 100px clamp(24px, 6vw, 96px);
 }
 .timelineInner { max-width: 1440px; margin: 0 auto; }
-.tlHeader { text-align: center; margin-bottom: 80px; }
+
+/* Section header — left-aligned */
+.tlHeader { margin-bottom: 72px; }
+.tlEyebrow {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+  line-height: 1;
+}
 .timelineTitle {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(34px, 4.5vw, 58px);
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
-  color: var(--dark);
-  margin: 0 0 32px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
 }
-.tlList { position: relative; display: flex; flex-direction: column; gap: 48px; }
-.tlLine {
+
+/* 3-column grid: [sparse desc] [dot+line] [year+content]
+   display:contents on .tlRow makes it transparent to the grid —
+   its 3 children flow directly into the parent columns             */
+.tlBody { display: grid; grid-template-columns: 2fr 56px 3fr; }
+.tlRow  { display: contents; }
+
+/* ── Left column — contextual blurbs (sparse, not every node) ── */
+.tlLeftCell {
+  padding: 6px 56px 72px 0;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;   /* needed when column collapses to 0 on mobile */
+}
+.tlBlurb {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 300;
+  line-height: 1.65;
+  letter-spacing: 0.3px;
+  color: rgba(0,0,0,0.52);
+  max-width: 340px;
+  margin: 0;
+}
+.tlBlurbAccent { color: var(--accent); font-weight: 500; }
+
+/* ── Center column — continuous line + dots ── */
+.tlMidCell {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+/* The vertical spine */
+.tlMidCell::before {
+  content: '';
   position: absolute;
-  left: 50%; top: 0; bottom: 0;
+  top: 0; bottom: -1px;    /* -1px bleed kills visible gap between rows */
+  left: 50%;
+  transform: translateX(-50%);
   width: 1px;
   background: rgba(0,0,0,0.1);
-  transform: translateX(-50%);
-  display: none;
+  z-index: 0;
 }
-.tlItem { display: flex; flex-direction: column; align-items: stretch; }
-.tlDot    { display: none; }
-.tlSpacer { display: none; }
+/* Last node: line ends at dot centre, not below */
+.tlMidCellLast::before { bottom: 50%; }
 
-.tlContent {
-  flex: 1;
-  padding: 28px 32px;
-  background: rgba(0,0,0,0.03);
-  border: 1px solid rgba(0,0,0,0.07);
-  border-radius: 12px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+/* The dot */
+.tlDot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: relative; z-index: 1;
+  margin-top: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(240,80,35,0.14);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
-.tlContent:hover { border-color: rgba(240,80,35,0.2); background: rgba(240,80,35,0.03); }
+.tlMidCell:hover .tlDot {
+  box-shadow: 0 0 0 8px rgba(240,80,35,0.1);
+  transform: scale(1.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tlDot { transition: none; }
+  .tlMidCell:hover .tlDot { transform: none; }
+}
+
+/* ── Right column — year badge, H2-weight title, body desc ── */
+.tlRightCell { padding: 0 0 72px 40px; }
+
+/* Year — XS SM badge per design-CLAUDE.md */
 .tlYear {
   display: block;
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(32px, 3.5vw, 44px);
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--accent);
-  line-height: 1;
   margin-bottom: 8px;
 }
-.tlTitle { font-size: 18px; font-weight: 700; color: var(--dark); margin: 0 0 6px; }
-.tlDesc  { font-size: 14px; line-height: 1.65; color: rgba(0,0,0,0.45); margin: 0; }
+/* Node heading — H2 spec (clamp 20–30px) per design-CLAUDE.md */
+.tlNodeTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(20px, 2.5vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0 0 10px;
+}
+/* Body standard */
+.tlNodeDesc {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.52);
+  margin: 0;
+  max-width: 440px;
+}
+
+/* ── Timeline responsive ── */
+@media (max-width: 960px) {
+  /* Left column collapses to 0; cells still occupy grid slot */
+  .tlBody { grid-template-columns: 0 48px 1fr; }
+  .tlLeftCell { padding: 0; }
+  .tlRightCell { padding-left: 28px; }
+}
+@media (max-width: 640px) {
+  .tlBody { grid-template-columns: 0 36px 1fr; }
+  .tlRightCell { padding-left: 20px; padding-bottom: 48px; }
+}
 
 /* ═══════════════════════════════════════
    5. TEAM
@@ -516,7 +610,7 @@
   padding: 100px clamp(24px, 6vw, 96px);
 }
 .teamInner  { max-width: 1440px; margin: 0 auto; }
-.teamHeader { text-align: center; margin-bottom: 64px; }
+.teamHeader { text-align: left; margin-bottom: 64px; }
 .teamTitle {
   font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
   font-size: clamp(34px, 4.5vw, 58px);
@@ -548,21 +642,6 @@
 /* ═══════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════ */
-@media (min-width: 768px) {
-  .tlLine { display: block; }
-  .tlDot {
-    display: block;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    position: relative; z-index: 10; flex-shrink: 0;
-  }
-  .tlSpacer { display: block; flex: 1; }
-  .tlItem { flex-direction: row; align-items: center; gap: 32px; }
-  .tlItemRight { flex-direction: row-reverse; }
-  .tlItemLeft  .tlContent { text-align: right; }
-  .tlItemRight .tlContent { text-align: left; }
-}
 @media (max-width: 1100px) {
   .drivesGrid { grid-template-columns: repeat(2, 1fr); }
   .teamGrid   { grid-template-columns: repeat(2, 1fr); }

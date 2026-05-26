@@ -96,9 +96,9 @@ Work is done **section by section, page by page** in this order:
 | 1 | Hero (dark full-bleed, dot-grid overlay, H1 title, desc paragraph, "Our Journey" CTA, scroll indicator) | Done |
 | 2 | Awards & Honours (6-card grid — year badge, icon, award name, org, description) | Done |
 | 3 | What Drives Us (4 value cards — Innovation, Reliability, Speed, Partnership — icon + title + body) | Done |
-| 4 | The FOG Journey (alternating left/right timeline — dot, line, year badge, title, desc) | Pending |
-| 5 | The Team Behind FOG (4 avatar initials cards — name + role) | Pending |
-| 6 | Get In Touch (shared ContactForm) | Pending |
+| 4 | The FOG Journey (alternating left/right timeline — dot, line, year badge, title, desc) | Done |
+| 5 | The Team Behind FOG (4 avatar initials cards — name + role) | Done |
+| 6 | Get In Touch (shared ContactForm) | Done |
 
 ---
 
@@ -147,6 +147,18 @@ Work is done **section by section, page by page** in this order:
 - **H3 title:** `driveCardTitle` — ClashDisplay 700, `clamp(13px,1.5vw,19px)`, uppercase, `#0a0a0a` — proper H3 spec per `design-CLAUDE.md`; was bare `h3` tag with no class
 - **Body:** `driveCardBody` — GoogleSans 400, 13px, `rgba(0,0,0,0.55)` — standard body role; was bare `p` tag, wrong color `var(--dark)`
 - **Stagger:** `0 / 0.08 / 0.16 / 0.24s` across 4 cards — left-to-right cascade
+
+### About — Section 4: The FOG Journey (Timeline)
+- **Section bg:** `var(--surface)` = `#F5F5F5` — continues from What Drives Us; same tonal zone, no separation border needed
+- **Header:** left-aligned; `margin-bottom: 72px` — extra breathing room before the timeline rows begin
+- **Grid architecture:** `display: grid; grid-template-columns: 2fr 56px 3fr` — 3-column layout where left (sparse desc) : center (spine) : right (content) = 2 : 0.35 : 3; `display: contents` on `.tlRow` wrappers makes the wrapping div transparent so its 3 children flow directly into the parent grid
+- **Left column — sparse blurbs:** Only items 0 (Founded 2019) and 3 (Product Line 2022) carry a `blurb`; all others are empty. `.tlBlurb` uses GoogleSans 300, `clamp(14px,1.6vw,18px)`, `rgba(0,0,0,0.52)` — Body Lead spec from dark-section equivalent, applied to light bg
+- **Center column — continuous spine:** `.tlMidCell::before` draws a 1px vertical line from `top:0` to `bottom:-1px` (−1px bleed eliminates visible gaps between consecutive rows); last row uses `.tlMidCellLast` which terminates at `bottom: 50%` (dot centre); `.tlDot` is 10px accent circle with `box-shadow: 0 0 0 4px rgba(240,80,35,0.14)` pulse ring; hover scales dot and expands ring
+- **Right column — content:** `.tlYear` — GoogleSans 700, 11px, 2px tracking, `var(--accent)` orange; `.tlNodeTitle` — ClashDisplay 700, `clamp(20px,2.5vw,30px)`, H2 spec, dark; `.tlNodeDesc` — GoogleSans 400, 13px, `rgba(0,0,0,0.52)`, max-width 440px
+- **Removed:** stale `@media (min-width: 768px)` block that referenced old class names (`.tlLine`, `.tlItem`, `.tlItemRight`, `.tlItemLeft`, `.tlContent`, `.tlSpacer`) — these conflicted with new grid classes
+- **Responsive 960px:** `grid-template-columns: 0 48px 1fr` — left column zeroed; `overflow: hidden` on `.tlLeftCell` prevents any blurb text from bleeding out
+- **Responsive 640px:** `grid-template-columns: 0 36px 1fr` — spine narrows further; right cell padding reduces
+- **Data:** `year: '2019'` added to Founded item; `side`/`delay` props removed (no longer needed in grid layout); `blurb` prop added to all 6 items (non-empty for items 0 and 3)
 
 ### About — Section 2: Awards & Recognition
 - **Section bg:** `#ffffff` — white; contrasts cleanly with adjacent dark sections; `border-top: 1px solid rgba(0,0,0,0.06)` as a hair-line separator
