@@ -263,7 +263,7 @@ export default function LaserTagClient({ testimonials }: Props) {
               <span className={styles.uspGhostNum} aria-hidden="true">3</span>
               <div className={styles.uspImgWrap}>
                 <Image
-                  src="/images/laser-tag/vest.png"
+                  src="/images/laser-tag/vest-description.png"
                   alt="Operator-friendly laser tag software management suite"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -280,7 +280,60 @@ export default function LaserTagClient({ testimonials }: Props) {
         </div>
       </section>
 
-      {/* 3. GAME MODES */}
+      {/* 3. GUN + VEST DESCRIPTION */}
+      <section id="equipment" className={styles.equipSection} data-nav-theme="light">
+        <div className={styles.equipInner} data-reveal>
+
+          {/* Gun Card */}
+          <div className={styles.equipCard}>
+            <div className={styles.equipImgWrap}>
+              <Image
+                src="/images/laser-tag/gun-description.png"
+                alt="FOG Laser Tag Combat Phaser gun"
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className={styles.equipOverlay}>
+              <span className={styles.equipLabel}>Hardware</span>
+              <h3 className={styles.equipCardTitle}>Combat Phaser</h3>
+              <ul className={styles.equipFeatures}>
+                <li>Ergonomic lightweight build</li>
+                <li>Wireless contact-free charging</li>
+                <li>Long-range precision targeting</li>
+                <li>Multi-colour LED hit indicators</li>
+                <li>Modular plug-and-play internals</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Vest Card */}
+          <div className={styles.equipCard}>
+            <div className={styles.equipImgWrap}>
+              <Image
+                src="/images/laser-tag/vest.png"
+                alt="FOG Laser Tag Tactical Vest with sensor zones"
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className={styles.equipOverlay}>
+              <span className={styles.equipLabel}>Protection</span>
+              <h3 className={styles.equipCardTitle}>Tactical Vest</h3>
+              <ul className={styles.equipFeatures}>
+                <li>360° multi-zone impact sensors</li>
+                <li>Front, back &amp; shoulder coverage</li>
+                <li>LED full-body hit feedback</li>
+                <li>Adjustable fit — all ages</li>
+                <li>Durable arena-grade construction</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. GAME MODES */}
       <section id="game-modes" className={styles.modesV2Section} data-nav-theme="light">
         <div className={styles.modesV2Wrap}>
 
@@ -446,7 +499,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       </section>
 
       {/* 5. HOW IT WORKS */}
-      <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
+      {/* <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
         <div className={styles.processInner}>
           <div className={styles.processHeader} data-reveal>
             <h2 className={styles.processTitle}>Fast Setup, Full Immersion</h2>
@@ -480,7 +533,7 @@ export default function LaserTagClient({ testimonials }: Props) {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 6. ARENA DESIGN */}
       <section id="arena-design" className={styles.speModelSection} data-nav-theme="dark">

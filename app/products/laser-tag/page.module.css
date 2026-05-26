@@ -405,7 +405,155 @@
 }
 
 /* ═══════════════════════════════════════
-   3. GAME MODES
+   3. GUN + VEST DESCRIPTION
+═══════════════════════════════════════ */
+.equipSection {
+  background: #ffffff;
+  height: 50vh;
+  min-height: 380px;
+  padding: 32px 36px;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.equipInner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Card shell ── */
+.equipCard {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.10),
+    0 12px 48px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+/* ── Image layer ── */
+.equipImgWrap {
+  position: absolute;
+  inset: 0;
+  transition: transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.equipCard:hover .equipImgWrap {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipCard:hover .equipImgWrap { transform: none; }
+}
+
+/* ── Text overlay — hidden until hover ── */
+.equipOverlay {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 40px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 360ms ease,
+    transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.equipCard:hover .equipOverlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipOverlay { transition: opacity 200ms ease; transform: none !important; }
+}
+
+.equipLabel {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 10px;
+}
+
+.equipCardTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 38px);
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
+.equipFeatures {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.equipFeatures li {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+  padding-left: 16px;
+  position: relative;
+}
+
+.equipFeatures li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  .equipSection { padding: 28px 32px; }
+}
+
+@media (max-width: 900px) {
+  .equipSection { padding: 24px 24px; min-height: 320px; }
+  .equipOverlay { padding: 28px 28px; }
+}
+
+@media (max-width: 640px) {
+  .equipSection {
+    height: auto;
+    padding: 24px 20px;
+    min-height: unset;
+  }
+  .equipInner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .equipCard { height: 260px; }
+}
+
+/* ═══════════════════════════════════════
+   4. GAME MODES
 ═══════════════════════════════════════ */
 .modesV2Section {
   background: #ffffff;
