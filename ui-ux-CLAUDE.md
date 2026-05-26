@@ -542,3 +542,10 @@ Work is done **section by section, page by page** in this order:
 - **Breakpoint removed:** `@media (max-width: 767px)` override `padding-left/right: var(--sp-24)` deleted — no longer needed since base padding is already 0
 - **Scope:** `globals.css` — `Footer.tsx` is a shared layout component rendered on every page; change propagates site-wide automatically
 - **Why:** Aligns footer content width with the full 1440px max-width container (same 0-horizontal-padding convention used on blog listing `.blogInner` and blog post `.postContainer`)
+
+### Home — Globe / Locations Section: Remove Horizontal Padding
+- **Change:** `.globeText` `left: 80px` → `left: 0` — text overlay now sits flush with the left edge of the 1440px `globeInner` container; top (80px) preserved
+- **Responsive 1023px:** `left: var(--sp-48)` → `left: 0`
+- **Responsive 767px:** `left: var(--sp-24); right: var(--sp-24)` → `left: 0; right: 0` — mobile full-width text block also zero-padded
+- **Scope:** `app/home.module.css` — affects only the Globe section on the home page
+- **Why:** Aligns globe text with the zero-horizontal-padding convention applied to the footer and blog pages
