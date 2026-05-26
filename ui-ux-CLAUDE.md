@@ -137,8 +137,14 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
+### Laser Tag — Global: Section Padding Refactor
+- **Rule applied:** All sections in `page.module.css` changed to `padding: 80px 0` — 80px top/bottom, zero left/right. Documented in `design-CLAUDE.md` under "Section Layout".
+- **Removed:** All responsive overrides that modified horizontal padding (`36px`, `32px`, `24px`, `20px`, `var(--sp-80)`, `var(--sp-48)`, `var(--sp-24)` horizontal values) across every breakpoint. Top/bottom stays `80px` across all breakpoints.
+- **Sections affected:** uspSection, equipSection, modesV2Section, momentsInner, speModelInner, speDataInner, testSection
+- **Unchanged:** Hero (full-bleed, `padding: 0`), inner card/component padding (e.g. `uspContent`, `equipOverlay`, `speInfoCard`) — only section-shell and inner-wrapper padding was normalised.
+
 ### Laser Tag — Section 3: Gun + Vest Description
-- **Section bg:** `#ffffff` (white), `height: 50vh`, `min-height: 380px`, `padding: 32px 36px`, `display: flex; align-items: stretch` — natural flex fill to propagate height into grid
+- **Section bg:** `#ffffff` (white), `height: 50vh`, `min-height: 380px`, `padding: 80px 0`, `display: flex; align-items: stretch` — natural flex fill to propagate height into grid
 - **No section title or eyebrow** — section is purely visual (two cards with no header text above)
 - **Inner grid:** max-width 1440px, `display: grid; grid-template-columns: 1fr 1fr; gap: 20px` — fills full available 50vh height via flex stretch chain
 - **Card (`.equipCard`):** `border-radius: 16px; overflow: hidden`; `box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 12px 48px rgba(0,0,0,0.08)` — dual-layer depth shadow
