@@ -457,10 +457,11 @@
   z-index: 0;
   transition: opacity 0.2s ease;
 }
+/* Product black left overlay */
 .prodOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, #000 0%, #000 36%, rgba(0,0,0,0.5) 46%, transparent 56%);
+  background: linear-gradient(to right, #000 20%, #000 6%, rgba(0,0,0,0.5) 46%, transparent 96%);
   z-index: 1;
 }
 .prodThumbs { position: absolute; bottom: 56px; right: 64px; display: flex; gap: var(--sp-8); z-index: 2; }
