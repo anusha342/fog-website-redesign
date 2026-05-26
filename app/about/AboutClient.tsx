@@ -149,7 +149,7 @@ export default function AboutClient() {
             <div>
               {/* <p className={styles.awardsEyebrow} data-reveal>02 — Awards &amp; Recognition</p> */}
               <h2 className={styles.awardsTitle} data-reveal data-reveal-delay="0.1">
-                Industry&apos;s Most<br />Recognised Platform.
+                Industry&apos;s Most<br />Recognised Platform
               </h2>
             </div>
             <div className={styles.awardsStat} data-reveal data-reveal-delay="0.15">
@@ -206,23 +206,30 @@ export default function AboutClient() {
       <section id="what-drives-us" className={styles.drives}>
         <div className={styles.drivesInner}>
           <div className={styles.drivesHeader}>
+            {/* <p className={styles.drivesEyebrow} data-reveal>03 — What Drives Us</p> */}
             <h2 className={styles.drivesTitle} data-reveal data-reveal-delay="0.1">
-              What Drives Us
+              Built on Four Principles
             </h2>
           </div>
           <div className={styles.drivesGrid}>
-            {VALUES.map((v, i) => (
-              <div
-                key={i}
-                className={styles.driveCard}
-                data-reveal
-                {...(v.delay ? { 'data-reveal-delay': v.delay } : {})}
-              >
-                <div className={styles.driveIconWrap}>{v.icon}</div>
-                <h3>{v.title}</h3>
-                <p>{v.body}</p>
-              </div>
-            ))}
+            {VALUES.map((v, i) => {
+              const STAGGER = ['', '0.08', '0.16', '0.24'];
+              return (
+                <div
+                  key={i}
+                  className={styles.driveCard}
+                  data-reveal
+                  data-reveal-delay={STAGGER[i]}
+                >
+                  {/* <span className={styles.driveCardIndex}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span> */}
+                  <div className={styles.driveIconWrap}>{v.icon}</div>
+                  <h3 className={styles.driveCardTitle}>{v.title}</h3>
+                  <p className={styles.driveCardBody}>{v.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

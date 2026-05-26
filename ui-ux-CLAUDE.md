@@ -95,7 +95,7 @@ Work is done **section by section, page by page** in this order:
 |---|---|---|
 | 1 | Hero (dark full-bleed, dot-grid overlay, H1 title, desc paragraph, "Our Journey" CTA, scroll indicator) | Done |
 | 2 | Awards & Honours (6-card grid — year badge, icon, award name, org, description) | Done |
-| 3 | What Drives Us (4 value cards — Innovation, Reliability, Speed, Partnership — icon + title + body) | Pending |
+| 3 | What Drives Us (4 value cards — Innovation, Reliability, Speed, Partnership — icon + title + body) | Done |
 | 4 | The FOG Journey (alternating left/right timeline — dot, line, year badge, title, desc) | Pending |
 | 5 | The Team Behind FOG (4 avatar initials cards — name + role) | Pending |
 | 6 | Get In Touch (shared ContactForm) | Pending |
@@ -132,6 +132,21 @@ Work is done **section by section, page by page** in this order:
 - **Removed:** `heroBg` (flat dark div), `heroGrid` (dot pattern), `heroCta` (anchor link) — photo eliminates the need for artificial texture; CTA removed to reduce density at 50vh
 - **Scroll indicator:** condensed to `height: 52px` (was 90px) to fit 50vh proportionally; `prefers-reduced-motion` guard added — dot freezes at mid-point instead of animating
 - **Responsive:** `min-height: 320px` is the safety floor on small phones; eyebrow and title are fluid via `clamp()` so no custom breakpoint rules needed inside the hero
+
+### About — Section 3: What Drives Us
+- **Section bg:** `var(--surface)` = `#F5F5F5` — grey token from `globals.css`; intentional tonal break between the white Awards section above and later sections; no border needed
+- **Header:** left-aligned (`text-align: left`); `margin-bottom: 52px` — tighter than the old 64px to keep section height unchanged
+- **Eyebrow:** `"03 — What Drives Us"` — GoogleSans 500, `var(--accent)` orange, 4px tracking, `clamp(10px,1vw,13px)` — matches universal section eyebrow spec
+- **H2 title:** `"Built on Four Principles."` — ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `letter-spacing: -0.5px`, `#0a0a0a` — corrected from old `clamp(34px,4.5vw,58px)` non-standard size; left-aligned per requirement
+- **Grid:** `repeat(4, 1fr); gap: 18px` — unchanged column count, gap tightened slightly to match card padding rhythm
+- **Card base:** `background: #ffffff` — white cards pop off the `#F5F5F5` surface; `border: 1px solid rgba(0,0,0,0.06)` — near-invisible on white; `border-top: 2.5px solid transparent` — reserves orange accent slot for hover
+- **Card hover:** `transform: translateY(-5px)` spring cubic-bezier + `border-top-color: var(--accent)` reveals orange top stripe + `box-shadow: 0 18px 44px rgba(0,0,0,0.08)`; `prefers-reduced-motion` disables transform
+- **Card layout:** `align-items: flex-start` — left-aligned content (was centred)
+- **Index label:** `driveCardIndex` — GoogleSans 700, 10px, 2.5px tracking, orange — "01 / 02 / 03 / 04" above icon; `margin-bottom: 20px` gap to icon
+- **Icon:** `driveIconWrap` — 48×48px, `border-radius: 12px` (rounded-rect, matches site icon language; was `50%` circle); `rgba(240,80,35,0.08)` tint; `margin-bottom: 20px` gap to title
+- **H3 title:** `driveCardTitle` — ClashDisplay 700, `clamp(13px,1.5vw,19px)`, uppercase, `#0a0a0a` — proper H3 spec per `design-CLAUDE.md`; was bare `h3` tag with no class
+- **Body:** `driveCardBody` — GoogleSans 400, 13px, `rgba(0,0,0,0.55)` — standard body role; was bare `p` tag, wrong color `var(--dark)`
+- **Stagger:** `0 / 0.08 / 0.16 / 0.24s` across 4 cards — left-to-right cascade
 
 ### About — Section 2: Awards & Recognition
 - **Section bg:** `#ffffff` — white; contrasts cleanly with adjacent dark sections; `border-top: 1px solid rgba(0,0,0,0.06)` as a hair-line separator
