@@ -187,6 +187,7 @@ export default function HomeClient({
   }, []);
 
   // ── Three.js hero ────────────────────────────────────────────────────────
+  /* THREE.JS ANIMATION COMMENTED OUT
   useEffect(() => {
     const canvas = canvasRef.current;
     const hero   = heroRef.current;
@@ -416,6 +417,7 @@ export default function HomeClient({
       if (r?.__dispose) r.__dispose();
     };
   }, []);
+  THREE.JS ANIMATION COMMENTED OUT */
 
   // ── FOG text animation ───────────────────────────────────────────────────
   useEffect(() => {
