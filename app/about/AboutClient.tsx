@@ -82,12 +82,12 @@ const VALUES = [
 ];
 
 const TIMELINE = [
-  { year: '',     title: 'Founded',        desc: 'FOG Technologies born in Surat with a vision to revolutionize FEC entertainment.', side: 'left', delay: '' },
-  { year: '2020', title: 'First Product',  desc: 'HyperGrid prototype completed and installed in first beta venue.',                  side: 'right', delay: '0.1' },
-  { year: '2021', title: 'Expansion',      desc: 'Reached 10 installations across 5 cities in India.',                               side: 'left',  delay: '0.05' },
-  { year: '2022', title: 'Product Line',   desc: 'Launched Infinity Laser Tag and Laser Spy attractions.',                           side: 'right', delay: '0.1' },
-  { year: '2023', title: 'AI Integration', desc: 'Introduced Statue Game with computer vision technology.',                          side: 'left',  delay: '0.05' },
-  { year: '2024', title: 'Global',         desc: 'Announced international expansion into UAE, Singapore, and UK.',                   side: 'right', delay: '0.1' },
+  { year: '2019', title: 'Founded',        desc: 'FOG Technologies born in Surat with a vision to revolutionize family entertainment centres.',    blurb: 'Born from a passion for next-gen play, FOG set out to redefine what a family entertainment centre could be.' },
+  { year: '2020', title: 'First Product',  desc: 'HyperGrid prototype completed and installed in the first beta venue.',                           blurb: '' },
+  { year: '2021', title: 'Expansion',      desc: 'Reached 10 installations across 5 cities in India.',                                             blurb: '' },
+  { year: '2022', title: 'Product Line',   desc: 'Launched Infinity Laser Tag and Laser Spy — completing the FOG ecosystem.',                      blurb: 'Three products. One vision. The FOG ecosystem took shape across India.' },
+  { year: '2023', title: 'AI Integration', desc: 'Introduced Statue Game powered by real-time computer vision.',                                   blurb: '' },
+  { year: '2024', title: 'Global Reach',   desc: 'Expansion into UAE, Singapore, and UK — bringing FOG to 3 new continents.',                     blurb: '' },
 ];
 
 const TEAM = [
@@ -243,25 +243,30 @@ export default function AboutClient() {
             </h2>
           </div>
 
-          <div className={styles.tlList}>
-            <div className={styles.tlLine} aria-hidden="true" />
+          <div className={styles.tlBody}>
+            {TIMELINE.map((item, i) => {
+              const isLast = i === TIMELINE.length - 1;
+              return (
+                <div key={i} className={styles.tlRow}>
+                  {/* Left — sparse contextual blurb */}
+                  <div className={styles.tlLeftCell}>
+                    {item.blurb && <p className={styles.tlBlurb}>{item.blurb}</p>}
+                  </div>
 
-            {TIMELINE.map((item, i) => (
-              <div
-                key={i}
-                className={`${styles.tlItem} ${item.side === 'right' ? styles.tlItemRight : styles.tlItemLeft}`}
-                data-reveal
-                {...(item.delay ? { 'data-reveal-delay': item.delay } : {})}
-              >
-                <div className={styles.tlContent}>
-                  {item.year && <span className={styles.tlYear}>{item.year}</span>}
-                  <h3 className={styles.tlTitle}>{item.title}</h3>
-                  <p className={styles.tlDesc}>{item.desc}</p>
+                  {/* Centre — continuous spine + accent dot */}
+                  <div className={`${styles.tlMidCell}${isLast ? ` ${styles.tlMidCellLast}` : ''}`}>
+                    <span className={styles.tlDot} aria-hidden="true" />
+                  </div>
+
+                  {/* Right — year badge, heading, description */}
+                  <div className={styles.tlRightCell} data-reveal>
+                    <span className={styles.tlYear}>{item.year}</span>
+                    <h3 className={styles.tlNodeTitle}>{item.title}</h3>
+                    <p className={styles.tlNodeDesc}>{item.desc}</p>
+                  </div>
                 </div>
-                <div className={styles.tlDot} aria-hidden="true" />
-                <div className={styles.tlSpacer} />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -271,7 +276,7 @@ export default function AboutClient() {
         <div className={styles.teamInner}>
           <div className={styles.teamHeader}>
             <h2 className={styles.teamTitle} data-reveal data-reveal-delay="0.1">
-              The Team Behind FOG
+              Our Team
             </h2>
           </div>
           <div className={styles.teamGrid}>
