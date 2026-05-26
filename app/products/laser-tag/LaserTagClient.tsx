@@ -251,43 +251,57 @@ export default function LaserTagClient({ testimonials }: Props) {
       </section>
 
       {/* 3. GAME MODES */}
-      <section id="game-modes" className={styles.modesSection} data-nav-theme="dark">
-        <div className={styles.modesWrap}>
-          <h2 className={styles.modesTitle} data-reveal>Game Modes</h2>
-          
-          <div className={styles.modesLeft}>
-            <div className={styles.modesImgWrap}>
-              <Image
-                src={MODES[activeMode].img}
-                alt={MODES[activeMode].name}
-                className={styles.modesImg}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <button className={styles.modesVideoBtn} onClick={openVideo}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
-              Watch Gameplay
-            </button>
+      <section id="game-modes" className={styles.modesV2Section} data-nav-theme="light">
+        <div className={styles.modesV2Wrap}>
+
+          {/* Full-width header */}
+          <div className={styles.modesV2Header}>
+            <span className={styles.modesEyebrow} data-reveal>03 — Game Modes</span>
+            <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
           </div>
 
-          <div className={styles.modesRight}>
-            <div className={styles.modesLine}></div>
-            {MODES.map((m, idx) => (
-              <div key={idx}>
-                <div 
-                  className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
-                  onMouseEnter={() => setActiveMode(idx)}
-                >
-                  <h3 className={styles.modeItemName}>{m.name}</h3>
-                  <span className={styles.modeItemNum}>
-                    {`{ 0${idx + 1} }`}
-                    {idx === 2 && <span className={styles.modeNew}>New</span>}
-                  </span>
-                </div>
-                <div className={styles.modesLine}></div>
+          {/* 60 / 40 body — fills remaining viewport height */}
+          <div className={styles.modesV2Body}>
+
+            {/* Left — image panel, 60% */}
+            <div className={styles.modesV2Left}>
+              <div className={styles.modesV2ImgWrap}>
+                <Image
+                  src={MODES[activeMode].img}
+                  alt={MODES[activeMode].name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
-            ))}
+              <button className={styles.modesVideoBtn} onClick={openVideo} aria-label="Watch Laser Tag gameplay video">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/>
+                  <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/>
+                </svg>
+                Watch Gameplay
+              </button>
+            </div>
+
+            {/* Right — mode list, 40% */}
+            <div className={styles.modesV2Right}>
+              <div className={styles.modesV2Line}></div>
+              {MODES.map((m, idx) => (
+                <div key={idx}>
+                  <div
+                    className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
+                    onMouseEnter={() => setActiveMode(idx)}
+                  >
+                    <h3 className={styles.modeItemName}>{m.name}</h3>
+                    <span className={styles.modeItemNum}>
+                      0{idx + 1}
+                      {idx === 2 && <span className={styles.modeNew}>New</span>}
+                    </span>
+                  </div>
+                  <div className={styles.modesV2Line}></div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
@@ -411,10 +425,10 @@ export default function LaserTagClient({ testimonials }: Props) {
       <section id="arena-design" className={styles.speModelSection} data-nav-theme="dark">
         <div className={styles.speModelInner}>
           <h2 className={styles.speModelTitle} data-reveal>Immersive Arena Design</h2>
-          <p className={styles.speModelBody} data-reveal data-reveal-delay="0.1">
+          {/* <p className={styles.speModelBody} data-reveal data-reveal-delay="0.1">
             Recommended area: <strong>700–3000 sq ft</strong> (approx. <strong>100 sq ft</strong> per player)<br/>
             Specialized in Designing Strategic 3D Laser Tag Arenas
-          </p>
+          </p> */}
           <div className={styles.speModelImgWrap} data-reveal data-reveal-delay="0.15">
             <Image
               src="/images/laser-tag/arena.png"
