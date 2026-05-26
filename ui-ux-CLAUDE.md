@@ -513,3 +513,26 @@ Work is done **section by section, page by page** in this order:
 - HUD corners: added `@keyframes hudDraw` (scale 0.6 → 1, opacity 0 → 0.55) with staggered delays (0.4–0.7s), spring cubic-bezier — wrapped in `prefers-reduced-motion` guard
 - Added bobbing scroll chevron at hero bottom — `@keyframes scrollBob`, opacity + 6px Y travel, `prefers-reduced-motion` guard
 - Button hover: replaced generic `transition: all` with explicit property list; added `-2px translateY` lift on all `.hbtn`; solid variant glow `rgba(240,80,35,0.45)`, ghost variant `rgba(255,255,255,0.12)`
+
+### Blog Post Page — Left ToC Panel + White Layout Redesign
+- **Background:** White (`#ffffff`), `margin-top: 60px` navbar clearance, `padding: 56px 0 96px`; max-width 1440px container with `clamp(24px,5vw,80px)` horizontal padding
+- **Back button:** Ghost pill at top — `border: 1px solid rgba(0,0,0,0.15)`, `border-radius: 100px`, GoogleSans 500, 12px, 1.5px tracking, uppercase, `#0a0a0a`; hover → orange border + orange text; SVG left-arrow icon (14px, `stroke-width: 2.2`)
+- **Meta row (below back, above title):** Three pill variants side-by-side:
+  - Category: dark bg pill (`rgba(0,0,0,0.07)`, `border-radius: 4px`, 11px, 1.5px tracking, uppercase, `#0a0a0a`)
+  - Date: border pill (`border: 1px solid rgba(0,0,0,0.12)`, muted `rgba(0,0,0,0.45)`)
+  - Read time: orange tint pill (`rgba(240,80,35,0.08)` bg, `var(--accent)` text) — matches blog listing card meta spec exactly for visual consistency
+- **H1:** ClashDisplay 700, `clamp(28px,4.5vw,52px)`, uppercase, `letter-spacing: -0.5px`, `#0a0a0a` — standard site H1 spec; `max-width: 860px`
+- **Excerpt:** GoogleSans 300, `clamp(15px,1.5vw,18px)`, `line-height: 1.65`, `rgba(0,0,0,0.52)` — Body Lead spec
+- **Cover image:** Full container width, `aspect-ratio: 16/9`, `border-radius: 16px`, `margin-bottom: 60px`
+- **Two-column layout:** `grid-template-columns: 260px 1fr; gap: 60px; align-items: start` — left panel is sticky; collapses at ≤900px
+- **Left panel (`PostTocClient.tsx`, 'use client'):**
+  - **Reading progress:** Vertical 3px track (`rgba(0,0,0,0.08)` bg) × 100px tall; orange fill height driven by `window.scrollY / (scrollHeight - clientHeight) * 100`; percentage displayed as ClashDisplay 700, 22px with "read" sub-label in GoogleSans 10px uppercase — big number creates instant visual feedback
+  - **Table of contents:** H2/h3 headings extracted server-side via regex, IDs injected into HTML with `injectHeadingIds()` helper; `IntersectionObserver` with `rootMargin: '-15% 0% -70% 0%'` tracks active section; active link gets orange color + 2px left border; sub-headings (`h3`) indent 26px and use 12px; smooth scroll on click
+  - **Share:** Three icon buttons (X/Twitter, LinkedIn, Facebook) — 36×36px, `border-radius: 8px`, `rgba(0,0,0,0.05)` bg; hover fills orange + `translateY(-2px)` spring
+  - **CTA:** Dark pill button (`background: #0a0a0a`), `border-radius: 100px`, fills full panel width; hover → orange + `-2px` lift
+- **Mobile panel (≤900px):** Drops sticky positioning → flat horizontal flex row inside a `border: 1px solid rgba(0,0,0,0.08)` rounded card (`border-radius: 12px`, `background: #fafafa`); progress block hidden; ToC and share blocks wrap inline
+- **Prose (right column):** GoogleSans body prose — `clamp(15px,1.5vw,17px)`, `line-height: 1.78`, `#2a2a2a`; H2 ClashDisplay 700 uppercase `clamp(20px,2.5vw,28px)`; blockquote orange left border + `rgba(240,80,35,0.04)` tint bg + `border-radius: 0 8px 8px 0`; images `border-radius: 8px`
+- **End CTA strip:** `border-top: 1px solid #e8e8e8`, flex row with label left + dark pill CTA right; hover fills orange
+- **More Posts grid:** Below layout — H2 "More from the Blog" (ClashDisplay 700, uppercase, `clamp(20px,2.5vw,32px)`); `repeat(3,1fr)` card grid (same card design as blog listing: image 16/9 + category orange label + ClashDisplay title + "Read More" text); filters out current slug; collapses to 2-col at ≤1100px, 1-col at ≤600px
+- **Heading ID injection:** `extractHeadings(html)` + `injectHeadingIds(html)` server-side helpers in `page.tsx` — regex walks `<h2>/<h3>` tags, slugifies text → `id="heading-slug"`, enables anchor + ToC scroll targeting
+- **No `data-reveal`:** None used anywhere on this page — all elements are static server or client rendered; `data-reveal` unsafe on client-component output (opacity: 0.001 remains permanently)
