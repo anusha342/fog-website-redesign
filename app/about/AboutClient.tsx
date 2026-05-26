@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import styles from './about.module.css';
 
@@ -105,24 +105,34 @@ export default function AboutClient() {
 
       {/* ── 1. HERO ── */}
       <header className={styles.hero}>
-        <div className={styles.heroBg}    aria-hidden="true" />
-        <div className={styles.heroOverlay} aria-hidden="true" />
-        <div className={styles.heroGrid}  aria-hidden="true" />
-
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">
-            Engineering the<br />Future of Fun.
-          </h1>
-          <p className={styles.heroDesc} data-reveal data-reveal-delay="0.2">
-            FOG Technologies (Future of Gaming Technologies) is a premium B2B company that manufactures
-            and deploys interactive entertainment attractions for Family Entertainment Centers globally.
-            We transform spaces into unforgettable experiences.
-          </p>
-          <a href="#achievement" className={styles.heroCta} data-reveal data-reveal-delay="0.25">
-            Our Journey &#x2193;
-          </a>
+        {/* Background photo */}
+        <div className={styles.heroBgImg} aria-hidden="true">
+          <Image
+            src="/images/about-us/about-us.jpg"
+            alt="FOG Technologies team celebrating at the IAAPI National Awards for Excellence 2026"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center 22%' }}
+            priority
+          />
         </div>
 
+        {/* Dark gradient scrim for legibility */}
+        <div className={styles.heroOverlay} aria-hidden="true" />
+
+        {/* Centered text content */}
+        {/* <div className={styles.heroContent}>
+          <p className={styles.heroEyebrow} data-reveal>
+            01 — About FOG Technologies
+          </p>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">
+            Engineering the Future of Fun.
+          </h1>
+          <p className={styles.heroDesc} data-reveal data-reveal-delay="0.2">
+            Premium interactive entertainment for Family Entertainment Centers worldwide.
+          </p>
+        </div> */}
+
+        {/* Scroll cue */}
         <div className={styles.heroScrollIndicator} aria-hidden="true">
           <div className={styles.scrollLine}>
             <div className={styles.scrollDot} />

@@ -89,6 +89,19 @@ Work is done **section by section, page by page** in this order:
 
 ---
 
+## About Page — Section Map
+
+| # | Section | Status |
+|---|---|---|
+| 1 | Hero (dark full-bleed, dot-grid overlay, H1 title, desc paragraph, "Our Journey" CTA, scroll indicator) | Done |
+| 2 | Awards & Honours (6-card grid — year badge, icon, award name, org, description) | Pending |
+| 3 | What Drives Us (4 value cards — Innovation, Reliability, Speed, Partnership — icon + title + body) | Pending |
+| 4 | The FOG Journey (alternating left/right timeline — dot, line, year badge, title, desc) | Pending |
+| 5 | The Team Behind FOG (4 avatar initials cards — name + role) | Pending |
+| 6 | Get In Touch (shared ContactForm) | Pending |
+
+---
+
 ## Home Page — Section Map
 
 | # | Section | Status |
@@ -107,6 +120,21 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### About — Section 1: Hero
+- **Section height:** `height: 50vh; min-height: 320px` — intentionally compact; the photo does the work, not the text mass
+- **Background:** `next/image` fill with `/images/about-us/about-us.jpg` (team at IAAPI National Awards for Excellence 2026); `object-position: center 22%` raises the frame to keep faces in view
+- **Overlay:** 3-stop `linear-gradient(to bottom)` — `rgba(0,0,0,0.28)` at top → `rgba(0,0,0,0.58)` at 48% → `rgba(0,0,0,0.72)` at bottom — photo reads clearly in upper portion, text sits on dense shadow at center
+- **Layout:** `justify-content: center; align-items: center; text-align: center` — content centred on both axes
+- **Eyebrow:** `"01 — About FOG Technologies"` — GoogleSans 500, `var(--accent)` orange, `4px` tracking, `clamp(10px,1vw,13px)` — matches universal section eyebrow spec
+- **H1:** `"Engineering the Future of Fun."` — ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `letter-spacing: -0.5px`, `line-height: 1.05` — exact H1 spec from `design-CLAUDE.md`
+- **Sub-headline:** GoogleSans 300, `clamp(14px,1.6vw,18px)`, `rgba(255,255,255,0.55)`, `letter-spacing: 0.5px` — Body Lead spec; text cut to one tight line to suit the compact section height
+- **Removed:** `heroBg` (flat dark div), `heroGrid` (dot pattern), `heroCta` (anchor link) — photo eliminates the need for artificial texture; CTA removed to reduce density at 50vh
+- **Scroll indicator:** condensed to `height: 52px` (was 90px) to fit 50vh proportionally; `prefers-reduced-motion` guard added — dot freezes at mid-point instead of animating
+- **Responsive:** `min-height: 320px` is the safety floor on small phones; eyebrow and title are fluid via `clamp()` so no custom breakpoint rules needed inside the hero
+
+### About Page — Section Map status update
+- **Section 1 (Hero):** Done
 
 ### HyperGrid — Section 5: How It Works — v4 white section redesign
 - **Section colour:** Background changed from `#090909` to `#ffffff`; `processHeaderWrap` border updated to `rgba(0,0,0,0.08)`; `processTitle` colour `#fff` → `#0a0a0a`; `processSub` colour `rgba(255,255,255,0.42)` → `rgba(0,0,0,0.42)` — consistent with white-section text colour roles in `design-CLAUDE.md`
