@@ -107,13 +107,13 @@ Work is done **section by section, page by page** in this order:
 | # | Section | Status |
 |---|---|---|
 | 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Pending |
-| 2 | What is Laser Tag (split layout — gun + vest equipment photos left, 3 descriptor cards right) | Pending |
-| 3 | Game Modes (sticky image panel + interactive modes list, Watch Gameplay overlay button) | Done |
-| 4 | Moments Bento Grid (4-card mixed layout — arena photo, player journey checklist, shareable video, highlights badge) | Done |
-| 5 | How It Works (process steps — image stage + overlaid name/desc + 4 nav buttons below) | Pending |
+| 2 | Why FOG's Laser Tag (USP cards — key differentiators that make FOG's product the premium choice) | Done |
+| 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Pending |
+| 4 | Game Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
+| 5 | Moments in Laser Tag (step-flow bento grid — 4 cards with step labels and editorial cascade) | Done |
 | 6 | Arena Design (full-width arena render + area copy) | Pending |
 | 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Pending |
-| 8 | Testimonials Carousel (shared TestimonialsCarousel component) | Pending |
+| 8 | Operator (operator-focused section — ease of management, controls, reporting) | Pending |
 | 9 | Get In Touch (shared ContactForm, lasertag pre-selected) | Pending |
 
 ---
@@ -136,6 +136,28 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Section 2: Why FOG's Laser Tag (USP Section) — v2 Dark Cards
+- **Visual direction:** Each USP is a dark rounded card floating on white; replaced full-bleed divider rows with self-contained editorial cards (reference: dark portfolio card with ghost number)
+- **Section:** White (`#ffffff`), `padding: 80px 36px 72px`, natural height (no `100vh`)
+- **Inner wrap:** max-width 1440px, flex-column; `margin-bottom: 40px` header
+- **Header:** eyebrow `"02 — Why FOG's Laser Tag"` (GoogleSans 500, `var(--accent)`, 4px tracking); H2 `"The FOG Advantage."` (ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `#0a0a0a`) — left-aligned
+- **USP list:** `display: flex; flex-direction: column; gap: 16px`
+- **Card (`.uspCard`):** `background: #111111; border-radius: 20px; overflow: hidden; grid-template-columns: 42fr 58fr; min-height: 340px` — hover `translateY(-3px)` spring `cubic-bezier(0.34,1.56,0.64,1)`
+- **Card reverse (`.uspCardReverse`):** `grid-template-columns: 58fr 42fr`; CSS `order` properties swap image/content; JSX order unchanged
+- **Ghost number (`.uspGhostNum`):** `position: absolute; top: 12px; right: 24px`; ClashDisplay 700, `clamp(80px,9vw,120px)`, `rgba(255,255,255,0.04)` — decorative watermark "1"/"2"/"3"
+- **Image wrap:** `border-radius: 14px; margin: 14px 0 14px 14px` (reverse: `margin: 14px 14px 14px 0`) — inset image inside dark card
+- **Content panel:** `padding: 40px 48px; position: relative; z-index: 2`
+- **Category label (`.uspCategoryLabel`):** GoogleSans 500, 11px, 4px tracking, uppercase, `var(--accent)` — replaces old number + rule pair
+- **Card title:** ClashDisplay 700, `clamp(18px,2.2vw,30px)`, uppercase, `#ffffff` (was `#0a0a0a`)
+- **Body:** GoogleSans 400, 13px, `line-height: 1.8`, `rgba(255,255,255,0.52)` (was `rgba(19,19,19,0.62)`)
+- **USP content:**
+  - Card 1 — "Zero Downtime" / "15-Minute Swaps. Zero Revenue Loss." / `gun.png` — image left
+  - Card 2 — "Arena Design" / "Custom Arenas Built for Repeat Bookings." / `arena.png` — image right (reverse)
+  - Card 3 — "Operator First" / "Operator-First Software. Zero Extra Cost." / `vest.png` — image left
+- **Responsive 1199px:** padding `72px 32px 60px`; content padding `32px 36px`
+- **Responsive 900px:** cards collapse to single column; `uspImgWrap` always `order: 1` (above content) with `aspect-ratio: 16/9`; `!important` guards override reverse-card ordering
+- **Responsive 640px:** aspect-ratio `4/3`; content padding `24px 20px 32px`; card title clamped to `clamp(16px,4.5vw,24px)`
 
 ### Laser Tag — Section 4: Moments Bento Grid
 - **Source of truth:** Exact structural and visual port of HyperGrid Moments section — step-flow layout, card types, grid rhythm, and all animation classes are identical; only content (text, images, checklist items) belongs to Laser Tag
