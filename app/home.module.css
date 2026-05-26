@@ -691,7 +691,7 @@
 .globeSection { position: relative; width: 100%; height: 100vh; background: var(--dark); overflow: hidden; }
 .globeInner { position: relative; max-width: 1440px; width: 100%; height: 100%; margin: 0 auto; }
 .chartdiv { position: absolute; right: 0; top: 0; width: 68%; height: 100%; max-width: 980px; }
-.globeText { position: absolute; top: 80px; left: 80px; z-index: 2; max-width: 400px; }
+.globeText { position: absolute; top: 80px; left: 0; z-index: 2; max-width: 400px; }
 .globeHeadline { font-family: 'ClashDisplay', serif; font-weight: 700; font-size: clamp(36px, 4.5vw, 60px); text-transform: uppercase; color: var(--white); line-height: 1.1; margin-top: var(--sp-16); }
 .globeSub { font-size: 16px; font-weight: 300; color: rgba(255,255,255,.65); max-width: 300px; margin-top: var(--sp-24); line-height: 1.6; }
 .globePill {
@@ -900,7 +900,7 @@
   .testImage { display: none; }
   .globeSection { height: 560px; }
   .chartdiv { width: 100%; max-width: 100%; opacity: 0.5; }
-  .globeText { top: 48px; left: var(--sp-48); }
+  .globeText { top: 48px; left: 0; }
 }
 
 @media (max-width: 767px) {
@@ -949,7 +949,7 @@
   /* Globe */
   .globeSection { height: 480px; }
   .chartdiv { width: 100%; max-width: 100%; opacity: 0.4; }
-  .globeText { top: 40px; left: var(--sp-24); right: var(--sp-24); max-width: none; }
+  .globeText { top: 40px; left: 0; right: 0; max-width: none; }
   .globeHeadline { font-size: clamp(28px, 7vw, 44px); }
 
   /* Blog */
