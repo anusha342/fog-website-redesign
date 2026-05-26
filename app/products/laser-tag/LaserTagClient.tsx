@@ -310,73 +310,104 @@ export default function LaserTagClient({ testimonials }: Props) {
       <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
+            <span className={styles.momentsEyebrow}>04 — Moments</span>
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
           </div>
-          <div className={styles.momentsBento} data-reveal data-reveal-delay="0.1">
-            
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={styles.momentsCardVisual}>
-                <Image src="/images/laser-tag/laser-tag-1.png" alt="Laser Tag arena" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Play in arena</h3>
-              </div>
-            </div>
 
-            <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
-                <h3 className={styles.momentsCardH}>Scan Qr Code for getting moments</h3>
-                <div className={styles.momentsAvatars}>
-                  <span className={styles.momentsAvatar}>TD</span>
-                  <span className={styles.momentsAvatar}>SD</span>
-                  <span className={styles.momentsAvatar}>SP</span>
+          <div className={styles.momentsBento}>
+
+            {/* Step 1 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.1">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 01</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={styles.momentsCardVisual}>
+                  <Image src="/images/laser-tag/laser-tag-1.png" alt="Laser Tag arena" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <div className={styles.momentsChecklist}>
-                  <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>Book session &amp; gear up</span>
-                  </div>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>Select game mode at kiosk</span>
-                  </div>
-                  <div className={`${styles.momentsCheck} ${styles.momentsCheckDone}`}>
-                    <span className={styles.momentsCheckIcon}><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-                    <span>AI capture starts on entry</span>
-                  </div>
-                  <div className={styles.momentsCheck}>
-                    <span className={`${styles.momentsCheckIcon} ${styles.momentsCheckIconEmpty}`}></span>
-                    <span>Highlight clip delivered instantly</span>
-                  </div>
-                  <div className={styles.momentsCheck}>
-                    <span className={`${styles.momentsCheckIcon} ${styles.momentsCheckIconEmpty}`}></span>
-                    <span>Leaderboard rank updated</span>
-                  </div>
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Play in arena</h3>
                 </div>
               </div>
             </div>
 
-            <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
-              <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
-                <div className={styles.momentsIconCircle} aria-hidden="true">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/></svg>
+            {/* Step 2 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.2">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 02</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
+                  <h3 className={styles.momentsCardH}>Scan Qr Code for getting moments</h3>
+                  <div className={styles.momentsAvatars}>
+                    <span className={styles.momentsAvatar}>TD</span>
+                    <span className={styles.momentsAvatar}>SD</span>
+                    <span className={styles.momentsAvatar}>SP</span>
+                  </div>
+                  <div className={styles.momentsChecklist}>
+                    <p className={styles.momentsChecklistTitle}>Player Journey</p>
+                    {[
+                      { label: 'Book session & gear up',          done: true },
+                      { label: 'Select game mode at kiosk',       done: true },
+                      { label: 'AI capture starts on entry',      done: true },
+                      { label: 'Highlight clip delivered instantly', done: false },
+                      { label: 'Leaderboard rank updated',        done: false },
+                    ].map((item, i) => (
+                      <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
+                        <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
+                          {item.done && (
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          )}
+                        </span>
+                        <span>{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
-                <h3 className={styles.momentsCardH}>Video gets automatically downloaded</h3>
               </div>
             </div>
 
-            <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
-              <div className={styles.momentsCardMedia}>
-                <Image src="/images/laser-tag/laser-tag-1.png" alt="Moments AI" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            {/* Step 3 */}
+            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.3">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 03</span>
               </div>
-              <div className={styles.momentsCardBody}>
-                <h3 className={styles.momentsCardH}>Sharable moments</h3>
-                <span className={styles.momentsBadge}>Real-Time Highlights</span>
+              <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
+                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
+                  <div className={styles.momentsIconCircle} aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                      <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
+                    </svg>
+                  </div>
+                  <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
+                  <h3 className={styles.momentsCardH}>Video gets automatically downloaded</h3>
+                </div>
               </div>
-              <div className={styles.momentsMadeIn}>
-                <span>By FOG Technologies</span>
+            </div>
+
+            {/* Step 4 */}
+            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.4">
+              <div className={styles.momentsStepLabel}>
+                <span className={styles.momentsStepDot} aria-hidden="true"></span>
+                <span className={styles.momentsStepText}>Step 04</span>
+              </div>
+              <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
+                <div className={styles.momentsCardMedia}>
+                  <Image src="/images/laser-tag/laser-tag-1.png" alt="Moments AI" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }} />
+                </div>
+                <div className={styles.momentsCardBody}>
+                  <h3 className={styles.momentsCardH}>Sharable moments</h3>
+                  <span className={styles.momentsBadge}>Real-Time Highlights</span>
+                </div>
+                <div className={styles.momentsMadeIn}>
+                  <span>By FOG Technologies</span>
+                </div>
               </div>
             </div>
 

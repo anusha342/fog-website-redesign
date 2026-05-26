@@ -535,38 +535,102 @@
    4. MOMENTS
 ═══════════════════════════════════════ */
 .momentsSection {
-  background: var(--white);
+  background: var(--surface);
   width: 100%;
 }
 
 .momentsInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 100px var(--sp-80);
+  padding: 80px var(--sp-80) 80px;
 }
 
 .momentsTop {
-  text-align: center;
+  text-align: left;
   max-width: 680px;
-  margin: 0 auto 64px;
+  margin-bottom: 64px;
+}
+
+.momentsEyebrow {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
 }
 
 .momentsTitle {
   font-family: 'ClashDisplay', sans-serif;
-  font-weight: 600;
-  font-size: clamp(40px, 6vw, 52px);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 56px);
   text-transform: uppercase;
   color: var(--dark);
-  line-height: 1.0;
-  margin: 0 0 20px;
-  letter-spacing: -2px;
+  line-height: 1.05;
+  margin: 0;
+  letter-spacing: -0.5px;
 }
 
+/* Step-flow bento grid */
 .momentsBento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  align-items: stretch;
+  gap: 0 20px;
+  align-items: start;
+}
+
+/* Individual step wrapper */
+.momentsStep {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Cascade offset for steps 2 & 4 — editorial stagger */
+.momentsStepOffset {
+  margin-top: 56px;
+}
+
+/* Connector line drawn across grid gap to next step */
+.momentsStep:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 9px;
+  left: calc(100% + 1px);
+  width: calc(20px - 2px);
+  height: 1.5px;
+  background: linear-gradient(to right, var(--accent), rgba(240, 80, 35, 0.25));
+}
+
+/* Step label row */
+.momentsStepLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(240, 80, 35, 0.18);
+}
+
+.momentsStepDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(240, 80, 35, 0.55);
+}
+
+.momentsStepText {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1;
 }
 
 .momentsCard {
@@ -580,10 +644,12 @@
   border: 1px solid rgba(19, 19, 19, 0.07);
 }
 
-.momentsCardDark { background: var(--dark); }
+.momentsCardDark {
+  background: var(--dark);
+}
 
 .momentsCardAccent {
-  background: linear-gradient(160deg, #001a24 0%, #004d6b 50%, var(--lt-cyan) 100%);
+  background: linear-gradient(160deg, #1a0a05 0%, #7a2308 50%, var(--accent) 100%);
   position: relative;
 }
 
@@ -593,7 +659,16 @@
   overflow: hidden;
 }
 
-.momentsCardBody { padding: 24px 28px 28px; }
+.momentsCardVisual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.momentsCardBody {
+  padding: 24px 28px 28px;
+}
 
 .momentsCardBodyFull {
   padding: 28px;
@@ -624,7 +699,9 @@
 }
 
 .momentsCardDark .momentsCardH,
-.momentsCardAccent .momentsCardH { color: var(--white); }
+.momentsCardAccent .momentsCardH {
+  color: var(--white);
+}
 
 .momentsCardEyebrow {
   font-family: 'GoogleSans', sans-serif;
@@ -637,13 +714,16 @@
   display: block;
 }
 
-.momentsAvatars { display: flex; margin: 20px 0 0; }
+.momentsAvatars {
+  display: flex;
+  margin: 20px 0 0;
+}
 
 .momentsAvatar {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--lt-cyan);
+  background: var(--accent);
   border: 2px solid var(--surface);
   margin-right: -10px;
   display: flex;
@@ -652,12 +732,12 @@
   font-family: 'ClashDisplay', sans-serif;
   font-size: 10px;
   font-weight: 600;
-  color: var(--dark);
+  color: var(--white);
   flex-shrink: 0;
 }
 
-.momentsAvatar:nth-child(2) { background: #004d6b; color: var(--white); }
-.momentsAvatar:nth-child(3) { background: #333; color: var(--white); }
+.momentsAvatar:nth-child(2) { background: #1a0a05; }
+.momentsAvatar:nth-child(3) { background: #7a2308; }
 
 .momentsChecklist {
   background: var(--white);
@@ -687,7 +767,10 @@
   border-bottom: 1px solid rgba(19, 19, 19, 0.05);
 }
 
-.momentsCheck:last-child { border-bottom: none; padding-bottom: 0; }
+.momentsCheck:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
 
 .momentsCheckDone {
   color: rgba(19, 19, 19, 0.38);
@@ -698,7 +781,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--lt-cyan);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -714,7 +797,7 @@
   width: 76px;
   height: 76px;
   border-radius: 50%;
-  background: var(--lt-cyan);
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -725,7 +808,17 @@
 .momentsCardMedia {
   flex: 1;
   overflow: hidden;
+  position: relative;
   min-height: 200px;
+}
+
+.momentsCardMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.35;
+  mix-blend-mode: luminosity;
 }
 
 .momentsBadge {
@@ -755,13 +848,29 @@
 
 @media (max-width: 1023px) {
   .momentsInner { padding: 80px var(--sp-48); }
-  .momentsBento { grid-template-columns: repeat(2, 1fr); }
+  .momentsBento {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .momentsStepOffset { margin-top: 0; }
+  .momentsStep:not(:last-child)::after { display: none; }
+  .momentsStep:nth-child(odd):not(:last-child)::after {
+    display: block;
+    top: 9px;
+    left: calc(100% + 1px);
+    width: 19px;
+  }
 }
 
 @media (max-width: 767px) {
   .momentsInner { padding: 64px var(--sp-24); }
   .momentsTop { margin-bottom: 40px; }
-  .momentsBento { grid-template-columns: 1fr; gap: 8px; }
+  .momentsBento {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .momentsStepOffset { margin-top: 0; }
+  .momentsStep::after { display: none; }
   .momentsCardBodyCenter { padding: 40px 24px; }
 }
 
