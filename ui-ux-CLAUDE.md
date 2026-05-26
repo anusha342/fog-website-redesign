@@ -111,8 +111,8 @@ Work is done **section by section, page by page** in this order:
 | 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Done |
 | 4 | Game Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
 | 5 | Moments in Laser Tag (step-flow bento grid — 4 cards with step labels and editorial cascade) | Done |
-| 6 | Arena Design (full-width arena render + area copy) | Pending |
-| 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Pending |
+| 6 | Arena Design (full-width arena render + area copy) | Done |
+| 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Done |
 | 8 | Operator (operator-focused section — ease of management, controls, reporting) | Pending |
 | 9 | Get In Touch (shared ContactForm, lasertag pre-selected) | Pending |
 
@@ -136,6 +136,19 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Sections 6 & 7: Arena Design + Arena Specs Layout Parity with HyperGrid
+- **Source of truth:** HyperGrid `speModelSection` + `speDataSection` — exact layout match; only content (arena image, dimension data, Game Modes / Equipment info cards) belongs to Laser Tag
+- **`speModelInner` padding:** `80px 0 0` → `72px var(--sp-80) 0` — matches HyperGrid horizontal inset and top rhythm
+- **`speModelTitle` margin-bottom:** `20px` → `48px` — proper breathing room between heading and arena image
+- **`speDataInner` padding:** `80px 0` → `72px var(--sp-80)` — adds horizontal inset matching inner-wrapper convention
+- **`speDataInner` align-items:** `start` → `stretch` — both columns (dims card + info cards) now fill identical height; eliminates unequal card heights at wide viewports
+- **`speDimsCard`:** added `height: 100%; display: flex; flex-direction: column;` — flex chain propagates stretch into card
+- **`speDimsTable`:** added `flex: 1; justify-content: center;` — rows distribute vertically to fill available card height
+- **`speInfoCards`:** added `height: 100%;` — right column fills full stretched height
+- **`speInfoCard`:** added `flex: 1; display: flex; flex-direction: column; justify-content: center;` — each info card takes equal share of column, content centred vertically
+- **Responsive 1023px:** expanded from single `grid-template-columns: 1fr` override to also set `padding: 56px var(--sp-48)` on `speDataInner` and `padding: 56px var(--sp-48) 0` on `speModelInner` — matches HyperGrid breakpoint handling exactly
+- **Responsive 767px:** added `speModelInner { padding: 48px var(--sp-24) 0 }` and `speDataInner { padding: 48px var(--sp-24) }` — was previously missing entirely from LT
 
 ### Laser Tag — Global: Section Padding Refactor
 - **Rule applied:** All sections in `page.module.css` changed to `padding: 80px 0` — 80px top/bottom, zero left/right. Documented in `design-CLAUDE.md` under "Section Layout".
