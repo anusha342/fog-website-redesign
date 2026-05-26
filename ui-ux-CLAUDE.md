@@ -108,7 +108,7 @@ Work is done **section by section, page by page** in this order:
 |---|---|---|
 | 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Pending |
 | 2 | Why FOG's Laser Tag (USP cards — key differentiators that make FOG's product the premium choice) | Done |
-| 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Pending |
+| 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Done |
 | 4 | Game Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
 | 5 | Moments in Laser Tag (step-flow bento grid — 4 cards with step labels and editorial cascade) | Done |
 | 6 | Arena Design (full-width arena render + area copy) | Pending |
@@ -136,6 +136,24 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Section 3: Gun + Vest Description
+- **Section bg:** `#ffffff` (white), `height: 50vh`, `min-height: 380px`, `padding: 32px 36px`, `display: flex; align-items: stretch` — natural flex fill to propagate height into grid
+- **No section title or eyebrow** — section is purely visual (two cards with no header text above)
+- **Inner grid:** max-width 1440px, `display: grid; grid-template-columns: 1fr 1fr; gap: 20px` — fills full available 50vh height via flex stretch chain
+- **Card (`.equipCard`):** `border-radius: 16px; overflow: hidden`; `box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 12px 48px rgba(0,0,0,0.08)` — dual-layer depth shadow
+- **Image layer (`.equipImgWrap`):** `position: absolute; inset: 0`; `next/image fill + objectFit: cover`; hover `transform: scale(1.06)` with `700ms cubic-bezier(0.34,1.56,0.64,1)` spring
+- **Text overlay (`.equipOverlay`):** `position: absolute; inset: 0; background: var(--accent)` (orange); `opacity: 0; transform: translateY(14px)` at rest → `opacity: 1; translateY(0)` on card hover; `transition: opacity 360ms ease, transform 420ms spring` — smooth photo-to-text swap
+- **Overlay layout:** `justify-content: flex-end; padding: 36px 40px` — text anchored at card bottom
+- **Label (`.equipLabel`):** GoogleSans 500, 11px, 4px tracking, uppercase, `rgba(255,255,255,0.65)` — "Hardware" / "Protection"
+- **Card title (`.equipCardTitle`):** ClashDisplay 700, `clamp(22px,3vw,38px)`, uppercase, `#ffffff` — "Combat Phaser" / "Tactical Vest"
+- **Feature list (`.equipFeatures`):** `list-style: none; gap: 8px`; GoogleSans 400, 13px, `rgba(255,255,255,0.82)`; bullet dot via `::before` pseudo-element (4px white circle at left)
+- **Scroll reveal:** `data-reveal` on `equipInner` (grid wrapper) — both cards enter simultaneously, no stagger
+- **Gun content:** label "Hardware", title "Combat Phaser", 5 features — ergonomic build, wireless charging, long-range targeting, LED indicators, modular internals; image: `gun.png`
+- **Vest content:** label "Protection", title "Tactical Vest", 5 features — 360° sensors, front/back/shoulder coverage, LED feedback, adjustable fit, durable construction; image: `vest.png`
+- **Responsive 1199px:** padding tightened to `28px 32px`
+- **Responsive 900px:** padding `24px 24px`; overlay padding reduced
+- **Responsive 640px:** section `height: auto`; grid collapses to 1 column; each card gets fixed `height: 260px`
 
 ### Laser Tag — Section 2: Why FOG's Laser Tag (USP Section) — v2 Dark Cards
 - **Visual direction:** Each USP is a dark rounded card floating on white; replaced full-bleed divider rows with self-contained editorial cards (reference: dark portfolio card with ghost number)
