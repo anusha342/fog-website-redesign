@@ -78,7 +78,7 @@ export default async function BlogPostPage(
       />
 
       {/* ── HERO ── */}
-      <section className={styles.pageHero} aria-label="Post header">
+      {/* <section className={styles.pageHero} aria-label="Post header">
         <div className={styles.pageHeroInner}>
           <p className={styles.postEyebrow}>{post.category}</p>
           <h1 className={styles.postTitle}>{post.title}</h1>
@@ -97,7 +97,7 @@ export default async function BlogPostPage(
             </div>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* ── SIDEBAR + CONTENT ── */}
       <div className={styles.layout}>

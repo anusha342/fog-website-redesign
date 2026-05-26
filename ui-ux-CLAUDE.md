@@ -137,6 +137,31 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
+### Blog Listing Page — Client-Side Search Fix
+- **Root cause:** Server-side `searchParams` filter was returning 0 results when query string was present (field mismatch with S3 post data), leaving the posts column visually empty while the sidebar remained populated
+- **Fix:** Extracted posts list + search + tag pills into `BlogListingClient.tsx` (`'use client'`) — server component fetches all posts once, passes them as props; client component filters with `useMemo` in real-time, never navigating away or reloading the page
+- **Tag pills changed from `<Link>` to `<button>`** — toggle active tag state; clicking the same tag again clears the filter; mutually exclusive with text search (typing clears active tag, clicking tag clears query)
+- **Search input is controlled** (`useState`) — filters title + excerpt + category with `toLowerCase().includes()` on every keystroke
+- **Empty state messaging:** When filtered → `"No posts match 'query'."` vs no posts at all → `"No posts yet — check back soon."`
+- **No URL navigation on search** — preserves scroll position and avoids full page reload
+- **Search icon** changed from `<button type="submit">` to a decorative `<span>` (pointer-events: none) — no longer needs a form submit since filtering is real-time
+
+### Blog Listing Page — Two-Column Layout Redesign
+- **Layout:** Replaced 3-column card grid with `grid-template-columns: 1fr 340px` — posts column left, sticky sidebar right; collapses to single column at ≤1023px
+- **Section bg:** `#ffffff` white throughout (section, header, cards) — removed dark hero strip; `margin-top: 60px` retained for navbar clearance
+- **Section header:** Centered `blogEyebrow` ("Insights & Updates") — GoogleSans 500, `var(--accent)` orange, 4px tracking, clamp(10px,1vw,13px); `blogTitle` ("News & Blogs") — ClashDisplay 700, clamp(28px,4vw,56px), uppercase, `#0a0a0a`, `-0.5px` tracking — matches universal H1 spec
+- **Post card:** `border: 1px solid rgba(0,0,0,0.08)`, `border-radius: 12px`; hover `translateY(-4px)` spring + `box-shadow: 0 14px 44px rgba(0,0,0,0.09)`; image `aspect-ratio: 16/9` with hover `scale(1.04)`
+- **Tag + date row:** Sits below image, above title — `postCategory` (dark bg pill, uppercase, 11px, `rgba(0,0,0,0.07)` bg) + `postDate` (border pill, `rgba(0,0,0,0.45)`) — matches reference image eyebrow placement
+- **"Read More" link:** GoogleSans 500, 12px, 2px tracking, orange — underline draw animation via `::after` on card hover
+- **Sidebar (sticky, `top: 100px`):** 4 widgets stacked with `gap: 36px`
+  - **Search:** `<form action="/blog" method="GET">` — text input with `background: #f5f5f5`, `border-radius: 8px`; focus → orange border; SVG search icon button right-aligned; server-side `q` param filters posts by title/excerpt/category
+  - **Popular Tags:** Unique categories extracted from posts as `<Link>` pills — `border-radius: 100px`, hover fills `var(--accent)` orange; active state if current query matches
+  - **Recent Posts:** Last 3 posts — thumbnail (68×60px, `border-radius: 8px`) + title (2-line clamp) + date; whole item fades to `opacity: 0.78` on hover
+  - **CTA Banner:** `background: #111111`, `border-radius: 16px`; orange radial glow pseudo-element top-right; eyebrow (orange, 4px tracking) + ClashDisplay title + orange pill CTA button with hover `translateY(-2px)` spring
+- **Server-side search:** `searchParams` awaited (Next.js 15 async pattern); filters `allPosts` by `title | excerpt | category` before render
+- **Responsive 1023px:** grid collapses to single column; sidebar drops sticky positioning
+- **Responsive 639px:** section/header padding tightened; card body padding `20px 20px 24px`
+
 ### Laser Tag — Section 1: Hero — HyperGrid layout parity
 - **Source of truth:** HyperGrid hero layout — content anchored to lower third, staggered reveal, scroll indicator, spring button transitions; only video source, copy, and thematic accents (cyan reticle) belong to Laser Tag
 - **`.hero` justify-content:** `center` → `flex-end` — content now anchors to lower third exactly like HyperGrid; was vertically centred
