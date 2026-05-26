@@ -352,45 +352,107 @@
    3. WHAT DRIVES US
 ═══════════════════════════════════════ */
 .drives {
-  background: #ffffff;
+  background: var(--surface);   /* #F5F5F5 */
   width: 100%;
   padding: 100px clamp(24px, 6vw, 96px);
 }
 .drivesInner  { max-width: 1440px; margin: 0 auto; }
-.drivesHeader { text-align: center; margin-bottom: 64px; }
+
+/* Left-aligned header */
+.drivesHeader { text-align: left; margin-bottom: 52px; }
+.drivesEyebrow {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+  line-height: 1;
+}
+/* H2 — design-CLAUDE.md §H1 spec (dominant section heading) */
 .drivesTitle {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(34px, 4.5vw, 58px);
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
-  color: var(--dark);
-  margin: 0 0 32px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
 }
-.drivesGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 
+.drivesGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+/* White card lifts off the grey surface */
 .driveCard {
-  background: rgba(255,255,255,0.3);
-  border: 1px solid rgba(136,136,136,0.7);
-  border-radius: 12px;
-  padding: 32px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-top: 2.5px solid transparent;
+  /* border-radius: 14px; */
+  padding: 32px 26px 36px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 14px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  align-items: flex-start;
+  gap: 0;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-top-color 0.25s ease,
+    box-shadow 0.3s ease;
 }
-.driveCard:hover { border-color: rgba(240,80,35,0.22); background: rgba(240,80,35,0.04); }
+.driveCard:hover {
+  transform: translateY(-5px);
+  border-top-color: var(--accent);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .driveCard { transition: border-top-color 0.25s ease; }
+  .driveCard:hover { transform: none; box-shadow: none; }
+}
+
+/* Sequential index label */
+.driveCardIndex {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+/* Icon — rounded-rect to match site icon language */
 .driveIconWrap {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: rgba(240,80,35,0.1);
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: rgba(240,80,35,0.08);
   display: flex; align-items: center; justify-content: center;
-  color: var(--accent); flex-shrink: 0;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-bottom: 20px;
 }
-.driveCard h3 { font-size: 16px; font-weight: 700; color: var(--dark); margin: 0; }
-.driveCard p  { font-size: 14px; line-height: 1.7; color: var(--dark); margin: 0; }
+
+/* H3 — design-CLAUDE.md §H3 Card/component heading */
+.driveCardTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(13px, 1.5vw, 19px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0 0 10px;
+}
+
+/* Body — design-CLAUDE.md §Body standard */
+.driveCardBody {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.55);
+  margin: 0;
+}
 
 /* ═══════════════════════════════════════
    4. TIMELINE
