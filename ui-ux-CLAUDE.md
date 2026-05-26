@@ -106,7 +106,7 @@ Work is done **section by section, page by page** in this order:
 
 | # | Section | Status |
 |---|---|---|
-| 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Pending |
+| 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Done |
 | 2 | Why FOG's Laser Tag (USP cards — key differentiators that make FOG's product the premium choice) | Done |
 | 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Done |
 | 4 | Game Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
@@ -136,6 +136,21 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Section 1: Hero — HyperGrid layout parity
+- **Source of truth:** HyperGrid hero layout — content anchored to lower third, staggered reveal, scroll indicator, spring button transitions; only video source, copy, and thematic accents (cyan reticle) belong to Laser Tag
+- **`.hero` justify-content:** `center` → `flex-end` — content now anchors to lower third exactly like HyperGrid; was vertically centred
+- **`.heroContent`:** `max-width: 860px` → `900px`; `gap: 28px` → `gap: var(--sp-16)`; added `align-self: flex-end` and `padding-bottom: clamp(64px, 8vh, 120px)` — text block sits at the same lower-third position as HG regardless of viewport height
+- **HUD corners:** Added `@keyframes hudDraw` (scale 0.6→1, opacity 0→0.55) with staggered delays 0.4–0.7s and spring cubic-bezier; kept `var(--lt-cyan)` border colour (thematic) vs HG white; added `prefers-reduced-motion` guard
+- **Eyebrow added:** `"Multi-Player Laser Combat"` — GoogleSans 500, `var(--hg-neon-orange)`, 4px tracking, `clamp(10px,1.1vw,13px)` — `data-reveal-delay="0"` matches universal section eyebrow spec
+- **Sub-headline added:** `"Where strategy meets adrenaline."` — GoogleSans 300, `rgba(255,255,255,0.55)`, `clamp(14px,1.6vw,18px)`, `0.5px` tracking — `data-reveal-delay="0.22"` matches Body Lead spec
+- **data-reveal stagger corrected:** eyebrow 0s → title 0.12s → sub 0.22s → buttons 0.32s — was title 0.1s / buttons 0.2s (non-standard)
+- **Scroll indicator added:** `heroScroll` (position absolute, bottom 32px, left 50%) + `heroScrollChevron` (18×18px border-right/bottom chevron) + `@keyframes scrollBob` (opacity + 6px Y travel, 2s loop); `prefers-reduced-motion` freezes animation — was missing entirely from LT
+- **`.hbtn` transition:** `all 300ms cubic-bezier(.4,0,.2,1)` → explicit property list with spring `cubic-bezier(.34,1.56,.64,1)` for transform; added `.hbtn:hover { transform: translateY(-2px); }` — lift on hover was missing
+- **`.hbtnSolid:hover` box-shadow:** `0 0 32px rgba(240,80,35,.55)` → `0 8px 28px rgba(240,80,35,0.45)` — directional lift shadow, lower opacity, matches HG spec
+- **`.hbtnGhost:hover`:** added `box-shadow: 0 8px 24px rgba(255,255,255,0.12)` — was missing
+- **`.heroBtnWatch`:** added frosted-glass variant (`rgba(255,255,255,0.05)` bg, `blur(8px)`) + `:hover` — was referenced in JSX but had no CSS definition in LT
+- **Responsive 767px:** `.heroBtns` now gets `width: 100%; max-width: 280px` to match HG constrained mobile button width; retained `hudCorner/heroQr { display: none }`
 
 ### Laser Tag — Sections 6 & 7: Arena Design + Arena Specs Layout Parity with HyperGrid
 - **Source of truth:** HyperGrid `speModelSection` + `speDataSection` — exact layout match; only content (arena image, dimension data, Game Modes / Equipment info cards) belongs to Laser Tag

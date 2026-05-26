@@ -154,7 +154,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       {/* 1. HERO SECTION */}
       <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/hypergrid-bg-video.mp4" type="video/mp4" />
+          <source src="/videos/lasertag-bg-video.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay} aria-hidden="true"></div>
 
@@ -169,9 +169,15 @@ export default function LaserTagClient({ testimonials }: Props) {
           <div className={`${styles.reticleCross} ${styles.reticleCrossV}`}></div>
         </div>
 
+        <div className={styles.heroScroll} aria-hidden="true">
+          <div className={styles.heroScrollChevron}></div>
+        </div>
+
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">Laser Tag</h1>
-          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
+          <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Multi-Player Laser Combat</span>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Tag</h1>
+          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Where strategy meets adrenaline.</p>
+          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
             <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
               document.getElementById('why-fog-lasertag')?.scrollIntoView({ behavior: 'smooth' });
             }}>Explore &#x2192;</button>
