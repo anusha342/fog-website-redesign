@@ -211,87 +211,155 @@
 .videoClose:hover { color: var(--white); }
 
 /* ═══════════════════════════════════════
-   2. WHAT IS LASER TAG
+   2. WHY FOG'S LASER TAG (USP SECTION)
 ═══════════════════════════════════════ */
-.whatSection {
-  background: var(--white);
-  padding: 80px var(--sp-80) 0;
-  width: 100%;
-}
-
-.whatInner {
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.whatEquipment {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.whatEquipItem {
-  overflow: hidden;
-  background: #f0f0f0;
-}
-
-.whatEquipImg {
-  width: 100%;
-  height: auto;
-  max-height: 560px;
-  display: block;
-  object-fit: cover;
-  transition: transform 500ms ease;
-}
-
-.whatEquipItem:hover .whatEquipImg {
-  transform: scale(1.03);
-}
-
-.whatCards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 30px;
-}
-
-.whatCard {
-  background: var(--dark);
-  padding: 52px 44px;
+.uspSection {
+  background: #ffffff;
+  padding: 80px 36px 72px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+}
+
+.uspInner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.uspHeader {
+  flex-shrink: 0;
+  margin-bottom: 40px;
+}
+
+.uspEyebrow {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.uspTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 56px);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.uspList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Card ── */
+.uspCard {
+  position: relative;
+  background: #111111;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 42fr 58fr;
+  min-height: 340px;
+  transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.uspCard:hover {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uspCard { transition: none; }
+  .uspCard:hover { transform: none; }
+}
+
+/* Reverse layout for card 2 */
+.uspCardReverse {
+  grid-template-columns: 58fr 42fr;
+}
+
+/* Ghost number watermark */
+.uspGhostNum {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  font-family: 'ClashDisplay', sans-serif;
+  font-weight: 700;
+  font-size: clamp(80px, 9vw, 120px);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* Image panel */
+.uspImgWrap {
   position: relative;
   overflow: hidden;
-  transition: background 300ms ease;
+  border-radius: 14px;
+  margin: 14px 0 14px 14px;
+  min-height: 0;
 }
 
-.whatCard::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 48px;
-  height: 2px;
-  background: var(--lt-cyan);
-  transition: width 400ms cubic-bezier(.4, 0, .2, 1);
+.uspCardReverse .uspImgWrap {
+  margin: 14px 14px 14px 0;
+  order: 2;
 }
 
-.whatCard:hover { background: #1c1c1c; }
-.whatCard:hover::after { width: 100%; }
+.uspCardReverse .uspContent {
+  order: 1;
+}
 
-.whatCardText {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(16px, 1.6vw, 22px);
-  font-weight: 600;
+/* Content panel */
+.uspContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.uspCategoryLabel {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--white);
-  letter-spacing: 0.2px;
-  line-height: 1.25;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.uspCardTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-weight: 700;
+  font-size: clamp(18px, 2.2vw, 30px);
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.12;
+  margin: 0 0 18px;
+}
+
+.uspBody {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.52);
+  max-width: 440px;
   margin: 0;
 }
 
@@ -302,17 +370,38 @@
   .heroBtns { flex-direction: column; align-items: center; gap: 12px; }
 }
 
-/* ── What section ── */
-@media (max-width: 767px) {
-  .whatSection { padding: 64px var(--sp-24) 0; }
-  .whatEquipment { grid-template-columns: 1fr; }
-  .whatCards { grid-template-columns: 1fr; }
-  .whatCard { padding: 36px 28px; }
+/* ── USP section responsive ── */
+@media (max-width: 1199px) {
+  .uspSection { padding: 72px 32px 60px; }
+  .uspContent { padding: 32px 36px; }
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  .whatSection { padding: 72px var(--sp-48) 0; }
-  .whatCards { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .uspSection { padding: 64px 24px; }
+  .uspCard {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+  .uspCardReverse {
+    grid-template-columns: 1fr;
+  }
+  .uspImgWrap {
+    margin: 14px 14px 0 14px;
+    aspect-ratio: 16/9;
+    order: 1 !important;
+  }
+  .uspContent {
+    order: 2 !important;
+    padding: 28px 24px 36px;
+  }
+  .uspBody { max-width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .uspSection { padding: 56px 20px; }
+  .uspImgWrap { aspect-ratio: 4/3; }
+  .uspContent { padding: 24px 20px 32px; }
+  .uspCardTitle { font-size: clamp(16px, 4.5vw, 24px); }
 }
 
 /* ═══════════════════════════════════════

@@ -173,7 +173,7 @@ export default function LaserTagClient({ testimonials }: Props) {
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">Laser Tag</h1>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
             <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
-              document.getElementById('what-is-lasertag')?.scrollIntoView({ behavior: 'smooth' });
+              document.getElementById('why-fog-lasertag')?.scrollIntoView({ behavior: 'smooth' });
             }}>Explore &#x2192;</button>
             <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
           </div>
@@ -211,41 +211,71 @@ export default function LaserTagClient({ testimonials }: Props) {
         </div>
       </div>
 
-      {/* 2. WHAT IS LASER TAG */}
-      <section id="what-is-lasertag" className={styles.whatSection} data-nav-theme="light">
-        <div className={styles.whatInner}>
-          <div className={styles.whatEquipment} data-reveal>
-            <div className={styles.whatEquipItem}>
-              <Image
-                src="/images/laser-tag/gun.png"
-                alt="Laser Tag gun"
-                className={styles.whatEquipImg}
-                width={800}
-                height={560}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-            <div className={styles.whatEquipItem}>
-              <Image
-                src="/images/laser-tag/vest.png"
-                alt="Laser Tag vest"
-                className={styles.whatEquipImg}
-                width={800}
-                height={560}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
+      {/* 2. WHY FOG'S LASER TAG */}
+      <section id="why-fog-lasertag" className={styles.uspSection} data-nav-theme="light">
+        <div className={styles.uspInner}>
+
+          <div className={styles.uspHeader} data-reveal>
+            <span className={styles.uspEyebrow}>02 — Why FOG's Laser Tag</span>
+            <h2 className={styles.uspTitle}>The FOG Advantage.</h2>
           </div>
-          <div className={styles.whatCards} data-reveal>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Realistic Combat-Grade Laser Guns</p>
+
+          <div className={styles.uspList}>
+
+            {/* USP 1 — Image Left, Content Right */}
+            <div className={styles.uspCard} data-reveal data-reveal-delay="0.1">
+              <span className={styles.uspGhostNum} aria-hidden="true">1</span>
+              <div className={styles.uspImgWrap}>
+                <Image
+                  src="/images/laser-tag/gun.png"
+                  alt="Wireless charging stand and modular laser tag hardware"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className={styles.uspContent}>
+                <span className={styles.uspCategoryLabel}>Zero Downtime</span>
+                <h3 className={styles.uspCardTitle}>15-Minute Swaps. Zero Revenue Loss.</h3>
+                <p className={styles.uspBody}>A wireless contact-free charging stand eliminates battery hassle, while a modular plug-and-play design with locally stocked, in-house spares enables 15-minute component swaps to ensure your arena never loses revenue.</p>
+              </div>
             </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Futuristic Sensor Vests with Haptic Feedback</p>
+
+            {/* USP 2 — Content Left, Image Right */}
+            <div className={`${styles.uspCard} ${styles.uspCardReverse}`} data-reveal data-reveal-delay="0.2">
+              <span className={styles.uspGhostNum} aria-hidden="true">2</span>
+              <div className={styles.uspContent}>
+                <span className={styles.uspCategoryLabel}>Arena Design</span>
+                <h3 className={styles.uspCardTitle}>Custom Arenas Built for Repeat Bookings.</h3>
+                <p className={styles.uspBody}>Custom 3D-engineered layouts with ramps and tunnels maximize space and safety, while interactive Shooting Points and Homebases compel corporate teams, families, and friends to book repeat sessions.</p>
+              </div>
+              <div className={styles.uspImgWrap}>
+                <Image
+                  src="/images/laser-tag/arena.png"
+                  alt="Custom 3D-engineered laser tag arena with ramps and tunnels"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
             </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Smart Arena Control &amp; Live Scoring System</p>
+
+            {/* USP 3 — Image Left, Content Right */}
+            <div className={styles.uspCard} data-reveal data-reveal-delay="0.3">
+              <span className={styles.uspGhostNum} aria-hidden="true">3</span>
+              <div className={styles.uspImgWrap}>
+                <Image
+                  src="/images/laser-tag/vest.png"
+                  alt="Operator-friendly laser tag software management suite"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className={styles.uspContent}>
+                <span className={styles.uspCategoryLabel}>Operator First</span>
+                <h3 className={styles.uspCardTitle}>Operator-First Software. Zero Extra Cost.</h3>
+                <p className={styles.uspBody}>Eliminate recurring overhead costs with an operator-friendly software suite that includes free lifetime updates, backed by a dedicated center engineer providing instant troubleshooting and mandatory daily checks.</p>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
