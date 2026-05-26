@@ -102,6 +102,22 @@ Work is done **section by section, page by page** in this order:
 
 ---
 
+## Laser Tag Product Page — Section Map
+
+| # | Section | Status |
+|---|---|---|
+| 1 | Hero (cinematic video BG, HUD corners, reticle crosshair, eyebrow, title, CTAs, QR widget, scroll indicator) | Pending |
+| 2 | What is Laser Tag (split layout — gun + vest equipment photos left, 3 descriptor cards right) | Pending |
+| 3 | Game Modes (sticky image panel + interactive modes list, Watch Gameplay overlay button) | Done |
+| 4 | Moments Bento Grid (4-card mixed layout — arena photo, player journey checklist, shareable video, highlights badge) | Pending |
+| 5 | How It Works (process steps — image stage + overlaid name/desc + 4 nav buttons below) | Pending |
+| 6 | Arena Design (full-width arena render + area copy) | Pending |
+| 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Pending |
+| 8 | Testimonials Carousel (shared TestimonialsCarousel component) | Pending |
+| 9 | Get In Touch (shared ContactForm, lasertag pre-selected) | Pending |
+
+---
+
 ## Home Page — Section Map
 
 | # | Section | Status |
@@ -120,6 +136,25 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Tag — Section 3: Game Modes
+- **Source of truth:** Exact structural and visual port of HyperGrid Game Modes V2 — layout, motion, and type spec are identical; only content (mode names, images, section eyebrow number) belongs to Laser Tag
+- **Section:** `height: 100vh`, `display: flex; flex-direction: column`, `padding: 80px 36px`, white bg (`#ffffff`) — replaces old sticky-grid layout
+- **Outer wrap:** `modesV2Wrap` — `flex: 1`, max-width 1440px, flex-column, `min-height: 0` — flex chain allows body to fill remaining height
+- **Header block:** `modesV2Header` — `flex-shrink: 0`, `margin-bottom: 40px`; eyebrow `"03 — Game Modes"` (GoogleSans 500, `var(--accent)` orange, 4px tracking, clamp(10px,1vw,13px)); H2 title `"Game Modes"` (ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `#0a0a0a`, `-0.5px` tracking, `line-height: 1.05`)
+- **Body grid:** `modesV2Body` — `flex: 1`, `grid-template-columns: 60fr 40fr`, `gap: 0 48px`, `min-height: 0` — image panel takes 60%, mode list 40%
+- **Image panel (left):** `modesV2Left` — `position: relative; height: 100%`; `modesV2ImgWrap` fills full height with `next/image fill + objectFit: cover`; image swaps on `onMouseEnter` via `activeMode` state
+- **Watch Gameplay button:** Absolutely positioned `bottom: 20px; left: 0` on the image; `background: rgba(9,9,9,0.6)`, `backdrop-filter: blur(8px)`, `border: 1.5px solid var(--accent)`, orange text; hover fills orange + `translateY(-2px)` with spring cubic-bezier `(0.34, 1.56, 0.64, 1)` — weight corrected from old `700` to `500` (ghost button spec)
+- **Mode list (right):** `modesV2Right` — `align-self: start`; top/bottom `modesV2Line` dividers (`1px`, `rgba(19,19,19,0.12)`); each row is `modeItem` flex row with `justify-content: space-between`
+- **Mode item inactive:** `opacity: 0.28` (corrected from old `0.22`); `transition: opacity 300ms ease`
+- **Mode item active/hover:** `opacity: 1`
+- **Mode name:** ClashDisplay **300** (decorative large — not a heading weight), `clamp(26px,3.2vw,44px)`, `line-height: 0.95`, `color: #131313`, `letter-spacing: -1.5px` — matches design-CLAUDE.md mode-name display spec exactly
+- **Mode number:** ClashDisplay 700, 13px, `var(--accent)` orange, `letter-spacing: 2px`, `opacity: 0.8` (restores to `1` on active/hover) — number format changed from `{ 0X }` to clean `0X`
+- **"New" badge:** Preserved on Save the President (idx 2) — GoogleSans 700, 9px, white text on `var(--accent)` fill, `padding: 3px 8px`
+- **Responsive 1199px:** padding tightens to `72px 32px`; body gap narrows to `0 32px`; mode names scale down to `clamp(22px,2.8vw,38px)`
+- **Responsive 900px:** section reverts to `height: auto; min-height: 100vh`; body becomes single column; image gets `aspect-ratio: 16/9`; video button drops to static position, backdrop removed
+- **Responsive 640px:** image tightens to `aspect-ratio: 4/3`; mode name `clamp(24px,7vw,36px)`, `-1px` tracking; mode number 12px
+- **Removed:** old `modesSection`, `modesWrap`, `modesTitle`, `modesLeft` (sticky), `modesImgWrap` (fixed aspect-ratio), `modesImg`, `modesRight`, `modesLine` class names — all replaced with V2 equivalents
 
 ### About — Section 1: Hero
 - **Section height:** `height: 50vh; min-height: 320px` — intentionally compact; the photo does the work, not the text mass
