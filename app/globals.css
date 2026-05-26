@@ -172,7 +172,7 @@ html { scrollbar-width: none; -ms-overflow-style: none; }
 
 /* ── FOOTER ── */
 #footer-wrap { background: var(--surface); border-top: 1px solid var(--divider); position: relative; z-index: 1; }
-#footer { background: none; padding: 56px var(--sp-80) 40px; max-width: 1440px; margin: 0 auto; width: 100%; }
+#footer { background: none; padding: 56px 0 40px; max-width: 1440px; margin: 0 auto; width: 100%; }
 .footer-top {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
   align-items: flex-start; padding-bottom: var(--sp-48);
@@ -213,7 +213,6 @@ html { scrollbar-width: none; -ms-overflow-style: none; }
 /* ── FOOTER RESPONSIVE ── */
 @media (max-width: 1023px) { .footer-top { gap: 48px; } }
 @media (max-width: 767px) {
-  #footer { padding-left: var(--sp-24); padding-right: var(--sp-24); }
   .footer-top { grid-template-columns: 1fr; gap: 36px; }
   .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
 }

@@ -536,3 +536,9 @@ Work is done **section by section, page by page** in this order:
 - **More Posts grid:** Below layout — H2 "More from the Blog" (ClashDisplay 700, uppercase, `clamp(20px,2.5vw,32px)`); `repeat(3,1fr)` card grid (same card design as blog listing: image 16/9 + category orange label + ClashDisplay title + "Read More" text); filters out current slug; collapses to 2-col at ≤1100px, 1-col at ≤600px
 - **Heading ID injection:** `extractHeadings(html)` + `injectHeadingIds(html)` server-side helpers in `page.tsx` — regex walks `<h2>/<h3>` tags, slugifies text → `id="heading-slug"`, enables anchor + ToC scroll targeting
 - **No `data-reveal`:** None used anywhere on this page — all elements are static server or client rendered; `data-reveal` unsafe on client-component output (opacity: 0.001 remains permanently)
+
+### Footer — Remove Horizontal Padding
+- **Change:** `#footer` padding changed from `56px var(--sp-80) 40px` to `56px 0 40px` — zero left/right padding; top (56px) and bottom (40px) preserved
+- **Breakpoint removed:** `@media (max-width: 767px)` override `padding-left/right: var(--sp-24)` deleted — no longer needed since base padding is already 0
+- **Scope:** `globals.css` — `Footer.tsx` is a shared layout component rendered on every page; change propagates site-wide automatically
+- **Why:** Aligns footer content width with the full 1440px max-width container (same 0-horizontal-padding convention used on blog listing `.blogInner` and blog post `.postContainer`)
