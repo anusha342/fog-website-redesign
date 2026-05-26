@@ -143,32 +143,61 @@ export default function AboutClient() {
       {/* ── 2. AWARDS ── */}
       <section id="achievement" className={styles.awards}>
         <div className={styles.awardsInner}>
-          <div className={styles.awardsHeader} data-reveal>
-            <h2 className={styles.awardsTitle}>Awards &amp; Honours</h2>
-            <p className={styles.awardsSubtitle}>
-              Industry recognition for pushing the boundaries of location-based entertainment.
-            </p>
+
+          {/* Header — left title + right stat */}
+          <div className={styles.awardsHeader}>
+            <div>
+              {/* <p className={styles.awardsEyebrow} data-reveal>02 — Awards &amp; Recognition</p> */}
+              <h2 className={styles.awardsTitle} data-reveal data-reveal-delay="0.1">
+                Industry&apos;s Most<br />Recognised Platform.
+              </h2>
+            </div>
+            <div className={styles.awardsStat} data-reveal data-reveal-delay="0.15">
+              <span className={styles.awardsStatNum}>06</span>
+              <span className={styles.awardsStatLabel}>Awards Won</span>
+            </div>
           </div>
 
+          {/* Asymmetric bento grid */}
           <div className={styles.awardsGrid}>
-            {AWARDS.map((a, i) => (
-              <div
-                key={i}
-                className={styles.awardCard}
-                data-reveal
-                {...(a.delay ? { 'data-reveal-delay': a.delay } : {})}
-              >
-                <div className={styles.awardYear}>{a.year}</div>
-                <div className={styles.awardBody}>
-                  <div className={styles.awardIcon}>{a.icon}</div>
-                  <div className={styles.awardText}>
-                    <p className={styles.awardName}>{a.name}</p>
-                    <p className={styles.awardOrg}>{a.org}</p>
-                    <p className={styles.awardDesc}>{a.desc}</p>
-                  </div>
+            {AWARDS.map((a, i) => {
+              const isHoriz = i === 3 || i === 4;
+              const STAGGER = ['', '0.07', '0.12', '0.18', '0.24', '0.30'];
+              return (
+                <div
+                  key={i}
+                  className={isHoriz
+                    ? `${styles.awardCard} ${styles.awardCardHoriz}`
+                    : styles.awardCard}
+                  data-reveal
+                  data-reveal-delay={STAGGER[i]}
+                >
+                  {isHoriz ? (
+                    /* Horizontal layout: icon sits flush left, text fills right */
+                    <>
+                      <div className={styles.awardIconWrap}>{a.icon}</div>
+                      <div className={styles.awardMain}>
+                        <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span>
+                        <p className={styles.awardName}>{a.name}</p>
+                        <p className={styles.awardOrg}>{a.org}</p>
+                        <p className={styles.awardDesc}>{a.desc}</p>
+                      </div>
+                    </>
+                  ) : (
+                    /* Vertical layout (small + featured cards) */
+                    <div className={styles.awardCardContent}>
+                      <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span>
+                      <div className={styles.awardIconWrap}>{a.icon}</div>
+                      <p className={styles.awardName}>{a.name}</p>
+                      <p className={styles.awardOrg}>{a.org}</p>
+                      <p className={styles.awardDesc}>{a.desc}</p>
+                    </div>
+                  )}
+                  {/* Ghost year watermark — decorative */}
+                  <span className={styles.awardYearBg} aria-hidden="true">{a.year}</span>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

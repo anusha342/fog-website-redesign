@@ -103,64 +103,250 @@
    2. AWARDS
 ═══════════════════════════════════════ */
 .awards {
-  background: #0a0a0a;
+  background: #ffffff;
   width: 100%;
   padding: 100px clamp(24px, 6vw, 96px);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(0,0,0,0.06);
 }
 .awardsInner { max-width: 1440px; margin: 0 auto; }
-.awardsHeader { text-align: center; margin-bottom: 72px; }
+
+/* Section header — left title, right counter */
+.awardsHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 52px;
+  gap: 32px;
+}
+.awardsEyebrow {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 12px;
+  line-height: 1;
+}
 .awardsTitle {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(34px, 4.5vw, 58px);
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
-  color: var(--white);
-  margin: 0 0 16px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
 }
-.awardsSubtitle {
-  font-size: clamp(15px, 1.5vw, 17px);
-  font-weight: 300;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.45);
-  max-width: 520px;
-  margin: 0 auto;
+/* Right-side award counter */
+.awardsStat { text-align: right; flex-shrink: 0; }
+.awardsStatNum {
+  display: block;
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -3px;
 }
-.awardsGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.awardsStatLabel {
+  display: block;
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+  margin-top: 6px;
+}
 
+/* ── Asymmetric bento grid ── */
+.awardsGrid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr 1fr;
+  grid-auto-rows: minmax(200px, auto);
+  gap: 14px;
+}
+
+/* Card grid placement — nth-child targets direct children by position */
+.awardCard:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }  /* featured tall */
+.awardCard:nth-child(2) { grid-column: 2; grid-row: 1; }
+.awardCard:nth-child(3) { grid-column: 3; grid-row: 1; }
+.awardCard:nth-child(4) { grid-column: 2 / 4; grid-row: 2; }  /* wide */
+.awardCard:nth-child(5) { grid-column: 1 / 3; grid-row: 3; }  /* wide */
+.awardCard:nth-child(6) { grid-column: 3; grid-row: 3; }
+
+/* Base card */
 .awardCard {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  padding: 28px 28px 32px;
+  background: #f9f9f8;
+  border: 1px solid rgba(0,0,0,0.07);
+  /* border-radius: 18px; */
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  gap: 12px;
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.25s ease,
+    box-shadow 0.3s ease;
 }
-.awardCard:hover { border-color: rgba(240,80,35,0.3); background: rgba(240,80,35,0.04); }
-.awardYear {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: 13px;
+.awardCard:hover {
+  transform: translateY(-7px);
+  border-color: rgba(240,80,35,0.22);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(240,80,35,0.07);
+}
+@media (prefers-reduced-motion: reduce) {
+  .awardCard { transition: border-color 0.25s ease; }
+  .awardCard:hover { transform: none; box-shadow: none; }
+}
+
+/* Featured card — orange left border + warm tint */
+.awardCard:nth-child(1) {
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(145deg, rgba(240,80,35,0.03) 0%, #f9f9f8 52%);
+}
+
+/* ── Wide-card horizontal variant (cards 4 & 5) ── */
+.awardCardHoriz {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+/* Text block inside horizontal cards */
+.awardMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Year watermark — decorative, absolute positioned ── */
+.awardYearBg {
+  position: absolute;
+  bottom: -16px;
+  right: 16px;
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: 110px;
   font-weight: 700;
-  letter-spacing: 3px;
+  line-height: 1;
+  color: rgba(0,0,0,0.028);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -4px;
+  z-index: 0;
+}
+.awardCard:nth-child(1) .awardYearBg { font-size: 152px; bottom: -26px; }
+.awardCard:nth-child(4) .awardYearBg,
+.awardCard:nth-child(5) .awardYearBg { font-size: 86px; bottom: -10px; }
+
+/* ── Card content wrapper — always above watermark ── */
+.awardCardContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+/* Index label e.g. "01" */
+.awardIndex {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--accent);
 }
-.awardBody { display: flex; align-items: flex-start; gap: 16px; }
-.awardIcon {
+
+/* Icon circle */
+.awardIconWrap {
   width: 44px; height: 44px;
   border-radius: 10px;
-  background: rgba(240,80,35,0.1);
+  background: rgba(240,80,35,0.08);
   display: flex; align-items: center; justify-content: center;
-  color: var(--accent); flex-shrink: 0;
+  color: var(--accent);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
-.awardText { display: flex; flex-direction: column; gap: 4px; }
-.awardName { font-size: 15px; font-weight: 700; color: var(--white); margin: 0; line-height: 1.35; }
-.awardOrg  { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.35); margin: 0 0 6px; }
-.awardDesc { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.5); margin: 0; }
+.awardCard:nth-child(1) .awardIconWrap { width: 52px; height: 52px; border-radius: 13px; }
+
+/* Award name */
+.awardName {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(13px, 1.15vw, 17px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
+  position: relative; z-index: 1;
+}
+.awardCard:nth-child(1) .awardName { font-size: clamp(16px, 1.5vw, 22px); }
+.awardCard:nth-child(4) .awardName,
+.awardCard:nth-child(5) .awardName { font-size: clamp(14px, 1.3vw, 19px); }
+
+/* Organisation */
+.awardOrg {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.36);
+  margin: 0;
+  position: relative; z-index: 1;
+}
+
+/* Description */
+.awardDesc {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0,0,0,0.52);
+  margin: 0;
+  position: relative; z-index: 1;
+}
+/* Compact (small) cards suppress description */
+.awardCard:nth-child(2) .awardDesc,
+.awardCard:nth-child(3) .awardDesc,
+.awardCard:nth-child(6) .awardDesc { display: none; }
+
+/* ── Awards responsive ── */
+@media (max-width: 1100px) {
+  .awardsGrid { grid-template-columns: 1fr 1fr; }
+  .awardCard:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
+  .awardCard:nth-child(2) { grid-column: 1;     grid-row: 2; }
+  .awardCard:nth-child(3) { grid-column: 2;     grid-row: 2; }
+  .awardCard:nth-child(4) { grid-column: 1 / 3; grid-row: 3; }
+  .awardCard:nth-child(5) { grid-column: 1;     grid-row: 4; }
+  .awardCard:nth-child(6) { grid-column: 2;     grid-row: 4; }
+  /* Restore desc on formerly-compact cards */
+  .awardCard:nth-child(2) .awardDesc,
+  .awardCard:nth-child(3) .awardDesc { display: block; }
+}
+@media (max-width: 640px) {
+  .awardsGrid { grid-template-columns: 1fr; }
+  .awardCard:nth-child(1),
+  .awardCard:nth-child(2),
+  .awardCard:nth-child(3),
+  .awardCard:nth-child(4),
+  .awardCard:nth-child(5),
+  .awardCard:nth-child(6) { grid-column: 1; grid-row: auto; }
+  .awardsHeader { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .awardsStat  { text-align: left; }
+  .awardCardHoriz { flex-direction: column; }
+  .awardCard:nth-child(2) .awardDesc,
+  .awardCard:nth-child(3) .awardDesc,
+  .awardCard:nth-child(6) .awardDesc { display: block; }
+}
 
 /* ═══════════════════════════════════════
    3. WHAT DRIVES US
@@ -316,14 +502,11 @@
   .tlItemRight .tlContent { text-align: left; }
 }
 @media (max-width: 1100px) {
-  .awardsGrid { grid-template-columns: repeat(2, 1fr); }
   .drivesGrid { grid-template-columns: repeat(2, 1fr); }
   .teamGrid   { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
   .awards, .drives, .timeline, .team { padding: 72px 20px; }
-  .awardsGrid { grid-template-columns: 1fr; }
   .drivesGrid { grid-template-columns: 1fr; }
   .teamGrid   { grid-template-columns: repeat(2, 1fr); }
-  .heroTitle  { font-size: clamp(36px, 10vw, 60px); }
 }

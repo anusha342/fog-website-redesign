@@ -94,7 +94,7 @@ Work is done **section by section, page by page** in this order:
 | # | Section | Status |
 |---|---|---|
 | 1 | Hero (dark full-bleed, dot-grid overlay, H1 title, desc paragraph, "Our Journey" CTA, scroll indicator) | Done |
-| 2 | Awards & Honours (6-card grid — year badge, icon, award name, org, description) | Pending |
+| 2 | Awards & Honours (6-card grid — year badge, icon, award name, org, description) | Done |
 | 3 | What Drives Us (4 value cards — Innovation, Reliability, Speed, Partnership — icon + title + body) | Pending |
 | 4 | The FOG Journey (alternating left/right timeline — dot, line, year badge, title, desc) | Pending |
 | 5 | The Team Behind FOG (4 avatar initials cards — name + role) | Pending |
@@ -132,6 +132,25 @@ Work is done **section by section, page by page** in this order:
 - **Removed:** `heroBg` (flat dark div), `heroGrid` (dot pattern), `heroCta` (anchor link) — photo eliminates the need for artificial texture; CTA removed to reduce density at 50vh
 - **Scroll indicator:** condensed to `height: 52px` (was 90px) to fit 50vh proportionally; `prefers-reduced-motion` guard added — dot freezes at mid-point instead of animating
 - **Responsive:** `min-height: 320px` is the safety floor on small phones; eyebrow and title are fluid via `clamp()` so no custom breakpoint rules needed inside the hero
+
+### About — Section 2: Awards & Recognition
+- **Section bg:** `#ffffff` — white; contrasts cleanly with adjacent dark sections; `border-top: 1px solid rgba(0,0,0,0.06)` as a hair-line separator
+- **Header layout:** `flex; justify-content: space-between; align-items: flex-end` — eyebrow + H2 left-aligned (per requirement), large "06" counter right-aligned as a visual anchor
+- **Eyebrow:** `"02 — Awards & Recognition"` — GoogleSans 500, orange, 4px tracking — matches universal section eyebrow spec
+- **H2 title:** `"Industry's Most Recognised Platform."` — ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `#0a0a0a` (white section text role per design-CLAUDE.md); left-aligned
+- **Award counter (right):** `"06"` in ClashDisplay 700 at `clamp(52px,7vw,88px)` in `var(--accent)` orange — massive decorative number creates instant trust signal; `"Awards Won"` sub-label in GoogleSans 500 SM uppercase below
+- **Grid:** Asymmetric bento — `grid-template-columns: 1.8fr 1fr 1fr; grid-auto-rows: minmax(200px,auto)` — 6 cards in 3 rows with deliberate size hierarchy:
+  - Card 1 (featured, 2024 IAAPA): `grid-column: 1; grid-row: 1/3` — tall spanning card; orange left border `3px solid var(--accent)`; warm linear-gradient tint; larger icon (52px) + larger name size
+  - Cards 2 & 3: small top-right cells; description hidden (too tight to read)
+  - Card 4: `grid-column: 2/4; grid-row: 2` — wide horizontal layout (icon left, text right via `awardCardHoriz` flex-row)
+  - Card 5: `grid-column: 1/3; grid-row: 3` — wide horizontal layout
+  - Card 6: compact bottom-right cell
+- **Year watermark:** `position: absolute; bottom; right` — ClashDisplay 700 at 86–152px depending on card size, `color: rgba(0,0,0,0.028)` — ghost text gives editorial depth without competing with content
+- **Hover:** Spring cubic-bezier `(0.34, 1.56, 0.64, 1)` — `translateY(-7px)` lift + orange border tint + `box-shadow` — tactile and premium; `prefers-reduced-motion` disables transform
+- **Card content z-index:** content at `z-index: 1`, watermark at `z-index: 0` — guaranteed layering inside `position: relative` card
+- **Stagger reveal:** delays `0 / 0.07 / 0.12 / 0.18 / 0.24 / 0.30s` — natural cascade left-to-right, top-to-bottom
+- **Responsive 1100px:** collapses to `1fr 1fr`; card 1 spans full width; cards 4 & 5 widen to full row; descs restored on formerly compact cards
+- **Responsive 640px:** single column; all nth-child grid assignments reset to `auto`; horizontal cards revert to flex-column; awardsStat aligns left
 
 ### About Page — Section Map status update
 - **Section 1 (Hero):** Done
