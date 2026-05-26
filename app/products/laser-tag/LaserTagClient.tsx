@@ -216,8 +216,8 @@ export default function LaserTagClient({ testimonials }: Props) {
         <div className={styles.uspInner}>
 
           <div className={styles.uspHeader} data-reveal>
-            <span className={styles.uspEyebrow}>02 — Why FOG's Laser Tag</span>
-            <h2 className={styles.uspTitle}>The FOG Advantage.</h2>
+            {/* <span className={styles.uspEyebrow}>02 — Why FOG's Laser Tag</span> */}
+            <h2 className={styles.uspTitle}>Why FOG's Laser Tag?</h2>
           </div>
 
           <div className={styles.uspList}>
@@ -234,7 +234,7 @@ export default function LaserTagClient({ testimonials }: Props) {
                 />
               </div>
               <div className={styles.uspContent}>
-                <span className={styles.uspCategoryLabel}>Zero Downtime</span>
+                {/* <span className={styles.uspCategoryLabel}>Zero Downtime</span> */}
                 <h3 className={styles.uspCardTitle}>15-Minute Swaps. Zero Revenue Loss.</h3>
                 <p className={styles.uspBody}>A wireless contact-free charging stand eliminates battery hassle, while a modular plug-and-play design with locally stocked, in-house spares enables 15-minute component swaps to ensure your arena never loses revenue.</p>
               </div>
@@ -244,7 +244,7 @@ export default function LaserTagClient({ testimonials }: Props) {
             <div className={`${styles.uspCard} ${styles.uspCardReverse}`} data-reveal data-reveal-delay="0.2">
               <span className={styles.uspGhostNum} aria-hidden="true">2</span>
               <div className={styles.uspContent}>
-                <span className={styles.uspCategoryLabel}>Arena Design</span>
+                {/* <span className={styles.uspCategoryLabel}>Arena Design</span> */}
                 <h3 className={styles.uspCardTitle}>Custom Arenas Built for Repeat Bookings.</h3>
                 <p className={styles.uspBody}>Custom 3D-engineered layouts with ramps and tunnels maximize space and safety, while interactive Shooting Points and Homebases compel corporate teams, families, and friends to book repeat sessions.</p>
               </div>
@@ -270,7 +270,7 @@ export default function LaserTagClient({ testimonials }: Props) {
                 />
               </div>
               <div className={styles.uspContent}>
-                <span className={styles.uspCategoryLabel}>Operator First</span>
+                {/* <span className={styles.uspCategoryLabel}>Operator First</span> */}
                 <h3 className={styles.uspCardTitle}>Operator-First Software. Zero Extra Cost.</h3>
                 <p className={styles.uspBody}>Eliminate recurring overhead costs with an operator-friendly software suite that includes free lifetime updates, backed by a dedicated center engineer providing instant troubleshooting and mandatory daily checks.</p>
               </div>
@@ -339,7 +339,7 @@ export default function LaserTagClient({ testimonials }: Props) {
 
           {/* Full-width header */}
           <div className={styles.modesV2Header}>
-            <span className={styles.modesEyebrow} data-reveal>03 — Game Modes</span>
+            {/* <span className={styles.modesEyebrow} data-reveal>03 — Game Modes</span> */}
             <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
           </div>
 
@@ -393,7 +393,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
-            <span className={styles.momentsEyebrow}>04 — Moments</span>
+            {/* <span className={styles.momentsEyebrow}>04 — Moments</span> */}
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
           </div>
 

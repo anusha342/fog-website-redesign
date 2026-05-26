@@ -215,7 +215,7 @@
 ═══════════════════════════════════════ */
 .uspSection {
   background: #ffffff;
-  padding: 80px 36px 72px;
+  padding: 80px 0;
   display: flex;
   flex-direction: column;
 }
@@ -372,12 +372,10 @@
 
 /* ── USP section responsive ── */
 @media (max-width: 1199px) {
-  .uspSection { padding: 72px 32px 60px; }
   .uspContent { padding: 32px 36px; }
 }
 
 @media (max-width: 900px) {
-  .uspSection { padding: 64px 24px; }
   .uspCard {
     grid-template-columns: 1fr;
     min-height: unset;
@@ -398,7 +396,6 @@
 }
 
 @media (max-width: 640px) {
-  .uspSection { padding: 56px 20px; }
   .uspImgWrap { aspect-ratio: 4/3; }
   .uspContent { padding: 24px 20px 32px; }
   .uspCardTitle { font-size: clamp(16px, 4.5vw, 24px); }
@@ -411,7 +408,7 @@
   background: #ffffff;
   height: 50vh;
   min-height: 380px;
-  padding: 32px 36px;
+  padding: 80px 0;
   display: flex;
   align-items: stretch;
   box-sizing: border-box;
@@ -530,19 +527,14 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 1199px) {
-  .equipSection { padding: 28px 32px; }
-}
-
 @media (max-width: 900px) {
-  .equipSection { padding: 24px 24px; min-height: 320px; }
+  .equipSection { min-height: 320px; }
   .equipOverlay { padding: 28px 28px; }
 }
 
 @media (max-width: 640px) {
   .equipSection {
     height: auto;
-    padding: 24px 20px;
     min-height: unset;
   }
   .equipInner {
@@ -558,7 +550,7 @@
 .modesV2Section {
   background: #ffffff;
   height: 100vh;
-  padding: 80px 36px;
+  padding: 80px 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -723,7 +715,6 @@
 }
 
 @media (max-width: 1199px) {
-  .modesV2Section { padding: 72px 32px; }
   .modesV2Body { gap: 0 32px; }
   .modeItemName { font-size: clamp(22px, 2.8vw, 38px); }
 }
@@ -732,7 +723,6 @@
   .modesV2Section {
     height: auto;
     min-height: 100vh;
-    padding: 72px 24px;
   }
   .modesV2Header { margin-bottom: 32px; }
   .modesV2Body {
@@ -779,7 +769,7 @@
 .momentsInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 80px var(--sp-80) 80px;
+  padding: 80px 0;
 }
 
 .momentsTop {
@@ -1084,7 +1074,7 @@
 }
 
 @media (max-width: 1023px) {
-  .momentsInner { padding: 80px var(--sp-48); }
+  .momentsInner { padding: 80px 0; }
   .momentsBento {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -1100,7 +1090,7 @@
 }
 
 @media (max-width: 767px) {
-  .momentsInner { padding: 64px var(--sp-24); }
+  .momentsInner { padding: 80px 0; }
   .momentsTop { margin-bottom: 40px; }
   .momentsBento {
     grid-template-columns: 1fr;
@@ -1290,7 +1280,7 @@
 .speModelInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 72px var(--sp-80) 0;
+  padding: 80px 0 0;
 }
 
 .speModelTitle {
@@ -1339,7 +1329,7 @@
 .speDataInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 72px var(--sp-80);
+  padding: 80px 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
@@ -1421,13 +1411,10 @@
 .speInfoText strong { color: var(--white); font-weight: 600; }
 
 @media (max-width: 1023px) {
-  .speDataInner { grid-template-columns: 1fr; padding: 56px var(--sp-48); }
-  .speModelInner { padding: 56px var(--sp-48) 0; }
+  .speDataInner { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 767px) {
-  .speModelInner { padding: 48px var(--sp-24) 0; }
-  .speDataInner { padding: 48px var(--sp-24); }
   .speDimsCard { padding: 28px 24px; }
   .speInfoCard { padding: 24px 20px; }
 }
@@ -1437,7 +1424,7 @@
 ═══════════════════════════════════════ */
 .testSection {
   background: var(--white);
-  padding: var(--sp-96) var(--sp-80);
+  padding: 80px 0;
   width: 100%;
   position: relative;
 }
@@ -1589,13 +1576,11 @@
 .testArrowNext { right: 0; }
 
 @media (max-width: 1023px) {
-  .testSection { padding: 80px var(--sp-48); }
   .testGrid { grid-template-columns: 1fr; gap: 40px; }
   .testImage { aspect-ratio: 16/9; }
 }
 
 @media (max-width: 767px) {
-  .testSection { padding: 64px var(--sp-24); }
   .testArrowAbs { display: none; }
 }
 

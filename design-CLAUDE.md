@@ -232,3 +232,31 @@ Usage:          .processPlayBtn ("Click to Play"), .modesVideoBtn ("Watch Gamepl
 | Step / badge accent | `var(--hg-neon-orange)` | `var(--hg-neon-orange)` (unchanged) |
 
 > **Rule:** Eyebrows and step labels are always orange regardless of section background colour.
+
+---
+
+## Section Layout
+
+### Padding Standard
+
+All sections use `padding: 80px 0` — 80px top and bottom, zero left and right. This is mandatory across all product pages.
+
+```css
+/* Section container */
+section {
+  padding: 80px 0;
+}
+
+/* Inner content wrapper — constrains width, does NOT add horizontal padding */
+.sectionInner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+```
+
+> **Rule:** Horizontal spacing is never applied at the section level. The `max-width: 1440px; margin: 0 auto` inner wrapper controls content width. On screens narrower than 1440px the inner wrapper stretches edge-to-edge — individual components (cards, text blocks) may carry their own internal padding.
+
+> **Exception:** Sections that are full-bleed by design (Hero, Arena image, full-width media) have `padding: 0` or custom inset padding that is internal to the component, not the section shell.
+
+> **Responsive:** Top/bottom padding stays at `80px` across all breakpoints unless a specific section has a documented reason to deviate.
