@@ -282,7 +282,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
         <div className={styles.whatInner}>
           <div className={styles.whatImgWrap} data-reveal>
             <Image
-              src="/images/laser-spy/laser-spy-1.jpg"
+              src="/images/laser-spy/laser-spy-1.png"
               alt="Laser Spy beam maze in action"
               className={styles.whatImg}
               width={1600}
