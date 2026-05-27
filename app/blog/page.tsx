@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { getAllPostsFromS3 } from '@/lib/s3';
 import styles from './page.module.css';
 import BlogListingClient from './BlogListingClient';
@@ -56,13 +57,37 @@ export default async function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className={styles.blogSection}>
-        {/* Section header */}
-        <div className={styles.blogHeader}>
-          {/* <span className={styles.blogEyebrow}>Insights &amp; Updates</span> */}
-          <h1 className={styles.blogTitle}>News &amp; Blogs</h1>
+      {/* ── HERO ── */}
+      <header className={styles.blogHero}>
+        {/* Background photo */}
+        <div className={styles.blogHeroBgImg} aria-hidden="true">
+          <Image
+            src="/images/about-us/about-us.jpg"
+            alt="FOG Technologies team"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center 22%' }}
+            priority
+          />
         </div>
 
+        {/* Dark gradient scrim */}
+        <div className={styles.blogHeroOverlay} aria-hidden="true" />
+
+        {/* Centered text */}
+        <div className={styles.blogHeroContent}>
+          {/* <p className={styles.blogHeroEyebrow}>Insights &amp; Updates</p> */}
+          <h1 className={styles.blogHeroTitle}>News &amp; Blogs</h1>
+        </div>
+
+        {/* Scroll cue */}
+        <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
+          <div className={styles.blogScrollLine}>
+            <div className={styles.blogScrollDot} />
+          </div>
+        </div>
+      </header>
+
+      <section className={styles.blogSection}>
         {/* Posts + sidebar — client component handles search/filter interactivity */}
         <BlogListingClient
           posts={allPosts}

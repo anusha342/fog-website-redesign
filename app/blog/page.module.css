@@ -2,40 +2,116 @@
    BLOG LISTING PAGE
    ════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.blogHero {
+  position: relative;
+  width: 100vw;
+  height: 50vh;
+  min-height: 320px;
+  margin-top: 60px; /* navbar clearance */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* next/image fill wrapper */
+.blogHeroBgImg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Cinematic dark gradient — same 3-stop spec as About hero */
+.blogHeroOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,0.28) 0%,
+      rgba(0,0,0,0.58) 48%,
+      rgba(0,0,0,0.72) 100%);
+  z-index: 2;
+}
+
+.blogHeroContent {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 clamp(24px, 6vw, 96px);
+  max-width: 860px;
+}
+
+/* Eyebrow — XS spec: GoogleSans 500, 4px tracking, orange */
+.blogHeroEyebrow {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent, #F05023);
+  margin: 0 0 14px;
+  line-height: 1;
+}
+
+/* H1 — design-CLAUDE.md §H1: ClashDisplay 700, uppercase */
+.blogHeroTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Scroll indicator — same height as About hero (52px) */
+.blogHeroScrollIndicator {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+}
+.blogScrollLine {
+  width: 2px;
+  height: 52px;
+  background: rgba(255,255,255,.18);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+.blogScrollDot {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  width: 2px;
+  height: 9px;
+  background: var(--accent, #F05023);
+  border-radius: 1px;
+  animation: blogScrollDot 1.6s ease-in-out infinite;
+}
+@keyframes blogScrollDot {
+  0%   { top: -9px;  opacity: 1;   }
+  80%  {             opacity: 0.6; }
+  100% { top: 52px;  opacity: 0;   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blogScrollDot { animation: none; top: 22px; opacity: 0.5; }
+}
+
 /* ── SECTION SHELL ── */
 .blogSection {
   background: #ffffff;
   padding: 80px 0;
-  margin-top: 60px; /* navbar clearance */
   width: 100%;
-}
-
-/* ── SECTION HEADER ── */
-.blogHeader {
-  text-align: center;
-  margin-bottom: 56px;
-}
-
-.blogEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-weight: 500;
-  font-size: clamp(10px, 1vw, 13px);
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--accent, #F05023);
-  display: block;
-  margin: 0 0 14px;
-}
-
-.blogTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
-  color: #0a0a0a;
-  margin: 0;
 }
 
 /* ── TWO-COLUMN INNER ── */

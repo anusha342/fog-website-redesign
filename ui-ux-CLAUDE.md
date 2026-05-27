@@ -137,6 +137,19 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
+### Blog Listing Page — Hero Section Added
+- **Source of truth:** About page hero — exact layout, height, and CSS spec; only copy belongs to Blog
+- **`blogHero`:** `position: relative; width: 100vw; height: 50vh; min-height: 320px; margin-top: 60px` (navbar clearance moved from blogSection to hero); `display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden`
+- **Background image:** `next/image` fill with `/images/about-us/about-us.jpg`; `objectFit: cover; objectPosition: center 22%`; `priority` — same framing as About hero
+- **Overlay:** 3-stop `linear-gradient(to bottom)` — `rgba(0,0,0,0.28)` → `rgba(0,0,0,0.58)` at 48% → `rgba(0,0,0,0.72)` — identical to About hero spec
+- **Content:** `blogHeroContent` — `position: relative; z-index: 3; flex-column; align-items: center; padding: 0 clamp(24px,6vw,96px); max-width: 860px`
+- **Eyebrow:** `"Insights & Updates"` — GoogleSans 500, `var(--accent)` orange, 4px tracking, `clamp(10px,1vw,13px)`, `margin-bottom: 14px` — matches XS eyebrow spec
+- **H1:** `"News & Blogs"` — ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `letter-spacing: -0.5px`, `line-height: 1.05`, `#ffffff` — exact H1 spec from `design-CLAUDE.md`
+- **Scroll indicator:** `blogScrollLine` (2px × 52px, `rgba(255,255,255,.18)`) + `blogScrollDot` (2px × 9px orange, `@keyframes blogScrollDot` 1.6s loop); `prefers-reduced-motion` freezes dot at `top: 22px; opacity: 0.5`
+- **Removed:** `blogHeader` div (plain white title block), `blogEyebrow` and `blogTitle` CSS classes — all replaced by hero
+- **Removed:** `margin-top: 60px` from `blogSection` — clearance now lives on `blogHero`
+- **`page.tsx`:** Added `import Image from 'next/image'`; hero rendered as `<header>` element above `<section className={styles.blogSection}>`
+
 ### Blog Listing Page — Client-Side Search Fix
 - **Root cause:** Server-side `searchParams` filter was returning 0 results when query string was present (field mismatch with S3 post data), leaving the posts column visually empty while the sidebar remained populated
 - **Fix:** Extracted posts list + search + tag pills into `BlogListingClient.tsx` (`'use client'`) — server component fetches all posts once, passes them as props; client component filters with `useMemo` in real-time, never navigating away or reloading the page
