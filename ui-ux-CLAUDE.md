@@ -124,14 +124,10 @@ Work is done **section by section, page by page** in this order:
 |---|---|---|
 | 1 | Hero (cinematic video BG, HUD corners, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
 | 2 | What is Laser Spy (full-width image + 3 descriptor cards) | Pending |
-| 3 | Challenge Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
-| 4 | Moments in Laser Spy (step-flow bento grid — 4 cards with step labels and editorial cascade) | Pending |
-| 5 | How It Works (process steps carousel with image swap) | Pending |
-| 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
-| 7 | Room Design (full-width room render + area copy) | Pending |
-| 8 | Room Specs (dimensions card + 2 info cards — Challenge Modes, Alarm System) | Pending |
-| 9 | Testimonials Carousel (shared component) | Done |
-| 10 | Get In Touch (shared ContactForm, lasermaze pre-selected) | Done |
+| 3 | Themes (60/40 image+list grid — 4 themes: Laser Wars, Laser Ship, Laser Lab, Laser Spy) | Done |
+| 4 | ROI Calculator (white 100vh, slider inputs + Chart.js cumulative line) | Done |
+| 5 | Operator (operator-facing section — business case, setup details, or operator CTA) | Pending |
+| 6 | Get In Touch (shared ContactForm, lasermaze pre-selected) | Done |
 
 ---
 

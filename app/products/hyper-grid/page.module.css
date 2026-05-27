@@ -115,7 +115,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--sp-16);
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
 .heroEyebrow {
