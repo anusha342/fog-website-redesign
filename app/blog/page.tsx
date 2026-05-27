@@ -80,11 +80,11 @@ export default async function BlogPage() {
         </div>
 
         {/* Scroll cue */}
-        <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
+        {/* <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
           <div className={styles.blogScrollLine}>
             <div className={styles.blogScrollDot} />
           </div>
-        </div>
+        </div> */}
       </header>
 
       <section className={styles.blogSection}>
