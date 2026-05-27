@@ -42,9 +42,6 @@ export default function ContactClient() {
         </div> */}
       </header>
 
-      {/* ── GET IN TOUCH FORM ── */}
-      <ContactForm />
-
       {/* ── INFO STRIP ── */}
       <div className={styles.infoStrip} data-reveal>
         <div className={styles.infoInner}>
@@ -88,6 +85,9 @@ export default function ContactClient() {
 
         </div>
       </div>
+
+      {/* ── GET IN TOUCH FORM ── */}
+      <ContactForm />
 
     </main>
   );

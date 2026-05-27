@@ -137,10 +137,10 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
   }
 
   const btnLabel =
-    status === 'loading' ? 'Sending…'
+    status === 'loading' ? 'Submitting…'
     : status === 'success' ? 'Message Sent!'
     : status === 'error'   ? 'Failed — try again'
-    : 'Send Message';
+    : 'Submit';
 
   const btnClass = [
     styles.btn,
