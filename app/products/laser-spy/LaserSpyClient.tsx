@@ -186,11 +186,9 @@ export default function LaserSpyClient({ testimonials }: Props) {
   const updateCharts = () => {
     const Chart = (window as any).Chart;
     const lineCanvas = document.getElementById('chart-cumulative') as HTMLCanvasElement;
-    const barCanvas = document.getElementById('chart-revenue') as HTMLCanvasElement;
-    if (!lineCanvas || !barCanvas) return;
+    if (!lineCanvas) return;
 
     if ((window as any).lineChartInstance) (window as any).lineChartInstance.destroy();
-    if ((window as any).barChartInstance) (window as any).barChartInstance.destroy();
 
     (window as any).lineChartInstance = new Chart(lineCanvas.getContext('2d'), {
       type: 'line',
@@ -200,18 +198,19 @@ export default function LaserSpyClient({ testimonials }: Props) {
           data: Array.from({ length: 60 }, (_, i) => ((monthlyRevenue * (i + 1)) - productCost) / 100000),
           borderColor: '#F05023',
           borderWidth: 2,
-          fill: false,
+          backgroundColor: 'rgba(240,80,35,0.06)',
+          fill: true,
           pointRadius: 0,
           tension: 0.3,
         }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { 
+        plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
-            titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12,
+            backgroundColor: '#fff', borderColor: 'rgba(19,19,19,0.1)', borderWidth: 1,
+            titleColor: '#131313', bodyColor: 'rgba(19,19,19,0.6)', padding: 12,
             callbacks: {
               label: (ctx: any) => '₹' + ctx.parsed.y.toFixed(1) + 'L',
               title: (ctx: any) => 'Month ' + (ctx[0].dataIndex + 1)
@@ -219,35 +218,8 @@ export default function LaserSpyClient({ testimonials }: Props) {
           }
         },
         scales: {
-          x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
-          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } }
-        }
-      }
-    });
-
-    (window as any).barChartInstance = new Chart(barCanvas.getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Product Cost', 'Monthly Rev.', 'Yearly Rev.', '5-Year Rev.'],
-        datasets: [{
-          data: [productCost / 100000, monthlyRevenue / 100000, yearlyRevenue / 100000, (yearlyRevenue * 5) / 100000],
-          backgroundColor: ['rgba(240,80,35,0.35)', '#F05023', '#F05023', '#F05023'],
-          borderRadius: 3,
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-        plugins: { 
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
-            titleColor: '#fff', bodyColor: 'rgba(255,255,255,0.6)', padding: 12,
-            callbacks: { label: (ctx: any) => '₹' + ctx.parsed.x.toFixed(1) + 'L' }
-          }
-        },
-        scales: {
-          x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } },
-          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: 'rgba(255,255,255,0.3)', font: { size: 10 } }, border: { display: false } }
+          x: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.3)', font: { size: 10 } }, border: { display: false } },
+          y: { grid: { color: 'rgba(19,19,19,0.05)' }, ticks: { color: 'rgba(19,19,19,0.3)', font: { size: 10 } }, border: { display: false } }
         }
       }
     });
@@ -274,13 +246,18 @@ export default function LaserSpyClient({ testimonials }: Props) {
         <div className={`${styles.hudCorner} ${styles.hudCornerBr}`} aria-hidden="true"></div>
 
         <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">Laser Spy</h1>
-          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.2">
+          <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Laser Beam Maze Attraction</span>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Spy</h1>
+          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Navigate the beam maze. Beat the clock. Own the leaderboard.</p>
+          <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
             <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
               document.getElementById('what-is-laserspy')?.scrollIntoView({ behavior: 'smooth' });
             }}>Discover &#x2192;</button>
             <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
           </div>
+        </div>
+        <div className={styles.heroScroll} aria-hidden="true">
+          <div className={styles.heroScrollChevron}></div>
         </div>
       </header>
 
@@ -326,44 +303,49 @@ export default function LaserSpyClient({ testimonials }: Props) {
       {/* 3. CHALLENGE MODES */}
       <section id="challenge-modes" className={styles.modesV2Section} data-nav-theme="dark">
         <div className={styles.modesV2Wrap}>
-          <h2 className={styles.modesV2Title} data-reveal>Challenge Modes</h2>
-
-          <div className={styles.modesV2Left}>
-            <div className={styles.modesV2ImgWrap}>
-              <Image
-                src={MODES[activeMode].img}
-                alt={MODES[activeMode].name}
-                className={styles.modesV2Img}
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <button className={styles.modesVideoBtn} onClick={openVideo}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
-              Watch Gameplay
-            </button>
+          <div className={styles.modesV2Header}>
+            <span className={styles.modesEyebrow}>03 — Challenge Modes</span>
+            <h2 className={styles.modesV2Title}>Challenge Modes</h2>
           </div>
 
-          <div className={styles.modesV2Right}>
-            <div className={styles.modesV2Line}></div>
-            {MODES.map((m, idx) => (
-              <div key={idx}>
-                <div 
-                  className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
-                  onMouseEnter={() => setActiveMode(idx)}
-                >
-                  <h3 className={styles.modeItemName}>{m.name}</h3>
-                  <span className={styles.modeItemNum}>{`{ 0${idx + 1} }`}</span>
-                </div>
-                <div className={styles.modesV2Line}></div>
+          <div className={styles.modesV2Body}>
+            <div className={styles.modesV2Left}>
+              <div className={styles.modesV2ImgWrap}>
+                <Image
+                  src={MODES[activeMode].img}
+                  alt={MODES[activeMode].name}
+                  className={styles.modesV2Img}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
-            ))}
+              <button className={styles.modesVideoBtn} onClick={openVideo}>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
+                Watch Gameplay
+              </button>
+            </div>
+
+            <div className={styles.modesV2Right}>
+              <div className={styles.modesV2Line}></div>
+              {MODES.map((m, idx) => (
+                <div key={idx}>
+                  <div
+                    className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
+                    onMouseEnter={() => setActiveMode(idx)}
+                  >
+                    <h3 className={styles.modeItemName}>{m.name}</h3>
+                    <span className={styles.modeItemNum}>0{idx + 1}</span>
+                  </div>
+                  <div className={styles.modesV2Line}></div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* 3b. MOMENTS */}
-      <section id="ls-moments" className={styles.momentsSection} data-nav-theme="light">
+      {/* <section id="ls-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
             <h2 className={styles.momentsTitle}>Moments in Laser Spy</h2>
@@ -438,7 +420,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 4. HOW IT WORKS */}
       <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
@@ -478,16 +460,17 @@ export default function LaserSpyClient({ testimonials }: Props) {
       </section>
 
       {/* 5. ROI CALCULATOR */}
-      <section id="roi-calculator" className={styles.calcSection} data-nav-theme="dark">
-        <div className={styles.calcInner}>
+      <section id="roi-calculator" className={styles.calcSection} data-nav-theme="light">
+        <div className={styles.calcWrap}>
           <div className={styles.calcHeader}>
-            <h2 className={styles.sectionTitle} data-reveal>ROI Calculator</h2>
+            <span className={styles.calcEyebrow} data-reveal>06 — ROI Calculator</span>
+            <h2 className={styles.calcTitle} data-reveal data-reveal-delay="0.1">Revenue Projection</h2>
           </div>
-          <div className={styles.calcGrid}>
-            
+
+          <div className={styles.calcBody}>
             <div className={styles.calcInputs}>
               <h3 className={styles.calcPanelTitle}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M4 8h8M4 5h8M4 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M3.5 7h7M3.5 4.5h7M3.5 9.5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 Input Parameters
               </h3>
               <div className={styles.calcField}>
@@ -533,65 +516,38 @@ export default function LaserSpyClient({ testimonials }: Props) {
               </div>
             </div>
 
-            <div className={styles.calcResults}>
-              <div className={styles.calcMetrics}>
-                <div className={styles.calcMetric}>
-                  <span className={styles.calcMetricLabel}>Investment</span>
-                  <span className={styles.calcMetricVal}>₹{(productCost / 100000).toFixed(1)}L</span>
+            <div className={styles.calcOutput}>
+              <div className={styles.calcKpis}>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Investment</span>
+                  <span className={styles.calcKpiVal}>₹{(productCost / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Monthly Revenue</span>
-                  <span className={styles.calcMetricVal}>₹{(monthlyRevenue / 100000).toFixed(1)}L</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Monthly Revenue</span>
+                  <span className={styles.calcKpiVal}>₹{(monthlyRevenue / 100000).toFixed(1)}L</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricAccent}`}>
-                  <span className={styles.calcMetricLabel}>Payback Period</span>
-                  <span className={styles.calcMetricVal}>{paybackMonths} mo</span>
+                <div className={styles.calcKpi}>
+                  <span className={styles.calcKpiLabel}>Payback Period</span>
+                  <span className={styles.calcKpiVal}>{paybackMonths} mo</span>
                 </div>
-                <div className={`${styles.calcMetric} ${styles.calcMetricGreen}`}>
-                  <span className={styles.calcMetricLabel}>5-Year ROI</span>
-                  <span className={styles.calcMetricVal}>{roi.toFixed(0)}%</span>
+                <div className={`${styles.calcKpi} ${styles.calcKpiHero}`}>
+                  <span className={styles.calcKpiLabel}>5-Year ROI</span>
+                  <span className={styles.calcKpiVal}>{roi.toFixed(0)}%</span>
                 </div>
               </div>
 
-              <div className={styles.calcChartCard}>
+              <div className={styles.calcChartArea}>
                 <h4 className={styles.calcChartTitle}>60-Month Cumulative Profit (₹ Lakhs)</h4>
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>
                 </div>
-                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero.</p>
-              </div>
-
-              <div className={styles.calcChartCard}>
-                <h4 className={styles.calcChartTitle}>Revenue Projection (₹ Lakhs)</h4>
-                <div className={`${styles.calcChartWrap} ${styles.calcChartWrapBar}`}>
-                  <canvas id="chart-revenue"></canvas>
-                </div>
-              </div>
-
-              <div className={styles.calcDailyCard}>
-                <h4 className={styles.calcChartTitle}>Daily Breakdown</h4>
-                <div className={styles.calcDailyGrid}>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Expected Players</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers)}</span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Daily Revenue</span>
-                    <span className={`${styles.calcDailyVal} ${styles.calcDailyValAccent}`}>₹{Math.round(dailyRevenue).toLocaleString('en-IN')}</span>
-                    <span className={styles.calcDailyUnit}>per day</span>
-                  </div>
-                  <div className={styles.calcDailyItem}>
-                    <span className={styles.calcDailyLabel}>Sessions per Hour</span>
-                    <span className={styles.calcDailyVal}>{Math.round(dailyPlayers / hours)}</span>
-                    <span className={styles.calcDailyUnit}>avg capacity</span>
-                  </div>
-                </div>
+                <p className={styles.calcChartNote}>Break-even occurs when the line crosses zero. Projections are indicative.</p>
               </div>
             </div>
           </div>
+
           <div className={styles.calcFooter}>
-            <p className={styles.calcDisclaimer}>These estimates are indicative and based on industry averages. Actual results may vary based on location, marketing, and operational factors.</p>
+            <p className={styles.calcDisclaimer}>Estimates based on industry averages. Actual results may vary based on location, marketing, and operational factors.</p>
             <Link href="/contact" className={`${styles.hbtn} ${styles.hbtnSolid}`}>Get a Detailed Proposal &nbsp;&#x2192;</Link>
           </div>
         </div>

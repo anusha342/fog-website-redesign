@@ -118,6 +118,23 @@ Work is done **section by section, page by page** in this order:
 
 ---
 
+## Laser Spy Product Page — Section Map
+
+| # | Section | Status |
+|---|---|---|
+| 1 | Hero (cinematic video BG, HUD corners, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
+| 2 | What is Laser Spy (full-width image + 3 descriptor cards) | Pending |
+| 3 | Challenge Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
+| 4 | Moments in Laser Spy (step-flow bento grid — 4 cards with step labels and editorial cascade) | Pending |
+| 5 | How It Works (process steps carousel with image swap) | Pending |
+| 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
+| 7 | Room Design (full-width room render + area copy) | Pending |
+| 8 | Room Specs (dimensions card + 2 info cards — Challenge Modes, Alarm System) | Pending |
+| 9 | Testimonials Carousel (shared component) | Done |
+| 10 | Get In Touch (shared ContactForm, lasermaze pre-selected) | Done |
+
+---
+
 ## Home Page — Section Map
 
 | # | Section | Status |
@@ -136,6 +153,40 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### Laser Spy — Hero, Challenge Modes, ROI Calculator (HyperGrid Parity)
+
+**Hero** (`page.module.css` + `LaserSpyClient.tsx`)
+- `justify-content: flex-end` — content anchors to lower third, matching HyperGrid
+- `heroOverlay`: cinematic 2-layer gradient (radial + linear) replacing flat rgba black
+- `heroEyebrow` span added: GoogleSans 500, `clamp(10px,1.1vw,13px)`, 4px tracking, orange; text = "Laser Beam Maze Attraction"; `data-reveal-delay="0"`
+- `heroTitle` H1: Expansiva 700, `clamp(48px,9vw,110px)`, `line-height: 0.92`, `-1px` tracking; `data-reveal-delay="0.12"`
+- `heroSub` para added: GoogleSans 300, `clamp(14px,1.6vw,18px)`, `rgba(255,255,255,0.55)`, 0.5px tracking; `data-reveal-delay="0.22"`
+- `heroBtns`: `data-reveal-delay="0.32"` — full stagger chain matching HyperGrid
+- HUD corners: static divs → `@keyframes hudDraw` with `opacity 0 → 0.55`, scale `0.6 → 1`, delays `0.4–0.7s`; orange (`rgba(240,80,35,0.7)`) `::before`/`::after` pseudo-elements; `prefers-reduced-motion` guard
+- Scroll indicator: `@keyframes scrollBob` (translateY 6px bounce, 2s loop); `heroScroll` + `heroScrollChevron` divs added to JSX; `prefers-reduced-motion` guard
+- `.hbtn` transition: `all 300ms ease` → explicit property list with spring `cubic-bezier(.34,1.56,.64,1)`; hover adds `translateY(-2px)` + directional box-shadow
+
+**Challenge Modes** (`page.module.css` + `LaserSpyClient.tsx`)
+- Layout: `display: grid` → `display: flex; flex-direction: column; height: 100vh` on `.modesV2Section` (dark bg, matching HyperGrid)
+- `.modesV2Header` wrapper added: eyebrow ("03 — Challenge Modes") + `.modesV2Title` (ClashDisplay 700, white, H1 spec)
+- `.modesV2Body`: `grid-template-columns: 60fr 40fr; gap: 0 48px` — left image fills height, right list centred vertically
+- `.modesVideoBtn`: `position: absolute; bottom: 20px; left: 0` inside image wrap, orange border colour
+- `.modeItemName`: `font-weight: 300; clamp(26px,3.2vw,44px); letter-spacing: -1.5px; color: #fff` (was 100 weight, dark, wrong scale)
+- `.modeItemNum`: ClashDisplay 700, 13px, orange, `opacity: 0.8`; mode numbers output as `0{idx+1}` (no `{ }` brackets)
+- `.modesV2Line`: `rgba(255,255,255,0.1)` (dark variant)
+
+**ROI Calculator** (`page.module.css` + `LaserSpyClient.tsx`)
+- Background: `var(--ls-dark-bg)` → `#ffffff`; `height: 100vh; display: flex; flex-direction: column`
+- `calcWrap` replaces `calcInner`: flex-column, `padding: 56px 36px 28px`, `max-width: 1440px`
+- `calcEyebrow` added: orange, GoogleSans 500, 4px tracking; text = "06 — ROI Calculator"
+- `calcTitle`: ClashDisplay 700, `#131313`, `clamp(28px,4vw,56px)`
+- `calcBody` replaces `calcGrid`: `grid-template-columns: 300px 1fr; gap: 0 48px`
+- `calcInputs`: `#f7f7f7` bg, `border-radius: 8px` — white-panel style; labels → `rgba(19,19,19,0.55)`; `calcVal` → `#131313`
+- `calcOutput` replaces `calcResults`; `calcKpis` replaces `calcMetrics`: `repeat(4,1fr); gap: 12px`; `calcKpi` = `#f4f4f4`; `calcKpiHero` = `#131313` with orange value
+- `calcChartArea` replaces `calcChartCard`: `#f7f7f7`, flex-fill, border-radius 8px
+- Chart colours: all `rgba(255,255,255,x)` → `rgba(19,19,19,x)`; tooltip `#fff` bg with dark text; fill area `rgba(240,80,35,0.06)`
+- Removed: bar chart canvas + `barChartInstance`, daily breakdown card (`calcDailyCard`, `calcDailyGrid`, `calcDailyItem`)
 
 ### Contact Page — Hero Redesign + Info Strip Refactor
 - **Hero source of truth:** Blog page hero — exact `50vh / min-height: 320px` dimensions, centered layout, eyebrow + H1 typography; white variant (no photo, no overlay)
