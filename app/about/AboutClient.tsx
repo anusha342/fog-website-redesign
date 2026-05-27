@@ -120,17 +120,18 @@ export default function AboutClient() {
         <div className={styles.heroOverlay} aria-hidden="true" />
 
         {/* Centered text content */}
-        {/* <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow} data-reveal>
+        <div className={styles.heroContent}>
+          {/* <p className={styles.heroEyebrow} data-reveal>
             01 — About FOG Technologies
-          </p>
+          </p> */}
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.1">
-            Engineering the Future of Fun.
+            About Us
           </h1>
-          <p className={styles.heroDesc} data-reveal data-reveal-delay="0.2">
+          {/* <p className={styles.heroDesc} data-reveal data-reveal-delay="0.2">
             Premium interactive entertainment for Family Entertainment Centers worldwide.
-          </p>
-        </div> */}
+          </p> */}
+        </div>
+        
 
         {/* Scroll cue */}
         <div className={styles.heroScrollIndicator} aria-hidden="true">
