@@ -170,7 +170,7 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
         {/* ── LEFT PANEL ── */}
         <div className={styles.left}>
           <div className={styles.leftInner}>
-            {/* <p className={styles.eyebrow}>Get In Touch</p> */}
+            <p className={styles.eyebrow}>Let's Connect</p>
             <h2 className={styles.headline}>Start Your Journey&nbsp;With FOG.</h2>
             <p className={styles.sub}>
               Whether you&rsquo;re planning a new venue or expanding an existing one &mdash; tell us your vision. We&rsquo;ll engineer it.
@@ -182,10 +182,10 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
         {/* ── RIGHT PANEL ── */}
         <div className={styles.right}>
           <div className={styles.formWrap}>
-            <div className={styles.formHeader}>
+            {/* <div className={styles.formHeader}>
               <h3 className={styles.formTitle}>Let&rsquo;s Connect</h3>
               <p className={styles.formDesc}>We review every submission personally. Expect a reply within 24&nbsp;hours.</p>
-            </div>
+            </div> */}
 
             <form className={styles.form} onSubmit={handleSubmit} noValidate>
 
@@ -319,12 +319,12 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
               </div>
 
               {/* Footer */}
-              <div className={styles.foot}>
-                <p className={styles.note}>
+              {/* <div className={styles.foot}> */}
+                {/* <p className={styles.note}>
                   By submitting you agree to our{' '}
                   <a href="#" className={styles.noteLink}>Privacy Policy</a>.
                   {' '}No spam, ever.
-                </p>
+                </p> */}
                 <button
                   type="submit"
                   className={btnClass}
@@ -335,7 +335,7 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
                     <path d="M3 9h12M9.5 4l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
-              </div>
+              {/* </div> */}
 
             </form>
           </div>

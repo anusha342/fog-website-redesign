@@ -4,7 +4,7 @@
 
 /* ── OUTER SECTION ── */
 .section {
-  background: #0d0d0d;
+  background: #ffffff;
   background-image:
     linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
@@ -60,13 +60,13 @@
   font-size: clamp(28px, 3vw, 48px);
   line-height: 0.95;
   text-transform: uppercase;
-  color: #fff;
+  color: #0d0d0d;
   margin-bottom: 24px;
 }
 .sub {
   font-size: 14px;
   font-weight: 300;
-  color: rgba(255,255,255,.42);
+  color: #0d0d0d;
   line-height: 1.75;
   max-width: 340px;
 }
@@ -79,7 +79,7 @@
 
 /* ── RIGHT PANEL ── */
 .right {
-  background: rgba(255,255,255,0.02);
+  background: #ffffff;
   display: flex;
   align-items: stretch;
 }
@@ -96,7 +96,7 @@
   font-weight: 700;
   font-size: clamp(22px, 2.2vw, 32px);
   text-transform: uppercase;
-  color: #fff;
+  color: #0d0d0d;
   line-height: 1.05;
   margin-bottom: 10px;
 }
@@ -116,12 +116,12 @@
 .input {
   width: 100%;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-bottom: 1px solid #0d0d0d;
   padding: 10px 0;
   font-size: 14px;
   line-height: 1.4;
   background: transparent;
-  color: rgba(255,255,255,.85);
+  color: #0d0d0d;
   font-family: 'GoogleSans', sans-serif;
   transition: border-color 250ms;
   display: block;
@@ -138,7 +138,7 @@
   padding: 10px 28px 10px 0;
   font-size: 14px;
   background: transparent;
-  color: rgba(255,255,255,.85);
+  color: #0d0d0d;
   font-family: 'GoogleSans', sans-serif;
   appearance: none;
   cursor: pointer;
@@ -162,7 +162,7 @@
   top: 22px;
   left: 0;
   font-size: 14px;
-  color: rgba(255,255,255,.28);
+  color: #0d0d0d;
   pointer-events: none;
   transition: all 210ms cubic-bezier(.4,0,.2,1);
   white-space: nowrap;
@@ -250,7 +250,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: var(--accent);
+  background: var(--dark);
   color: #fff;
   border: none;
   padding: 15px 32px;
