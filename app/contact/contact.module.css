@@ -1,159 +1,154 @@
 .contactPage {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #ffffff;
+  color: #0a0a0a;
   overflow-x: hidden;
 }
 
 /* ── HERO ── */
+/* White version of the blog hero — same dimensions, no photo, dark text */
 .hero {
   position: relative;
-  width: 100%;
-  min-height: 62vh;
+  width: 100vw;
+  height: 50vh;
+  min-height: 320px;
+  margin-top: 60px; /* navbar clearance */
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   overflow: hidden;
-  padding: 0 clamp(24px, 6vw, 96px);
-}
-
-.heroBg {
-  position: absolute;
-  inset: 0;
-  background: #0a0a0a;
-  z-index: 1;
-}
-
-.heroOverlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(240, 80, 35, 0.07) 0%, transparent 60%);
-  z-index: 2;
-}
-
-.heroGrid {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
 }
 
 .heroContent {
   position: relative;
-  z-index: 3;
-  max-width: 800px;
-  padding-top: 120px;
-  padding-bottom: 80px;
-}
-
-.heroEyebrow {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  color: var(--accent);
-  margin-bottom: 24px;
-}
-
-.heroTitle {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(44px, 6.5vw, 88px);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -1.5px;
-  color: #ffffff;
-  margin: 0 0 24px;
-}
-
-.heroDesc {
-  font-size: clamp(15px, 1.6vw, 19px);
-  font-weight: 300;
-  line-height: 1.65;
-  color: rgba(255,255,255,0.58);
-  max-width: 520px;
-  margin: 0 0 40px;
-}
-
-.heroMeta {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.heroStat {
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  align-items: center;
+  padding: 0 clamp(24px, 6vw, 96px);
+  max-width: 860px;
 }
 
-.heroStatNum {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1;
-  letter-spacing: -0.5px;
-}
-
-.heroStatLbl {
-  font-size: 11px;
-  font-weight: 600;
+/* Eyebrow — XS spec: GoogleSans 500, 4px tracking, orange (unchanged on white) */
+.heroEyebrow {
+  font-family: 'GoogleSans', sans-serif;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 500;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,0.4);
+  color: var(--accent, #F05023);
+  margin: 0 0 14px;
+  line-height: 1;
 }
 
-.heroStatSep {
-  width: 1px;
-  height: 36px;
-  background: rgba(255,255,255,0.12);
+/* H1 — design-CLAUDE.md §H1: ClashDisplay 700, dark on white */
+.heroTitle {
+  font-family: 'ClashDisplay', sans-serif;
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+/* Scroll indicator — dark variant for white bg */
+.heroScrollIndicator {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+.heroScrollLine {
+  width: 2px;
+  height: 52px;
+  background: rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+  border-radius: 1px;
+}
+.heroScrollDot {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  width: 2px;
+  height: 9px;
+  background: var(--accent, #F05023);
+  border-radius: 1px;
+  animation: contactScrollDot 1.6s ease-in-out infinite;
+}
+@keyframes contactScrollDot {
+  0%   { top: -9px; opacity: 1;   }
+  80%  {            opacity: 0.6; }
+  100% { top: 52px; opacity: 0;   }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroScrollDot { animation: none; top: 22px; opacity: 0.5; }
 }
 
 /* ── INFO STRIP ── */
 .infoStrip {
-  background: #111;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 0 clamp(24px, 6vw, 96px);
+  background: #ffffff;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  width: 100vw;
+  height: 455.5px;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .infoInner {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
-  display: flex;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
 }
 
+/* Email — left-aligned */
 .infoCard {
-  flex: 1;
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 28px 0;
   text-decoration: none;
   transition: opacity 0.2s;
+  justify-content: flex-start;
 }
-.infoCard:hover { opacity: 0.75; }
+.infoCard:hover { opacity: 0.7; }
+
+/* Address — centred */
+.infoCardCenter {
+  justify-content: center;
+}
+
+/* Phone — right-aligned */
+.infoCardRight {
+  justify-content: flex-end;
+}
 
 .infoCardPlain { cursor: default; }
 .infoCardPlain:hover { opacity: 1; }
 
 .infoDivider {
   width: 1px;
-  background: rgba(255,255,255,0.07);
-  margin: 20px 40px;
+  height: 52px;
+  background: rgba(0,0,0,0.08);
   flex-shrink: 0;
 }
 
 .infoIcon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: rgba(240, 80, 35, 0.1);
-  border: 1px solid rgba(240, 80, 35, 0.2);
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: rgba(240, 80, 35, 0.08);
+  border: 1px solid rgba(240, 80, 35, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,17 +163,19 @@
 }
 
 .infoLabel {
+  font-family: 'GoogleSans', sans-serif;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255,255,255,0.38);
+  color: rgba(0,0,0,0.42);
 }
 
 .infoVal {
+  font-family: 'GoogleSans', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #ffffff;
+  color: #0a0a0a;
 }
 
 /* ── GET IN TOUCH SECTION ── */

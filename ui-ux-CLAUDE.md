@@ -137,6 +137,20 @@ Work is done **section by section, page by page** in this order:
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
 
+### Contact Page — Hero Redesign + Info Strip Refactor
+- **Hero source of truth:** Blog page hero — exact `50vh / min-height: 320px` dimensions, centered layout, eyebrow + H1 typography; white variant (no photo, no overlay)
+- **`.hero`:** `width: 100vw; height: 50vh; min-height: 320px; margin-top: 60px` (navbar clearance); `background: #ffffff`; `justify-content: center; align-items: center; text-align: center` — replaces old `62vh` left-aligned dark hero
+- **Removed from hero:** `heroBg`, `heroOverlay`, `heroGrid` divs, all stats (`heroMeta`, `heroStat`, `heroStatNum`, `heroStatLbl`, `heroStatSep`), `heroDesc` — section is now purely titular
+- **`.heroEyebrow`:** GoogleSans 500, `clamp(10px,1vw,13px)`, 4px tracking, uppercase, `var(--accent)` orange, `margin-bottom: 14px` — XS eyebrow spec; text = "Get In Touch"
+- **`.heroTitle`:** ClashDisplay 700, `clamp(28px,4vw,56px)`, uppercase, `letter-spacing: -0.5px`, `line-height: 1.05`, `#0a0a0a` — dark text on white bg per design-CLAUDE.md colour roles; text = "Contact Us"
+- **Scroll indicator:** Same 52px dark-variant spec as Blog hero — `rgba(0,0,0,0.12)` track + orange dot; `@keyframes contactScrollDot`; `prefers-reduced-motion` guard
+- **Info strip — background:** `#111` → `#ffffff`; borders `rgba(255,255,255,0.06)` → `rgba(0,0,0,0.08)`; `width: 100vw; padding: 0`
+- **Info strip — layout:** `display: flex` → `display: grid; grid-template-columns: 1fr auto 1fr auto 1fr` — email left-aligned in col 1, address centred in col 3, phone right-aligned in col 5; dividers in cols 2 & 4
+- **Response Time → Address:** Clock card replaced with map-pin SVG; label "Address"; value "Mumbai, Maharashtra, India"; `infoCardCenter` class centres it within its grid cell
+- **Info strip — text colours:** `infoLabel` `rgba(255,255,255,0.38)` → `rgba(0,0,0,0.42)`; `infoVal` `#ffffff` → `#0a0a0a`; `infoDivider` `rgba(255,255,255,0.07)` → `rgba(0,0,0,0.08)` (static `height: 52px`, no longer `margin`-based)
+- **Icon bg:** `rgba(240,80,35,0.1)` → `rgba(240,80,35,0.08)`; border `rgba(240,80,35,0.2)` → `rgba(240,80,35,0.18)` — lighter on white
+- **`.contactPage` bg:** `#0a0a0a` → `#ffffff` — whole page is now light, ContactForm dark section provides visual break
+
 ### Blog Listing Page — Hero Section Added
 - **Source of truth:** About page hero — exact layout, height, and CSS spec; only copy belongs to Blog
 - **`blogHero`:** `position: relative; width: 100vw; height: 50vh; min-height: 320px; margin-top: 60px` (navbar clearance moved from blogSection to hero); `display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden`
