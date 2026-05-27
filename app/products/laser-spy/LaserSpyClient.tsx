@@ -87,16 +87,20 @@ function useNavTheme() {
 
 const MODES = [
   {
-    name: 'Solo Challenge',
-    img: '/images/laser-spy/laser-spy-1.jpg',
+    name: 'Laser Wars',
+    img: '/images/laser-spy/themes/laser-war.png',
   },
   {
-    name: 'Team Relay',
-    img: '/images/laser-spy/laser-spy-1.jpg',
+    name: 'Laser Ship',
+    img: '/images/laser-spy/themes/laser-ship.png',
   },
   {
-    name: 'Elite Time Trial',
-    img: '/images/laser-spy/laser-spy-1.jpg',
+    name: 'Laser Lab',
+    img: '/images/laser-spy/themes/laser-lab.png',
+  },
+  {
+    name: 'Laser Spy',
+    img: '/images/laser-spy/themes/laser-spy.png',
   }
 ];
 
@@ -300,12 +304,12 @@ export default function LaserSpyClient({ testimonials }: Props) {
         </div>
       </section>
 
-      {/* 3. CHALLENGE MODES */}
+      {/* 3. THEMES MODES */}
       <section id="challenge-modes" className={styles.modesV2Section} data-nav-theme="dark">
         <div className={styles.modesV2Wrap}>
           <div className={styles.modesV2Header}>
-            <span className={styles.modesEyebrow}>03 — Challenge Modes</span>
-            <h2 className={styles.modesV2Title}>Challenge Modes</h2>
+            {/* <span className={styles.modesEyebrow}>03 — Challenge Modes</span> */}
+            <h2 className={styles.modesV2Title}>Themes</h2>
           </div>
 
           <div className={styles.modesV2Body}>
@@ -423,7 +427,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
       </section> */}
 
       {/* 4. HOW IT WORKS */}
-      <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
+      {/* <section id="how-it-works" className={styles.processSection} data-nav-theme="dark">
         <div className={styles.processInner}>
           <div className={styles.processHeader} data-reveal>
             <h2 className={styles.processTitle}>Stealth. Precision. Escape.</h2>
@@ -457,7 +461,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 5. ROI CALCULATOR */}
       <section id="roi-calculator" className={styles.calcSection} data-nav-theme="light">
@@ -554,7 +558,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
       </section>
 
       {/* 6. ROOM DESIGN */}
-      <section id="specs-design" className={styles.speModelSection} data-nav-theme="dark">
+      {/* <section id="specs-design" className={styles.speModelSection} data-nav-theme="dark">
         <div className={styles.speModelInner}>
           <h2 className={styles.speModelTitle} data-reveal>Room Design</h2>
           <p className={styles.speModelBody} data-reveal data-reveal-delay="0.1">
@@ -572,10 +576,10 @@ export default function LaserSpyClient({ testimonials }: Props) {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 6b. SPECS SECTION */}
-      <section className={styles.speDataSection} data-nav-theme="dark">
+      {/* <section className={styles.speDataSection} data-nav-theme="dark">
         <div className={styles.speDataInner}>
           
           <div className={styles.speDimsCard} data-reveal>
@@ -609,7 +613,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
           </div>
 
         </div>
-      </section>
+      </section> */}
 
       {/* 7. TESTIMONIALS */}
       <TestimonialsCarousel testimonials={testimonials} />
