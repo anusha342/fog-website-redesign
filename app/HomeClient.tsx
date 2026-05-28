@@ -646,7 +646,7 @@ export default function HomeClient({
           function startRotation() {
             const currentX = chart.get('rotationX') || 0;
             if (rotAnim) rotAnim.stop();
-            rotAnim = chart.animate({ key: 'rotationX', from: currentX, to: currentX + 360, duration: 30000, loops: Infinity });
+            rotAnim = chart.animate({ key: 'rotationX', from: currentX, to: currentX + 360, duration: 8000, loops: Infinity });
           }
           startRotation();
 
