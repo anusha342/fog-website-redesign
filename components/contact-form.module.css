@@ -236,7 +236,7 @@
   padding: 10px 16px;
   font-size: var(--fs-body-p4);
   color: #0a0a0a;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: background 120ms;
 }
 .countryList li:hover { background: #f4f4f4; }
@@ -264,7 +264,8 @@
   background: #0a0a0a;
   color: #ffffff;
   border: 1.5px solid #0a0a0a;
-  padding: 17px 32px;
+  padding: 0px 20px;
+  height: 44px;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: var(--fs-body-p4);

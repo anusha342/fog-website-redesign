@@ -23,7 +23,7 @@
   color: var(--text-primary);
   text-transform: uppercase;
   line-height: 1;
-  margin-bottom: var(--sp-48);
+  margin-bottom: 30px;
 }
 
 /* Controls row: prev arrow + grid + next arrow */
@@ -50,11 +50,12 @@
 }
 
 .testPersonImg {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: cover;
   object-position: center top;
   display: block;
+  margin: 65px auto;
   filter: grayscale(1) contrast(1.05);
   transition: opacity 0.2s ease;
 }
@@ -69,7 +70,7 @@
   line-height: 1;
   color: var(--accent);
   font-family: var(--font-display);
-  margin-bottom: var(--sp-16);
+  /* margin-bottom: var(--sp-16); */
 }
 
 .testQuote {
