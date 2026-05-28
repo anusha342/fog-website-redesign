@@ -93,8 +93,8 @@ export default function TestimonialsCarousel({
               <Image
                 src={t.avatar || '/images/operators/person-1.jpg'}
                 alt={t.name}
-                width={480}
-                height={640}
+                width={240}
+                height={480}
                 className={styles.testPersonImg}
                 style={{ objectFit: 'cover', objectPosition: 'center top' }}
               />
