@@ -105,6 +105,9 @@ export default function TestimonialsCarousel({
                 <blockquote className={styles.testQuote}>{t.body}</blockquote>
                 <div className={styles.testDivider} aria-hidden="true" />
                 <p className={styles.testName}>{t.name}</p>
+                <span className={styles.testRole}>
+                  {[t.designation, t.company].filter(Boolean).join(', ')}
+                </span>
                 <div className={styles.testMetaWrap}>
                   {t.logo && (
                     <Image
@@ -117,9 +120,6 @@ export default function TestimonialsCarousel({
                     />
                   )}
                 </div>
-                <span className={styles.testRole}>
-                  {[t.designation, t.company].filter(Boolean).join(', ')}
-                </span>
               </div>
             </div>
           </div>

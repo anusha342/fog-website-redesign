@@ -25,16 +25,16 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #0a0a0a;
   text-decoration: none;
+  height: 44px;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 100px;
-  padding: 10px 22px;
+  padding: 0px 20px;
   transition: border-color 200ms ease, color 200ms ease;
 }
 .backBtn:hover {
@@ -57,48 +57,45 @@
 }
 
 .metaCategory {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #0a0a0a;
   background: rgba(0, 0, 0, 0.07);
-  border-radius: 4px;
   padding: 5px 12px;
   line-height: 1;
 }
 
 .metaDate {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
   padding: 4px 12px;
   line-height: 1;
 }
 
 .metaReadTime {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--accent, #F05023);
   background: rgba(240, 80, 35, 0.08);
-  border-radius: 4px;
   padding: 5px 12px;
   line-height: 1;
 }
 
 .postTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4.5vw, 52px);
+  font-size: var(--fs-heading-1);
   line-height: 1.05;
   letter-spacing: -0.5px;
   text-transform: uppercase;
@@ -107,8 +104,8 @@
 }
 
 .postExcerpt {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(15px, 1.5vw, 18px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p1);
   font-weight: 300;
   line-height: 1.65;
   color: rgba(0, 0, 0, 0.52);
@@ -121,7 +118,6 @@
   aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
   margin-bottom: 60px;
   background: #e8e8e8;
 }
@@ -148,8 +144,8 @@
 
 /* Panel section label */
 .panelLabel {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -168,7 +164,6 @@
   width: 3px;
   height: 100px;
   background: rgba(0, 0, 0, 0.08);
-  border-radius: 100px;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -180,7 +175,6 @@
   left: 0;
   width: 100%;
   background: var(--accent, #F05023);
-  border-radius: 100px;
   transition: height 80ms linear;
   min-height: 0;
 }
@@ -193,16 +187,16 @@
 }
 
 .progressPercent {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: 22px;
+  font-size: var(--fs-heading-4);
   line-height: 1;
   color: #0a0a0a;
 }
 
 .progressHint {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -220,8 +214,8 @@
 }
 
 .tocLink {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.48);
   text-decoration: none;
@@ -235,7 +229,7 @@
   color: #0a0a0a;
 }
 .tocLinkSub {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   padding-left: 26px;
   color: rgba(0, 0, 0, 0.38);
 }
@@ -256,7 +250,6 @@
 .shareBtn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
   background: rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
@@ -273,18 +266,20 @@
 
 /* ── CTA pill ── */
 .tocCta {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff;
   background: #0a0a0a;
-  border-radius: 100px;
-  padding: 13px 20px;
+  padding: 0px 20px;
+  height: 44px;
   text-decoration: none;
   text-align: center;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: background 200ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .tocCta:hover {
@@ -300,28 +295,28 @@
 }
 
 .postBody {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(15px, 1.5vw, 17px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
   line-height: 1.78;
   color: #2a2a2a;
 }
 
 .postBody :global(h2) {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(20px, 2.5vw, 28px);
+  font-size: var(--fs-heading-3);
   color: #0a0a0a;
   text-transform: uppercase;
   letter-spacing: -0.3px;
-  margin: 52px 0 16px;
+  margin: 0px 0 16px;
   line-height: 1.15;
-  padding-top: 8px;
+  padding-top: 0px;
 }
 
 .postBody :global(h3) {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(17px, 2vw, 22px);
+  font-size: var(--fs-heading-4);
   color: #0a0a0a;
   text-transform: uppercase;
   letter-spacing: -0.2px;
@@ -368,7 +363,6 @@
   height: auto;
   display: block;
   margin: 8px 0 28px;
-  border-radius: 8px;
 }
 
 .postBody :global(blockquote) {
@@ -378,7 +372,6 @@
   background: rgba(240, 80, 35, 0.04);
   font-style: italic;
   color: rgba(0, 0, 0, 0.6);
-  border-radius: 0 8px 8px 0;
 }
 
 .postBody :global(code) {
@@ -386,7 +379,6 @@
   padding: 2px 7px;
   font-size: 0.9em;
   font-family: monospace;
-  border-radius: 4px;
 }
 
 /* ── End CTA ── */
@@ -401,8 +393,8 @@
 }
 
 .ctaLabel {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 15px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
   color: rgba(0, 0, 0, 0.5);
   flex: 1;
   min-width: 200px;
@@ -415,13 +407,12 @@
   background: #0a0a0a;
   color: #ffffff;
   padding: 14px 32px;
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-decoration: none;
-  border-radius: 100px;
   white-space: nowrap;
   transition: background 220ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -440,9 +431,9 @@
 }
 
 .morePostsTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(20px, 2.5vw, 32px);
+  font-size: var(--fs-heading-2);
   text-transform: uppercase;
   letter-spacing: -0.5px;
   color: #0a0a0a;
@@ -460,7 +451,6 @@
   text-decoration: none;
   color: inherit;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
   overflow: hidden;
   transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 300ms ease;
@@ -489,8 +479,8 @@
 }
 
 .morePostCategory {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -500,10 +490,10 @@
 }
 
 .morePostTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(14px, 1.5vw, 18px);
-  text-transform: uppercase;
+  font-size: var(--fs-body-p2);
+  text-transform: sentence-case;
   letter-spacing: -0.3px;
   color: #0a0a0a;
   line-height: 1.25;
@@ -511,8 +501,8 @@
 }
 
 .morePostReadMore {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -545,7 +535,6 @@
     align-items: flex-start;
     gap: 24px;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
     padding: 24px;
     margin-bottom: 48px;
     background: #fafafa;
@@ -565,7 +554,7 @@
 @media (max-width: 600px) {
   .postPage { padding: 40px 0 72px; }
 
-  .postCover { border-radius: 10px; margin-bottom: 40px; }
+  .postCover { margin-bottom: 40px; }
 
   .morePostsGrid { grid-template-columns: 1fr; }
 

@@ -15,7 +15,7 @@
 .hypergridPage {
   background: var(--hg-dark-bg);
   color: var(--white);
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   overflow-x: hidden;
 }
 
@@ -119,8 +119,8 @@
 }
 
 .heroEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1.1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -129,9 +129,9 @@
 }
 
 .heroTitle {
-  font-family: 'Expansiva', sans-serif;
+  font-family: var(--font-deco);
   font-weight: 700;
-  font-size: clamp(48px, 9vw, 110px);
+  font-size: var(--fs-hero);
   line-height: 0.92;
   text-transform: uppercase;
   color: var(--white);
@@ -141,8 +141,8 @@
 }
 
 .heroSub {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p2);
   font-weight: 300;
   color: rgba(255,255,255,0.55);
   letter-spacing: 0.5px;
@@ -269,9 +269,9 @@
 
 /* ── SECTION SETUP ── */
 .sectionTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(32px, 4.5vw, 56px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   line-height: 1.05;
   margin-bottom: var(--sp-48);
@@ -280,19 +280,18 @@
 /* ── WHAT IS HYPERGRID ── */
 .whatSection {
   background: var(--hg-dark-bg);
-  padding: 100px var(--sp-80) 100px;
-  width: 100%;
 }
 
 .whatInner {
   max-width: 1440px;
   margin: 0 auto;
+  padding: 80px 0px;
 }
 
 .whatHeading {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: var(--white);
   letter-spacing: -0.5px;
@@ -352,8 +351,8 @@
     0 0 24px rgba(240, 80, 35, 0.55),
     inset 0 0 12px rgba(240, 80, 35, 0.08);
   padding: 8px 40px;
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(13px, 1.4vw, 18px);
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p2);
   font-weight: 700;
   letter-spacing: 6px;
   color: var(--white);
@@ -415,8 +414,8 @@
 
 /* Caption below polaroid on dark bg */
 .whatCardCaption {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(12px, 1.1vw, 15px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
   font-weight: 700;
   text-transform: uppercase;
   color: var(--white);
@@ -445,7 +444,6 @@
 .modesV2Section {
   background: #FFFFFF;
   height: 100vh;
-  padding: 80px 36px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -456,6 +454,7 @@
   flex: 1;
   max-width: 1440px;
   width: 100%;
+  padding: 80px 0px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -471,8 +470,8 @@
 /* Section eyebrow */
 .modesEyebrow {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 12px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -483,9 +482,9 @@
 
 /* Section heading — matches whatHeading exactly */
 .modesV2Title {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: var(--dark);
   letter-spacing: -0.5px;
@@ -502,15 +501,16 @@
   min-height: 0;
 }
 
-/* Left: image fills full body height */
+/* Left: image + button stacked */
 .modesV2Left {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
 .modesV2ImgWrap {
-  width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   overflow: hidden;
   position: relative;
 }
@@ -523,37 +523,30 @@
   transition: opacity 300ms ease;
 }
 
-/* Video button overlaid bottom-left on image */
+/* Video button below image */
 .modesVideoBtn {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  z-index: 2;
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
-  padding: 10px 20px;
-  background: rgba(9, 9, 9, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--hg-neon-orange);
-  border: 1.5px solid var(--hg-neon-orange);
+  padding: 0px 20px;
+  height: 44px;
+  width: 100%;
+  margin-top: 24px;
+  background: var(--accent);
+  color: var(--white);
+  border: 1.5px solid var(--accent);
   cursor: pointer;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: sentence;
   letter-spacing: 2px;
-  transition:
-    background 200ms ease,
-    color 200ms ease,
-    transform 240ms cubic-bezier(.34, 1.56, .64, 1);
+  transition: background 150ms cubic-bezier(.4, 0, .2, 1);
 }
 
 .modesVideoBtn:hover {
-  background: var(--hg-neon-orange);
-  color: var(--white);
-  transform: translateY(-2px);
+  background: #c93d18;
 }
 
 /* Right: mode list, top-aligned */
@@ -586,12 +579,12 @@
 }
 
 .modeItemName {
-  font-family: 'ClashDisplay', sans-serif;
-  font-weight: 300;
-  font-size: clamp(26px, 3.2vw, 34px);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-heading-3);
   line-height: 0.95;
   color: #131313;
-  text-transform: uppercase;
+  text-transform: sentence;
   letter-spacing: 0.1px;
   word-spacing: 2px;
   margin: 0;
@@ -599,8 +592,8 @@
 }
 
 .modeItemNum {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   color: var(--hg-neon-orange);
   flex-shrink: 0;
@@ -619,7 +612,7 @@
 @media (max-width: 1199px) {
   .modesV2Section { padding: 72px 32px; }
   .modesV2Body { gap: 0 32px; }
-  .modeItemName { font-size: clamp(22px, 2.8vw, 38px); }
+  .modeItemName { font-size: var(--fs-heading-3); }
 }
 
 @media (max-width: 900px) {
@@ -636,30 +629,29 @@
   }
   .modesV2Left {
     height: auto;
-    position: static;
   }
   .modesV2ImgWrap {
+    flex: none;
     height: auto;
     aspect-ratio: 16/9;
   }
   .modesVideoBtn {
-    position: static;
     margin-top: 16px;
     backdrop-filter: none;
     background: transparent;
   }
   .modesV2Right { align-self: auto; }
-  .modeItemName { font-size: clamp(28px, 6vw, 44px); }
+  .modeItemName { font-size: var(--fs-heading-2); }
 }
 
 @media (max-width: 640px) {
   .modesV2ImgWrap { aspect-ratio: 4/3; }
   .modeItem { padding: 20px 0; }
   .modeItemName {
-    font-size: clamp(24px, 7vw, 36px);
+    font-size: var(--fs-heading-3);
     letter-spacing: -1px;
   }
-  .modeItemNum { font-size: 12px; }
+  .modeItemNum { font-size: var(--fs-body-p4); }
 }
 
 /* ── MOMENTS (BENTO GRID) SECTION ── */
@@ -671,7 +663,7 @@
 .momentsInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 80px var(--sp-80) 80px;
+  padding: 80px 0px;
 }
 
 .momentsTop {
@@ -683,8 +675,8 @@
 /* Eyebrow — consistent with other sections */
 .momentsEyebrow {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 12px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -695,9 +687,9 @@
 
 /* Title — matches modesV2Title exactly */
 .momentsTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: var(--dark);
   line-height: 1.05;
@@ -749,15 +741,14 @@
 .momentsStepDot {
   width: 9px;
   height: 9px;
-  border-radius: 50%;
   background: var(--hg-neon-orange);
   flex-shrink: 0;
   box-shadow: 0 0 8px rgba(240, 80, 35, 0.55);
 }
 
 .momentsStepText {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -820,9 +811,9 @@
 }
 
 .momentsCardH {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(15px, 1.4vw, 19px);
+  font-size: var(--fs-body-p2);
   text-transform: uppercase;
   color: var(--dark);
   margin: 0 0 10px;
@@ -836,8 +827,8 @@
 }
 
 .momentsCardEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2.5px;
@@ -854,15 +845,14 @@
 .momentsAvatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
   background: var(--accent);
   border: 2px solid var(--surface);
   margin-right: -10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   color: var(--white);
   flex-shrink: 0;
@@ -880,8 +870,8 @@
 }
 
 .momentsChecklistTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -894,8 +884,8 @@
   align-items: center;
   gap: 10px;
   padding: 7px 0;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: var(--gray);
   border-bottom: 1px solid rgba(19, 19, 19, 0.05);
 }
@@ -913,7 +903,6 @@
 .momentsCheckIcon {
   width: 18px;
   height: 18px;
-  border-radius: 50%;
   background: var(--accent);
   display: flex;
   align-items: center;
@@ -929,7 +918,6 @@
 .momentsIconCircle {
   width: 76px;
   height: 76px;
-  border-radius: 50%;
   background: var(--accent);
   display: flex;
   align-items: center;
@@ -959,8 +947,8 @@
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 5px 12px;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -970,8 +958,8 @@
 
 .momentsMadeIn {
   padding: 12px 28px 20px;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   color: rgba(255, 255, 255, 0.25);
   text-transform: uppercase;
@@ -1011,14 +999,17 @@
 
 /* ── HOW IT WORKS / PROCESS STEPS SECTION ── */
 .processSection {
-  width: 100%;
   background: #ffffff;
   overflow: hidden;
+  padding: 80px 0;
+  margin: 0 auto;
 }
 
-/* Header strip */
+/* Header strip — sits above the image */
 .processHeaderWrap {
-  width: 100%;
+  /* width: 100%; */
+  max-width: 1440px;
+  margin: 0 auto;
   background: #ffffff;
   border-bottom: 1px solid rgba(0,0,0,0.08);
 }
@@ -1026,7 +1017,7 @@
 .processHeaderInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: clamp(48px, 6vh, 80px) clamp(20px, 4vw, 72px) clamp(32px, 4vh, 52px);
+  padding: 0 0 40px;
 }
 
 /* Canvas — constrained to content width, centered */
@@ -1034,7 +1025,7 @@
   position: relative;
   overflow: hidden;
   max-width: 1440px;
-  margin: 48px auto 0;
+  margin: 0 auto;
   aspect-ratio: 16 / 7;
 }
 
@@ -1054,8 +1045,8 @@
 /* ── Header typography ── */
 .processEyebrow {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -1064,9 +1055,9 @@
 }
 
 .processTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(26px, 3.6vw, 52px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: #0a0a0a;
   letter-spacing: -0.5px;
@@ -1075,8 +1066,8 @@
 }
 
 .processSub {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 300;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -1088,7 +1079,8 @@
 .processFooter {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 40px clamp(20px, 4vw, 72px) 64px;
+  padding: 0px 0px;
+  margin-top: 32px;
   display: flex;
   justify-content: center;
 }
@@ -1098,13 +1090,14 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 26px;
+  padding: 0px 20px;
   background: transparent;
   border: 1px solid rgba(0,0,0,0.22);
   color: rgba(0,0,0,0.8);
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
+  height: 44px;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
@@ -1171,8 +1164,8 @@
 
 .boxStep {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -1181,8 +1174,8 @@
 }
 
 .boxTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(13px, 1.5vw, 18px);
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p2);
   font-weight: 700;
   text-transform: uppercase;
   color: #fff;
@@ -1192,8 +1185,8 @@
 }
 
 .boxDesc {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 0.9vw, 12px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.4px;
@@ -1259,15 +1252,16 @@
 
 /* ── Responsive ── */
 @media (max-width: 1023px) {
-  .processHeaderInner { padding: 48px 32px 36px; }
+  .processHeaderInner { padding: 0 32px 32px; }
   .processCanvas { aspect-ratio: 16 / 7; }
   .processInner { display: none; }
 }
 
 @media (max-width: 767px) {
-  .processHeaderInner { padding: 40px 20px 28px; }
+  .processSection { padding: 56px 0; }
+  .processHeaderInner { padding: 0 20px 24px; }
   .processCanvas { aspect-ratio: 16 / 9; }
-  .processFooter { padding: 32px 20px 48px; }
+  .processFooter { padding: 32px 20px 0; }
 }
 
 /* ── SPECS MODEL SECTION ── */
@@ -1280,13 +1274,13 @@
 .speModelInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 72px var(--sp-80) 0;
+  padding: 80px 0;
 }
 
 .speModelTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: var(--white);
   margin-bottom: 48px;
@@ -1320,7 +1314,7 @@
 .speDataInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 72px var(--sp-80);
+  padding: 80px 0px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
@@ -1337,8 +1331,8 @@
 }
 
 .speAreaTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(20px, 2.5vw, 30px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-3);
   font-weight: 700;
   text-transform: uppercase;
   color: var(--white);
@@ -1369,7 +1363,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   padding: 14px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
-  font-size: clamp(12px, 1.2vw, 15px);
+  font-size: var(--fs-body-p4);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.7);
@@ -1402,7 +1396,7 @@
 }
 
 .speInfoTitle {
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   color: rgba(255, 255, 255, 0.85);
   text-transform: uppercase;
@@ -1410,7 +1404,7 @@
 }
 
 .speInfoText {
-  font-size: 15px;
+  font-size: var(--fs-body-p3);
   color: rgba(255, 255, 255, 0.55);
   line-height: 1.5;
   margin: 0;
@@ -1452,7 +1446,7 @@
 
 .calcSection {
   background: #fff;
-  width: 100%;
+  /* width: 100%; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -1465,16 +1459,15 @@
   flex-direction: column;
   min-height: 0;
   max-width: 1440px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 56px 36px 28px;
+  margin: 0 240px;
+  padding: 80px 0px;
   box-sizing: border-box;
 }
 
 .calcEyebrow {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1.1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -1488,9 +1481,9 @@
 }
 
 .calcTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 4vw, 56px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: #131313;
   letter-spacing: -0.5px;
@@ -1514,7 +1507,6 @@
   flex-direction: column;
   background: #f7f7f7;
   border: 1px solid rgba(19,19,19,0.07);
-  border-radius: 8px;
   padding: 24px;
   overflow-y: auto;
   gap: 0;
@@ -1543,8 +1535,8 @@
 
 .calcFieldRow label,
 .calcSelectLabel {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: rgba(19,19,19,0.55);
   display: block;
   margin-bottom: 8px;
@@ -1555,8 +1547,8 @@
 }
 
 .calcVal {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   color: var(--hg-neon-orange);
 }
@@ -1572,8 +1564,8 @@
 .calcRangeLabels {
   display: flex;
   justify-content: space-between;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: rgba(19,19,19,0.3);
   margin-top: 5px;
 }
@@ -1583,10 +1575,9 @@
   padding: 10px 14px;
   background: #fff;
   border: 1px solid rgba(19,19,19,0.15);
-  border-radius: 4px;
   color: #131313;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
@@ -1616,7 +1607,6 @@
 
 .calcKpi {
   background: #f4f4f4;
-  border-radius: 6px;
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
@@ -1628,10 +1618,10 @@
 }
 
 .calcKpiLabel {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
-  text-transform: uppercase;
+  text-transform: sentence-case;
   letter-spacing: 1.5px;
   color: rgba(19,19,19,0.45);
   display: block;
@@ -1642,8 +1632,8 @@
 }
 
 .calcKpiVal {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(20px, 2vw, 30px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-3);
   font-weight: 700;
   color: #131313;
   line-height: 1;
@@ -1666,7 +1656,6 @@
   min-height: 0;
   background: #f7f7f7;
   border: 1px solid rgba(19,19,19,0.07);
-  border-radius: 8px;
   padding: 20px 24px;
 }
 
@@ -1679,17 +1668,17 @@
 }
 
 .calcChartLabel {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: sentence-case;
   letter-spacing: 0.5px;
   color: rgba(19,19,19,0.65);
 }
 
 .calcChartNote {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: rgba(19,19,19,0.35);
 }
 
@@ -1710,8 +1699,8 @@
 }
 
 .calcDisclaimer {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: rgba(19,19,19,0.35);
   line-height: 1.5;
   margin: 0;
@@ -1845,10 +1834,10 @@
 }
 
 .testQuoteMark {
-  font-size: 80px;
+  font-size: var(--fs-heading-1);
   line-height: 1;
   color: var(--accent);
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   margin-bottom: var(--sp-16);
 }
 
@@ -1872,16 +1861,16 @@
 }
 
 .testQuote {
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(24px, 2.8vw, 36px);
+  font-size: var(--fs-heading-2);
   text-transform: uppercase;
   color: #131313;
   line-height: 1.2;
 }
 
 .testSub {
-  font-size: 16px;
+  font-size: var(--fs-body-p3);
   font-weight: 300;
   color: var(--gray);
   max-width: 440px;
@@ -1897,7 +1886,7 @@
 }
 
 .testName {
-  font-size: 16px;
+  font-size: var(--fs-body-p3);
   font-weight: 600;
   color: #131313;
 }
@@ -1921,7 +1910,7 @@
 }
 
 .testRole {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 300;
   color: var(--gray);
   margin-top: 0;
@@ -1956,15 +1945,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 32px;
-  height: 52px;
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 15px;
+  padding: 0 20px;
+  height: 44px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-decoration: none;
-  border-radius: 2px;
   transition:
     transform 240ms cubic-bezier(.34, 1.56, .64, 1),
     box-shadow 240ms ease,

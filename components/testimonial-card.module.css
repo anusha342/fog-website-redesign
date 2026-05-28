@@ -30,8 +30,8 @@
 
 /* Quote mark */
 .quoteMark {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 56px;
+  font-family: var(--font-display);
+  font-size: var(--fs-body-p2);
   line-height: 1;
   color: var(--accent, #F05023);
   margin-bottom: -10px;
@@ -40,8 +40,8 @@
 
 /* Body */
 .body {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(14px, 1.4vw, 16px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
   line-height: 1.7;
   color: #444;
   flex: 1;
@@ -63,7 +63,6 @@
 .avatar {
   width: 48px;
   height: 48px;
-  border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
   position: relative;
@@ -72,22 +71,22 @@
 .avatar img { object-fit: cover; object-position: center top; }
 .authorInfo { display: flex; flex-direction: column; gap: 2px; }
 .name {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 14px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   color: var(--dark, #131313);
 }
 .role {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   color: #888;
 }
 .product {
   display: inline-block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--accent, #F05023);

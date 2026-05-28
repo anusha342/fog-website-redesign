@@ -5,6 +5,35 @@ import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import styles from './about.module.css';
 
+/* ── LOAD SCRIPT HELPER ── */
+function loadScript(src: string): Promise<void> {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.async = true;
+    s.onload = () => res(); s.onerror = () => rej();
+    document.head.appendChild(s);
+  });
+}
+
+/* ── LENIS SMOOTH SCROLL ── */
+function useLenis() {
+  useEffect(() => {
+    let animId: number;
+    loadScript('https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js')
+      .then(() => {
+        const LenisClass = (window as any).Lenis;
+        if (!LenisClass) return;
+        const lenis = new LenisClass({ lerp: 0.075, smoothWheel: true });
+        function raf(time: number) { lenis.raf(time); animId = requestAnimationFrame(raf); }
+        animId = requestAnimationFrame(raf);
+        (window as any).__fogLenis = lenis;
+      })
+      .catch(() => {});
+    return () => { cancelAnimationFrame(animId); };
+  }, []);
+}
+
 /* ── SCROLL REVEAL ── */
 function useScrollReveal() {
   useEffect(() => {
@@ -98,6 +127,7 @@ const TEAM = [
 ];
 
 export default function AboutClient() {
+  useLenis();
   useScrollReveal();
 
   return (
@@ -150,7 +180,8 @@ export default function AboutClient() {
             <div>
               {/* <p className={styles.awardsEyebrow} data-reveal>02 — Awards &amp; Recognition</p> */}
               <h2 className={styles.awardsTitle} data-reveal data-reveal-delay="0.1">
-                Industry&apos;s Most<br />Recognised Platform
+                {/* Industry&apos;s Most<br />Recognised Platform */}
+                Our Achievements
               </h2>
             </div>
             <div className={styles.awardsStat} data-reveal data-reveal-delay="0.15">
@@ -176,9 +207,9 @@ export default function AboutClient() {
                   {isHoriz ? (
                     /* Horizontal layout: icon sits flush left, text fills right */
                     <>
-                      <div className={styles.awardIconWrap}>{a.icon}</div>
+                      {/* <div className={styles.awardIconWrap}>{a.icon}</div> */}
                       <div className={styles.awardMain}>
-                        <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span>
+                        {/* <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span> */}
                         <p className={styles.awardName}>{a.name}</p>
                         <p className={styles.awardOrg}>{a.org}</p>
                         <p className={styles.awardDesc}>{a.desc}</p>
@@ -187,8 +218,8 @@ export default function AboutClient() {
                   ) : (
                     /* Vertical layout (small + featured cards) */
                     <div className={styles.awardCardContent}>
-                      <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span>
-                      <div className={styles.awardIconWrap}>{a.icon}</div>
+                      {/* <span className={styles.awardIndex}>{String(i + 1).padStart(2, '0')}</span> */}
+                      {/* <div className={styles.awardIconWrap}>{a.icon}</div> */}
                       <p className={styles.awardName}>{a.name}</p>
                       <p className={styles.awardOrg}>{a.org}</p>
                       <p className={styles.awardDesc}>{a.desc}</p>

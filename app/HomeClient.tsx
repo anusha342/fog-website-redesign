@@ -929,13 +929,13 @@ export default function HomeClient({
               <br />delivers every player&rsquo;s best moment automatically.
             </p>
 
-            <div className={styles.mbTags} aria-hidden="true">
+            {/* <div className={styles.mbTags} aria-hidden="true">
               <span className={styles.mbTag}>Real-Time Capture</span>
               <span className={styles.mbTagDot}>&middot;</span>
               <span className={styles.mbTag}>AI Scoring</span>
               <span className={styles.mbTagDot}>&middot;</span>
               <span className={styles.mbTag}>Instant Delivery</span>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -981,7 +981,7 @@ export default function HomeClient({
           <div ref={globeRef} className={styles.chartdiv} aria-hidden="true" />
           <div className={styles.globeText}>
             <h2 className={styles.globeHeadline} data-reveal>
-              Empowering<br />Your Global<br />Reach
+              Our<br />Locations
             </h2>
             <p className={styles.globeSub} data-reveal data-reveal-delay="0.1">
               100+ active venues. 10+ countries. One platform that scales with your business.
