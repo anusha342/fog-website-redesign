@@ -52,8 +52,8 @@
 
 /* Eyebrow — matches universal section eyebrow spec in design-CLAUDE.md */
 .heroEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -64,8 +64,8 @@
 
 /* H1 — design-CLAUDE.md §H1 Section heading */
 .heroTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(28px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -76,8 +76,8 @@
 
 /* Body lead — design-CLAUDE.md §Body Lead */
 .heroDesc {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p1);
   font-weight: 300;
   line-height: 1.6;
   letter-spacing: 0.5px;
@@ -94,8 +94,8 @@
   transform: translateX(-50%);
   z-index: 4;
 }
-.scrollLine { width: 2px; height: 52px; background: rgba(255,255,255,.18); position: relative; overflow: hidden; border-radius: 1px; }
-.scrollDot  { position: absolute; top: -9px; left: 0; width: 2px; height: 9px; background: var(--accent); border-radius: 1px; animation: scrollDot 1.6s ease-in-out infinite; }
+.scrollLine { width: 2px; height: 52px; background: rgba(255,255,255,.18); position: relative; overflow: hidden; }
+.scrollDot  { position: absolute; top: -9px; left: 0; width: 2px; height: 9px; background: var(--accent); animation: scrollDot 1.6s ease-in-out infinite; }
 @keyframes scrollDot { 0% { top: -9px; opacity: 1; } 80% { opacity: 0.6; } 100% { top: 52px; opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .scrollDot { animation: none; top: 22px; opacity: 0.5; } }
 
@@ -119,8 +119,8 @@
   gap: 32px;
 }
 .awardsEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -129,8 +129,8 @@
   line-height: 1;
 }
 .awardsTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(28px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -142,8 +142,8 @@
 .awardsStat { text-align: right; flex-shrink: 0; }
 .awardsStatNum {
   display: block;
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(52px, 7vw, 88px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1;
   color: var(--accent);
@@ -151,8 +151,8 @@
 }
 .awardsStatLabel {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -227,10 +227,10 @@
 /* ── Year watermark — decorative, absolute positioned ── */
 .awardYearBg {
   position: absolute;
-  bottom: -16px;
+  bottom: -12px;
   right: 16px;
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: 110px;
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
   font-weight: 700;
   line-height: 1;
   color: rgba(0,0,0,0.028);
@@ -239,9 +239,9 @@
   letter-spacing: -4px;
   z-index: 0;
 }
-.awardCard:nth-child(1) .awardYearBg { font-size: 152px; bottom: -26px; }
+.awardCard:nth-child(1) .awardYearBg { font-size: 140px; bottom: -12px; }
 .awardCard:nth-child(4) .awardYearBg,
-.awardCard:nth-child(5) .awardYearBg { font-size: 86px; bottom: -10px; }
+.awardCard:nth-child(5) .awardYearBg { font-size: var(--fs-hero); bottom: -12px; }
 
 /* ── Card content wrapper — always above watermark ── */
 .awardCardContent {
@@ -255,8 +255,8 @@
 
 /* Index label e.g. "01" */
 .awardIndex {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -266,7 +266,6 @@
 /* Icon circle */
 .awardIconWrap {
   width: 44px; height: 44px;
-  border-radius: 10px;
   background: rgba(240,80,35,0.08);
   display: flex; align-items: center; justify-content: center;
   color: var(--accent);
@@ -274,31 +273,31 @@
   position: relative;
   z-index: 1;
 }
-.awardCard:nth-child(1) .awardIconWrap { width: 52px; height: 52px; border-radius: 13px; }
+.awardCard:nth-child(1) .awardIconWrap { width: 52px; height: 52px; }
 
 /* Award name */
 .awardName {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(13px, 1.15vw, 17px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-3);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.2px;
-  text-transform: uppercase;
+  text-transform: sentence;
   color: #0a0a0a;
   margin: 0;
   position: relative; z-index: 1;
 }
-.awardCard:nth-child(1) .awardName { font-size: clamp(16px, 1.5vw, 22px); }
+.awardCard:nth-child(1) .awardName { font-size: var(--fs-heading-3); }
 .awardCard:nth-child(4) .awardName,
-.awardCard:nth-child(5) .awardName { font-size: clamp(14px, 1.3vw, 19px); }
+.awardCard:nth-child(5) .awardName { font-size: var(--fs-heading-3); }
 
 /* Organisation */
 .awardOrg {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 1.5px;
-  text-transform: uppercase;
+  text-transform: sentence;
   color: rgba(0,0,0,0.36);
   margin: 0;
   position: relative; z-index: 1;
@@ -306,8 +305,8 @@
 
 /* Description */
 .awardDesc {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   line-height: 1.65;
   color: rgba(0,0,0,0.52);
@@ -361,8 +360,8 @@
 /* Left-aligned header */
 .drivesHeader { text-align: left; margin-bottom: 52px; }
 .drivesEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -372,8 +371,8 @@
 }
 /* H2 — design-CLAUDE.md §H1 spec (dominant section heading) */
 .drivesTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(28px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -412,8 +411,8 @@
 
 /* Sequential index label */
 .driveCardIndex {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -424,7 +423,6 @@
 /* Icon — rounded-rect to match site icon language */
 .driveIconWrap {
   width: 48px; height: 48px;
-  border-radius: 12px;
   background: rgba(240,80,35,0.08);
   display: flex; align-items: center; justify-content: center;
   color: var(--accent);
@@ -434,8 +432,8 @@
 
 /* H3 — design-CLAUDE.md §H3 Card/component heading */
 .driveCardTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(13px, 1.5vw, 19px);
+  font-family: var(--font-body);
+  font-size: var(--fs-heading-4);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: 0.2px;
@@ -446,8 +444,8 @@
 
 /* Body — design-CLAUDE.md §Body standard */
 .driveCardBody {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   line-height: 1.65;
   color: rgba(0,0,0,0.55);
@@ -467,8 +465,8 @@
 /* Section header — left-aligned */
 .tlHeader { margin-bottom: 72px; }
 .tlEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -477,8 +475,8 @@
   line-height: 1;
 }
 .timelineTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(28px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -501,8 +499,8 @@
   overflow: hidden;   /* needed when column collapses to 0 on mobile */
 }
 .tlBlurb {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(14px, 1.6vw, 18px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p1);
   font-weight: 300;
   line-height: 1.65;
   letter-spacing: 0.3px;
@@ -536,7 +534,6 @@
 /* The dot */
 .tlDot {
   width: 10px; height: 10px;
-  border-radius: 50%;
   background: var(--accent);
   position: relative; z-index: 1;
   margin-top: 10px;
@@ -559,8 +556,8 @@
 /* Year — XS SM badge per design-CLAUDE.md */
 .tlYear {
   display: block;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -569,8 +566,8 @@
 }
 /* Node heading — H2 spec (clamp 20–30px) per design-CLAUDE.md */
 .tlNodeTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(20px, 2.5vw, 30px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-2);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.3px;
@@ -580,8 +577,8 @@
 }
 /* Body standard */
 .tlNodeDesc {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   line-height: 1.65;
   color: rgba(0,0,0,0.52);
@@ -612,8 +609,8 @@
 .teamInner  { max-width: 1440px; margin: 0 auto; }
 .teamHeader { text-align: left; margin-bottom: 64px; }
 .teamTitle {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: clamp(34px, 4.5vw, 58px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -624,20 +621,19 @@
 .teamCard  { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .teamAvatar {
   width: 96px; height: 96px;
-  border-radius: 50%;
   background: linear-gradient(135deg, var(--accent) 0%, rgba(240,80,35,0.4) 100%);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 4px;
 }
 .teamInitial {
-  font-family: 'ClashDisplay', 'GoogleSans', sans-serif;
-  font-size: 24px;
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-4);
   font-weight: 700;
   color: var(--white);
   letter-spacing: 1px;
 }
-.teamName { font-size: 16px; font-weight: 600; color: var(--dark); margin: 0; }
-.teamRole { font-size: 13px; color: rgba(0,0,0,0.45); margin: 0; line-height: 1.4; }
+.teamName { font-size: var(--fs-body-p3); font-weight: 600; color: var(--dark); margin: 0; }
+.teamRole { font-size: var(--fs-body-p4); color: rgba(0,0,0,0.45); margin: 0; line-height: 1.4; }
 
 /* ═══════════════════════════════════════
    RESPONSIVE

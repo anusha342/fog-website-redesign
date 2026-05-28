@@ -1,9 +1,36 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
+
+function loadScript(src: string): Promise<void> {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+    const s = document.createElement('script');
+    s.src = src; s.async = true;
+    s.onload = () => res(); s.onerror = () => rej();
+    document.head.appendChild(s);
+  });
+}
+
+function useLenis() {
+  useEffect(() => {
+    let animId: number;
+    loadScript('https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js')
+      .then(() => {
+        const LenisClass = (window as any).Lenis;
+        if (!LenisClass) return;
+        const lenis = new LenisClass({ lerp: 0.075, smoothWheel: true });
+        function raf(time: number) { lenis.raf(time); animId = requestAnimationFrame(raf); }
+        animId = requestAnimationFrame(raf);
+        (window as any).__fogLenis = lenis;
+      })
+      .catch(() => {});
+    return () => { cancelAnimationFrame(animId); };
+  }, []);
+}
 
 interface Post {
   slug: string;
@@ -35,6 +62,7 @@ function formatDate(iso: string) {
 }
 
 export default function BlogListingClient({ posts, recentPosts, allCategories }: Props) {
+  useLenis();
   const [query, setQuery] = useState('');
   const [activeTag, setActiveTag] = useState('');
 

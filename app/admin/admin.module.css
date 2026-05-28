@@ -8,14 +8,13 @@
   align-items: center;
   justify-content: center;
   padding: 32px 24px;
-  font-family: 'Google Sans', sans-serif;
+  font-family: var(--font-body);
 }
 
 /* Login / verify card */
 .card {
   background: #ffffff;
   border: 1.5px solid #e0e3e8;
-  border-radius: 16px;
   padding: 48px 40px;
   width: 100%;
   max-width: 420px;
@@ -32,7 +31,7 @@
 }
 
 .heading {
-  font-size: 22px;
+  font-size: var(--fs-heading-4);
   font-weight: 600;
   color: #111827;
   margin: 0;
@@ -40,7 +39,8 @@
 }
 
 .subtext {
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   text-align: center;
   margin: 0 0 24px;
@@ -56,7 +56,7 @@
 }
 
 .label {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   color: #374151;
   margin-bottom: 4px;
@@ -67,9 +67,8 @@
   width: 100%;
   background: #ffffff;
   border: 1.5px solid #d1d5db;
-  border-radius: 8px;
   padding: 12px 14px;
-  font-size: 14px;
+  font-size: var(--fs-body-p3);
   color: #111827;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -86,9 +85,16 @@
   color: #c0c8d4;
 }
 
+/* OTP input — large centred digit display */
+.inputOtp {
+  font-size: var(--fs-heading-4);
+  letter-spacing: 6px;
+  text-align: center;
+}
+
 /* OTP input group */
 .otpHint {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   text-align: center;
 }
@@ -104,9 +110,8 @@
   background: #F05023;
   color: #ffffff;
   border: none;
-  border-radius: 8px;
   padding: 13px;
-  font-size: 14px;
+  font-size: var(--fs-body-p3);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
@@ -130,9 +135,8 @@
   background: transparent;
   color: #374151;
   border: 1.5px solid #d1d5db;
-  border-radius: 8px;
   padding: 11px;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
@@ -152,23 +156,21 @@
 
 /* Error */
 .error {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #dc2626;
   margin: 0;
   padding: 8px 12px;
   background: #fef2f2;
-  border-radius: 6px;
   border: 1px solid #fecaca;
 }
 
 /* Success */
 .success {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #16a34a;
   margin: 0;
   padding: 8px 12px;
   background: #f0fdf4;
-  border-radius: 6px;
   border: 1px solid #bbf7d0;
 }
 
@@ -182,7 +184,7 @@
 
 /* Back link */
 .backLink {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   text-decoration: none;
   text-align: center;

@@ -4,5 +4,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Google Sans', sans-serif;
+  font-family: var(--font-body);
 }

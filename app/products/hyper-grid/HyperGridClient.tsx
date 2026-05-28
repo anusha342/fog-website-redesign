@@ -359,7 +359,7 @@ export default function HyperGridClient({ testimonials }: Props) {
 
           {/* Full-width header — matches whatHeading position */}
           <div className={styles.modesV2Header}>
-            <span className={styles.modesEyebrow} data-reveal>02 — Game Modes</span>
+            {/* <span className={styles.modesEyebrow} data-reveal>02 — Game Modes</span> */}
             <h2 className={styles.modesV2Title} data-reveal>Game Modes</h2>
           </div>
 
@@ -410,7 +410,7 @@ export default function HyperGridClient({ testimonials }: Props) {
       <section id="hg-moments" className={styles.momentsSection}>
         <div className={styles.momentsInner}>
           <div className={styles.momentsTop} data-reveal>
-            <span className={styles.momentsEyebrow}>03 — Moments</span>
+            {/* <span className={styles.momentsEyebrow}>03 — Moments</span> */}
             <h2 className={styles.momentsTitle}>Moments in HyperGrid</h2>
           </div>
 
@@ -531,10 +531,10 @@ export default function HyperGridClient({ testimonials }: Props) {
       {/* ── HOW IT WORKS ── */}
       <section id="how-it-works" className={styles.processSection}>
 
-        {/* ── Header strip ── */}
+        {/* ── Header strip — separate from image ── */}
         <div className={styles.processHeaderWrap}>
           <div className={styles.processHeaderInner}>
-            <span className={styles.processEyebrow} data-reveal>04 — How It Works</span>
+            {/* <span className={styles.processEyebrow} data-reveal>04 — How It Works</span> */}
             <h2 className={styles.processTitle} data-reveal data-reveal-delay="0.1">
               Easy, Automated &amp; Operator-Free
             </h2>
@@ -650,7 +650,7 @@ export default function HyperGridClient({ testimonials }: Props) {
         <div className={styles.calcWrap}>
 
           <div className={styles.calcHeader}>
-            <span className={styles.calcEyebrow} data-reveal>05 — ROI Calculator</span>
+            {/* <span className={styles.calcEyebrow} data-reveal>05 — ROI Calculator</span> */}
             <h2 className={styles.calcTitle} data-reveal data-reveal-delay="0.1">
               Your Returns, Calculated
             </h2>
@@ -737,7 +737,7 @@ export default function HyperGridClient({ testimonials }: Props) {
               <div className={styles.calcChartArea}>
                 <div className={styles.calcChartMeta}>
                   <span className={styles.calcChartLabel}>5-Year Cumulative Profit</span>
-                  <span className={styles.calcChartNote}>Break-even when the line crosses zero</span>
+                  {/* <span className={styles.calcChartNote}>Break-even when the line crosses zero</span> */}
                 </div>
                 <div className={styles.calcChartWrap}>
                   <canvas id="chart-cumulative"></canvas>

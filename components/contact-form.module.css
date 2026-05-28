@@ -38,7 +38,7 @@
 .leftInner {
   position: relative;
   z-index: 1;
-  padding: 80px 64px;
+  padding: 80px 0px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -46,8 +46,8 @@
 }
 
 .eyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   color: rgba(0,0,0,0.38);
   text-transform: uppercase;
@@ -56,9 +56,9 @@
 }
 
 .headline {
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(28px, 3vw, 48px);
+  font-size: var(--fs-heading-1);
   line-height: 0.95;
   text-transform: uppercase;
   color: #0a0a0a;
@@ -66,7 +66,7 @@
 }
 
 .sub {
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   font-weight: 300;
   color: rgba(0,0,0,0.52);
   line-height: 1.75;
@@ -98,9 +98,9 @@
 .formHeader { margin-bottom: 44px; }
 
 .formTitle {
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(22px, 2.2vw, 32px);
+  font-size: var(--fs-heading-2);
   text-transform: uppercase;
   color: #0a0a0a;
   line-height: 1.05;
@@ -108,7 +108,7 @@
 }
 
 .formDesc {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 300;
   color: rgba(0,0,0,0.42);
   line-height: 1.6;
@@ -125,11 +125,11 @@
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.14);
   padding: 10px 0;
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   line-height: 1.4;
   background: transparent;
   color: #0a0a0a;
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   transition: border-color 250ms;
   display: block;
 }
@@ -143,10 +143,10 @@
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.14);
   padding: 10px 28px 10px 0;
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   background: transparent;
   color: #0a0a0a;
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   appearance: none;
   cursor: pointer;
   transition: border-color 250ms;
@@ -168,7 +168,7 @@
   position: absolute;
   top: 22px;
   left: 0;
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   color: rgba(0,0,0,0.35);
   pointer-events: none;
   transition: all 210ms cubic-bezier(.4,0,.2,1);
@@ -234,7 +234,7 @@
 .countryList.open { display: block; }
 .countryList li {
   padding: 10px 16px;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   color: #0a0a0a;
   cursor: pointer;
   transition: background 120ms;
@@ -251,7 +251,7 @@
   gap: 20px;
   padding-top: 8px;
 }
-.note { font-size: 12px; color: rgba(0,0,0,0.3); line-height: 1.5; }
+.note { font-size: var(--fs-body-p4); color: rgba(0,0,0,0.3); line-height: 1.5; }
 .noteLink { color: #0a0a0a; text-decoration: underline; text-underline-offset: 2px; }
 
 /* Inversion-on-hover button — full width, centered */
@@ -265,11 +265,11 @@
   color: #ffffff;
   border: 1.5px solid #0a0a0a;
   padding: 17px 32px;
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   text-transform: uppercase;
-  letter-spacing: 2.5px;
+  letter-spacing: 2px;
   cursor: pointer;
   white-space: nowrap;
   transition: background 250ms, color 250ms, letter-spacing 250ms, transform 200ms;

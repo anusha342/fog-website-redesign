@@ -116,11 +116,10 @@ function VerifyForm() {
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
               placeholder="000000"
-              className={styles.input}
+              className={`${styles.input} ${styles.inputOtp}`}
               required
               autoFocus
               autoComplete="one-time-code"
-              style={{ letterSpacing: '6px', fontSize: '20px', textAlign: 'center' }}
             />
           </div>
 

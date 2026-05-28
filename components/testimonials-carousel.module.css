@@ -5,20 +5,21 @@
 
 .testimonials {
   background: var(--white);
-  padding: var(--sp-96) var(--sp-80);
-  width: 100%;
+  /* padding: var(--sp-96) var(--sp-80); */
+  /* width: 100%; */
   position: relative;
 }
 
 .testInner {
   max-width: 1440px;
   margin: 0 auto;
+  padding: 80px 0px
 }
 
 .testHeading {
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(40px, 4.5vw, 63px);
+  font-size: var(--fs-heading-1);
   color: var(--text-primary);
   text-transform: uppercase;
   line-height: 1;
@@ -64,17 +65,17 @@
 }
 
 .testQuoteMark {
-  font-size: 80px;
+  font-size: var(--fs-heading-1);
   line-height: 1;
   color: var(--accent);
-  font-family: 'ClashDisplay', serif;
+  font-family: var(--font-display);
   margin-bottom: var(--sp-16);
 }
 
 .testQuote {
-  font-family: 'ClashDisplay', serif;
-  font-weight: 400;
-  font-size: 30px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-heading-3);
   color: var(--text-primary);
   line-height: 1.35;
 }
@@ -87,7 +88,7 @@
 }
 
 .testName {
-  font-size: 16px;
+  font-size: var(--fs-body-p1);
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -111,7 +112,7 @@
 }
 
 .testRole {
-  font-size: 13px;
+  font-size: var(--fs-body-p2);
   font-weight: 300;
   color: var(--gray);
   margin-top: 0;
@@ -163,7 +164,6 @@
 @media (max-width: 1023px) {
   .testimonials { padding: 64px var(--sp-48); }
   .testGrid { grid-template-columns: 40% 1fr; gap: 40px; }
-  .testQuote { font-size: 26px; }
 }
 
 @media (max-width: 767px) {
@@ -171,5 +171,4 @@
   .testGrid { grid-template-columns: 1fr; }
   .testImage { display: none; }
   .testArrowAbs { width: 36px; height: 52px; }
-  .testQuote { font-size: 22px; }
 }

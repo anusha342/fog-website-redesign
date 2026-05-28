@@ -50,8 +50,8 @@
 
 /* Eyebrow — XS spec: GoogleSans 500, 4px tracking, orange */
 .blogHeroEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: clamp(10px, 1vw, 13px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -62,8 +62,8 @@
 
 /* H1 — design-CLAUDE.md §H1: ClashDisplay 700, uppercase */
 .blogHeroTitle {
-  font-family: 'ClashDisplay', sans-serif;
-  font-size: clamp(28px, 4vw, 56px);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading-1);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.5px;
@@ -86,7 +86,6 @@
   background: rgba(255,255,255,.18);
   position: relative;
   overflow: hidden;
-  border-radius: 1px;
 }
 .blogScrollDot {
   position: absolute;
@@ -95,7 +94,6 @@
   width: 2px;
   height: 9px;
   background: var(--accent, #F05023);
-  border-radius: 1px;
   animation: blogScrollDot 1.6s ease-in-out infinite;
 }
 @keyframes blogScrollDot {
@@ -118,7 +116,7 @@
 .blogInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0;
+  /* padding: 80px 0px; */
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: 48px;
@@ -138,7 +136,6 @@
 .postCard {
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
   overflow: hidden;
   transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 300ms ease;
@@ -190,48 +187,46 @@
 }
 
 .postCategory {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 11px;
+  font-size: var(--fs-body-p4);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #0a0a0a;
   background: rgba(0, 0, 0, 0.07);
-  border-radius: 4px;
   padding: 5px 12px;
   line-height: 1;
 }
 
 .postDate {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 11px;
+  font-size: var(--fs-body-p4);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
   padding: 4px 12px;
   line-height: 1;
 }
 
 /* Title */
 .postCardTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(18px, 2vw, 26px);
+  font-size: var(--fs-heading-3);
   line-height: 1.2;
   letter-spacing: -0.5px;
-  text-transform: uppercase;
+  text-transform: sentence-case;
   color: #0a0a0a;
   margin: 0 0 14px;
 }
 
 /* Excerpt */
 .postCardExcerpt {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 400;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   line-height: 1.7;
   color: rgba(0, 0, 0, 0.52);
   margin: 0 0 20px;
@@ -243,9 +238,9 @@
 
 /* Read more link */
 .postReadMore {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--accent, #F05023);
@@ -272,8 +267,8 @@
 .empty {
   text-align: center;
   padding: 80px 24px;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 15px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
   color: rgba(0, 0, 0, 0.42);
 }
 
@@ -295,10 +290,10 @@
 
 /* Widget heading */
 .sideWidgetTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: clamp(13px, 1.5vw, 17px);
-  text-transform: uppercase;
+  font-size: var(--fs-heading-3);
+  text-transform: sentence-case;
   letter-spacing: -0.3px;
   color: #0a0a0a;
   margin: 0 0 16px;
@@ -316,13 +311,12 @@
 
 .searchInput {
   width: 100%;
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 13px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   color: #0a0a0a;
   background: #f5f5f5;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
   padding: 12px 44px 12px 16px;
   outline: none;
   transition: border-color 200ms, background 200ms;
@@ -357,14 +351,13 @@
 }
 
 .tagPill {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 0.5px;
   color: rgba(0, 0, 0, 0.62);
   background: #f0f0f0;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 100px;
   padding: 7px 16px;
   cursor: pointer;
   text-decoration: none;
@@ -404,7 +397,6 @@
 .recentThumb {
   width: 68px;
   height: 60px;
-  border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
   position: relative;
@@ -422,9 +414,9 @@
 }
 
 .recentTitle {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   line-height: 1.4;
   color: #0a0a0a;
   margin: 0 0 5px;
@@ -435,8 +427,8 @@
 }
 
 .recentDate {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 400;
   color: rgba(0, 0, 0, 0.42);
   margin: 0;
@@ -445,8 +437,7 @@
 /* ── CTA BANNER ── */
 .ctaBanner {
   background: #111111;
-  border-radius: 16px;
-  padding: 36px 28px;
+  padding: 36px 0px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -463,8 +454,8 @@
 }
 
 .ctaBannerEyebrow {
-  font-family: 'GoogleSans', sans-serif;
-  font-size: 11px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -473,9 +464,9 @@
 }
 
 .ctaBannerTitle {
-  font-family: 'ClashDisplay', sans-serif;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: var(--fs-heading-3);
   line-height: 1.2;
   letter-spacing: -0.5px;
   text-transform: uppercase;
@@ -484,14 +475,13 @@
 }
 
 .ctaBannerBtn {
-  font-family: 'GoogleSans', sans-serif;
+  font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff;
   background: var(--accent, #F05023);
-  border-radius: 100px;
   padding: 14px 28px;
   text-decoration: none;
   display: inline-block;

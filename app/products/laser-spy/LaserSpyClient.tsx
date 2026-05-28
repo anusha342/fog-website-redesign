@@ -467,7 +467,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
       <section id="roi-calculator" className={styles.calcSection} data-nav-theme="light">
         <div className={styles.calcWrap}>
           <div className={styles.calcHeader}>
-            <span className={styles.calcEyebrow} data-reveal>06 — ROI Calculator</span>
+            {/* <span className={styles.calcEyebrow} data-reveal>06 — ROI Calculator</span> */}
             <h2 className={styles.calcTitle} data-reveal data-reveal-delay="0.1">Revenue Projection</h2>
           </div>
 

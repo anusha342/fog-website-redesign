@@ -2,7 +2,7 @@
   min-height: 100vh;
   background: #f0f2f5;
   padding: 32px 24px 80px;
-  font-family: 'Google Sans', sans-serif;
+  font-family: var(--font-body);
 }
 
 .container {
@@ -24,14 +24,14 @@
 }
 
 .title {
-  font-size: 24px;
+  font-size: var(--fs-heading-4);
   font-weight: 700;
   color: #111827;
   margin: 0 0 4px;
 }
 
 .meta {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   margin: 0;
 }
@@ -45,9 +45,8 @@
   background: #ffffff;
   border: 1.5px solid #d1d5db;
   color: #374151;
-  border-radius: 8px;
   padding: 8px 16px;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
@@ -70,7 +69,6 @@
 .card {
   background: #ffffff;
   border: 1.5px solid #e0e3e8;
-  border-radius: 14px;
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
@@ -100,13 +98,13 @@
 }
 
 .cardLabel {
-  font-size: 18px;
+  font-size: var(--fs-body-p1);
   font-weight: 600;
   color: #111827;
 }
 
 .cardDesc {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   line-height: 1.4;
 }
@@ -131,10 +129,9 @@
   right: 16px;
   background: #f3f4f6;
   color: #9ca3af;
-  font-size: 10px;
+  font-size: var(--fs-body-p4);
   font-weight: 600;
   padding: 3px 8px;
-  border-radius: 20px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   border: 1px solid #e5e7eb;
@@ -144,20 +141,19 @@
 .utilSection {
   background: #ffffff;
   border: 1.5px solid #e0e3e8;
-  border-radius: 14px;
   padding: 24px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .utilHeading {
-  font-size: 15px;
+  font-size: var(--fs-body-p3);
   font-weight: 600;
   color: #111827;
   margin: 0 0 6px;
 }
 
 .utilDesc {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   margin: 0 0 16px;
   line-height: 1.6;
@@ -167,18 +163,16 @@
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
   padding: 1px 5px;
-  border-radius: 4px;
   color: #6b7280;
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
 }
 
 .migrateBtn {
   background: #ffffff;
   border: 1.5px solid #d1d5db;
   color: #374151;
-  border-radius: 8px;
   padding: 10px 20px;
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
@@ -197,22 +191,20 @@
 }
 
 .utilSuccess {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #16a34a;
   padding: 8px 12px;
   background: #f0fdf4;
   border: 1px solid #bbf7d0;
-  border-radius: 6px;
   margin: 0;
 }
 
 .utilError {
-  font-size: 12px;
+  font-size: var(--fs-body-p4);
   color: #dc2626;
   padding: 8px 12px;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 6px;
   margin: 0;
 }
 
@@ -224,7 +216,7 @@
 }
 
 .homeBtn {
-  font-size: 13px;
+  font-size: var(--fs-body-p4);
   font-weight: 500;
   color: #374151;
   background: none;

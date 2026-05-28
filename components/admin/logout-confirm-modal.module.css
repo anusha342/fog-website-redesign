@@ -21,7 +21,6 @@
 .card {
   background: #ffffff;
   border: 1px solid #e0e3e8;
-  border-radius: 16px;
   padding: 36px 32px 28px;
   max-width: 400px;
   width: 100%;
@@ -47,14 +46,14 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: var(--fs-heading-4);
   font-weight: 700;
   color: #111827;
   margin: 0;
 }
 
 .body {
-  font-size: 14px;
+  font-size: var(--fs-body-p4);
   color: #6b7280;
   line-height: 1.6;
   margin: 0;
@@ -77,9 +76,8 @@
   background: #ffffff;
   border: 1.5px solid #d1d5db;
   color: #374151;
-  border-radius: 8px;
   padding: 10px 16px;
-  font-size: 14px;
+  font-size: var(--fs-body-p3);
   font-weight: 500;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
@@ -101,9 +99,8 @@
   background: #F05023;
   border: none;
   color: #ffffff;
-  border-radius: 8px;
   padding: 10px 16px;
-  font-size: 14px;
+  font-size: var(--fs-body-p3);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
