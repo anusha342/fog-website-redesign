@@ -255,76 +255,122 @@
 
 /* ── WHAT IS LASER SPY ── */
 .whatSection {
-  background: var(--white);
-}
-
-.whatInner {
+  background: #f5f5f3;
+  display: grid;
+  grid-template-columns: 55fr 45fr;
   max-width: 1440px;
   margin: 0 auto;
   padding: 80px 0px;
-}
-
-.whatImgWrap {
-  width: 100%;
+  min-height: 72vh;
   overflow: hidden;
-  line-height: 0;
 }
 
-.whatImg {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-.whatCards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  margin-top: 30px;
-}
-
-.whatCard {
-  background: var(--dark);
-  padding: 52px 44px;
+/* Left — text column */
+.whatLeft {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  position: relative;
-  overflow: hidden;
-  transition: background 300ms ease;
+  justify-content: center;
+  padding: 80px 64px 80px clamp(40px, 5.5vw, 80px);
 }
 
-.whatCard::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 48px;
-  height: 2px;
-  background: var(--accent);
-  transition: width 400ms cubic-bezier(.4, 0, .2, 1);
-}
-
-.whatCard:hover { background: #1c1c1c; }
-.whatCard:hover::after { width: 100%; }
-
-.whatCardText {
+/* Orange eyebrow */
+.whatEyebrow {
   font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  word-spacing: 2px;
+  color: var(--hg-neon-orange);
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* Section H2 */
+.whatHeading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-heading-2);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
+  line-height: 1.2;
+  margin: 0 0 48px;
+}
+
+/* Stacked value list */
+.whatValues {
+  display: flex;
+  flex-direction: column;
+}
+
+.whatValue {
+  padding: 22px 0 22px 24px;
+  border-left-width: 2px;
+  border-left-style: solid;
+  border-left-color: rgba(19, 19, 19, 0.1);
+  transition: border-left-color 220ms ease;
+}
+
+.whatValue + .whatValue {
+  margin-top: 4px;
+}
+
+.whatValue:hover {
+  border-left-color: var(--hg-neon-orange);
+}
+
+.whatValueTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
   font-size: var(--fs-heading-4);
-  font-weight: 600;
-  text-transform: sentence-case;
-  color: var(--white);
-  letter-spacing: 0.2px;
-  line-height: 1.25;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+.whatValueBody {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(19, 19, 19, 0.65);
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
   margin: 0;
 }
 
+/* Right — image fills full column height */
+.whatRight {
+  position: relative;
+  overflow: hidden;
+}
+
+.whatImg {
+  object-fit: cover;
+  object-position: center center;
+}
+
+@media (max-width: 1100px) {
+  .whatLeft { padding: 72px 48px; }
+}
+
 @media (max-width: 767px) {
-  .whatSection { padding: 64px var(--sp-24) 0; }
-  .whatCards { grid-template-columns: 1fr; }
-  .whatCard { padding: 36px 28px; }
+  .whatSection {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .whatRight {
+    order: -1;
+    height: 56vw;
+    min-height: 240px;
+  }
+  .whatLeft { padding: 48px var(--sp-24); }
+  .whatHeading { margin-bottom: 36px; }
 }
 
 /* ── CHALLENGE MODES V2 ── */
