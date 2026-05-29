@@ -94,7 +94,7 @@ export default function ContactClient() {
             </div>
             <div className={styles.infoText}>
               <span className={styles.infoLabel}>Address</span>
-              <span className={styles.infoVal}>Mumbai, Maharashtra, India</span>
+              <span className={styles.infoVal}>Surat, Gujarat, India</span>
             </div>
           </div>
 
@@ -116,6 +116,22 @@ export default function ContactClient() {
 
       {/* ── GET IN TOUCH FORM ── */}
       <ContactForm />
+
+      {/* ── LOCATION MAP ── */}
+      <section className={styles.mapSection} aria-label="Our location on the map">
+        <div className={styles.mapInner}>
+          <div className={styles.mapFrame}>
+            <iframe
+              src="https://maps.google.com/maps?q=4QPF%2B6P+Surat+Gujarat+India&z=16&output=embed"
+              title="FOG Technologies office location — Surat, Gujarat, India"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className={styles.mapIframe}
+            />
+          </div>
+          <div className={styles.mapOverlay} aria-hidden="true" />
+        </div>
+      </section>
 
     </main>
   );
