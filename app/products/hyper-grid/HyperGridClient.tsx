@@ -406,6 +406,39 @@ export default function HyperGridClient({ testimonials }: Props) {
         </div>
       </section>
 
+      {/* ── QUICK STATS ── */}
+      <section className={styles.quickStats} aria-label="HyperGrid at a glance">
+        <div className={styles.quickStatsInner}>
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>4</span>
+            <span className={styles.statLabel}>Minimum Age</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>24</span>
+            <span className={styles.statLabel}>Max Players</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>400</span>
+            <span className={styles.statLabel}>Area Required (sq ft)</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>18</span>
+            <span className={styles.statLabel}>ROI Months</span>
+          </div>
+
+        </div>
+      </section>
+
       {/* ── MOMENTS BENTO ── */}
       <section id="hg-moments" className={styles.momentsSection}>
         <div className={styles.momentsInner}>

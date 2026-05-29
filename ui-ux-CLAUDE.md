@@ -80,6 +80,7 @@ Work is done **section by section, page by page** in this order:
 | 1 | Hero (cinematic video BG `/videos/hypergrid-bg-video.mp4`, HUD brackets, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
 | 2 | What is HyperGrid (full-width 3D render + 3 descriptor cards) | Done |
 | 3 | Game Modes (sticky image panel + interactive modes list) | Done |
+| 3b | Quick Stats (4-stat strip — Minimum Age, Max Players, Area Required, ROI Months) | Done |
 | 4 | Moments Bento Grid (mixed card layout) | Done |
 | 5 | How It Works (process steps carousel with image swap) | Done |
 | 6 | ROI Calculator (slider inputs + Chart.js output) | Done |
@@ -110,6 +111,7 @@ Work is done **section by section, page by page** in this order:
 | 2 | Why FOG's Laser Tag (USP cards — key differentiators that make FOG's product the premium choice) | Done |
 | 3 | Gun + Vest Description (equipment deep-dive — gun specs + vest specs, side-by-side or feature breakdown) | Done |
 | 4 | Game Modes (60/40 image+list grid, Watch Gameplay overlay button) | Done |
+| 4b | Quick Stats (4-stat strip — Minimum Age, Max Players, Area Required, ROI Months) | Done |
 | 5 | Moments in Laser Tag (step-flow bento grid — 4 cards with step labels and editorial cascade) | Done |
 | 6 | Arena Design (full-width arena render + area copy) | Done |
 | 7 | Arena Specs (dimensions card + 2 info cards — Game Modes, Equipment) | Done |
@@ -125,6 +127,7 @@ Work is done **section by section, page by page** in this order:
 | 1 | Hero (cinematic video BG, HUD corners, eyebrow, title, sub-headline, CTAs, scroll indicator) | Done |
 | 2 | What is Laser Spy (full-width image + 3 descriptor cards) | Pending |
 | 3 | Themes (60/40 image+list grid — 4 themes: Laser Wars, Laser Ship, Laser Lab, Laser Spy) | Done |
+| 3b | Quick Stats (4-stat strip — Minimum Age, Max Players, Area Required, ROI Months) | Done |
 | 4 | ROI Calculator (white 100vh, slider inputs + Chart.js cumulative line) | Done |
 | 5 | Operator (operator-facing section — business case, setup details, or operator CTA) | Pending |
 | 6 | Get In Touch (shared ContactForm, lasermaze pre-selected) | Done |
@@ -149,6 +152,17 @@ Work is done **section by section, page by page** in this order:
 ## Session Log
 
 > Entries are appended here after each section is completed. Most recent entry is at the top.
+
+### HyperGrid / Laser Tag / Laser Spy — Quick Stats Strip (post–Game Modes)
+- **Section:** `quickStats` — white (`#ffffff`), fixed `height: 300px`, `border-top/bottom: 1px solid rgba(0,0,0,0.08)`, full `width: 100vw`
+- **Inner container:** `max-width: 1440px; margin: 0 auto; padding: 0 clamp(24px,5vw,80px)` — 7-column grid (`1fr auto 1fr auto 1fr auto 1fr`) so stats fill equal thirds with `1px / 80px` dividers between each
+- **4 stats per product:**
+  - HyperGrid: Minimum Age 4 · Max Players 24 · Area Required 400 sq ft · ROI Months 18
+  - Laser Tag: Minimum Age 7 · Max Players 30 · Area Required 2000 sq ft · ROI Months 24
+  - Laser Spy: Minimum Age 6 · Max Players 6 · Area Required 600 sq ft · ROI Months 12
+- **Number (`.statNum`):** `--font-body` (GoogleSans), `clamp(64px,8vw,108px)`, `font-weight: 500`, `letter-spacing: -2px`, `#0a0a0a` — large dominant display value, no symbols
+- **Label (`.statLabel`):** `--font-body`, `--fs-heading-4` (1.375rem/22px), `font-weight: 500`, uppercase, `rgba(0,0,0,0.45)`, `letter-spacing: 1px` — sits below the number
+- **Responsive ≤767px:** section height becomes `auto`, inner grid collapses to `1fr 1fr` (2×2), dividers hidden, number clamps to `clamp(48px,14vw,80px)`
 
 ### Laser Spy — Hero, Challenge Modes, ROI Calculator (HyperGrid Parity)
 
