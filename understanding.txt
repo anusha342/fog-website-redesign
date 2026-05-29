@@ -1,0 +1,34 @@
+# Architecture & Code Flow Understanding
+
+This document outlines the teaching flow for understanding the FOG Technologies website architecture.
+
+## 1. High-Level Architecture
+- Framework: Next.js (React-based) using the App Router.
+- Hosting: Vercel (Serverless environment).
+- Backend: Built-in Next.js API Routes (Route Handlers).
+- Services:
+    - Resend: For sending emails (Contact form & OTP).
+    - S3: For storing content like blogs and testimonials (Dynamic storage).
+    - Local Markdown: Initial source for static content.
+
+## 2. Contact Form Flow (Email Functionality)
+- **The Trigger**: `components/ContactForm.tsx` (Client Component).
+- **The Bridge**: Browser's `fetch` API.
+- **The Logic**: `app/api/contact/route.ts` (Server-side).
+- **The Delivery**: `Resend` service.
+
+## 3. Admin Panel & Authentication (The Security Layer)
+- **Step A: Identity Check**: `app/api/admin/send-otp/route.ts`.
+    - Checks email against an allowlist in environment variables.
+- **Step B: Temporary Session**: JWT Cookie (`otp_token`).
+    - Stores the OTP securely on the user's browser for a short time.
+- **Step C: Verification**: `app/api/admin/verify-otp/route.ts`.
+    - Validates the user's input against the token.
+- **Step D: Persistent Session**: `admin_token` Cookie.
+    - A 7-day token that allows access to `/admin/dashboard`.
+
+## 4. Protected Routes
+- How the dashboard and management pages ensure you are logged in using `cookies()` and `jwtVerify`.
+
+## 5. Content Management (Blogs & Testimonials)
+- How the website reads data from Markdown files and/or S3 to display dynamic content.
