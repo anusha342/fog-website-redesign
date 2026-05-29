@@ -7,6 +7,7 @@ import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import GallerySection from './GallerySection';
+import FaqSection from './FaqSection';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -662,6 +663,9 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
         </div>
       </section> */}
+
+      {/* FAQ SECTION */}
+      <FaqSection />
 
       {/* 7. TESTIMONIALS */}
       <TestimonialsCarousel testimonials={testimonials} />
