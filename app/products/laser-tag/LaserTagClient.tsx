@@ -395,6 +395,39 @@ export default function LaserTagClient({ testimonials }: Props) {
         </div>
       </section>
 
+      {/* QUICK STATS */}
+      <section className={styles.quickStats} aria-label="Laser Tag at a glance">
+        <div className={styles.quickStatsInner}>
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>7</span>
+            <span className={styles.statLabel}>Minimum Age</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>30</span>
+            <span className={styles.statLabel}>Max Players</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>2000</span>
+            <span className={styles.statLabel}>Area Required (sq ft)</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>24</span>
+            <span className={styles.statLabel}>ROI Months</span>
+          </div>
+
+        </div>
+      </section>
+
       {/* 4. MOMENTS */}
       <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>

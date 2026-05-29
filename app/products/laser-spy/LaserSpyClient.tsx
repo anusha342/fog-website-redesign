@@ -348,6 +348,39 @@ export default function LaserSpyClient({ testimonials }: Props) {
         </div>
       </section>
 
+      {/* QUICK STATS */}
+      <section className={styles.quickStats} aria-label="Laser Spy at a glance">
+        <div className={styles.quickStatsInner}>
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>6</span>
+            <span className={styles.statLabel}>Minimum Age</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>6</span>
+            <span className={styles.statLabel}>Max Players</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>600</span>
+            <span className={styles.statLabel}>Area Required (sq ft)</span>
+          </div>
+
+          <div className={styles.statDivider} aria-hidden="true" />
+
+          <div className={styles.statItem}>
+            <span className={styles.statNum}>12</span>
+            <span className={styles.statLabel}>ROI Months</span>
+          </div>
+
+        </div>
+      </section>
+
       {/* 3b. MOMENTS */}
       {/* <section id="ls-moments" className={styles.momentsSection} data-nav-theme="light">
         <div className={styles.momentsInner}>
