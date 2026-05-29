@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import GallerySection from './GallerySection';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -391,6 +392,9 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
         </div>
       </section>
+
+      {/* GALLERY SECTION */}
+      <GallerySection />
 
       {/* 3b. MOMENTS */}
       {/* <section id="ls-moments" className={styles.momentsSection} data-nav-theme="light">
