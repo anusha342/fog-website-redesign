@@ -279,29 +279,40 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
       {/* 2. WHAT IS LASER SPY */}
       <section id="what-is-laserspy" className={styles.whatSection} data-nav-theme="light">
-        <div className={styles.whatInner}>
-          <div className={styles.whatImgWrap} data-reveal>
-            <Image
-              src="/images/laser-spy/laser-spy-1.png"
-              alt="Laser Spy beam maze in action"
-              className={styles.whatImg}
-              width={1600}
-              height={900}
-              sizes="100vw"
-            />
-          </div>
-          <div className={styles.whatCards} data-reveal>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Laser Beam Maze You Can&apos;t Break</p>
+
+        {/* Left — text content */}
+        <div className={styles.whatLeft}>
+          <span className={styles.whatEyebrow} data-reveal>What is Laser Spy?</span>
+          <h2 className={styles.whatHeading} data-reveal data-reveal-delay="0.08">
+            A ROOM THAT<br />PAYS FOR ITSELF
+          </h2>
+          <div className={styles.whatValues} data-reveal data-reveal-delay="0.16">
+            <div className={styles.whatValue}>
+              <h3 className={styles.whatValueTitle}>ZERO-OPERATOR ROOM</h3>
+              <p className={styles.whatValueBody}>No staff required inside. Players check in, pay, and play — autonomously.</p>
             </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Timed Challenges with Live Leaderboard</p>
+            <div className={styles.whatValue}>
+              <h3 className={styles.whatValueTitle}>PREMIUM TICKET PRICING</h3>
+              <p className={styles.whatValueBody}>₹150–₹600 per session — 2–4× the revenue of open-floor attractions.</p>
             </div>
-            <div className={styles.whatCard}>
-              <p className={styles.whatCardText}>Moments AI Captures Every Near-Miss</p>
+            <div className={styles.whatValue}>
+              <h3 className={styles.whatValueTitle}>BUILT-IN VIRAL LOOP</h3>
+              <p className={styles.whatValueBody}>Every run ends with an AI-cut clip. Players share it. Your venue earns reach for free.</p>
             </div>
           </div>
         </div>
+
+        {/* Right — image fills full column height */}
+        <div className={styles.whatRight}>
+          <Image
+            src="/images/laser-spy/laser-spy-1.png"
+            alt="Laser Spy beam maze room — precision laser challenge installed by FOG Technologies"
+            className={styles.whatImg}
+            fill
+            sizes="45vw"
+          />
+        </div>
+
       </section>
 
       {/* 3. THEMES MODES */}
