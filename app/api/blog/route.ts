@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPostsFromS3 } from '@/lib/s3';
 
 export async function GET() {
-  const posts = getAllPosts().map((p) => ({
+  const postsData = await getAllPostsFromS3();
+  const posts = postsData.map((p) => ({
     id:       p.slug,
     title:    p.title,
     category: p.category,

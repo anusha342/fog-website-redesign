@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/blog';
+import { getAllPostsFromS3 } from '@/lib/s3';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://futureofgaming.tech';
   
   // Static pages
@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Dynamic blog posts
-  const posts = getAllPosts();
+  const posts = await getAllPostsFromS3();
   const blogPages = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.date),

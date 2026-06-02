@@ -126,7 +126,7 @@ export default function HomeClient({
   // (testimonials carousel delegated to shared TestimonialsCarousel component)
 
   // Blog
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(initialPosts);
+  const blogPosts = initialPosts;
 
   // ── Lenis smooth scroll ──────────────────────────────────────────────────
   useEffect(() => {
@@ -757,12 +757,12 @@ export default function HomeClient({
         <div className={styles.marqueeWrap} aria-label="Venue partners">
           <div className={styles.marqueeTrack} aria-hidden="true">
             {[...Array(4)].flatMap(() => [
-              { src: '/uploads/skyjumper-logo.png', alt: 'Sky Jumper' },
-              { src: '/uploads/timezone-logo.png',  alt: 'Timezone' },
-              { src: '/uploads/xplore-logo.png',    alt: 'Xplore' },
-              { src: '/uploads/rebounce-logo.png',  alt: 'Rebounce' },
-              { src: '/uploads/hopup-logo.png',     alt: 'Hopup' },
-              { src: '/uploads/mastizone-logo.png', alt: 'Mastizone' },
+              { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
+              { src: '/images/gamezones_logo/timezone-logo.png',  alt: 'Timezone' },
+              { src: '/images/gamezones_logo/xplore-logo.png',    alt: 'Xplore' },
+              { src: '/images/gamezones_logo/rebounce-logo.png',  alt: 'Rebounce' },
+              { src: '/images/gamezones_logo/hopup-logo.png',     alt: 'Hopup' },
+              { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
             ]).map((logo, i) => (
               <Image
                 key={i}
