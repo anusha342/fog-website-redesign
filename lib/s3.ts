@@ -8,14 +8,19 @@ import {
 import type { PostMeta, Post } from './blog';
 import type { TestimonialMeta, Testimonial } from './testimonials';
 
+let s3Client: S3Client | null = null;
+
 function getS3() {
-  return new S3Client({
-    region: process.env.AWS_REGION!,
-    credentials: {
-      accessKeyId:     process.env.AWS_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-    },
-  });
+  if (!s3Client) {
+    s3Client = new S3Client({
+      region: process.env.AWS_REGION || 'ap-south-1',
+      credentials: {
+        accessKeyId:     process.env.AWS_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+      },
+    });
+  }
+  return s3Client;
 }
 
 function bucket()                  { return process.env.S3_BUCKET_NAME!; }

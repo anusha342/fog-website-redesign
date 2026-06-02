@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import HomeClient from './HomeClient';
-import { getAllPosts } from '@/lib/blog';
-import { getAllTestimonialsWithBodyFromS3 } from '@/lib/s3';
+import { getAllPostsFromS3, getAllTestimonialsWithBodyFromS3 } from '@/lib/s3';
 
 export const revalidate = 60; // ISR — re-render at most every 60 s
 
@@ -54,7 +53,8 @@ const jsonLd = {
 };
 
 export default async function HomePage() {
-  const posts = getAllPosts().map((p) => ({
+  const postsData = await getAllPostsFromS3();
+  const posts = postsData.map((p) => ({
     id:       p.slug,
     title:    p.title,
     category: p.category,
