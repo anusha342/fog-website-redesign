@@ -880,10 +880,10 @@
 
 /* Heading — sits on white, aligned with panel contents */
 .modesHeader {
-  max-width: 1440px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 4vw, 60px);
   text-align: left;
 }
 
@@ -900,11 +900,11 @@
 
 /* Gray panel — identical to .uspInner and .equipInner */
 .modesInner {
-  max-width: 1440px;
+  max-width: 100%;
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 4vw, 60px);
 }
 
 /* Horizontal accordion inside the panel */
@@ -913,9 +913,10 @@
   flex-direction: row;
   width: 100%;
   height: calc(100vh - 230px);
-  max-height: 460px;
+  max-height: 520px;
   min-height: 320px;
   gap: 0;
+  background: #080c10;
 }
 
 /* Each card — equal flex, expands on hover */
@@ -981,11 +982,13 @@
   gap: 8px;
   z-index: 3;
   pointer-events: none;
-  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modesAccCard:hover .modesAccHeader {
-  transform: translateY(-8px);
+  transform: translateY(-20px);
+  opacity: 0;
 }
 
 /* Outlined large number */
@@ -1033,20 +1036,22 @@
 /* Bottom briefing — slides up on hover */
 .modesAccContent {
   position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 48%;
   padding: 40px;
   z-index: 3;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 16px;
-  background: linear-gradient(to top,
+  background: linear-gradient(to right,
       rgba(8, 12, 16, 0.95) 0%,
-      rgba(8, 12, 16, 0.65) 60%,
-      transparent 100%);
+      rgba(8, 12, 16, 0.8) 70%,
+      rgba(8, 12, 16, 0) 100%);
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateX(-30px);
   transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
@@ -1054,7 +1059,7 @@
 
 .modesAccCard:hover .modesAccContent {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
   pointer-events: auto;
 }
 
@@ -1272,6 +1277,7 @@
   .modesAccContent {
     padding: 32px;
     gap: 12px;
+    width: 55%;
   }
 
   .modesAccHeader {
@@ -1380,6 +1386,21 @@
   .modesAccContent {
     padding: 24px;
     gap: 8px;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    justify-content: flex-end;
+    background: linear-gradient(to top,
+        rgba(8, 12, 16, 0.95) 0%,
+        rgba(8, 12, 16, 0.65) 60%,
+        transparent 100%);
+    transform: translateY(20px);
+  }
+
+  .modesAccCard:hover .modesAccContent {
+    transform: translateY(0);
   }
 
   .modesAccDesc {
