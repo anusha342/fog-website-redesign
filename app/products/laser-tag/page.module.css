@@ -363,7 +363,7 @@
 .uspSection {
   width: 100%;
   background: #ffffff;
-  padding: 48px clamp(24px, 5vw, 80px) 48px;
+  padding: 80px 0;
   position: relative;
   overflow: hidden;
 }
@@ -372,6 +372,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
+  padding: 0 clamp(24px, 5vw, 80px);
   text-align: left;
 }
 
@@ -391,7 +392,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0;
+  padding: 0 clamp(24px, 5vw, 80px);
   display: flex;
   flex-direction: column;
 }
@@ -649,7 +650,7 @@
 ═══════════════════════════════════════ */
 .equipSection {
   background: #ffffff;
-  padding: 48px clamp(24px, 5vw, 80px) 48px;
+  padding: 80px 0;
   width: 100%;
 }
 
@@ -657,6 +658,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
+  padding: 0 clamp(24px, 5vw, 80px);
   text-align: left;
 }
 
@@ -676,7 +678,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0;
+  padding: 0 clamp(24px, 5vw, 80px);
   display: flex;
   flex-direction: column;
 }
@@ -872,7 +874,7 @@
 /* White outer wrapper — 80px top padding, no bottom */
 .modesSection {
   background: #ffffff;
-  padding: 48px clamp(24px, 5vw, 80px) 48px;
+  padding: 80px 0;
   width: 100%;
 }
 
@@ -881,6 +883,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
+  padding: 0 clamp(24px, 5vw, 80px);
   text-align: left;
 }
 
@@ -901,7 +904,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0;
+  padding: 0 clamp(24px, 5vw, 80px);
 }
 
 /* Horizontal accordion inside the panel */
@@ -924,7 +927,7 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 0;
   cursor: pointer;
-  transition: flex 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: flex 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Shrink siblings when one is hovered */
@@ -941,8 +944,8 @@
 .modesAccImgWrap {
   position: absolute;
   inset: 0;
-  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
-    filter 600ms ease;
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 700ms cubic-bezier(0.4, 0, 0.2, 1);
   filter: grayscale(100%) contrast(0.85) brightness(0.45);
 }
 
@@ -960,7 +963,7 @@
       rgba(8, 12, 16, 0.2) 0%,
       rgba(8, 12, 16, 0.8) 100%);
   z-index: 1;
-  transition: opacity 600ms ease;
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modesAccCard:hover .modesAccOverlay {
@@ -978,7 +981,7 @@
   gap: 8px;
   z-index: 3;
   pointer-events: none;
-  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modesAccCard:hover .modesAccHeader {
@@ -994,7 +997,8 @@
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
   letter-spacing: -2px;
-  transition: -webkit-text-stroke 400ms ease, color 400ms ease;
+  transition: -webkit-text-stroke 500ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Number glows accent orange on hover */
@@ -1042,9 +1046,9 @@
       rgba(8, 12, 16, 0.65) 60%,
       transparent 100%);
   opacity: 0;
-  transform: translateY(40px);
-  transition: transform 550ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 400ms ease;
+  transform: translateY(28px);
+  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
 
@@ -1111,13 +1115,17 @@
   letter-spacing: 1.5px;
   cursor: pointer;
   border-radius: 0;
-  transition: background 150ms cubic-bezier(0.4, 0, 0.2, 1),
-    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modesAccBtn:hover {
   background: #c93d18;
   border-color: #c93d18;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201, 61, 24, 0.4);
 }
 
 
@@ -1418,8 +1426,7 @@
 }
 
 /* ── 480px ── */
-@media (max-width: 480px) {
-}
+@media (max-width: 480px) {}
 
 
 /* ══════════════════════════════════════════
@@ -1437,8 +1444,13 @@
 
 /* Ticker tape above the grid */
 @keyframes ltTicker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .heroStatsTicker {
@@ -1477,7 +1489,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .heroStatsTicker { animation: none; }
+  .heroStatsTicker {
+    animation: none;
+  }
 }
 
 /* 4-column stat grid */
@@ -1569,17 +1583,23 @@
 
 /* Responsive hero stats */
 @media (max-width: 767px) {
-  .heroStatsTicker { display: none; }
+  .heroStatsTicker {
+    display: none;
+  }
+
   .heroStatsGrid {
     grid-template-columns: 1fr 1px 1fr;
     grid-template-rows: auto auto;
   }
+
   .heroStatDivider:last-of-type {
     display: none;
   }
+
   .heroStatItem {
     padding: 14px 16px;
   }
+
   .heroStatNum {
     font-size: clamp(20px, 5vw, 28px);
   }
@@ -1595,14 +1615,13 @@
    5. MOMENTS IN LASER TAG — Cinematic 3D Stage
    ══════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════
+   5. MOMENTS IN LASER TAG — Interactive 3D Grid
+   ══════════════════════════════════════════ */
+
 .momentsSection {
   background: #ffffff;
-  padding: 0;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  padding: 15px 0 100px 0;
 }
 
 /* ── Header ── */
@@ -1610,15 +1629,12 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  padding: 64px clamp(24px, 5vw, 80px) 36px;
+  padding: 0 clamp(24px, 5vw, 80px) 16px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 2;
 }
 
 .momentsHeaderLeft {
@@ -1640,11 +1656,11 @@
 .momentsTitle {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(36px, 4.5vw, 68px);
+  font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: #0a0a0a;
-  letter-spacing: -1px;
-  line-height: 1.0;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
   margin: 0;
 }
 
@@ -1659,662 +1675,360 @@
   text-align: right;
 }
 
-/* ── Cinema stage area ── */
-.momentsCinema {
+/* ── Grid Container ── */
+.momentsGridContainer {
   flex: 1;
-  position: relative;
-  overflow: hidden;
-  min-height: 500px;
-  max-height: 660px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* ── Animated grid background ── */
-@keyframes bgGridPulse {
-  0%, 100% { opacity: 0.6; }
-  50%       { opacity: 1; }
-}
-
-.momentsBgGrid {
-  display: none;
-}
-
-/* ── 3D perspective stage ── */
-.momentsStage {
-  position: absolute;
-  inset: 0;
-  transition: transform 180ms ease-out;
-  will-change: transform;
-  transform: perspective(1400px) rotateX(0deg) rotateY(0deg);
+  width: 100%;
+  padding: 24px clamp(24px, 5vw, 80px) 32px;
+  position: relative;
   z-index: 1;
 }
 
-/* ── Base card — hidden (2+ steps away) ── */
-.momentsCinemaCard {
-  position: absolute;
-  top: 40px;
-  bottom: 40px;
-  left: 50%;
-  width: clamp(300px, 42vw, 580px);
-  margin-left: calc(-1 * clamp(150px, 21vw, 290px));
+.momentsGrid {
+  max-width: 1440px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* ── Card Styling ── */
+.momentsCard {
+  position: relative;
+  height: 420px;
+  background: #080c10;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   overflow: hidden;
   cursor: pointer;
-  outline: none;
-  background: rgba(10, 15, 22, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
   transform-style: preserve-3d;
   transition:
-    transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   560ms ease,
-    filter    560ms ease,
-    border-color 400ms ease,
-    box-shadow 400ms ease;
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
-.momentsCinemaCard:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.momentsCinemaCard:hover {
-  border-color: rgba(240, 80, 35, 0.25);
-  box-shadow: 0 12px 40px rgba(240, 80, 35, 0.1);
-}
-
-/* ── Active card — front and center ── */
-.momentsCinemaCardActive {
-  transform: translateX(0) rotateY(0deg) scale(1);
-  opacity: 1;
-  filter: blur(0px);
-  z-index: 4;
-  cursor: default;
-  border-color: rgba(240, 80, 35, 0.45);
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(240, 80, 35, 0.15);
-}
-
-.momentsCinemaCardActive:hover {
-  border-color: rgba(240, 80, 35, 0.55);
-  box-shadow:
-    0 24px 70px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(240, 80, 35, 0.25);
-}
-
-/* ── Left neighbor — ghost placeholder ── */
-.momentsCinemaCardPrev {
-  transform: translateX(clamp(-380px, -32vw, -480px)) rotateY(12deg) scale(0.85);
-  opacity: 0.3;
-  z-index: 3;
-  pointer-events: auto;
-  cursor: pointer;
-  transition:
-    transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   560ms ease,
-    filter    560ms ease,
-    border-color 400ms ease,
-    box-shadow 400ms ease;
-}
-
-.momentsCinemaCardPrev:hover {
-  opacity: 0.6;
-}
-
-/* ── Right neighbor — ghost placeholder ── */
-.momentsCinemaCardNext {
-  transform: translateX(clamp(380px, 32vw, 480px)) rotateY(-12deg) scale(0.85);
-  opacity: 0.3;
-  z-index: 3;
-  pointer-events: auto;
-  cursor: pointer;
-  transition:
-    transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity   560ms ease,
-    filter    560ms ease,
-    border-color 400ms ease,
-    box-shadow 400ms ease;
-}
-
-.momentsCinemaCardNext:hover {
-  opacity: 0.6;
-}
-
-/* Ghost card — desaturated image, lighter overlay so image shows through */
-.momentsCinemaCardPrev .momentsCinemaCardBg,
-.momentsCinemaCardNext .momentsCinemaCardBg {
-  filter: grayscale(100%) brightness(0.55) contrast(1.1);
-}
-
-.momentsCinemaCardPrev .momentsCinemaCardOverlay,
-.momentsCinemaCardNext .momentsCinemaCardOverlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 7, 10, 0.05) 0%,
-    rgba(5, 7, 10, 0.25) 50%,
-    rgba(5, 7, 10, 0.55) 100%
-  );
-}
-
-/* Hide holo effects on ghost cards — reduces visual noise */
-.momentsCinemaCardPrev .momentsHoloOverlay,
-.momentsCinemaCardNext .momentsHoloOverlay,
-.momentsCinemaCardPrev .momentsHoloScanline,
-.momentsCinemaCardNext .momentsHoloScanline {
-  display: none;
-}
-
-/* ── Far left (hidden off screen) ── */
-.momentsCinemaCardFarLeft {
-  transform: translateX(clamp(-760px, -64vw, -960px)) rotateY(22deg) scale(0.62);
-  opacity: 0;
-  filter: blur(12px);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* ── Far right (hidden off screen) ── */
-.momentsCinemaCardFarRight {
-  transform: translateX(clamp(760px, 64vw, 960px)) rotateY(-22deg) scale(0.62);
-  opacity: 0;
-  filter: blur(12px);
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* ── Background image ── */
-.momentsCinemaCardBg {
+.momentsCard::after {
+  content: '';
   position: absolute;
   inset: 0;
-  filter: grayscale(80%) brightness(0.18) contrast(1.1);
-  transition:
-    filter 700ms ease,
-    transform 10000ms ease-in-out;
-  transform: scale(1.1) translate(0%, 0%) translateZ(0px);
+  z-index: 5;
+  background: radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.14) 0%,
+      transparent 100%);
+  opacity: var(--opacity, 0);
+  transition: opacity 300ms ease;
+  pointer-events: none;
 }
 
-/* Ken Burns on active */
-@keyframes kbPan {
-  0%   { transform: scale(1.1) translate(0%, 0%) translateZ(0px); }
-  33%  { transform: scale(1.1) translate(-1.5%, -0.8%) translateZ(0px); }
-  66%  { transform: scale(1.1) translate(-2%, 0.6%) translateZ(0px); }
-  100% { transform: scale(1.1) translate(-0.5%, -0.5%) translateZ(0px); }
-}
-
-.momentsCinemaCardActive .momentsCinemaCardBg {
-  filter: grayscale(0%) brightness(0.4);
-  animation: kbPan 12s ease-in-out infinite alternate;
-}
-
-/* ── Dark gradient overlay ── */
-.momentsCinemaCardOverlay {
+.momentsCardBg {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to bottom,
-    rgba(8, 20, 28, 0.4) 0%,
-    rgba(8, 20, 28, 0.8) 50%,
-    rgba(8, 12, 16, 0.98) 100%
-  );
-  transition: background 600ms ease;
+  overflow: hidden;
+  filter: grayscale(15%) brightness(0.65) contrast(1.05);
+  transition:
+    filter 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99),
+    opacity 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99),
+    transform 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99);
 }
 
-.momentsCinemaCardActive .momentsCinemaCardOverlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 7, 10, 0.05) 0%,
-    rgba(5, 7, 10, 0.45) 40%,
-    rgba(5, 7, 10, 0.96) 100%
-  );
+.momentsCardBg img {
+  width: 100% !important;
+  height: 100% !important;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Holographic grid overlay ── */
+.momentsCardBgCover {
+  opacity: 1;
+}
+
+.momentsCardBgContain {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.momentsCardBgCover img {
+  object-fit: cover !important;
+}
+
+.momentsCardBgContain img {
+  object-fit: contain !important;
+}
+
+.momentsCardOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(to bottom,
+      rgba(8, 12, 16, 0.05) 0%,
+      rgba(8, 12, 16, 0.35) 60%,
+      rgba(8, 12, 16, 0.92) 100%);
+}
+
+/* ── Holographic overlays ── */
 .momentsHoloOverlay {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(240, 80, 35, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(240, 80, 35, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(240, 80, 35, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 80, 35, 0.04) 1px, transparent 1px);
   background-size: 16px 16px;
-  z-index: 2;
-  opacity: 0.65;
+  z-index: 3;
+  opacity: 0;
   mix-blend-mode: color-dodge;
   pointer-events: none;
   transform: translateZ(10px);
-  transition: opacity 600ms ease;
+  transition: opacity 400ms ease;
 }
 
-.momentsCinemaCardActive .momentsHoloOverlay {
-  opacity: 0.15;
-}
-
-/* ── Holographic scrolling scanline ── */
 @keyframes holoScroll {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 300px; }
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 200px;
+  }
 }
 
 .momentsHoloScanline {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(240, 80, 35, 0) 0%,
-    rgba(240, 80, 35, 0.08) 10%,
-    rgba(240, 80, 35, 0) 20%
-  );
-  background-size: 100% 300px;
-  z-index: 3;
-  opacity: 0.5;
+  background: linear-gradient(to bottom,
+      rgba(240, 80, 35, 0) 0%,
+      rgba(240, 80, 35, 0.08) 10%,
+      rgba(240, 80, 35, 0) 20%);
+  background-size: 100% 200px;
+  z-index: 4;
+  opacity: 0;
   pointer-events: none;
   transform: translateZ(15px);
-  animation: holoScroll 6s linear infinite;
-  transition: opacity 600ms ease;
+  transition: opacity 400ms ease;
 }
 
-.momentsCinemaCardActive .momentsHoloScanline {
-  animation: holoScroll 12s linear infinite;
-  opacity: 0.15;
-}
-
-/* ── Light sweep — fires once when card activates ── */
-@keyframes lightSweep {
-  0%   { left: -60%; opacity: 0; }
-  12%  { opacity: 1; }
-  88%  { opacity: 0.55; }
-  100% { left: 160%; opacity: 0; }
-}
-
-.momentsCinemaCardSweep {
+/* ── Giant ghost watermark ── */
+.momentsCardWatermark {
   position: absolute;
-  top: 0;
-  left: -60%;
-  width: 45%;
-  height: 100%;
-  background: linear-gradient(
-    108deg,
-    transparent 0%,
-    rgba(240, 80, 35, 0.07) 38%,
-    rgba(240, 80, 35, 0.16) 50%,
-    rgba(240, 80, 35, 0.07) 62%,
-    transparent 100%
-  );
-  z-index: 5;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateZ(20px);
-}
-
-.momentsCinemaCardActive .momentsCinemaCardSweep {
-  animation: lightSweep 1.1s ease-out 0.15s 1 forwards;
-}
-
-/* ── Giant ghost watermark number ── */
-.momentsCinemaCardWatermark {
-  position: absolute;
-  top: -20px;
-  right: -12px;
+  top: 15px;
+  right: 15px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(140px, 16vw, 240px);
-  line-height: 0.82;
+  font-size: 96px;
+  line-height: 0.8;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
   z-index: 2;
-  pointer-events: none;
   user-select: none;
-  opacity: 0;
-  transform: translateZ(30px);
-  transition: opacity 600ms ease 120ms;
-}
-
-.momentsCinemaCardActive .momentsCinemaCardWatermark {
-  opacity: 1;
-}
-
-/* ── HUD corner brackets ── */
-.momentsCinemaCornerTl,
-.momentsCinemaCornerBr {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  z-index: 6;
-  opacity: 0;
-  transform: scale(0.55) translateZ(50px);
-  transition: opacity 320ms ease 440ms, transform 320ms ease 440ms;
-}
-
-.momentsCinemaCardActive .momentsCinemaCornerTl,
-.momentsCinemaCardActive .momentsCinemaCornerBr {
-  opacity: 1;
-  transform: scale(1) translateZ(50px);
-}
-
-.momentsCinemaCornerTl {
-  top: 18px;
-  left: 18px;
-  border-top: 2px solid var(--accent);
-  border-left: 2px solid var(--accent);
-}
-
-.momentsCinemaCornerBr {
-  bottom: 18px;
-  right: 18px;
-  border-bottom: 2px solid var(--accent);
-  border-right: 2px solid var(--accent);
-}
-
-/* ── Content block — staggered reveal ── */
-.momentsCinemaCardContent {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 36px 44px 44px;
-  z-index: 6;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   pointer-events: none;
-  transform-style: preserve-3d;
-  transform: translateZ(80px);
+  transition:
+    opacity 400ms ease,
+    color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-text-stroke 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    text-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.momentsCinemaCardActive .momentsCinemaCardContent {
-  pointer-events: auto;
-}
-
-@keyframes stepPulse {
-  0% {
-    text-shadow:
-      0 0 4px rgba(240, 80, 35, 0.6),
-      0 0 12px rgba(240, 80, 35, 0.3);
-  }
-  100% {
-    text-shadow:
-      0 0 10px rgba(240, 80, 35, 0.95),
-      0 0 24px rgba(240, 80, 35, 0.6);
-  }
-}
-
-.momentsCinemaCardStep {
+/* ── Step Indicator ── */
+.momentsCardStep {
   position: absolute;
-  top: 24px;
-  left: 24px;
-  z-index: 7;
+  top: 15px;
+  left: 15px;
+  z-index: 6;
   display: inline-flex;
   align-items: center;
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  color: rgba(240, 80, 35, 0.5);
-  background: rgba(240, 80, 35, 0.04);
-  border: 1px solid rgba(240, 80, 35, 0.18);
-  padding: 5px 10px;
-  text-shadow: 0 0 6px rgba(240, 80, 35, 0.2);
-  opacity: 0.65;
-  pointer-events: none;
-  transition:
-    color 400ms ease,
-    text-shadow 400ms ease,
-    opacity 400ms ease,
-    border-color 400ms ease,
-    box-shadow 400ms ease,
-    background 400ms ease;
-}
-
-.momentsCinemaCardActive .momentsCinemaCardStep {
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(8, 12, 16, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 8px;
   opacity: 1;
-  color: var(--accent);
-  background: rgba(240, 80, 35, 0.08);
-  border-color: rgba(240, 80, 35, 0.42);
-  box-shadow:
-    0 0 8px rgba(240, 80, 35, 0.18),
-    inset 0 0 6px rgba(240, 80, 35, 0.04);
-  text-shadow:
-    0 0 8px rgba(240, 80, 35, 0.85),
-    0 0 20px rgba(240, 80, 35, 0.4);
-  animation: stepPulse 2s infinite alternate;
+  transition:
+    opacity 300ms ease,
+    color 400ms ease,
+    border-color 400ms ease,
+    background 400ms ease,
+    text-shadow 400ms ease;
 }
 
-.momentsCinemaCardTitle {
+
+
+/* ── Content container ── */
+.momentsCardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 18px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: translateZ(40px);
+}
+
+.momentsCardTitle {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(18px, 2vw, 28px);
+  font-size: 17px;
   text-transform: uppercase;
   color: #ffffff;
   margin: 0;
-  letter-spacing: -0.3px;
-  line-height: 1.1;
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 380ms ease 260ms, transform 380ms cubic-bezier(0.16,1,0.3,1) 260ms;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  transition: color 400ms ease, text-shadow 400ms ease;
 }
 
-.momentsCinemaCardDesc {
+.momentsCardDesc {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
   margin: 0;
-  max-width: 480px;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 380ms ease 340ms, transform 380ms cubic-bezier(0.16,1,0.3,1) 340ms;
 }
 
-.momentsCinemaCardTags {
+.momentsCardTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 380ms ease 420ms, transform 380ms cubic-bezier(0.16,1,0.3,1) 420ms;
+  gap: 6px;
 }
 
-.momentsCinemaCardActive .momentsCinemaCardTitle,
-.momentsCinemaCardActive .momentsCinemaCardDesc,
-.momentsCinemaCardActive .momentsCinemaCardTags {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.momentsCinemaCardTag {
+.momentsCardTag {
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    color 400ms ease,
+    border-color 400ms ease,
+    background 400ms ease;
+}
+
+/* ── Interactive Hovers ── */
+@keyframes neonPulse {
+  0% {
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.45),
+      0 0 20px rgba(240, 80, 35, 0.2);
+  }
+  100% {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.6),
+      0 0 35px rgba(240, 80, 35, 0.45);
+  }
+}
+
+.momentsCard:hover {
+  z-index: 10;
+  border-color: rgba(240, 80, 35, 0.65);
+  animation: neonPulse 1.2s infinite alternate ease-in-out;
+}
+
+.momentsCard:hover .momentsCardBg {
+  filter: grayscale(0%) brightness(0.98) contrast(1.02);
+}
+
+.momentsCard:hover .momentsCardBgCover {
+  opacity: 0;
+}
+
+.momentsCard:hover .momentsCardBgContain {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.momentsCard:hover .momentsHoloOverlay {
+  opacity: 0.25;
+}
+
+.momentsCard:hover .momentsHoloScanline {
+  opacity: 0.35;
+  animation: holoScroll 6s linear infinite;
+}
+
+.momentsCard:hover .momentsCardWatermark {
+  color: rgba(240, 80, 35, 0.12);
+  -webkit-text-stroke: 1px var(--accent);
+  text-shadow: 0 0 15px rgba(240, 80, 35, 0.25);
+}
+
+.momentsCard:hover .momentsCardStep {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.momentsCard:hover .momentsCardTitle {
   color: var(--accent);
-  border: 1px solid rgba(240, 80, 35, 0.35);
-  padding: 4px 12px;
+  text-shadow: 0 0 8px rgba(240, 80, 35, 0.25);
+}
+
+.momentsCard:hover .momentsCardTag {
+  color: var(--accent);
+  border-color: rgba(240, 80, 35, 0.4);
   background: rgba(240, 80, 35, 0.06);
 }
 
-/* ── Prev / Next navigation buttons ── */
-.momentsNavBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  width: 44px;
-  height: 44px;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.14);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.45);
-  transition:
-    background 280ms ease,
-    border-color 280ms ease,
-    color 280ms ease,
-    transform 280ms ease;
+/* ── Responsive breakpoints ── */
+@media (max-width: 1200px) {
+  .momentsGridContainer {
+    padding: 40px clamp(24px, 5vw, 60px) 64px;
+  }
+
+  .momentsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .momentsCard {
+    height: 390px;
+  }
 }
 
-.momentsNavBtn:hover {
-  background: rgba(240, 80, 35, 0.08);
-  border-color: rgba(240, 80, 35, 0.45);
-  color: var(--accent);
-  transform: translateY(calc(-50% - 2px));
-}
+@media (max-width: 768px) {
+  .momentsGridContainer {
+    padding: 24px 24px 64px;
+  }
 
-.momentsNavBtnPrev { left: clamp(12px, 2.5vw, 48px); }
-.momentsNavBtnNext { right: clamp(12px, 2.5vw, 48px); }
+  .momentsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
 
-/* ── Footer: dots + glowing energy beam ── */
-.momentsFooter {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: clamp(240px, 36vw, 440px);
-}
+  .momentsCard {
+    height: 360px;
+  }
 
-.momentsStepDots {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.momentsStepDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.16);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition:
-    background 300ms ease,
-    transform 300ms ease,
-    box-shadow 300ms ease;
-}
-
-.momentsStepDotActive {
-  background: var(--accent);
-  transform: scale(1.5);
-  box-shadow: 0 0 8px rgba(240, 80, 35, 0.7);
-}
-
-/* ── Glowing energy beam ── */
-.momentsBeam {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  background: rgba(0, 0, 0, 0.1);
-  overflow: visible;
-}
-
-@keyframes beamFill {
-  from { width: 0%; }
-  to   { width: 100%; }
-}
-
-.momentsBeamFill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent) 0%, #ff8050 100%);
-  box-shadow:
-    0 0 5px rgba(240, 80, 35, 0.9),
-    0 0 12px rgba(240, 80, 35, 0.55),
-    0 0 28px rgba(240, 80, 35, 0.25);
-  animation: beamFill 5000ms linear forwards;
-}
-
-.momentsBeamFill::after {
-  content: '';
-  position: absolute;
-  right: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff9060;
-  box-shadow:
-    0 0 8px var(--accent),
-    0 0 18px var(--accent),
-    0 0 36px rgba(240, 80, 35, 0.5);
-}
-
-/* ── prefers-reduced-motion ── */
-@media (prefers-reduced-motion: reduce) {
-  .momentsCinemaCardActive .momentsCinemaCardBg { animation: none; }
-  .momentsCinemaCardActive .momentsCinemaCardSweep { animation: none; }
-  .momentsHoloScanline { animation: none; }
-  .momentsCinemaCard,
-  .momentsCinemaCardBg,
-  .momentsHoloOverlay,
-  .momentsHoloScanline,
-  .momentsCinemaCardStep,
-  .momentsCinemaCardTitle,
-  .momentsCinemaCardDesc,
-  .momentsCinemaCardTags,
-  .momentsCinemaCardWatermark,
-  .momentsCinemaCornerTl,
-  .momentsCinemaCornerBr { transition: none; }
-  .beamFill { animation: none; width: 100%; opacity: 0.4; }
-  .momentsBgGrid { animation: none; }
-}
-
-/* ── Responsive ── */
-@media (max-width: 1023px) {
   .momentsHeader {
     flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
-    padding-bottom: 28px;
+    gap: 16px;
+    text-align: left;
+    padding-bottom: 24px;
   }
-  .momentsSub { text-align: left; max-width: 100%; }
-  .momentsCinema { min-height: 460px; }
-  .momentsCinemaCardContent { padding: 28px 36px 36px; }
-  .momentsCinemaCardPrev {
-    transform: translateX(clamp(-280px, -26vw, -360px)) rotateY(16deg) scale(0.78);
-  }
-  .momentsCinemaCardNext {
-    transform: translateX(clamp(280px, 26vw, 360px)) rotateY(-16deg) scale(0.78);
-  }
-}
 
-@media (max-width: 767px) {
-  .momentsSection { min-height: unset; }
-  .momentsCinema { min-height: 400px; max-height: 520px; }
-  /* On mobile hide side cards — just swipe through */
-  .momentsCinemaCardPrev,
-  .momentsCinemaCardNext {
-    opacity: 0;
-    pointer-events: none;
+  .momentsSub {
+    text-align: left;
+    max-width: 100%;
   }
-  .momentsCinemaCard {
-    width: clamp(260px, 84vw, 360px);
-    margin-left: calc(-1 * clamp(130px, 42vw, 180px));
-  }
-  .momentsNavBtnPrev { left: 8px; }
-  .momentsNavBtnNext { right: 8px; }
-  .momentsCinemaCardContent { padding: 20px 24px 28px; }
-  .momentsCinemaCardTitle { font-size: clamp(16px, 4.5vw, 22px); }
-}
-
-@media (max-width: 640px) {
-  .momentsTitle { font-size: clamp(28px, 8vw, 44px); }
-  .momentsFooter { width: 88vw; }
 }
 
 /* ══════════════════════════════════════════
@@ -2358,15 +2072,21 @@
       rgba(8, 12, 16, 0.82) 0%,
       rgba(8, 12, 16, 0.28) 28%,
       rgba(8, 12, 16, 0.14) 52%,
-      rgba(8, 12, 16, 0.6)  76%,
-      rgba(8, 12, 16, 0.97) 100%
-    );
+      rgba(8, 12, 16, 0.6) 76%,
+      rgba(8, 12, 16, 0.97) 100%);
 }
 
 /* ── Blueprint grid ── */
 @keyframes blueprintPulse {
-  0%, 100% { opacity: 0.28; }
-  50%       { opacity: 0.55; }
+
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
 }
 
 .arenaBlueprintGrid {
@@ -2383,10 +2103,23 @@
 
 /* ── Laser sweep ── */
 @keyframes laserSweep {
-  0%   { top: 0%;   opacity: 0; }
-  6%   { opacity: 1; }
-  92%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+
+  6% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
 }
 
 .arenaLaserLine {
@@ -2406,7 +2139,10 @@
 }
 
 /* ── Section HUD brackets ── */
-.arenaHudTl, .arenaHudTr, .arenaHudBl, .arenaHudBr {
+.arenaHudTl,
+.arenaHudTr,
+.arenaHudBl,
+.arenaHudBr {
   position: absolute;
   z-index: 4;
   width: 28px;
@@ -2414,15 +2150,43 @@
   pointer-events: none;
 }
 
-.arenaHudTl { top: 18px; left: 18px; border-top: 1.5px solid rgba(0, 200, 255, 0.22); border-left: 1.5px solid rgba(0, 200, 255, 0.22); }
-.arenaHudTr { top: 18px; right: 18px; border-top: 1.5px solid rgba(0, 200, 255, 0.22); border-right: 1.5px solid rgba(0, 200, 255, 0.22); }
-.arenaHudBl { bottom: 46px; left: 18px; border-bottom: 1.5px solid rgba(0, 200, 255, 0.22); border-left: 1.5px solid rgba(0, 200, 255, 0.22); }
-.arenaHudBr { bottom: 46px; right: 18px; border-bottom: 1.5px solid rgba(0, 200, 255, 0.22); border-right: 1.5px solid rgba(0, 200, 255, 0.22); }
+.arenaHudTl {
+  top: 18px;
+  left: 18px;
+  border-top: 1.5px solid rgba(0, 200, 255, 0.22);
+  border-left: 1.5px solid rgba(0, 200, 255, 0.22);
+}
+
+.arenaHudTr {
+  top: 18px;
+  right: 18px;
+  border-top: 1.5px solid rgba(0, 200, 255, 0.22);
+  border-right: 1.5px solid rgba(0, 200, 255, 0.22);
+}
+
+.arenaHudBl {
+  bottom: 46px;
+  left: 18px;
+  border-bottom: 1.5px solid rgba(0, 200, 255, 0.22);
+  border-left: 1.5px solid rgba(0, 200, 255, 0.22);
+}
+
+.arenaHudBr {
+  bottom: 46px;
+  right: 18px;
+  border-bottom: 1.5px solid rgba(0, 200, 255, 0.22);
+  border-right: 1.5px solid rgba(0, 200, 255, 0.22);
+}
 
 /* ── Radar ── */
 @keyframes radarSweep {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .arenaRadar {
@@ -2441,9 +2205,19 @@
   border: 1px solid rgba(0, 200, 255, 0.1);
 }
 
-.arenaRadarRing:nth-child(1) { inset: 0; }
-.arenaRadarRing:nth-child(2) { inset: 22%; border-color: rgba(0, 200, 255, 0.16); }
-.arenaRadarRing:nth-child(3) { inset: 44%; border-color: rgba(0, 200, 255, 0.25); }
+.arenaRadarRing:nth-child(1) {
+  inset: 0;
+}
+
+.arenaRadarRing:nth-child(2) {
+  inset: 22%;
+  border-color: rgba(0, 200, 255, 0.16);
+}
+
+.arenaRadarRing:nth-child(3) {
+  inset: 44%;
+  border-color: rgba(0, 200, 255, 0.25);
+}
 
 .arenaRadarSweep {
   position: absolute;
@@ -2476,8 +2250,21 @@
   background: rgba(0, 200, 255, 0.08);
 }
 
-.arenaRadarCross::before { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
-.arenaRadarCross::after  { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+.arenaRadarCross::before {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.arenaRadarCross::after {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+}
 
 /* ── Content column ── */
 .arenaContent {
@@ -2553,7 +2340,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: 
+  transition:
     background 300ms ease,
     border-color 300ms ease,
     box-shadow 300ms ease,
@@ -2591,7 +2378,7 @@
   backdrop-filter: blur(24px) saturate(130%);
   -webkit-backdrop-filter: blur(24px) saturate(130%);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
+  box-shadow:
     0 -10px 40px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
@@ -2616,15 +2403,19 @@
 
 /* Each metric column */
 @keyframes specHighlightPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     border-color: rgba(255, 255, 255, 0.03);
     background: rgba(255, 255, 255, 0.005);
     box-shadow: none;
   }
-  30%, 70% {
+
+  30%,
+  70% {
     border-color: rgba(240, 80, 35, 0.5);
     background: rgba(240, 80, 35, 0.06);
-    box-shadow: 
+    box-shadow:
       0 0 25px rgba(240, 80, 35, 0.25),
       inset 0 0 12px rgba(240, 80, 35, 0.1);
   }
@@ -2640,7 +2431,7 @@
   padding: 24px 20px 22px;
   border: 1px solid rgba(255, 255, 255, 0.03);
   background: rgba(255, 255, 255, 0.005);
-  transition: 
+  transition:
     border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
     background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -2651,7 +2442,7 @@
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-4px);
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
@@ -2678,7 +2469,8 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(20px, 2vw, 30px);
-  color: #ff5e36; /* High contrast vibrant neon orange */
+  color: #ff5e36;
+  /* High contrast vibrant neon orange */
   letter-spacing: -0.5px;
   line-height: 1;
   text-shadow: 0 0 18px rgba(240, 80, 35, 0.4);
@@ -2690,7 +2482,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #ffffff; /* Highly visible pure white */
+  color: #ffffff;
+  /* Highly visible pure white */
   line-height: 1.1;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
@@ -2701,24 +2494,31 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: #cbd5e1; /* High contrast silver-slate */
+  color: #cbd5e1;
+  /* High contrast silver-slate */
   margin-top: 3px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .arenaSpecTrack {
   width: 100%;
-  height: 4px; /* Slightly thicker for visual weight */
+  height: 4px;
+  /* Slightly thicker for visual weight */
   background: rgba(255, 255, 255, 0.08);
   margin-top: 10px;
   overflow: hidden;
   border-radius: 2px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 @keyframes progressFill {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .arenaSpecFill {
@@ -2732,11 +2532,25 @@
   border-radius: 2px;
 }
 
-.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(1) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.2s  forwards; }
-.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(3) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s  forwards; }
-.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(5) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.4s  forwards; }
-.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(7) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s  forwards; }
-.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(9) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.6s  forwards; }
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(1) .arenaSpecFill {
+  animation: progressFill 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(3) .arenaSpecFill {
+  animation: progressFill 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(5) .arenaSpecFill {
+  animation: progressFill 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(7) .arenaSpecFill {
+  animation: progressFill 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(9) .arenaSpecFill {
+  animation: progressFill 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
 
 /* Feature columns (Game Modes / Equipment) */
 .arenaFeatureCol {
@@ -2747,7 +2561,7 @@
   padding: 24px 20px 22px;
   background: rgba(255, 255, 255, 0.005);
   border: 1px solid transparent;
-  transition: 
+  transition:
     background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
     transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2773,7 +2587,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #ffffff; /* Highly visible white */
+  color: #ffffff;
+  /* Highly visible white */
   margin-top: 6px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
@@ -2782,7 +2597,8 @@
   font-family: var(--font-body);
   font-size: 11.5px;
   font-weight: 400;
-  color: #f1f5f9; /* Highly visible silver white */
+  color: #f1f5f9;
+  /* Highly visible silver white */
   line-height: 1.6;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
@@ -2817,27 +2633,47 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.18); /* Make watermark slightly more visible but still backgrounded */
+  color: rgba(255, 255, 255, 0.18);
+  /* Make watermark slightly more visible but still backgrounded */
   white-space: nowrap;
   padding: 12px 0;
 }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .arenaBlueprintGrid  { animation: none; }
-  .arenaRadarSweep     { animation: none; }
-  .arenaLaserLine      { display: none; }
-  .arenaBg img         { transition: none; }
-  .arenaBottomPanel.is-revealed .arenaSpecFill { animation: none; transform: scaleX(1); }
+  .arenaBlueprintGrid {
+    animation: none;
+  }
+
+  .arenaRadarSweep {
+    animation: none;
+  }
+
+  .arenaLaserLine {
+    display: none;
+  }
+
+  .arenaBg img {
+    transition: none;
+  }
+
+  .arenaBottomPanel.is-revealed .arenaSpecFill {
+    animation: none;
+    transform: scaleX(1);
+  }
 }
 
 /* ── Responsive ── */
 @media (max-width: 1199px) {
+
   .arenaSpecCol,
   .arenaFeatureCol {
     padding: 18px 14px 16px;
   }
-  .arenaSpecVal { font-size: clamp(16px, 1.6vw, 24px); }
+
+  .arenaSpecVal {
+    font-size: clamp(16px, 1.6vw, 24px);
+  }
 }
 
 @media (max-width: 1023px) {
@@ -2845,18 +2681,53 @@
     height: auto;
     max-height: none;
   }
-  .arenaTitle { white-space: normal; }
-  .arenaSpecGrid { flex-wrap: wrap; }
-  .arenaSpecCol  { flex: 0 0 calc(50% - 1px); }
-  .arenaFeatureCol { flex: 1; }
-  .arenaColDiv { display: none; }
-  .arenaColDivAccent { display: block; }
+
+  .arenaTitle {
+    white-space: normal;
+  }
+
+  .arenaSpecGrid {
+    flex-wrap: wrap;
+  }
+
+  .arenaSpecCol {
+    flex: 0 0 calc(50% - 1px);
+  }
+
+  .arenaFeatureCol {
+    flex: 1;
+  }
+
+  .arenaColDiv {
+    display: none;
+  }
+
+  .arenaColDivAccent {
+    display: block;
+  }
 }
 
 @media (max-width: 640px) {
-  .arenaTitle { font-size: clamp(24px, 7.5vw, 40px); }
-  .arenaHudTl, .arenaHudTr, .arenaHudBl, .arenaHudBr { display: none; }
-  .arenaRadar { display: none; }
-  .arenaSpecCol { flex: 0 0 50%; }
-  .arenaFeatureCol { flex: 0 0 100%; }
+  .arenaTitle {
+    font-size: clamp(24px, 7.5vw, 40px);
+  }
+
+  .arenaHudTl,
+  .arenaHudTr,
+  .arenaHudBl,
+  .arenaHudBr {
+    display: none;
+  }
+
+  .arenaRadar {
+    display: none;
+  }
+
+  .arenaSpecCol {
+    flex: 0 0 50%;
+  }
+
+  .arenaFeatureCol {
+    flex: 0 0 100%;
+  }
 }
