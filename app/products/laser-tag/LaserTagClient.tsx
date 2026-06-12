@@ -200,6 +200,16 @@ export default function LaserTagClient({ testimonials }: Props) {
   const momentIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const momentStageRef = useRef<HTMLDivElement>(null);
 
+  const [highlightSpecs, setHighlightSpecs] = useState(false);
+
+  const handleViewSpecs = () => {
+    document.getElementById('arena-bottom-panel')?.scrollIntoView({ behavior: 'smooth' });
+    setHighlightSpecs(true);
+    setTimeout(() => {
+      setHighlightSpecs(false);
+    }, 2000);
+  };
+
   const restartAuto = useCallback(() => {
     if (momentIntervalRef.current) clearInterval(momentIntervalRef.current);
     momentIntervalRef.current = setInterval(() => {
@@ -671,10 +681,10 @@ export default function LaserTagClient({ testimonials }: Props) {
 
       </section>
 
-      {/* ── 6. ARENA DESIGN — Full-bleed cinematic reveal ── */}
-      <section id="arena-design" className={styles.arenaSection} data-nav-theme="dark">
+      {/* ── 6. ARENA DESIGN ── */}
+      <section id="arena-design" className={styles.arenaSection} data-nav-theme="dark" data-reveal>
 
-        {/* Background image layer */}
+        {/* Full-bleed background */}
         <div className={styles.arenaBg} aria-hidden="true">
           <Image
             src="/images/laser-tag/arena.png"
@@ -684,106 +694,117 @@ export default function LaserTagClient({ testimonials }: Props) {
             sizes="100vw"
             priority={false}
           />
-          {/* layered overlays for depth */}
-          <div className={styles.arenaOverlayBase} />
-          <div className={styles.arenaOverlayVignette} />
-          <div className={styles.arenaOverlayScanline} aria-hidden="true" />
+          <div className={styles.arenaOverlay} />
         </div>
 
-        {/* Content layer */}
+        {/* Blueprint grid */}
+        <div className={styles.arenaBlueprintGrid} aria-hidden="true" />
+
+        {/* Laser sweep */}
+        <div className={styles.arenaLaserLine} aria-hidden="true" />
+
+        {/* HUD corners */}
+        <div className={styles.arenaHudTl} aria-hidden="true" />
+        <div className={styles.arenaHudTr} aria-hidden="true" />
+        <div className={styles.arenaHudBl} aria-hidden="true" />
+        <div className={styles.arenaHudBr} aria-hidden="true" />
+
+        {/* Radar */}
+        <div className={styles.arenaRadar} aria-hidden="true">
+          <div className={styles.arenaRadarRing} />
+          <div className={styles.arenaRadarRing} />
+          <div className={styles.arenaRadarRing} />
+          <div className={styles.arenaRadarSweep} />
+          <div className={styles.arenaRadarCross} />
+        </div>
+
+        {/* Content column */}
         <div className={styles.arenaContent}>
 
-          {/* Left — heading + descriptor */}
-          <div className={styles.arenaLeft} data-reveal>
+          {/* TOP: eyebrow + single-line heading + description + CTA */}
+          <div className={styles.arenaTopBar} data-reveal>
             <span className={styles.arenaEyebrow}>06 — Arena Design</span>
-            <h2 className={styles.arenaTitle}>Immersive<br />Arena Design</h2>
-            <p className={styles.arenaDesc}>Every arena is a custom 3D-engineered battleground. Ramps, tunnels, cover walls — designed for maximum engagement and repeat bookings.</p>
+            <h2 className={styles.arenaTitle}>IMMERSIVE ARENA DESIGN</h2>
+            <p className={styles.arenaDesc}>
+              Every arena is a custom 3D-engineered battleground. Ramps, tunnels, cover walls — 
+              designed for maximum engagement and repeat bookings.
+            </p>
             <button
-              className={styles.arenaBtn}
-              onClick={() => document.getElementById('arena-specs')?.scrollIntoView({ behavior: 'smooth' })}
+              className={styles.arenaCtaBtn}
+              onClick={handleViewSpecs}
             >
-              View Specs &#x2192;
+              VIEW SPECS <span className={styles.arenaCtaBtnArrow}>➔</span>
             </button>
           </div>
 
-          {/* Right — floating spec callouts */}
-          <div className={styles.arenaRight} data-reveal data-reveal-delay="0.15">
-            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.2">
-              <span className={styles.arenaSpecChipLabel}>Arena Size</span>
-              <span className={styles.arenaSpecChipVal}>700 – 3000 <small>sq ft</small></span>
-            </div>
-            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.28">
-              <span className={styles.arenaSpecChipLabel}>Tagger Range</span>
-              <span className={styles.arenaSpecChipVal}>100 <small>m</small></span>
-            </div>
-            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.36">
-              <span className={styles.arenaSpecChipLabel}>Session Length</span>
-              <span className={styles.arenaSpecChipVal}>5 – 20 <small>min</small></span>
-            </div>
-            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.44">
-              <span className={styles.arenaSpecChipLabel}>Battery Life</span>
-              <span className={styles.arenaSpecChipVal}>8+ <small>hrs</small></span>
+          {/* Spacer — shows image through */}
+          <div className={styles.arenaMiddleSpacer} aria-hidden="true" />
+
+          {/* BOTTOM: full-width HUD data strip */}
+          <div id="arena-bottom-panel" className={styles.arenaBottomPanel} data-reveal data-reveal-delay="0.18">
+            <div className={styles.arenaSpecGrid}>
+
+              {/* 5 metric columns */}
+              {[
+                { val: '700–3000', unit: 'sq ft',   label: 'Arena Size',   bar: 82 },
+                { val: '2–24',     unit: 'players', label: 'Capacity',     bar: 75 },
+                { val: '100',      unit: 'm',       label: 'Tagger Range', bar: 95 },
+                { val: '5–20',     unit: 'min',     label: 'Session',      bar: 68 },
+                { val: '8+',       unit: 'hrs',     label: 'Battery',      bar: 88 },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  className={`${styles.arenaSpecCol} ${highlightSpecs ? styles.arenaSpecColHighlighted : ''}`}
+                >
+                  {i > 0 && <span className={styles.arenaColDiv} aria-hidden="true" />}
+                  <span className={styles.arenaSpecVal}>{s.val}</span>
+                  <span className={styles.arenaSpecUnit}>{s.unit}</span>
+                  <span className={styles.arenaSpecLabel}>{s.label}</span>
+                  <div className={styles.arenaSpecTrack}>
+                    <div
+                      className={styles.arenaSpecFill}
+                      style={{ '--bar-width': `${s.bar}%` } as React.CSSProperties}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Accent divider before feature cols */}
+              <span className={`${styles.arenaColDiv} ${styles.arenaColDivAccent}`} aria-hidden="true" />
+
+              {/* Game Modes */}
+              <div className={styles.arenaFeatureCol}>
+                <svg width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M10 2L4 10h5l-1 6 7-10h-5l1-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className={styles.arenaFeatureTitle}>Game Modes</span>
+                <span className={styles.arenaFeatureText}>TDM · Solo · Save the President</span>
+              </div>
+
+              {/* Equipment */}
+              <div className={styles.arenaFeatureCol}>
+                <svg width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <rect x="2" y="2" width="6" height="6" rx="0.5" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="10" y="2" width="6" height="6" rx="0.5" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="2" y="10" width="6" height="6" rx="0.5" stroke="currentColor" strokeWidth="1.5"/>
+                  <rect x="10" y="10" width="6" height="6" rx="0.5" stroke="currentColor" strokeWidth="1.5"/>
+                </svg>
+                <span className={styles.arenaFeatureTitle}>Equipment</span>
+                <span className={styles.arenaFeatureText}>Combat Phaser · 8-zone haptic vests</span>
+              </div>
+
             </div>
           </div>
 
         </div>
 
-        {/* Bottom bar — ground anchor with horizontal scan line */}
+        {/* Footer bar */}
         <div className={styles.arenaFooter} aria-hidden="true">
           <div className={styles.arenaFooterLine} />
           <span className={styles.arenaFooterLabel}>FOG TECHNOLOGIES — COMBAT ARENA SYSTEM</span>
           <div className={styles.arenaFooterLine} />
         </div>
 
-      </section>
-
-      {/* ── 7. ARENA SPECS ── */}
-      <section id="arena-specs" className={styles.speDataSection} data-nav-theme="dark">
-        <div className={styles.speDataInner}>
-
-          <div className={styles.speDimsCard} data-reveal>
-            <h3 className={styles.speAreaTitle}>
-              <span className={styles.speAreaLabel}>Area</span>
-              <span className={styles.speAreaNum}>700–3000</span> sqft
-            </h3>
-            <div className={styles.speDimsTable}>
-              <div className={styles.speDimsRow}><span>Players</span><span>2–24</span><span>per session</span></div>
-              <div className={styles.speDimsRow}><span>Session</span><span>5–20 min</span><span>operator set</span></div>
-              <div className={styles.speDimsRow}><span>Tagger Range</span><span>100 m</span><span>line of sight</span></div>
-              <div className={styles.speDimsRow}><span>Battery</span><span>8+ hrs</span><span>continuous play</span></div>
-            </div>
-          </div>
-
-          <div className={styles.speInfoCards} data-reveal data-reveal-delay="0.1">
-            <div className={styles.speInfoCard}>
-              <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className={styles.speInfoTitle}>Game Modes</span>
-              </div>
-              <p className={styles.speInfoText}>Team Deathmatch, Solo Deathmatch, Save the President — with more modes regularly added.</p>
-            </div>
-            <div className={styles.speInfoCard}>
-              <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                  <rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                </svg>
-                <span className={styles.speInfoTitle}>Equipment</span>
-              </div>
-              <p className={styles.speInfoText}>Realistic laser guns + <strong>8-zone haptic vests</strong> with sub-10ms hit response time.</p>
-            </div>
-          </div>
-
-        </div>
       </section>
 
       {/* ── 8. TESTIMONIALS ── */}

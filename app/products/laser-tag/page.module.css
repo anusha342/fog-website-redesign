@@ -1748,7 +1748,7 @@
 /* ── Left neighbor — ghost placeholder ── */
 .momentsCinemaCardPrev {
   transform: translateX(clamp(-380px, -32vw, -480px)) rotateY(12deg) scale(0.85);
-  opacity: 0.72;
+  opacity: 0.3;
   z-index: 3;
   pointer-events: auto;
   cursor: pointer;
@@ -1761,13 +1761,13 @@
 }
 
 .momentsCinemaCardPrev:hover {
-  opacity: 0.88;
+  opacity: 0.6;
 }
 
 /* ── Right neighbor — ghost placeholder ── */
 .momentsCinemaCardNext {
   transform: translateX(clamp(380px, 32vw, 480px)) rotateY(-12deg) scale(0.85);
-  opacity: 0.72;
+  opacity: 0.3;
   z-index: 3;
   pointer-events: auto;
   cursor: pointer;
@@ -1780,7 +1780,7 @@
 }
 
 .momentsCinemaCardNext:hover {
-  opacity: 0.88;
+  opacity: 0.6;
 }
 
 /* Ghost card — desaturated image, lighter overlay so image shows through */
@@ -2318,281 +2318,545 @@
 }
 
 /* ══════════════════════════════════════════
-   6. ARENA DESIGN — Full-bleed cinematic reveal
+   6. ARENA DESIGN — Full-bleed Command HUD
    ══════════════════════════════════════════ */
 
+/* ── Section shell ── */
 .arenaSection {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   overflow: hidden;
   background: var(--lt-dark-bg);
 }
 
-/* Background image layer */
+/* ── Full-bleed background image ── */
 .arenaBg {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
-/* Base dark overlay so content is always readable */
-.arenaOverlayBase {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(8, 12, 16, 0.96) 0%,
-    rgba(8, 12, 16, 0.75) 45%,
-    rgba(8, 12, 16, 0.35) 70%,
-    rgba(8, 12, 16, 0.55) 100%
-  );
-  z-index: 1;
+.arenaBg img {
+  transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(1.06);
 }
 
-/* Vignette — top + bottom */
-.arenaOverlayVignette {
+.arenaSection.is-revealed .arenaBg img {
+  transform: scale(1);
+}
+
+.arenaOverlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(8, 12, 16, 0.7) 0%, transparent 20%, transparent 80%, rgba(8, 12, 16, 0.8) 100%);
-  z-index: 2;
+    linear-gradient(to bottom,
+      rgba(8, 12, 16, 0.82) 0%,
+      rgba(8, 12, 16, 0.28) 28%,
+      rgba(8, 12, 16, 0.14) 52%,
+      rgba(8, 12, 16, 0.6)  76%,
+      rgba(8, 12, 16, 0.97) 100%
+    );
 }
 
-/* Animated scan line */
-@keyframes ltArenaScan {
-  0%   { top: -4px; opacity: 0; }
-  8%   { opacity: 0.6; }
-  92%  { opacity: 0.6; }
+/* ── Blueprint grid ── */
+@keyframes blueprintPulse {
+  0%, 100% { opacity: 0.28; }
+  50%       { opacity: 0.55; }
+}
+
+.arenaBlueprintGrid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(0, 200, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 200, 255, 0.022) 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: blueprintPulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Laser sweep ── */
+@keyframes laserSweep {
+  0%   { top: 0%;   opacity: 0; }
+  6%   { opacity: 1; }
+  92%  { opacity: 1; }
   100% { top: 100%; opacity: 0; }
 }
 
-.arenaOverlayScanline {
+.arenaLaserLine {
   position: absolute;
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(0, 200, 255, 0.12) 20%,
-    rgba(0, 200, 255, 0.5) 50%,
-    rgba(0, 200, 255, 0.12) 80%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 5%, var(--accent) 50%, transparent 95%);
+  box-shadow: 0 0 10px var(--accent), 0 0 22px rgba(240, 80, 35, 0.35);
   z-index: 3;
   pointer-events: none;
-  animation: ltArenaScan 8s ease-in-out infinite;
+  opacity: 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .arenaOverlayScanline { animation: none; opacity: 0; }
+.arenaSection.is-revealed .arenaLaserLine {
+  animation: laserSweep 1.8s cubic-bezier(0.25, 1, 0.5, 1) 0.25s forwards;
 }
 
-/* Content layer */
+/* ── Section HUD brackets ── */
+.arenaHudTl, .arenaHudTr, .arenaHudBl, .arenaHudBr {
+  position: absolute;
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+}
+
+.arenaHudTl { top: 18px; left: 18px; border-top: 1.5px solid rgba(0, 200, 255, 0.22); border-left: 1.5px solid rgba(0, 200, 255, 0.22); }
+.arenaHudTr { top: 18px; right: 18px; border-top: 1.5px solid rgba(0, 200, 255, 0.22); border-right: 1.5px solid rgba(0, 200, 255, 0.22); }
+.arenaHudBl { bottom: 46px; left: 18px; border-bottom: 1.5px solid rgba(0, 200, 255, 0.22); border-left: 1.5px solid rgba(0, 200, 255, 0.22); }
+.arenaHudBr { bottom: 46px; right: 18px; border-bottom: 1.5px solid rgba(0, 200, 255, 0.22); border-right: 1.5px solid rgba(0, 200, 255, 0.22); }
+
+/* ── Radar ── */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.arenaRadar {
+  position: absolute;
+  bottom: 56px;
+  right: clamp(22px, 4vw, 60px);
+  width: 72px;
+  height: 72px;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.arenaRadarRing {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 200, 255, 0.1);
+}
+
+.arenaRadarRing:nth-child(1) { inset: 0; }
+.arenaRadarRing:nth-child(2) { inset: 22%; border-color: rgba(0, 200, 255, 0.16); }
+.arenaRadarRing:nth-child(3) { inset: 44%; border-color: rgba(0, 200, 255, 0.25); }
+
+.arenaRadarSweep {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 1px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, rgba(240, 80, 35, 0.85) 0%, transparent 100%);
+  animation: radarSweep 4s linear infinite;
+}
+
+.arenaRadarSweep::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(240, 80, 35, 0.8);
+}
+
+.arenaRadarCross::before,
+.arenaRadarCross::after {
+  content: '';
+  position: absolute;
+  background: rgba(0, 200, 255, 0.08);
+}
+
+.arenaRadarCross::before { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+.arenaRadarCross::after  { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+
+/* ── Content column ── */
 .arenaContent {
   position: relative;
   z-index: 5;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 80px clamp(24px, 5vw, 80px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
-/* Left — heading block */
-.arenaLeft {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+}
+
+/* ── TOP: eyebrow + heading ── */
+.arenaTopBar {
+  flex-shrink: 0;
+  padding: 40px clamp(24px, 5vw, 80px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arenaTopBar.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .arenaEyebrow {
+  display: block;
   font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
+  font-size: clamp(9px, 0.85vw, 12px);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 4px;
   color: var(--accent);
-  display: block;
 }
 
 .arenaTitle {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--fs-heading-1);
+  font-size: clamp(28px, 3.4vw, 54px);
   text-transform: uppercase;
   color: #ffffff;
   letter-spacing: -0.5px;
-  line-height: 1.0;
-  margin: 0;
+  line-height: 1.05;
+  margin: 0 0 12px 0;
 }
 
 .arenaDesc {
   font-family: var(--font-body);
-  font-size: var(--fs-body-p3);
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.7;
-  margin: 0;
-  max-width: 420px;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.65;
+  margin: 0 0 24px 0;
+  max-width: 580px;
 }
 
-.arenaBtn {
-  display: inline-flex;
-  align-items: center;
-  height: 44px;
-  padding: 0 24px;
+.arenaCtaBtn {
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-family: var(--font-body);
-  font-size: var(--fs-body-p4);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  width: fit-content;
-  transition:
-    background 250ms ease,
-    border-color 250ms ease,
-    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.arenaBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.7);
-  transform: translateY(-2px);
-}
-
-/* Right — spec chips */
-.arenaRight {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: flex-end;
-}
-
-.arenaSpecChip {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 18px 28px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 3px solid var(--accent);
-  min-width: 240px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition:
-    background 300ms ease,
-    border-color 300ms ease,
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.arenaSpecChip:hover {
-  background: rgba(240, 80, 35, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  border-left-color: var(--accent);
-  transform: translateX(-6px);
-}
-
-.arenaSpecChipLabel {
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.38);
-  display: block;
+  letter-spacing: 2px;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 
+    background 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.arenaSpecChipVal {
+.arenaCtaBtn:hover {
+  background: rgba(240, 80, 35, 0.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(240, 80, 35, 0.2);
+  transform: translateY(-2px);
+}
+
+.arenaCtaBtnArrow {
+  font-size: 10px;
+  transition: transform 300ms ease;
+  color: var(--accent);
+  display: inline-block;
+}
+
+.arenaCtaBtn:hover .arenaCtaBtnArrow {
+  transform: translateX(4px);
+}
+
+/* Middle spacer — lets the image shine through */
+.arenaMiddleSpacer {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── BOTTOM: full-width HUD data strip ── */
+.arenaBottomPanel {
+  flex-shrink: 0;
+  background: rgba(8, 12, 16, 0.88);
+  backdrop-filter: blur(24px) saturate(130%);
+  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 -10px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arenaBottomPanel.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Spec + feature grid row */
+.arenaSpecGrid {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 80px);
+  display: flex;
+  align-items: stretch;
+}
+
+/* Each metric column */
+@keyframes specHighlightPulse {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.005);
+    box-shadow: none;
+  }
+  30%, 70% {
+    border-color: rgba(240, 80, 35, 0.5);
+    background: rgba(240, 80, 35, 0.06);
+    box-shadow: 
+      0 0 25px rgba(240, 80, 35, 0.25),
+      inset 0 0 12px rgba(240, 80, 35, 0.1);
+  }
+}
+
+.arenaSpecCol {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 24px 20px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.005);
+  transition: 
+    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arenaSpecCol:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.arenaSpecColHighlighted {
+  animation: specHighlightPulse 2000ms ease-in-out;
+}
+
+/* Vertical divider between columns */
+.arenaColDiv {
+  flex-shrink: 0;
+  width: 1px;
+  align-self: stretch;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.12) 15%, rgba(255, 255, 255, 0.12) 85%, transparent);
+  margin: 16px 0;
+}
+
+/* Accent divider before feature cols */
+.arenaColDivAccent {
+  background: linear-gradient(to bottom, transparent, rgba(240, 80, 35, 0.4) 15%, rgba(240, 80, 35, 0.4) 85%, transparent);
+}
+
+.arenaSpecVal {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(22px, 2.5vw, 32px);
-  color: #ffffff;
+  font-size: clamp(20px, 2vw, 30px);
+  color: #ff5e36; /* High contrast vibrant neon orange */
   letter-spacing: -0.5px;
   line-height: 1;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
+  text-shadow: 0 0 18px rgba(240, 80, 35, 0.4);
 }
 
-.arenaSpecChipVal small {
+.arenaSpecUnit {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.5px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff; /* Highly visible pure white */
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Bottom footer bar */
+.arenaSpecLabel {
+  font-family: var(--font-body);
+  font-size: 8.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #cbd5e1; /* High contrast silver-slate */
+  margin-top: 3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.arenaSpecTrack {
+  width: 100%;
+  height: 4px; /* Slightly thicker for visual weight */
+  background: rgba(255, 255, 255, 0.08);
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+}
+
+@keyframes progressFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.arenaSpecFill {
+  display: block;
+  width: var(--bar-width, 80%);
+  height: 100%;
+  background: linear-gradient(90deg, #f05023 0%, #ff8c50 100%);
+  box-shadow: 0 0 8px rgba(240, 80, 35, 0.85);
+  transform: scaleX(0);
+  transform-origin: left center;
+  border-radius: 2px;
+}
+
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(1) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.2s  forwards; }
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(3) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.3s  forwards; }
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(5) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.4s  forwards; }
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(7) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s  forwards; }
+.arenaBottomPanel.is-revealed .arenaSpecCol:nth-child(9) .arenaSpecFill { animation: progressFill 1.1s cubic-bezier(0.16,1,0.3,1) 0.6s  forwards; }
+
+/* Feature columns (Game Modes / Equipment) */
+.arenaFeatureCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 24px 20px 22px;
+  background: rgba(255, 255, 255, 0.005);
+  border: 1px solid transparent;
+  transition: 
+    background-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arenaFeatureCol:hover {
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-2px);
+}
+
+.arenaFeatureCol svg {
+  color: var(--lt-cyan);
+  filter: drop-shadow(0 0 6px rgba(0, 200, 255, 0.6));
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.arenaFeatureCol:hover svg {
+  transform: scale(1.2) rotate(8deg);
+}
+
+.arenaFeatureTitle {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff; /* Highly visible white */
+  margin-top: 6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.arenaFeatureText {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: #f1f5f9; /* Highly visible silver white */
+  line-height: 1.6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Footer bar ── */
 .arenaFooter {
   position: relative;
   z-index: 5;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   background: rgba(8, 12, 16, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .arenaFooterLine {
   flex: 1;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.06));
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05));
 }
 
 .arenaFooterLine:last-child {
-  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.06));
+  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.05));
 }
 
 .arenaFooterLabel {
   font-family: var(--font-body);
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 4px;
-  color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.18); /* Make watermark slightly more visible but still backgrounded */
   white-space: nowrap;
-  padding: 14px 0;
+  padding: 12px 0;
 }
 
-/* Responsive arena */
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .arenaBlueprintGrid  { animation: none; }
+  .arenaRadarSweep     { animation: none; }
+  .arenaLaserLine      { display: none; }
+  .arenaBg img         { transition: none; }
+  .arenaBottomPanel.is-revealed .arenaSpecFill { animation: none; transform: scaleX(1); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1199px) {
+  .arenaSpecCol,
+  .arenaFeatureCol {
+    padding: 18px 14px 16px;
+  }
+  .arenaSpecVal { font-size: clamp(16px, 1.6vw, 24px); }
+}
+
 @media (max-width: 1023px) {
-  .arenaContent {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 80px clamp(24px, 5vw, 80px);
+  .arenaSection {
+    height: auto;
+    max-height: none;
   }
-  .arenaRight {
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .arenaSpecChip {
-    min-width: 180px;
-    flex: 1;
-  }
-  .arenaSpecChip:hover { transform: translateY(-4px); }
-  .arenaOverlayBase {
-    background: rgba(8, 12, 16, 0.82);
-  }
+  .arenaTitle { white-space: normal; }
+  .arenaSpecGrid { flex-wrap: wrap; }
+  .arenaSpecCol  { flex: 0 0 calc(50% - 1px); }
+  .arenaFeatureCol { flex: 1; }
+  .arenaColDiv { display: none; }
+  .arenaColDivAccent { display: block; }
 }
 
 @media (max-width: 640px) {
-  .arenaSection { min-height: 80vh; }
-  .arenaTitle { font-size: clamp(36px, 9vw, 64px); }
-  .arenaRight { flex-direction: column; }
-  .arenaSpecChip { min-width: unset; width: 100%; }
+  .arenaTitle { font-size: clamp(24px, 7.5vw, 40px); }
+  .arenaHudTl, .arenaHudTr, .arenaHudBl, .arenaHudBr { display: none; }
+  .arenaRadar { display: none; }
+  .arenaSpecCol { flex: 0 0 50%; }
+  .arenaFeatureCol { flex: 0 0 100%; }
 }
