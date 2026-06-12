@@ -131,7 +131,7 @@ const MOMENTS = [
   {
     label: 'Suit Up & Play',
     title: 'Suit up & enter the arena',
-    desc: 'Players gear up with combat vests and laser guns in under 2 minutes. Select your game mode at the kiosk — Moments AI begins tracking the instant the session starts.',
+    desc: 'Gear up with combat vests and phasers, select your game mode, and start the battle.',
     tags: ['Under 2 min setup', 'Up to 30 players'],
     img: '/images/laser-tag/laser-tag-1.png',
     imgAlt: 'Players suiting up in laser tag arena',
@@ -139,7 +139,7 @@ const MOMENTS = [
   {
     label: 'AI Captures You',
     title: 'AI captures every highlight',
-    desc: 'Overhead cameras powered by Moments AI auto-detect key moments — eliminations, streaks, team victories — and clip them in real time. No operator input needed.',
+    desc: 'Overhead AI cameras automatically detect and record key eliminations, streaks, and victories.',
     tags: ['Auto-clip', 'Real-time', 'Zero setup'],
     img: '/images/laser-tag/arena.png',
     imgAlt: 'AI cameras tracking every move in the arena',
@@ -147,7 +147,7 @@ const MOMENTS = [
   {
     label: 'Scan QR Code',
     title: 'Scan QR, claim your clip',
-    desc: 'A QR code at the exit links every player to their personal highlight reel — no app, no login, no friction. Works instantly on any phone.',
+    desc: 'Scan the QR code at the arena exit to claim your personal highlight reel instantly.',
     tags: ['No app needed', 'Instant access'],
     img: '/images/laser-tag/vest-description.png',
     imgAlt: 'QR code scanning at exit kiosk',
@@ -155,12 +155,87 @@ const MOMENTS = [
   {
     label: 'Download & Share',
     title: 'Download & share instantly',
-    desc: 'Your highlight clip downloads automatically. Share it to Instagram, WhatsApp, or anywhere — every session becomes organic marketing for your venue.',
+    desc: 'Download your automated gameplay video and share it instantly to Instagram or WhatsApp.',
     tags: ['1-tap share', 'Viral ready'],
     img: '/images/laser-tag/gun.png',
     imgAlt: 'Sharing highlight clip on phone',
   },
 ];
+
+/* ── MOMENT CARD COMPONENT ── */
+function MomentCard({ step, idx }: { step: typeof MOMENTS[0]; idx: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = (x / rect.width - 0.5) * 2;
+    const py = (y / rect.height - 0.5) * 2;
+    const maxRotation = 8;
+    const rx = -py * maxRotation;
+    const ry = px * maxRotation;
+    card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.25, 1.25, 1.25)`;
+    card.style.setProperty('--mx', `${x}px`);
+    card.style.setProperty('--my', `${y}px`);
+    card.style.setProperty('--opacity', '1');
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    card.style.setProperty('--opacity', '0');
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className={styles.momentsCard}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      role="article"
+      aria-label={`Step ${idx + 1}: ${step.label}`}
+    >
+      <div className={`${styles.momentsCardBg} ${styles.momentsCardBgCover}`}>
+        <Image
+          src={step.img}
+          alt={step.imgAlt}
+          fill
+          loading="lazy"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+        />
+      </div>
+      <div className={`${styles.momentsCardBg} ${styles.momentsCardBgContain}`}>
+        <Image
+          src={step.img}
+          alt={step.imgAlt}
+          fill
+          loading="lazy"
+          style={{ objectFit: 'contain', objectPosition: 'center' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+        />
+      </div>
+      <div className={styles.momentsCardOverlay} aria-hidden="true" />
+      <div className={styles.momentsHoloOverlay} aria-hidden="true" />
+      <div className={styles.momentsHoloScanline} aria-hidden="true" />
+      <span className={styles.momentsCardWatermark} aria-hidden="true">0{idx + 1}</span>
+      <span className={styles.momentsCardStep} aria-hidden="true">[ • STEP 0{idx + 1} ]</span>
+      <div className={styles.momentsCardContent}>
+        <h3 className={styles.momentsCardTitle}>{step.title}</h3>
+        <p className={styles.momentsCardDesc}>{step.desc}</p>
+        <div className={styles.momentsCardTags}>
+          {step.tags.map(t => (
+            <span key={t} className={styles.momentsCardTag}>{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 interface Props {
   testimonials: Testimonial[];
@@ -196,10 +271,6 @@ export default function LaserTagClient({ testimonials }: Props) {
     return () => document.removeEventListener('keydown', onKey);
   }, [closeVideo]);
 
-  const [activeMoment, setActiveMoment] = useState(0);
-  const momentIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const momentStageRef = useRef<HTMLDivElement>(null);
-
   const [highlightSpecs, setHighlightSpecs] = useState(false);
 
   const handleViewSpecs = () => {
@@ -209,35 +280,6 @@ export default function LaserTagClient({ testimonials }: Props) {
       setHighlightSpecs(false);
     }, 2000);
   };
-
-  const restartAuto = useCallback(() => {
-    if (momentIntervalRef.current) clearInterval(momentIntervalRef.current);
-    momentIntervalRef.current = setInterval(() => {
-      setActiveMoment(prev => (prev + 1) % 4);
-    }, 5000);
-  }, []);
-
-  useEffect(() => {
-    restartAuto();
-    return () => { if (momentIntervalRef.current) clearInterval(momentIntervalRef.current); };
-  }, [restartAuto]);
-
-  const handleMomentMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    if (momentStageRef.current) {
-      momentStageRef.current.style.transform =
-        `perspective(1400px) rotateX(${y * -1.5}deg) rotateY(${x * 2}deg)`;
-    }
-  }, []);
-
-  const handleMomentMouseLeave = useCallback(() => {
-    if (momentStageRef.current) {
-      momentStageRef.current.style.transform =
-        'perspective(1400px) rotateX(0deg) rotateY(0deg)';
-    }
-  }, []);
 
   const [activeUsp, setActiveUsp] = useState(0);
 
@@ -565,8 +607,6 @@ export default function LaserTagClient({ testimonials }: Props) {
         id="lt-moments"
         className={styles.momentsSection}
         data-nav-theme="light"
-        onMouseMove={handleMomentMouseMove}
-        onMouseLeave={handleMomentMouseLeave}
       >
 
         {/* Header */}
@@ -575,108 +615,15 @@ export default function LaserTagClient({ testimonials }: Props) {
             <span className={styles.momentsEyebrow}>05 — Moments AI</span>
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
           </div>
-          <p className={styles.momentsSub}>Every battle, captured. Every highlight, shareable in seconds.</p>
         </div>
 
-        {/* Cinematic stage */}
-        <div className={styles.momentsCinema}>
-
-          {/* 3-D card stage — mouse parallax applied via ref */}
-          <div className={styles.momentsStage} ref={momentStageRef}>
-            {MOMENTS.map((step, idx) => {
-              const n = MOMENTS.length;
-              let offset = idx - activeMoment;
-              if (offset < -1) offset += n;
-              if (offset > 2)  offset -= n;
-              let cls = styles.momentsCinemaCard;
-              if (offset === 0)       cls += ` ${styles.momentsCinemaCardActive}`;
-              else if (offset === -1) cls += ` ${styles.momentsCinemaCardPrev}`;
-              else if (offset === 1)  cls += ` ${styles.momentsCinemaCardNext}`;
-              else                    cls += ` ${styles.momentsCinemaCardFarRight}`;
-
-              return (
-                <div
-                  key={idx}
-                  className={cls}
-                  onClick={() => { setActiveMoment(idx); restartAuto(); }}
-                  role="button"
-                  tabIndex={offset === 2 ? -1 : 0}
-                  aria-label={`Step ${idx + 1}: ${step.label}`}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter' || e.key === ' ') { setActiveMoment(idx); restartAuto(); }
-                  }}
-                >
-                  {/* Background image — Ken Burns on active */}
-                  <div className={styles.momentsCinemaCardBg}>
-                    <Image
-                      src={step.img}
-                      alt={step.imgAlt}
-                      fill
-                      loading="eager"
-                      style={{ objectFit: 'cover', objectPosition: 'center' }}
-                      sizes="(max-width: 640px) 100vw, 55vw"
-                    />
-                  </div>
-
-                  {/* Gradient overlay */}
-                  <div className={styles.momentsCinemaCardOverlay} aria-hidden="true" />
-
-                  {/* Holographic grid and scanline overlays */}
-                  <div className={styles.momentsHoloOverlay} aria-hidden="true" />
-                  <div className={styles.momentsHoloScanline} aria-hidden="true" />
-
-                  {/* Light sweep — plays once on activation */}
-                  <div className={styles.momentsCinemaCardSweep} aria-hidden="true" />
-
-                  {/* Giant ghost watermark number */}
-                  <span className={styles.momentsCinemaCardWatermark} aria-hidden="true">
-                    0{idx + 1}
-                  </span>
-
-                  {/* Step badge — top-left HUD tag, always visible on all cards */}
-                  <span className={styles.momentsCinemaCardStep} aria-hidden="true">
-                    [ • STEP 0{idx + 1} ]
-                  </span>
-
-                  {/* HUD corner brackets */}
-                  <div className={styles.momentsCinemaCornerTl} aria-hidden="true" />
-                  <div className={styles.momentsCinemaCornerBr} aria-hidden="true" />
-
-                  {/* Content — title/desc/tags revealed only on active card */}
-                  <div className={styles.momentsCinemaCardContent}>
-                    <h3 className={styles.momentsCinemaCardTitle}>{step.title}</h3>
-                    <p className={styles.momentsCinemaCardDesc}>{step.desc}</p>
-                    <div className={styles.momentsCinemaCardTags}>
-                      {step.tags.map(t => (
-                        <span key={t} className={styles.momentsCinemaCardTag}>{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+        {/* Cinematic grid container */}
+        <div className={styles.momentsGridContainer}>
+          <div className={styles.momentsGrid}>
+            {MOMENTS.map((step, idx) => (
+              <MomentCard key={idx} step={step} idx={idx} />
+            ))}
           </div>
-
-          {/* Prev / Next arrow buttons */}
-          <button
-            className={`${styles.momentsNavBtn} ${styles.momentsNavBtnPrev}`}
-            onClick={() => { setActiveMoment((activeMoment - 1 + 4) % 4); restartAuto(); }}
-            aria-label="Previous step"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <polyline points="12,3 6,9 12,15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <button
-            className={`${styles.momentsNavBtn} ${styles.momentsNavBtnNext}`}
-            onClick={() => { setActiveMoment((activeMoment + 1) % 4); restartAuto(); }}
-            aria-label="Next step"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-              <polyline points="6,3 12,9 6,15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-
         </div>
 
       </section>
