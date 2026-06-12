@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import styles from './page.module.css';
@@ -128,11 +127,39 @@ const MODES = [
   },
 ];
 
-const STEPS = [
-  { name: 'Suit Up', desc: 'Players gear up with combat vests and laser guns. Ready to battle in under 2 minutes.', img: '/images/laser-tag/laser-tag-1.png' },
-  { name: 'Select Game Mode', desc: 'Choose from Team Deathmatch, Solo Deathmatch, or Save the President at the kiosk.', img: '/images/laser-tag/laser-tag-1.png' },
-  { name: 'Enter & Battle', desc: 'Players enter the arena and battle begins. Moments AI captures every highlight automatically.', img: '/images/laser-tag/laser-tag-1.png' },
-  { name: 'Share & Return', desc: 'Review your score, claim your highlight clip, and challenge your squad to a rematch.', img: '/images/laser-tag/laser-tag-1.png' },
+const MOMENTS = [
+  {
+    label: 'Suit Up & Play',
+    title: 'Suit up & enter the arena',
+    desc: 'Players gear up with combat vests and laser guns in under 2 minutes. Select your game mode at the kiosk — Moments AI begins tracking the instant the session starts.',
+    tags: ['Under 2 min setup', 'Up to 30 players'],
+    img: '/images/laser-tag/laser-tag-1.png',
+    imgAlt: 'Players suiting up in laser tag arena',
+  },
+  {
+    label: 'AI Captures You',
+    title: 'AI captures every highlight',
+    desc: 'Overhead cameras powered by Moments AI auto-detect key moments — eliminations, streaks, team victories — and clip them in real time. No operator input needed.',
+    tags: ['Auto-clip', 'Real-time', 'Zero setup'],
+    img: '/images/laser-tag/arena.png',
+    imgAlt: 'AI cameras tracking every move in the arena',
+  },
+  {
+    label: 'Scan QR Code',
+    title: 'Scan QR, claim your clip',
+    desc: 'A QR code at the exit links every player to their personal highlight reel — no app, no login, no friction. Works instantly on any phone.',
+    tags: ['No app needed', 'Instant access'],
+    img: '/images/laser-tag/vest-description.png',
+    imgAlt: 'QR code scanning at exit kiosk',
+  },
+  {
+    label: 'Download & Share',
+    title: 'Download & share instantly',
+    desc: 'Your highlight clip downloads automatically. Share it to Instagram, WhatsApp, or anywhere — every session becomes organic marketing for your venue.',
+    tags: ['1-tap share', 'Viral ready'],
+    img: '/images/laser-tag/gun.png',
+    imgAlt: 'Sharing highlight clip on phone',
+  },
 ];
 
 interface Props {
@@ -169,7 +196,39 @@ export default function LaserTagClient({ testimonials }: Props) {
     return () => document.removeEventListener('keydown', onKey);
   }, [closeVideo]);
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeMoment, setActiveMoment] = useState(0);
+  const momentIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const momentStageRef = useRef<HTMLDivElement>(null);
+
+  const restartAuto = useCallback(() => {
+    if (momentIntervalRef.current) clearInterval(momentIntervalRef.current);
+    momentIntervalRef.current = setInterval(() => {
+      setActiveMoment(prev => (prev + 1) % 4);
+    }, 5000);
+  }, []);
+
+  useEffect(() => {
+    restartAuto();
+    return () => { if (momentIntervalRef.current) clearInterval(momentIntervalRef.current); };
+  }, [restartAuto]);
+
+  const handleMomentMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    if (momentStageRef.current) {
+      momentStageRef.current.style.transform =
+        `perspective(1400px) rotateX(${y * -1.5}deg) rotateY(${x * 2}deg)`;
+    }
+  }, []);
+
+  const handleMomentMouseLeave = useCallback(() => {
+    if (momentStageRef.current) {
+      momentStageRef.current.style.transform =
+        'perspective(1400px) rotateX(0deg) rotateY(0deg)';
+    }
+  }, []);
+
   const [activeUsp, setActiveUsp] = useState(0);
 
   return (
@@ -211,6 +270,60 @@ export default function LaserTagClient({ testimonials }: Props) {
             <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>
               &#x25B6;&nbsp; Video
             </button>
+          </div>
+        </div>
+
+        {/* ── HERO STATS HUD — visible immediately, no scroll required ── */}
+        <div className={styles.heroStats} aria-label="Laser Tag at a glance">
+          <div className={styles.heroStatsTicker} aria-hidden="true">
+            <span>LASER TAG COMBAT SYSTEM</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>FOG TECHNOLOGIES</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>ARENA-GRADE EQUIPMENT</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>INDIA&apos;S PREMIUM LBE</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>LASER TAG COMBAT SYSTEM</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>FOG TECHNOLOGIES</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>ARENA-GRADE EQUIPMENT</span>
+            <span className={styles.heroStatsTickerDot} />
+            <span>INDIA&apos;S PREMIUM LBE</span>
+          </div>
+          <div className={styles.heroStatsGrid}>
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.4">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                <span className={styles.heroStatLabel}>Min. Age</span>
+              </div>
+              <span className={styles.heroStatNum}>7<span className={styles.heroStatUnit}>yrs</span></span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.48">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span className={styles.heroStatLabel}>Max Players</span>
+              </div>
+              <span className={styles.heroStatNum}>30</span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.56">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+                <span className={styles.heroStatLabel}>Arena Area</span>
+              </div>
+              <span className={styles.heroStatNum}>2000<span className={styles.heroStatUnit}>sq ft</span></span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.64">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><path d="M3 20h18"/></svg>
+                <span className={styles.heroStatLabel}>ROI Period</span>
+              </div>
+              <span className={styles.heroStatNum}>24<span className={styles.heroStatUnit}>mo</span></span>
+            </div>
           </div>
         </div>
 
@@ -437,193 +550,195 @@ export default function LaserTagClient({ testimonials }: Props) {
         </div>
       </section>
 
-      {/* ── QUICK STATS ── */}
-      <section className={styles.quickStats} aria-label="Laser Tag at a glance">
-        <div className={styles.quickStatsInner}>
-
-          <div className={styles.statCard} data-reveal data-reveal-delay="0">
-            <div className={styles.statIconWrap}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <line x1="19" y1="8" x2="19" y2="14" />
-                <line x1="16" y1="11" x2="22" y2="11" />
-              </svg>
-            </div>
-            <span className={styles.statNum}>7</span>
-            <span className={styles.statLabel}>Minimum Age</span>
-          </div>
-
-          <div className={styles.statCard} data-reveal data-reveal-delay="0.1">
-            <div className={styles.statIconWrap}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-            </div>
-            <span className={styles.statNum}>30</span>
-            <span className={styles.statLabel}>Max Players</span>
-          </div>
-
-          <div className={styles.statCard} data-reveal data-reveal-delay="0.2">
-            <div className={styles.statIconWrap}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="0" />
-                <line x1="9" y1="3" x2="9" y2="21" />
-                <line x1="15" y1="3" x2="15" y2="21" />
-                <line x1="3" y1="9" x2="21" y2="9" />
-                <line x1="3" y1="15" x2="21" y2="15" />
-              </svg>
-            </div>
-            <span className={styles.statNum}>2000</span>
-            <span className={styles.statLabel}>Area Required (sq ft)</span>
-          </div>
-
-          <div className={styles.statCard} data-reveal data-reveal-delay="0.3">
-            <div className={styles.statIconWrap}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="18" y1="20" x2="18" y2="10" />
-                <line x1="12" y1="20" x2="12" y2="4" />
-                <line x1="6" y1="20" x2="6" y2="14" />
-                <path d="M3 20h18" />
-              </svg>
-            </div>
-            <span className={styles.statNum}>24</span>
-            <span className={styles.statLabel}>ROI Months</span>
-          </div>
-
-        </div>
-      </section>
-
       {/* ── 5. MOMENTS IN LASER TAG ── */}
-      <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
-        <div className={styles.momentsInner}>
-          <div className={styles.momentsTop} data-reveal>
+      <section
+        id="lt-moments"
+        className={styles.momentsSection}
+        data-nav-theme="light"
+        onMouseMove={handleMomentMouseMove}
+        onMouseLeave={handleMomentMouseLeave}
+      >
+
+        {/* Header */}
+        <div className={styles.momentsHeader} data-reveal>
+          <div className={styles.momentsHeaderLeft}>
+            <span className={styles.momentsEyebrow}>05 — Moments AI</span>
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
           </div>
-
-          <div className={styles.momentsBento}>
-
-            {/* Step 1 */}
-            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.1">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true" />
-                <span className={styles.momentsStepText}>Step 01</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-                <div className={styles.momentsCardVisual}>
-                  <Image src="/images/laser-tag/laser-tag-1.png" alt="Laser Tag arena" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <div className={styles.momentsCardBody}>
-                  <h3 className={styles.momentsCardH}>Play in arena</h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.2">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true" />
-                <span className={styles.momentsStepText}>Step 02</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
-                  <h3 className={styles.momentsCardH}>Scan Qr Code for getting moments</h3>
-                  <div className={styles.momentsAvatars}>
-                    <span className={styles.momentsAvatar}>TD</span>
-                    <span className={styles.momentsAvatar}>SD</span>
-                    <span className={styles.momentsAvatar}>SP</span>
-                  </div>
-                  <div className={styles.momentsChecklist}>
-                    <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                    {[
-                      { label: 'Book session & gear up', done: true },
-                      { label: 'Select game mode at kiosk', done: true },
-                      { label: 'AI capture starts on entry', done: true },
-                      { label: 'Highlight clip delivered instantly', done: false },
-                      { label: 'Leaderboard rank updated', done: false },
-                    ].map((item, i) => (
-                      <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
-                        <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
-                          {item.done && (
-                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
-                        </span>
-                        <span>{item.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.3">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true" />
-                <span className={styles.momentsStepText}>Step 03</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
-                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
-                  <div className={styles.momentsIconCircle} aria-hidden="true">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                      <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                      <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5" />
-                    </svg>
-                  </div>
-                  <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
-                  <h3 className={styles.momentsCardH}>Video gets automatically downloaded</h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Step 4 */}
-            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.4">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true" />
-                <span className={styles.momentsStepText}>Step 04</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
-                <div className={styles.momentsCardMedia}>
-                  <Image src="/images/laser-tag/laser-tag-1.png" alt="Moments AI" width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }} />
-                </div>
-                <div className={styles.momentsCardBody}>
-                  <h3 className={styles.momentsCardH}>Sharable moments</h3>
-                  <span className={styles.momentsBadge}>Real-Time Highlights</span>
-                </div>
-                <div className={styles.momentsMadeIn}>
-                  <span>By FOG Technologies</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          <p className={styles.momentsSub}>Every battle, captured. Every highlight, shareable in seconds.</p>
         </div>
+
+        {/* Cinematic stage */}
+        <div className={styles.momentsCinema}>
+
+          {/* 3-D card stage — mouse parallax applied via ref */}
+          <div className={styles.momentsStage} ref={momentStageRef}>
+            {MOMENTS.map((step, idx) => {
+              const n = MOMENTS.length;
+              let offset = idx - activeMoment;
+              if (offset < -1) offset += n;
+              if (offset > 2)  offset -= n;
+              let cls = styles.momentsCinemaCard;
+              if (offset === 0)       cls += ` ${styles.momentsCinemaCardActive}`;
+              else if (offset === -1) cls += ` ${styles.momentsCinemaCardPrev}`;
+              else if (offset === 1)  cls += ` ${styles.momentsCinemaCardNext}`;
+              else                    cls += ` ${styles.momentsCinemaCardFarRight}`;
+
+              return (
+                <div
+                  key={idx}
+                  className={cls}
+                  onClick={() => { setActiveMoment(idx); restartAuto(); }}
+                  role="button"
+                  tabIndex={offset === 2 ? -1 : 0}
+                  aria-label={`Step ${idx + 1}: ${step.label}`}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') { setActiveMoment(idx); restartAuto(); }
+                  }}
+                >
+                  {/* Background image — Ken Burns on active */}
+                  <div className={styles.momentsCinemaCardBg}>
+                    <Image
+                      src={step.img}
+                      alt={step.imgAlt}
+                      fill
+                      loading="eager"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      sizes="(max-width: 640px) 100vw, 55vw"
+                    />
+                  </div>
+
+                  {/* Gradient overlay */}
+                  <div className={styles.momentsCinemaCardOverlay} aria-hidden="true" />
+
+                  {/* Holographic grid and scanline overlays */}
+                  <div className={styles.momentsHoloOverlay} aria-hidden="true" />
+                  <div className={styles.momentsHoloScanline} aria-hidden="true" />
+
+                  {/* Light sweep — plays once on activation */}
+                  <div className={styles.momentsCinemaCardSweep} aria-hidden="true" />
+
+                  {/* Giant ghost watermark number */}
+                  <span className={styles.momentsCinemaCardWatermark} aria-hidden="true">
+                    0{idx + 1}
+                  </span>
+
+                  {/* Step badge — top-left HUD tag, always visible on all cards */}
+                  <span className={styles.momentsCinemaCardStep} aria-hidden="true">
+                    [ • STEP 0{idx + 1} ]
+                  </span>
+
+                  {/* HUD corner brackets */}
+                  <div className={styles.momentsCinemaCornerTl} aria-hidden="true" />
+                  <div className={styles.momentsCinemaCornerBr} aria-hidden="true" />
+
+                  {/* Content — title/desc/tags revealed only on active card */}
+                  <div className={styles.momentsCinemaCardContent}>
+                    <h3 className={styles.momentsCinemaCardTitle}>{step.title}</h3>
+                    <p className={styles.momentsCinemaCardDesc}>{step.desc}</p>
+                    <div className={styles.momentsCinemaCardTags}>
+                      {step.tags.map(t => (
+                        <span key={t} className={styles.momentsCinemaCardTag}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Prev / Next arrow buttons */}
+          <button
+            className={`${styles.momentsNavBtn} ${styles.momentsNavBtnPrev}`}
+            onClick={() => { setActiveMoment((activeMoment - 1 + 4) % 4); restartAuto(); }}
+            aria-label="Previous step"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <polyline points="12,3 6,9 12,15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+          <button
+            className={`${styles.momentsNavBtn} ${styles.momentsNavBtnNext}`}
+            onClick={() => { setActiveMoment((activeMoment + 1) % 4); restartAuto(); }}
+            aria-label="Next step"
+          >
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <polyline points="6,3 12,9 6,15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+        </div>
+
       </section>
 
-      {/* ── 6. ARENA DESIGN ── */}
-      <section id="arena-design" className={styles.speModelSection} data-nav-theme="dark">
-        <div className={styles.speModelInner}>
-          <h2 className={styles.speModelTitle} data-reveal>Immersive Arena Design</h2>
-          <div className={styles.speModelImgWrap} data-reveal data-reveal-delay="0.15">
-            <Image
-              src="/images/laser-tag/arena.png"
-              alt="3D Laser Tag Arena Design"
-              className={styles.speModelImg}
-              width={1000}
-              height={600}
-              sizes="(max-width: 1000px) 100vw, 1000px"
-            />
-          </div>
+      {/* ── 6. ARENA DESIGN — Full-bleed cinematic reveal ── */}
+      <section id="arena-design" className={styles.arenaSection} data-nav-theme="dark">
+
+        {/* Background image layer */}
+        <div className={styles.arenaBg} aria-hidden="true">
+          <Image
+            src="/images/laser-tag/arena.png"
+            alt=""
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            sizes="100vw"
+            priority={false}
+          />
+          {/* layered overlays for depth */}
+          <div className={styles.arenaOverlayBase} />
+          <div className={styles.arenaOverlayVignette} />
+          <div className={styles.arenaOverlayScanline} aria-hidden="true" />
         </div>
+
+        {/* Content layer */}
+        <div className={styles.arenaContent}>
+
+          {/* Left — heading + descriptor */}
+          <div className={styles.arenaLeft} data-reveal>
+            <span className={styles.arenaEyebrow}>06 — Arena Design</span>
+            <h2 className={styles.arenaTitle}>Immersive<br />Arena Design</h2>
+            <p className={styles.arenaDesc}>Every arena is a custom 3D-engineered battleground. Ramps, tunnels, cover walls — designed for maximum engagement and repeat bookings.</p>
+            <button
+              className={styles.arenaBtn}
+              onClick={() => document.getElementById('arena-specs')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              View Specs &#x2192;
+            </button>
+          </div>
+
+          {/* Right — floating spec callouts */}
+          <div className={styles.arenaRight} data-reveal data-reveal-delay="0.15">
+            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.2">
+              <span className={styles.arenaSpecChipLabel}>Arena Size</span>
+              <span className={styles.arenaSpecChipVal}>700 – 3000 <small>sq ft</small></span>
+            </div>
+            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.28">
+              <span className={styles.arenaSpecChipLabel}>Tagger Range</span>
+              <span className={styles.arenaSpecChipVal}>100 <small>m</small></span>
+            </div>
+            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.36">
+              <span className={styles.arenaSpecChipLabel}>Session Length</span>
+              <span className={styles.arenaSpecChipVal}>5 – 20 <small>min</small></span>
+            </div>
+            <div className={styles.arenaSpecChip} data-reveal data-reveal-delay="0.44">
+              <span className={styles.arenaSpecChipLabel}>Battery Life</span>
+              <span className={styles.arenaSpecChipVal}>8+ <small>hrs</small></span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom bar — ground anchor with horizontal scan line */}
+        <div className={styles.arenaFooter} aria-hidden="true">
+          <div className={styles.arenaFooterLine} />
+          <span className={styles.arenaFooterLabel}>FOG TECHNOLOGIES — COMBAT ARENA SYSTEM</span>
+          <div className={styles.arenaFooterLine} />
+        </div>
+
       </section>
 
       {/* ── 7. ARENA SPECS ── */}
-      <section className={styles.speDataSection} data-nav-theme="dark">
+      <section id="arena-specs" className={styles.speDataSection} data-nav-theme="dark">
         <div className={styles.speDataInner}>
 
           <div className={styles.speDimsCard} data-reveal>
