@@ -2,14 +2,16 @@
 .gallerySection {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh; /* Fixed height to fit exactly one viewport screen */
+  min-height: 580px; /* Safe minimum height constraint */
   background: #000000;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 64px 24px 56px;
-  font-family: "Playfair Display", Georgia, serif;
+  justify-content: center; /* Center content vertically inside 100vh screen */
+  padding: 40px clamp(12px, 2.5vw, 32px); /* Reduced padding to save vertical space */
+  font-family: var(--font-body);
 }
 
 /* 1440px content width constraint */
@@ -29,7 +31,7 @@
   pointer-events: none;
   background: radial-gradient(
     ellipse 60% 40% at 50% 60%,
-    rgba(40, 220, 80, 0.18) 0%,
+    rgba(40, 220, 80, 0.15) 0%,
     transparent 70%
   );
 }
@@ -38,55 +40,52 @@
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 700px;
+  max-width: 800px;
   color: #ffffff;
+  font-family: var(--font-display);
   font-weight: 700;
-  font-size: 52px;
+  font-size: clamp(28px, 4vw, 42px); /* Shrunk heading size to fit viewport */
   line-height: 1.1;
-  letter-spacing: 0.5px;
-  text-shadow:
-    0.5px 0 rgba(255, 255, 255, 0.18),
-    -0.5px 0 rgba(120, 255, 150, 0.06),
-    0 0.5px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
 }
 
 .subheading {
   position: relative;
   z-index: 2;
-  margin-top: 22px;
+  margin-top: 8px; /* Shrunk spacing */
   text-align: center;
-  max-width: 460px;
+  max-width: 480px;
   color: rgba(255, 255, 255, 0.55);
   font-weight: 400;
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: var(--fs-body-p3);
+  line-height: 1.4;
 }
 
 /* ── CAROUSEL ── */
 .carouselClip {
-  width: 100vw;
-  overflow: hidden;
+  width: 100%;
+  overflow: visible; /* Prevent vertical clipping of scaled-up center cards */
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .carouselWrap {
   position: relative;
   z-index: 1;
-  margin: 40px 0 32px;
+  margin: 32px 0 24px; /* Reduced vertical margins */
   width: 100%;
-  height: 320px;
-  perspective: 2400px;
+  height: 320px; /* Reduced from 340px to ensure no overlap */
+  perspective: 1400px; /* Balanced for convex layout perspective */
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
 .scene {
   position: relative;
-  width: 200px;
-  height: 240px;
+  width: 170px; /* Shrunk from 200px to solve text overlap */
+  height: 170px; /* Shrunk from 200px to solve text overlap */
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -95,19 +94,20 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 240px;
-  border-radius: 16px;
+  width: 170px; /* Square dimensions */
+  height: 170px; /* Square dimensions */
+  border-radius: 10px;
   overflow: hidden;
-  cursor: pointer;
   background: #111111;
   backface-visibility: hidden;
-  outline: 1.5px solid rgba(80, 255, 120, 0);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition:
-    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-    filter 0.35s ease,
-    box-shadow 0.35s ease,
-    outline-color 0.35s ease;
+    transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.45s ease,
+    box-shadow 0.45s ease,
+    outline 0.45s ease,
+    opacity 0.45s ease;
+  outline: 2px solid transparent;
 }
 
 .image {
@@ -119,59 +119,96 @@
   -webkit-user-drag: none;
 }
 
+/* active card at the center: glowing neon green rim */
+.active {
+  z-index: 15;
+  outline: 2px solid #28dc50;
+  box-shadow: 0 0 35px rgba(40, 220, 80, 0.25);
+  border-color: rgba(40, 220, 80, 0.4);
+}
+
 /* hovered card: enlarge + soft white glow + green accent rim */
 .hovered {
-  z-index: 10;
-  box-shadow: 0 0 60px 12px rgba(255, 255, 255, 0.18);
-  outline: 1.5px solid rgba(80, 255, 120, 0.35);
+  z-index: 20;
+  box-shadow: 0 0 60px 12px rgba(255, 255, 255, 0.15), 0 0 35px rgba(40, 220, 80, 0.3);
+  outline: 2px solid #28dc50;
 }
 
 /* every other card while one is hovered */
 .dimmed {
-  filter: blur(4px) brightness(0.45);
+  filter: blur(4px) brightness(0.35);
 }
 
-/* ── FEATURES ── */
-.features {
-  position: relative;
-  z-index: 2;
-  margin-top: 28px;
-  width: 100%;
-  max-width: 900px;
+/* ── CAPTION CONTAINER (MATCHES SCREENSHOT LAYOUT) ── */
+.captionContainer {
   display: flex;
-  justify-content: center;
-  gap: 80px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.feature {
-  max-width: 220px;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  margin-top: 16px; /* Reduced to fit viewport */
+  padding: 0 24px;
+  z-index: 2;
+  position: relative;
 }
 
-.featureTitle {
+.captionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3.5vw, 26px);
+  font-weight: 700;
   color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.3;
+  margin: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
-.featureBody {
-  margin-top: 10px;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 13px;
-  line-height: 1.6;
+.captionCategory {
+  font-size: 10px;
+  font-weight: 700;
+  color: #28dc50;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 6px 0 10px 0;
+  background: rgba(40, 220, 80, 0.08);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(40, 220, 80, 0.15);
+}
+
+.captionDesc {
+  font-size: var(--fs-body-p3);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 580px;
+  margin: 0;
 }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .heading {
-    font-size: 32px;
+  .carouselWrap {
+    height: 200px; /* Reduced to fit mobile screens without overlap */
+    margin: 24px 0 16px;
   }
-  .features {
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
+  
+  .scene {
+    width: 110px;
+    height: 110px;
+  }
+
+  .card {
+    width: 110px;
+    height: 110px;
+  }
+  
+  .captionContainer {
+    margin-top: 24px;
+  }
+
+  .captionTitle {
+    font-size: 18px;
+  }
+
+  .captionDesc {
+    font-size: 13px;
+    max-width: 100%;
   }
 }

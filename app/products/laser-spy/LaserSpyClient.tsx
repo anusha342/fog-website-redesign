@@ -91,18 +91,26 @@ const MODES = [
   {
     name: 'Laser Wars',
     img: '/images/laser-spy/themes/laser-war.png',
+    desc: 'Dodge high-frequency beams in a tactical crossfire simulation. Move with stealth, agility, and precision to escape.',
+    stats: 'Players: 1 – 4  |  Grid: Dynamic Beams  |  Difficulty: Challenging',
   },
   {
     name: 'Laser Ship',
     img: '/images/laser-spy/themes/laser-ship.png',
+    desc: 'Infiltrate a high-security spaceship cargo hold. Overcome moving laser barriers and alarms to secure the data core.',
+    stats: 'Players: 1 – 2  |  Grid: Cargo Hold  |  Difficulty: Special Ops',
   },
   {
     name: 'Laser Lab',
     img: '/images/laser-spy/themes/laser-lab.png',
+    desc: 'Weave through a network of scientific test lasers. A chaotic test chamber that requires extreme flexible maneuvering.',
+    stats: 'Players: 1 – 4  |  Grid: Test Network  |  Difficulty: Commander',
   },
   {
     name: 'Laser Spy',
     img: '/images/laser-spy/themes/laser-spy.png',
+    desc: 'The ultimate stealth agent simulation. Crawl, roll, and leap through a shifting maze of high-alert infrared security beams.',
+    stats: 'Players: 1 – 4  |  Grid: Security Maze  |  Difficulty: Elite',
   }
 ];
 
@@ -317,46 +325,61 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
       </section>
 
-      {/* 3. THEMES MODES */}
-      <section id="challenge-modes" className={styles.modesV2Section} data-nav-theme="dark">
-        <div className={styles.modesV2Wrap}>
-          <div className={styles.modesV2Header}>
-            {/* <span className={styles.modesEyebrow}>03 — Challenge Modes</span> */}
-            <h2 className={styles.modesV2Title}>Themes</h2>
-          </div>
+      {/* 3. THEME MODES */}
+      <section id="challenge-modes" className={styles.modesSection} data-nav-theme="light">
+        <div className={styles.modesHeader} data-reveal>
+          <h2 className={styles.modesTitle}>THEME MODES</h2>
+        </div>
 
-          <div className={styles.modesV2Body}>
-            <div className={styles.modesV2Left}>
-              <div className={styles.modesV2ImgWrap}>
-                <Image
-                  src={MODES[activeMode].img}
-                  alt={MODES[activeMode].name}
-                  className={styles.modesV2Img}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <button className={styles.modesVideoBtn} onClick={openVideo}>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4"/><path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor"/></svg>
-                Watch Gameplay
-              </button>
-            </div>
-
-            <div className={styles.modesV2Right}>
-              <div className={styles.modesV2Line}></div>
-              {MODES.map((m, idx) => (
-                <div key={idx}>
-                  <div
-                    className={`${styles.modeItem} ${activeMode === idx ? styles.modeItemActive : ''}`}
-                    onMouseEnter={() => setActiveMode(idx)}
-                  >
-                    <h3 className={styles.modeItemName}>{m.name}</h3>
-                    <span className={styles.modeItemNum}>0{idx + 1}</span>
-                  </div>
-                  <div className={styles.modesV2Line}></div>
+        <div className={styles.modesInner}>
+          <div className={styles.modesAccordion}>
+            {MODES.map((m, idx) => (
+              <div
+                key={idx}
+                className={styles.modesAccCard}
+                data-reveal
+                data-reveal-delay={idx * 0.15}
+              >
+                <div className={styles.modesAccImgWrap}>
+                  <Image
+                    src={m.img}
+                    alt={m.name}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    sizes="(max-width: 900px) 100vw, 33vw"
+                  />
                 </div>
-              ))}
-            </div>
+
+                <div className={styles.modesAccOverlay} aria-hidden="true" />
+
+                <div className={styles.modesAccHeader}>
+                  <span className={styles.modesAccNum}>0{idx + 1}</span>
+                  <h3 className={styles.modesAccName}>{m.name.toUpperCase()}</h3>
+                </div>
+
+                <div className={styles.modesAccContent}>
+                  <span className={styles.modesAccTag}>Theme Simulation</span>
+                  <h4 className={styles.modesAccTitle}>{m.name}</h4>
+                  <p className={styles.modesAccDesc}>{m.desc}</p>
+                  <div className={styles.modesAccStats}>{m.stats}</div>
+                  <button
+                    className={styles.modesAccBtn}
+                    onClick={openVideo}
+                    aria-label={`Watch ${m.name} gameplay video`}
+                  >
+                    <svg
+                      width="12" height="12" viewBox="0 0 14 14" fill="none"
+                      aria-hidden="true"
+                      style={{ marginRight: '6px', display: 'inline-block', verticalAlign: 'middle' }}
+                    >
+                      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.4" />
+                      <path d="M5.5 4.8l4 2.2-4 2.2V4.8z" fill="currentColor" />
+                    </svg>
+                    Watch Briefing
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
