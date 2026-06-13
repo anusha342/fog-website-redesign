@@ -254,123 +254,393 @@
 .videoClose:hover { color: var(--white); }
 
 /* ── WHAT IS LASER SPY ── */
-.whatSection {
-  background: #f5f5f3;
-  display: grid;
-  grid-template-columns: 55fr 45fr;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 80px 0px;
-  min-height: 72vh;
-  overflow: hidden;
-}
-
-/* Left — text column */
-.whatLeft {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 64px 80px clamp(40px, 5.5vw, 80px);
-}
-
-/* Orange eyebrow */
-.whatEyebrow {
-  font-family: var(--font-body);
-  font-size: var(--fs-body-p4);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  word-spacing: 2px;
-  color: var(--hg-neon-orange);
-  display: block;
-  margin-bottom: 20px;
-}
-
-/* Section H2 */
-.whatHeading {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--fs-heading-2);
-  text-transform: uppercase;
-  color: #0a0a0a;
-  letter-spacing: 0.1px;
-  word-spacing: 2px;
-  line-height: 1.2;
-  margin: 0 0 48px;
-}
-
-/* Stacked value list */
-.whatValues {
-  display: flex;
-  flex-direction: column;
-}
-
-.whatValue {
-  padding: 22px 0 22px 24px;
-  border-left-width: 2px;
-  border-left-style: solid;
-  border-left-color: rgba(19, 19, 19, 0.1);
-  transition: border-left-color 220ms ease;
-}
-
-.whatValue + .whatValue {
-  margin-top: 4px;
-}
-
-.whatValue:hover {
-  border-left-color: var(--hg-neon-orange);
-}
-
-.whatValueTitle {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--fs-heading-4);
-  text-transform: uppercase;
-  color: #0a0a0a;
-  letter-spacing: 0.1px;
-  word-spacing: 2px;
-  line-height: 1.2;
-  margin: 0 0 8px;
-}
-
-.whatValueBody {
-  font-family: var(--font-body);
-  font-size: var(--fs-body-p3);
-  font-weight: 400;
-  line-height: 1.5;
-  color: rgba(19, 19, 19, 0.65);
-  letter-spacing: 0.1px;
-  word-spacing: 2px;
-  margin: 0;
-}
-
-/* Right — image fills full column height */
-.whatRight {
+.uspSection {
+  width: 100%;
+  background: #ffffff;
+  padding: 80px 0;
   position: relative;
   overflow: hidden;
 }
 
-.whatImg {
+.uspHeader {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+  padding: 0 clamp(24px, 5vw, 80px);
+  text-align: left;
+}
+
+.uspTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-heading-1);
+  text-transform: uppercase;
+  color: #0a0a0a;
+  letter-spacing: -0.5px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.uspTitle .highlight {
+  color: var(--accent);
+}
+
+.uspSubheading {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-heading-4);
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.38);
+  margin-top: 8px;
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
+  line-height: 1.25;
+}
+
+.uspInner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  background: transparent;
+  padding: 0 clamp(24px, 5vw, 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+.uspCarouselGrid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 24px;
+  align-items: stretch;
+  height: calc(100vh - 220px);
+  max-height: 480px;
+  min-height: 360px;
+}
+
+.uspShowcasePane {
+  position: relative;
+  height: 100%;
+  background: #080c10;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 30px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.uspShowcasePane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(240, 80, 35, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240, 80, 35, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.uspShowcasePane::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  border: 1px dashed rgba(240, 80, 35, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: rotateHUD 25s linear infinite;
+}
+
+@keyframes rotateHUD {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.uspShowcaseGrid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.uspImageItem {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(0.96);
+  filter: grayscale(100%) contrast(0.85) brightness(0.85);
+  transition: opacity 600ms cubic-bezier(0.25, 1, 0.5, 1),
+    transform 600ms cubic-bezier(0.25, 1, 0.5, 1),
+    filter 600ms cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uspImageActive {
+  opacity: 1;
+  transform: scale(1);
+  filter: grayscale(0%) contrast(1) brightness(1);
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.uspImageActive img {
   object-fit: cover;
-  object-position: center center;
 }
 
-@media (max-width: 1100px) {
-  .whatLeft { padding: 72px 48px; }
+.uspImageScanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 15%, var(--accent) 50%, transparent 85%);
+  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+  animation: laserSweep 3.5s ease-in-out infinite;
+  z-index: 3;
+  pointer-events: none;
 }
 
-@media (max-width: 767px) {
-  .whatSection {
-    grid-template-columns: 1fr;
+@keyframes laserSweep {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.uspSelectorsPane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+/* 3D Tilt Card Styling integrated with selectors */
+.card3dContainer {
+  flex: 1;
+  perspective: 1000px;
+  width: 100%;
+}
+
+.uspSelectorCard {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.card3d {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  background: #f1f3f4;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 18px 28px;
+  cursor: pointer;
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: background 400ms cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 400ms cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 400ms cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.1s ease-out,
+              box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+  border-radius: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  will-change: transform;
+}
+
+.card3d:hover {
+  filter: grayscale(50%);
+  opacity: 0.85;
+  background: #f8f9fa;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(10px);
+}
+
+.uspSelectorAccentLine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
+}
+
+.uspSelectorActive .card3d,
+.uspSelectorActive:hover .card3d {
+  filter: grayscale(0%);
+  opacity: 1;
+  background: #ffffff;
+  border-color: rgba(240, 80, 35, 0.25);
+  box-shadow: 0 12px 28px rgba(240, 80, 35, 0.08), 0 2px 4px rgba(240, 80, 35, 0.03);
+}
+
+.uspSelectorActive .uspSelectorAccentLine {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.card3dInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  transform: translateZ(15px);
+  transform-style: preserve-3d;
+}
+
+.uspSelectorContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uspSelectorHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.uspSelectorNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-body-p3);
+  color: var(--accent);
+  opacity: 0.5;
+  transition: opacity 400ms;
+}
+
+.uspSelectorActive .uspSelectorNum {
+  opacity: 1;
+}
+
+.uspSelectorCategory {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.4);
+  transition: color 400ms;
+}
+
+.uspSelectorActive .uspSelectorCategory {
+  color: var(--accent);
+}
+
+.uspSelectorTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-heading-4);
+  text-transform: uppercase;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+
+.uspSelectorDesc {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.55);
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 350ms cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 300ms ease,
+    margin-top 300ms;
+}
+
+.uspSelectorActive .uspSelectorDesc {
+  max-height: 160px;
+  opacity: 1;
+  margin-top: 4px;
+}
+
+/* Fallbacks for .cardTitle and .cardBody if they are applied */
+.cardTitle {
+  margin: 0;
+}
+.cardBody {
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .uspSection {
+    height: auto;
     min-height: auto;
+    overflow: visible;
+    padding: 64px 0;
   }
-  .whatRight {
-    order: -1;
-    height: 56vw;
-    min-height: 240px;
+
+  .uspInner {
+    padding: 0 24px;
   }
-  .whatLeft { padding: 48px var(--sp-24); }
-  .whatHeading { margin-bottom: 36px; }
+
+  .uspCarouselGrid {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    gap: 32px;
+  }
+
+  .uspSelectorsPane {
+    order: 2;
+    height: auto;
+    gap: 16px;
+  }
+
+  .uspShowcasePane {
+    order: 1;
+    height: 40vh;
+    min-height: 280px;
+    max-height: 350px;
+  }
+
+  .card3dContainer {
+    flex: none;
+    height: auto;
+  }
+
+  .card3d {
+    min-height: auto;
+    padding: 20px 24px;
+  }
+
+  .uspSelectorActive .uspSelectorDesc {
+    max-height: 250px;
+  }
 }
 
 /* ── THEME MODES ACCORDION ── */

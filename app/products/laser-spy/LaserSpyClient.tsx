@@ -33,7 +33,7 @@ function useLenis() {
         animId = requestAnimationFrame(raf);
         (window as any).__fogLenis = lenis;
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => {
       cancelAnimationFrame(animId);
       (window as any).__fogLenis?.destroy?.();
@@ -137,6 +137,30 @@ const STEPS = [
   }
 ];
 
+const USPS_DATA = [
+  {
+    num: '01',
+    category: 'Zero-Operator',
+    title: 'ZERO-OPERATOR ROOM',
+    body: 'No staff required inside. Players check in, pay, and play — autonomously.',
+    img: '/images/laser-spy/laser-spy-1.png',
+  },
+  {
+    num: '02',
+    category: 'Premium Ticket',
+    title: 'PREMIUM TICKET PRICING',
+    body: '₹150-₹600 per session — 2-4x the revenue of open-floor attractions.',
+    img: '/images/laser-spy/laser-spy-2.jpg',
+  },
+  {
+    num: '03',
+    category: 'Viral Loop',
+    title: 'BUILT-IN VIRAL LOOP',
+    body: 'Every run ends with an AI-cut clip. Players share it. Your venue earns reach for free.',
+    img: '/images/laser-spy/themes/laser-spy.png',
+  },
+];
+
 interface Props {
   testimonials: Testimonial[];
 }
@@ -154,7 +178,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
     setIsVideoOpen(true);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
+      videoRef.current.play().catch(() => { });
       videoRef.current.muted = false;
     }
   };
@@ -173,6 +197,9 @@ export default function LaserSpyClient({ testimonials }: Props) {
   // Process Steps State
   const [activeStep, setActiveStep] = useState(0);
 
+  // Active USP Tab State
+  const [activeUsp, setActiveUsp] = useState(0);
+
   // ROI Calculator State
   const [floor, setFloor] = useState(300);
   const [footfall, setFootfall] = useState(500);
@@ -188,6 +215,29 @@ export default function LaserSpyClient({ testimonials }: Props) {
   const paybackMonths = monthlyRevenue > 0 ? Math.ceil(productCost / monthlyRevenue) : 0;
   const fiveYearProfit = (yearlyRevenue * 5) - productCost;
   const roi = productCost > 0 ? ((fiveYearProfit / productCost) * 100) : 0;
+
+  // 3D Card Tilt Effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const maxTilt = 10; // Max tilt angle in degrees
+    const percentX = (x - centerX) / centerX;
+    const percentY = (y - centerY) / centerY;
+    const tiltX = -percentY * maxTilt;
+    const tiltY = percentX * maxTilt;
+    card.style.setProperty('--rx', `${tiltX}deg`);
+    card.style.setProperty('--ry', `${tiltY}deg`);
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  };
 
   // Testimonials Carousel State
 
@@ -241,9 +291,9 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
   return (
     <main className={styles.laserspyPage}>
-      <Script 
-        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
-        strategy="lazyOnload" 
+      <Script
+        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+        strategy="lazyOnload"
         onLoad={updateCharts}
       />
 
@@ -288,41 +338,64 @@ export default function LaserSpyClient({ testimonials }: Props) {
       </div>
 
       {/* 2. WHAT IS LASER SPY */}
-      <section id="what-is-laserspy" className={styles.whatSection} data-nav-theme="light">
+      <section id="what-is-laserspy" className={styles.uspSection} data-nav-theme="light">
+        <div className={styles.uspHeader} data-reveal>
+          <h2 className={styles.uspTitle}>WHAT IS LASER SPY?</h2>
+          <span className={styles.uspSubheading}>A ROOM THAT PAYS FOR ITSELF</span>
+        </div>
+        <div className={styles.uspInner}>
+          <div className={styles.uspCarouselGrid}>
 
-        {/* Left — text content */}
-        <div className={styles.whatLeft}>
-          <span className={styles.whatEyebrow} data-reveal>What is Laser Spy?</span>
-          <h2 className={styles.whatHeading} data-reveal data-reveal-delay="0.08">
-            A ROOM THAT<br />PAYS FOR ITSELF
-          </h2>
-          <div className={styles.whatValues} data-reveal data-reveal-delay="0.16">
-            <div className={styles.whatValue}>
-              <h3 className={styles.whatValueTitle}>ZERO-OPERATOR ROOM</h3>
-              <p className={styles.whatValueBody}>No staff required inside. Players check in, pay, and play — autonomously.</p>
+            {/* Left — interactive selectors */}
+            <div className={styles.uspSelectorsPane} data-reveal>
+              {USPS_DATA.map((usp, idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
+                  onMouseEnter={() => setActiveUsp(idx)}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => setActiveUsp(idx)}
+                >
+                  <div className={styles.card3d}>
+                    <div className={styles.uspSelectorAccentLine} />
+                    <div className={`${styles.card3dInner} ${styles.uspSelectorContent}`}>
+                      <div className={styles.uspSelectorHeader}>
+                        <span className={styles.uspSelectorNum}>{usp.num}</span>
+                        <span className={styles.uspSelectorCategory}>{usp.category}</span>
+                      </div>
+                      <h3 className={`${styles.cardTitle} ${styles.uspSelectorTitle}`}>{usp.title}</h3>
+                      <p className={`${styles.cardBody} ${styles.uspSelectorDesc}`}>{usp.body}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className={styles.whatValue}>
-              <h3 className={styles.whatValueTitle}>PREMIUM TICKET PRICING</h3>
-              <p className={styles.whatValueBody}>₹150–₹600 per session — 2–4× the revenue of open-floor attractions.</p>
+
+            {/* Right — photo showcase */}
+            <div className={styles.uspShowcasePane} data-reveal data-reveal-delay="0.1">
+              <div className={styles.uspShowcaseGrid}>
+                {USPS_DATA.map((usp, idx) => (
+                  <div
+                    key={idx}
+                    className={`${styles.uspImageItem} ${activeUsp === idx ? styles.uspImageActive : ''}`}
+                  >
+                    <Image
+                      src={usp.img}
+                      alt={usp.category}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      sizes="(max-width: 900px) 100vw, 50vw"
+                      priority={idx === 0}
+                    />
+                    <div className={styles.uspImageScanline} />
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={styles.whatValue}>
-              <h3 className={styles.whatValueTitle}>BUILT-IN VIRAL LOOP</h3>
-              <p className={styles.whatValueBody}>Every run ends with an AI-cut clip. Players share it. Your venue earns reach for free.</p>
-            </div>
+
           </div>
         </div>
-
-        {/* Right — image fills full column height */}
-        <div className={styles.whatRight}>
-          <Image
-            src="/images/laser-spy/laser-spy-1.png"
-            alt="Laser Spy beam maze room — precision laser challenge installed by FOG Technologies"
-            className={styles.whatImg}
-            fill
-            sizes="45vw"
-          />
-        </div>
-
       </section>
 
       {/* 3. THEME MODES */}
@@ -546,7 +619,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
           <div className={styles.calcBody}>
             <div className={styles.calcInputs}>
               <h3 className={styles.calcPanelTitle}>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.4"/><path d="M3.5 7h7M3.5 4.5h7M3.5 9.5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.4" /><path d="M3.5 7h7M3.5 4.5h7M3.5 9.5h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" /></svg>
                 Input Parameters
               </h3>
               <div className={styles.calcField}>
