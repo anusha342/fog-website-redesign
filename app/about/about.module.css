@@ -646,4 +646,8 @@
   .awards, .drives, .timeline, .team { padding: 72px 20px; }
   .drivesGrid { grid-template-columns: 1fr; }
   .teamGrid   { grid-template-columns: repeat(2, 1fr); }
+  .heroTitle, .awardsTitle, .drivesTitle, .timelineTitle, .teamTitle { letter-spacing: -0.2px; }
+  .heroDesc { font-size: var(--fs-body-p3); }
+  .teamTitle { margin-bottom: 24px; }
+  .tlNodeTitle { font-size: var(--fs-heading-3); }
 }
