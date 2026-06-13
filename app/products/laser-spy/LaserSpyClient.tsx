@@ -317,9 +317,61 @@ export default function LaserSpyClient({ testimonials }: Props) {
             <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
               document.getElementById('what-is-laserspy')?.scrollIntoView({ behavior: 'smooth' });
             }}>Discover &#x2192;</button>
-            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Video</button>
+            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Watch</button>
           </div>
         </div>
+
+        {/* ── HERO STATS HUD — visible immediately, no scroll required ── */}
+        <div className={styles.heroStats} aria-label="Laser Spy at a glance">
+          <div className={styles.heroStatsTicker} aria-hidden="true">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className={styles.heroStatsTickerGroup}>
+                <span>LASER BEAM MAZE SYSTEM</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>FOG TECHNOLOGIES</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>STEALTH SECURITY GRID</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>INDIA&apos;S PREMIUM LBE</span>
+                <span className={styles.heroStatsTickerDot} />
+              </div>
+            ))}
+          </div>
+          <div className={styles.heroStatsGrid}>
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.4">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" y1="8" x2="19" y2="14" /><line x1="16" y1="11" x2="22" y2="11" /></svg>
+                <span className={styles.heroStatLabel}>Min. Age</span>
+              </div>
+              <span className={styles.heroStatNum}>6<span className={styles.heroStatUnit}>yrs</span></span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.48">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+                <span className={styles.heroStatLabel}>Max Players</span>
+              </div>
+              <span className={styles.heroStatNum}>6</span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.56">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" /><line x1="9" y1="3" x2="9" y2="21" /><line x1="15" y1="3" x2="15" y2="21" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="3" y1="15" x2="21" y2="15" /></svg>
+                <span className={styles.heroStatLabel}>Grid Area</span>
+              </div>
+              <span className={styles.heroStatNum}>600<span className={styles.heroStatUnit}>sq ft</span></span>
+            </div>
+            <div className={styles.heroStatDivider} aria-hidden="true" />
+            <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.64">
+              <div className={styles.heroStatTop}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /><path d="M3 20h18" /></svg>
+                <span className={styles.heroStatLabel}>ROI Period</span>
+              </div>
+              <span className={styles.heroStatNum}>12<span className={styles.heroStatUnit}>mo</span></span>
+            </div>
+          </div>
+        </div>
+
         <div className={styles.heroScroll} aria-hidden="true">
           <div className={styles.heroScrollChevron}></div>
         </div>
@@ -454,39 +506,6 @@ export default function LaserSpyClient({ testimonials }: Props) {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* QUICK STATS */}
-      <section className={styles.quickStats} aria-label="Laser Spy at a glance">
-        <div className={styles.quickStatsInner}>
-
-          <div className={styles.statItem}>
-            <span className={styles.statNum}>6</span>
-            <span className={styles.statLabel}>Minimum Age</span>
-          </div>
-
-          <div className={styles.statDivider} aria-hidden="true" />
-
-          <div className={styles.statItem}>
-            <span className={styles.statNum}>6</span>
-            <span className={styles.statLabel}>Max Players</span>
-          </div>
-
-          <div className={styles.statDivider} aria-hidden="true" />
-
-          <div className={styles.statItem}>
-            <span className={styles.statNum}>600</span>
-            <span className={styles.statLabel}>Area Required (sq ft)</span>
-          </div>
-
-          <div className={styles.statDivider} aria-hidden="true" />
-
-          <div className={styles.statItem}>
-            <span className={styles.statNum}>12</span>
-            <span className={styles.statLabel}>ROI Months</span>
-          </div>
-
         </div>
       </section>
 
