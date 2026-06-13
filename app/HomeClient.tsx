@@ -456,10 +456,12 @@ export default function HomeClient({
     if (!fogZone) return;
 
     const onEnter = () => {
+      if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
       if (concealTimer) { clearTimeout(concealTimer); concealTimer = null; }
       if (!isRevealed) revealTimer = setTimeout(reveal, 1000);
     };
     const onLeave = () => {
+      if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
       if (revealTimer) { clearTimeout(revealTimer); revealTimer = null; }
       if (isRevealed) concealTimer = setTimeout(conceal, 1000);
     };

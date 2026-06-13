@@ -660,6 +660,18 @@ export default function HyperGridClient({ testimonials }: Props) {
           </div>{/* /processInner */}
         </div>{/* /processCanvas */}
 
+        {/* ── Mobile/Tablet Steps Display ── */}
+        <div className={styles.processMobileSteps}>
+          {STEPS.map((step, idx) => (
+            <div key={idx} className={styles.mobileStepCard}>
+              <span className={styles.mobileStepNum}>Step 0{idx + 1}</span>
+              <h3 className={styles.mobileStepTitle}>{step.name}</h3>
+              <p className={styles.mobileStepDesc}>{step.desc}</p>
+            </div>
+          ))}
+        </div>
+
+
         {/* ── Click to Play — below photo, centered ── */}
         <div className={styles.processFooter}>
           <button
