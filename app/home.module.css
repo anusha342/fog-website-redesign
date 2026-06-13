@@ -278,7 +278,7 @@
 
 /* ── LOGO STRIP ── */
 .logoStrip {
-  background: var(--surface);
+  background: #1C1C1C;
   height: 168px;
   overflow: hidden;
   display: flex;
@@ -306,9 +306,11 @@
   object-fit: contain;
   transition: all 300ms ease;
   padding: 0 64px;
-  filter: grayscale(1) brightness(0.55);
 }
-.marqueeTrack img:hover { transform: scale(1.06); filter: grayscale(1) brightness(0.7); }
+.marqueeTrack img:hover { transform: scale(1.06); }
+.xploreLogo {
+  filter: invert(1) hue-rotate(180deg);
+}
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ── ABOUT & NUMBERS ── */

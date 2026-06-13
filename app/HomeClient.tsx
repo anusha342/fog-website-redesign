@@ -753,7 +753,7 @@ export default function HomeClient({
       </section>
 
       {/* ── LOGO STRIP ────────────────────────────────────────────────── */}
-      <section id="logo-strip" className={styles.logoStrip} aria-label="Our venues" data-nav-theme="light">
+      <section id="logo-strip" className={styles.logoStrip} aria-label="Our venues" data-nav-theme="dark">
         <div className={styles.marqueeWrap} aria-label="Venue partners">
           <div className={styles.marqueeTrack} aria-hidden="true">
             {[...Array(4)].flatMap(() => [
@@ -770,6 +770,7 @@ export default function HomeClient({
                 alt={logo.alt}
                 width={200}
                 height={120}
+                className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
                 style={{ objectFit: 'contain' }}
                 loading="lazy"
               />
