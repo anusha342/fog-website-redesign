@@ -13,7 +13,7 @@
 .postContainer {
   max-width: 1440px;
   margin: 0 auto;
-  /* padding: 0 clamp(24px, 5vw, 80px); */
+  padding: 0 clamp(24px, 5vw, 80px);
 }
 
 /* ── BACK BUTTON ── */
