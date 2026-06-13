@@ -1251,18 +1251,72 @@
 }
 
 /* ── Responsive ── */
+.processMobileSteps {
+  display: none;
+}
+
 @media (max-width: 1023px) {
   .processHeaderInner { padding: 0 32px 32px; }
   .processCanvas { aspect-ratio: 16 / 7; }
   .processInner { display: none; }
+  .processFooter { display: none; }
+  
+  .processMobileSteps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 1440px;
+    margin: 32px auto 0;
+    padding: 0 32px;
+  }
+  .mobileStepCard {
+    background: var(--surface);
+    border: 1px solid rgba(19, 19, 19, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mobileStepNum {
+    font-family: var(--font-body);
+    font-size: var(--fs-body-p4);
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--hg-neon-orange);
+  }
+  .mobileStepTitle {
+    font-family: var(--font-display);
+    font-size: var(--fs-heading-3);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .mobileStepDesc {
+    font-family: var(--font-body);
+    font-size: var(--fs-body-p4);
+    font-weight: 400;
+    color: var(--gray);
+    line-height: 1.6;
+    margin: 0;
+  }
 }
 
 @media (max-width: 767px) {
   .processSection { padding: 56px 0; }
   .processHeaderInner { padding: 0 20px 24px; }
   .processCanvas { aspect-ratio: 16 / 9; }
-  .processFooter { padding: 32px 20px 0; }
+  .processFooter { display: none; }
+  
+  .processMobileSteps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 20px;
+  }
 }
+
 
 /* ── SPECS MODEL SECTION ── */
 .speModelSection {

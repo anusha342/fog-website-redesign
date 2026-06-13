@@ -1624,11 +1624,11 @@
   }
 
   .heroStatsGrid {
-    grid-template-columns: 1fr 1px 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
   }
 
-  .heroStatDivider:last-of-type {
+  .heroStatDivider {
     display: none;
   }
 
@@ -1636,14 +1636,18 @@
     padding: 14px 16px;
   }
 
+  /* Draw borders for the 2x2 grid */
+  .heroStatItem:nth-child(1),
+  .heroStatItem:nth-child(5) {
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .heroStatItem:nth-child(1),
+  .heroStatItem:nth-child(3) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .heroStatNum {
     font-size: clamp(20px, 5vw, 28px);
-  }
-}
-
-@media (max-width: 480px) {
-  .heroStatsGrid {
-    grid-template-columns: 1fr 1px 1fr;
   }
 }
 
