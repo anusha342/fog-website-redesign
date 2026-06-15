@@ -312,12 +312,11 @@ export default function LaserSpyClient({ testimonials }: Props) {
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Laser Beam Maze Attraction</span>
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Spy</h1>
-          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Navigate the beam maze. Beat the clock. Own the leaderboard.</p>
+          <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">
+            Navigate the beam maze. Beat the clock. Own the leaderboard.
+          </p>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
-            <button className={`${styles.hbtn} ${styles.hbtnSolid}`} onClick={() => {
-              document.getElementById('what-is-laserspy')?.scrollIntoView({ behavior: 'smooth' });
-            }}>Discover &#x2192;</button>
-            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; Watch</button>
+            <button className={`${styles.hbtn} ${styles.hbtnSolid} ${styles.heroBtnWatch}`} onClick={openVideo}>&#x25B6;&nbsp; WATCH</button>
           </div>
         </div>
 
