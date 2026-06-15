@@ -75,23 +75,23 @@
 .heroEyebrow {
   font-family: var(--font-body);
   font-size: var(--fs-body-p4);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--accent); /* brand orange */
+  color: var(--hg-neon-orange);
   opacity: 0.95;
   text-shadow: 0 0 10px rgba(240, 80, 35, 0.2);
 }
 
 .heroTitle {
-  font-family: var(--font-deco);
+  font-family: var(--font-display);
   font-weight: 700;
-  /* slightly larger hero title */
-  font-size: clamp(2.75rem, 5.8vw, 4.2rem);
+  font-size: clamp(2.5rem, 5vw, 3.65rem);
   line-height: 0.92;
   text-transform: uppercase;
   color: var(--white);
-  letter-spacing: -0.5px;
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
   margin: 0;
   text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
   text-align: left;
@@ -102,7 +102,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-body-p1); /* 1.25rem per font-guidelines.md */
   font-weight: 300; /* Light per font-guidelines.md */
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.1px;
   word-spacing: 2px;
   line-height: 1.6;
@@ -111,8 +111,6 @@
   text-align: left;
 }
 
-
-
 .heroBtns {
   display: flex;
   gap: var(--sp-16);
@@ -120,15 +118,19 @@
 }
 
 .heroBtnWatch {
-  background: var(--accent);
+  background: var(--hg-neon-orange);
   color: var(--white);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--hg-neon-orange);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 0 24px;
   height: 38px;
-  font-size: 11px;
-  letter-spacing: 1.5px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .heroBtnWatch:hover {
