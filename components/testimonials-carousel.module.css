@@ -6,14 +6,16 @@
 .testimonials {
   background: var(--white);
   position: relative;
-  min-height: 100vh; /* At least one viewport screen high */
+  min-height: 100vh;
+  /* At least one viewport screen high */
   min-height: 100dvh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: clamp(32px, 5vh, 60px) 0; /* Dynamic breathing space prevents bottom cutoff */
+  padding: clamp(32px, 5vh, 60px) 0;
+  /* Dynamic breathing space prevents bottom cutoff */
 }
 
 
@@ -30,7 +32,8 @@
 .testHeading {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(36px, 4.5vw, 64px); /* Scaled up to match section dimensions */
+  font-size: clamp(36px, 4.5vw, 64px);
+  /* Scaled up to match section dimensions */
   color: var(--text-primary);
   text-transform: uppercase;
   line-height: 1;
@@ -50,7 +53,8 @@
   flex: 1;
   min-width: 0;
   display: grid;
-  grid-template-columns: 300px 1fr; /* Increased image column width */
+  grid-template-columns: 300px 1fr;
+  /* Increased image column width */
   gap: clamp(40px, 6vw, 80px);
   align-items: center;
   overflow: hidden;
@@ -58,7 +62,8 @@
 
 .testImage {
   width: 300px;
-  height: 400px; /* Scaled up to fill screen height better */
+  height: 400px;
+  /* Scaled up to fill screen height better */
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -83,7 +88,8 @@
 }
 
 .testQuoteMark {
-  font-size: 96px; /* Scaled up for drama and visual hierarchy */
+  font-size: 96px;
+  /* Scaled up for drama and visual hierarchy */
   line-height: 0.5;
   color: var(--accent);
   font-family: var(--font-display);
@@ -93,28 +99,33 @@
 .testQuote {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(20px, 2.2vw, 30px); /* Scaled up quote text size */
+  font-size: clamp(20px, 2.2vw, 30px);
+  /* Scaled up quote text size */
   color: var(--text-primary);
   line-height: 1.4;
   margin: 0;
 }
 
 .testDivider {
-  width: 60px; /* Wider divider line */
+  width: 60px;
+  /* Wider divider line */
   height: 2px;
   background: var(--accent);
-  margin: 24px 0; /* Balanced spacing */
+  margin: 24px 0;
+  /* Balanced spacing */
 }
 
 .testName {
-  font-size: clamp(18px, 1.8vw, 24px); /* Scaled up author name */
+  font-size: clamp(18px, 1.8vw, 24px);
+  /* Scaled up author name */
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 4px 0;
 }
 
 .testRole {
-  font-size: clamp(14px, 1.4vw, 16px); /* Scaled up role description */
+  font-size: clamp(14px, 1.4vw, 16px);
+  /* Scaled up role description */
   font-weight: 400;
   color: var(--gray);
   display: block;
@@ -142,7 +153,8 @@
 }
 
 .testZoneLogo {
-  height: 48px; /* Scaled up logo height */
+  height: 48px;
+  /* Scaled up logo height */
   width: auto;
   max-width: 120px;
   object-fit: contain;
@@ -159,9 +171,21 @@
 .testimonialContent {
   transition: opacity 220ms ease, transform 280ms ease;
 }
-.testimonialContent.exiting  { opacity: 0; transform: translateX(-30px); }
-.testimonialContent.entering { opacity: 0; transform: translateX(30px); }
-.testimonialContent.visible  { opacity: 1; transform: translateX(0); }
+
+.testimonialContent.exiting {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.testimonialContent.entering {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.testimonialContent.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 /* Prev / Next arrows */
 .testArrowAbs {
@@ -200,18 +224,22 @@
   .testArrowAbs {
     display: none;
   }
+
   .testInner {
     padding: 0 24px;
   }
+
   .testGrid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
   .testImage {
     width: 180px;
     height: 230px;
     margin: 0 auto;
   }
+
   .testimonials {
     min-height: 100vh;
     min-height: 100dvh;
@@ -223,14 +251,17 @@
   .testImage {
     display: none;
   }
+
   .testQuote {
     font-size: clamp(16px, 4.5vw, 18px);
   }
+
   .testimonials {
     min-height: 100vh;
     min-height: 100dvh;
     padding: 40px 0;
   }
+
   .testAuthorRow {
     flex-direction: column;
     align-items: flex-start;

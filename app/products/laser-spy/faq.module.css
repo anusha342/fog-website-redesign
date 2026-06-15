@@ -103,12 +103,10 @@
   left: -150%;
   width: 80px;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent);
   transform: skewX(-25deg);
 }
 
@@ -117,7 +115,8 @@
   color: #ffffff;
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(240, 80, 35, 0.22), 0 0 0 4px rgba(240, 80, 35, 0.06);
-  animation: none; /* disable pulse when hovering to lock the rich shadow */
+  animation: none;
+  /* disable pulse when hovering to lock the rich shadow */
 }
 
 .ask:hover::after {
@@ -126,10 +125,13 @@
 }
 
 @keyframes pulseOrangeShadow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 3px 8px rgba(240, 80, 35, 0.08);
     transform: translateY(0);
   }
+
   50% {
     box-shadow: 0 4px 12px rgba(240, 80, 35, 0.15);
     transform: translateY(-1px);
@@ -329,7 +331,7 @@
     row-gap: 48px;
     padding: 80px 40px;
   }
-  
+
   .intro {
     position: static;
     gap: 16px;
@@ -353,7 +355,7 @@
   .a {
     padding: 0 24px 22px 24px;
   }
-  
+
   .q {
     font-size: 16px;
   }
