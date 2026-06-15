@@ -35,9 +35,7 @@
 .heroOverlay {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(0, 200, 255, 0.06) 0%, transparent 60%),
-    linear-gradient(to bottom, rgba(8, 12, 16, 0.35) 0%, rgba(8, 12, 16, 0.98) 100%);
+  background: linear-gradient(to bottom, transparent 65%, rgba(8, 12, 16, 0.98) 100%);
   z-index: 2;
 }
 
@@ -164,53 +162,63 @@
 }
 
 .heroContent {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
   z-index: 5;
-  max-width: 900px;
-  width: 100%;
-  padding: 0 var(--sp-24);
-  padding-top: clamp(80px, 12vh, 160px);
-  padding-bottom: clamp(32px, 4vh, 64px);
+  width: 480px;
+  max-width: 100%;
+  padding: 0 40px;
+  padding-bottom: 120px;
+  background: rgba(8, 10, 12, 0.82);
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--sp-16);
-  flex: 1;
+  align-items: flex-start;
+  gap: var(--sp-24);
   justify-content: center;
+  text-align: left;
 }
 
 .heroEyebrow {
   font-family: var(--font-body);
   font-size: var(--fs-body-p4);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--hg-neon-orange);
-  opacity: 0.9;
+  color: var(--accent);
+  opacity: 0.95;
+  text-shadow: 0 0 10px rgba(240, 80, 35, 0.2);
 }
 
 .heroTitle {
   font-family: var(--font-deco);
   font-weight: 700;
-  font-size: var(--fs-hero);
-  line-height: 0.9;
+  font-size: clamp(2.75rem, 5.8vw, 4.2rem);
+  line-height: 0.92;
   text-transform: uppercase;
   color: var(--white);
-  letter-spacing: -2px;
+  letter-spacing: -0.5px;
   margin: 0;
-  text-shadow: 0 0 60px rgba(0, 200, 255, 0.15), 0 0 120px rgba(0, 200, 255, 0.08);
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+  text-align: left;
+  white-space: nowrap;
 }
 
 .heroSub {
   font-family: var(--font-body);
-  font-size: var(--fs-body-p2);
+  font-size: var(--fs-body-p1);
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.55);
-  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.1px;
+  word-spacing: 2px;
   line-height: 1.6;
   margin: 0;
-  max-width: 480px;
-  text-align: center;
+  max-width: 100%;
+  text-align: left;
 }
 
 .heroBtns {
@@ -218,6 +226,72 @@
   gap: 16px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.heroBtnWatch {
+  background: var(--accent);
+  color: var(--white);
+  border: 1px solid var(--accent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0 24px;
+  height: 38px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.heroBtnWatch:hover {
+  background: #c93d18;
+  border-color: #c93d18;
+  color: var(--white);
+  box-shadow: 0 0 20px rgba(240, 80, 35, 0.45);
+  transform: translateY(-2px);
+}
+
+/* ── BUTTONS (copied from Laser Spy for exact parity) ── */
+.hbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  height: 44px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-decoration: none;
+  transition: background 220ms cubic-bezier(.34, 1.56, .64, 1),
+    box-shadow 220ms cubic-bezier(.34, 1.56, .64, 1),
+    border-color 220ms cubic-bezier(.34, 1.56, .64, 1),
+    transform 220ms cubic-bezier(.34, 1.56, .64, 1);
+  cursor: pointer;
+}
+
+.hbtnSolid {
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid var(--accent);
+}
+
+.hbtnSolid:hover {
+  background: #c93d18;
+  border-color: #c93d18;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(240, 80, 35, 0.45);
+}
+
+.hbtnGhost {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+}
+
+.hbtnGhost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
 }
 
 .heroQr {
