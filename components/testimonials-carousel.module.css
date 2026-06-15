@@ -5,57 +5,74 @@
 
 .testimonials {
   background: var(--white);
-  /* padding: var(--sp-96) var(--sp-80); */
-  /* width: 100%; */
   position: relative;
+  min-height: 100vh; /* At least one viewport screen high */
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: clamp(32px, 5vh, 60px) 0; /* Dynamic breathing space prevents bottom cutoff */
 }
+
 
 .testInner {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
-  padding: 80px 0px
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .testHeading {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--fs-heading-1);
+  font-size: clamp(36px, 4.5vw, 64px); /* Scaled up to match section dimensions */
   color: var(--text-primary);
   text-transform: uppercase;
   line-height: 1;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  letter-spacing: -1.5px;
 }
 
 /* Controls row: prev arrow + grid + next arrow */
 .testControls {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
+  width: 100%;
 }
 
 .testGrid {
   flex: 1;
   min-width: 0;
   display: grid;
-  grid-template-columns: 36% 1fr;
-  gap: var(--sp-80);
+  grid-template-columns: 300px 1fr; /* Increased image column width */
+  gap: clamp(40px, 6vw, 80px);
   align-items: center;
   overflow: hidden;
 }
 
 .testImage {
-  aspect-ratio: 3 / 4;
+  width: 300px;
+  height: 400px; /* Scaled up to fill screen height better */
   position: relative;
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #f8f9fa;
+  flex-shrink: 0;
 }
 
 .testPersonImg {
-  width: 80%;
-  height: 80%;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
   object-position: center top;
   display: block;
-  margin: 65px auto;
+  margin: 0 !important;
   filter: grayscale(1) contrast(1.05);
   transition: opacity 0.2s ease;
 }
@@ -66,68 +83,87 @@
 }
 
 .testQuoteMark {
-  font-size: var(--fs-heading-1);
-  line-height: 1;
+  font-size: 96px; /* Scaled up for drama and visual hierarchy */
+  line-height: 0.5;
   color: var(--accent);
   font-family: var(--font-display);
-  /* margin-bottom: var(--sp-16); */
+  margin-bottom: 16px;
 }
 
 .testQuote {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--fs-heading-3);
+  font-size: clamp(20px, 2.2vw, 30px); /* Scaled up quote text size */
   color: var(--text-primary);
-  line-height: 1.35;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .testDivider {
-  width: 48px;
+  width: 60px; /* Wider divider line */
   height: 2px;
   background: var(--accent);
-  margin: var(--sp-32) 0;
+  margin: 24px 0; /* Balanced spacing */
 }
 
 .testName {
-  font-size: var(--fs-body-p1);
-  font-weight: 600;
+  font-size: clamp(18px, 1.8vw, 24px); /* Scaled up author name */
+  font-weight: 700;
   color: var(--text-primary);
+  margin: 0 0 4px 0;
 }
 
-.testMetaWrap {
+.testRole {
+  font-size: clamp(14px, 1.4vw, 16px); /* Scaled up role description */
+  font-weight: 400;
+  color: var(--gray);
+  display: block;
+}
+
+.testAuthorRow {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 8px;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.testAuthorInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.testLogoWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .testZoneLogo {
-  height: 100px;
+  height: 48px; /* Scaled up logo height */
   width: auto;
-  max-width: 100px;
+  max-width: 120px;
   object-fit: contain;
-  margin-top: -20px;
   display: block;
   filter: grayscale(1) brightness(0.55);
   transition: filter 250ms;
 }
 
-.testRole {
-  font-size: var(--fs-body-p2);
-  font-weight: 300;
-  color: var(--gray);
-  margin-top: 0;
+.testZoneLogo:hover {
+  filter: grayscale(0) brightness(1);
 }
 
 /* Slide transitions */
 .testimonialContent {
-  transition: opacity 0.22s ease, transform 0.28s ease;
+  transition: opacity 220ms ease, transform 280ms ease;
 }
-.testimonialContent.exiting  { opacity: 0; transform: translateX(-48px); }
-.testimonialContent.entering { opacity: 0; transform: translateX(48px); }
+.testimonialContent.exiting  { opacity: 0; transform: translateX(-30px); }
+.testimonialContent.entering { opacity: 0; transform: translateX(30px); }
 .testimonialContent.visible  { opacity: 1; transform: translateX(0); }
 
-/* Prev / Next arrows — flex siblings of the grid */
+/* Prev / Next arrows */
 .testArrowAbs {
   flex-shrink: 0;
   width: 44px;
@@ -136,17 +172,20 @@
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background 180ms, border-color 180ms;
 }
+
 .testArrowAbs:hover {
   background: rgba(240, 80, 35, 0.1);
   border-color: rgba(240, 80, 35, 0.35);
 }
-.testArrowAbs:hover svg { stroke: var(--accent); }
+
+.testArrowAbs:hover svg {
+  stroke: var(--accent);
+}
+
 .testArrowAbs svg {
   stroke: var(--text-primary);
   stroke-width: 1.8;
@@ -157,19 +196,44 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 1199px) {
-  .testimonials { padding: var(--sp-80) var(--sp-48); }
-  .testGrid { gap: var(--sp-48); }
-}
-
 @media (max-width: 1023px) {
-  .testimonials { padding: 64px var(--sp-48); }
-  .testGrid { grid-template-columns: 40% 1fr; gap: 40px; }
+  .testArrowAbs {
+    display: none;
+  }
+  .testInner {
+    padding: 0 24px;
+  }
+  .testGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .testImage {
+    width: 180px;
+    height: 230px;
+    margin: 0 auto;
+  }
+  .testimonials {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 60px 0;
+  }
 }
 
 @media (max-width: 767px) {
-  .testimonials { padding: 56px 24px; }
-  .testGrid { grid-template-columns: 1fr; }
-  .testImage { display: none; }
-  .testArrowAbs { width: 36px; height: 52px; }
+  .testImage {
+    display: none;
+  }
+  .testQuote {
+    font-size: clamp(16px, 4.5vw, 18px);
+  }
+  .testimonials {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 40px 0;
+  }
+  .testAuthorRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
 }

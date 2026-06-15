@@ -7,6 +7,30 @@ import styles from './testimonials-carousel.module.css';
 
 type Phase = 'visible' | 'exiting' | 'entering';
 
+function getVenueLogo(company: string, logoUrl?: string) {
+  if (!company) return logoUrl;
+  const name = company.toLowerCase();
+  if (name.includes('masti')) return '/images/gamezones_logo/mastizone-logo.png';
+  if (name.includes('timezone')) return '/images/gamezones_logo/timezone-logo.png';
+  if (name.includes('skyjumper') || name.includes('sky jumper')) return '/images/gamezones_logo/skyjumper-logo.png';
+  if (name.includes('xplore')) return '/images/gamezones_logo/xplore-logo.png';
+  if (name.includes('rebounce')) return '/images/gamezones_logo/rebounce-logo.png';
+  if (name.includes('hopup') || name.includes('hop up')) return '/images/gamezones_logo/hopup-logo.png';
+  return logoUrl;
+}
+
+function getAvatar(avatarUrl?: string, index?: number) {
+  if (!avatarUrl || avatarUrl.includes('placeholder') || avatarUrl.startsWith('https://')) {
+    const avatars = [
+      '/images/operators/person-1.jpg',
+      '/images/operators/person-2.png',
+      '/images/operators/person-3.png'
+    ];
+    return avatars[(index || 0) % avatars.length];
+  }
+  return avatarUrl;
+}
+
 interface Props {
   testimonials: Testimonial[];
   heading?: string;
@@ -16,10 +40,10 @@ export default function TestimonialsCarousel({
   testimonials,
   heading = 'What operators say',
 }: Props) {
-  const [tIdx,   setTIdx]   = useState(0);
+  const [tIdx, setTIdx] = useState(0);
   const [tPhase, setTPhase] = useState<Phase>('visible');
-  const tBusy       = useRef(false);
-  const autoRef     = useRef<ReturnType<typeof setInterval> | null>(null);
+  const tBusy = useRef(false);
+  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const tIdxForAuto = useRef(0);
 
   const showTestimonial = useCallback((nextIdx: number) => {
@@ -57,9 +81,9 @@ export default function TestimonialsCarousel({
   const t = testimonials[tIdx];
 
   const phaseClass =
-    tPhase === 'exiting'  ? styles.exiting  :
-    tPhase === 'entering' ? styles.entering :
-    styles.visible;
+    tPhase === 'exiting' ? styles.exiting :
+      tPhase === 'entering' ? styles.entering :
+        styles.visible;
 
   return (
     <section
@@ -91,10 +115,10 @@ export default function TestimonialsCarousel({
           <div className={styles.testGrid}>
             <div className={styles.testImage}>
               <Image
-                src={t.avatar || '/images/operators/person-1.jpg'}
+                src={getAvatar(t.avatar, tIdx)}
                 alt={t.name}
-                width={240}
-                height={480}
+                width={300}
+                height={400}
                 className={styles.testPersonImg}
                 style={{ objectFit: 'cover', objectPosition: 'center top' }}
               />
@@ -104,20 +128,24 @@ export default function TestimonialsCarousel({
               <div className={`${styles.testimonialContent} ${phaseClass}`}>
                 <blockquote className={styles.testQuote}>{t.body}</blockquote>
                 <div className={styles.testDivider} aria-hidden="true" />
-                <p className={styles.testName}>{t.name}</p>
-                <span className={styles.testRole}>
-                  {[t.designation, t.company].filter(Boolean).join(', ')}
-                </span>
-                <div className={styles.testMetaWrap}>
-                  {t.logo && (
-                    <Image
-                      src={t.logo}
-                      alt={`${t.company} logo`}
-                      width={100}
-                      height={100}
-                      className={styles.testZoneLogo}
-                      style={{ objectFit: 'contain' }}
-                    />
+                <div className={styles.testAuthorRow}>
+                  <div className={styles.testAuthorInfo}>
+                    <p className={styles.testName}>{t.name}</p>
+                    <span className={styles.testRole}>
+                      {[t.designation, t.company].filter(Boolean).join(', ')}
+                    </span>
+                  </div>
+                  {getVenueLogo(t.company, t.logo) && (
+                    <div className={styles.testLogoWrap}>
+                      <Image
+                        src={getVenueLogo(t.company, t.logo)!}
+                        alt={`${t.company} logo`}
+                        width={120}
+                        height={48}
+                        className={styles.testZoneLogo}
+                        style={{ objectFit: 'contain' }}
+                      />
+                    </div>
                   )}
                 </div>
               </div>
