@@ -928,25 +928,24 @@
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 0;
   cursor: pointer;
-  transition: flex 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 /* Shrink siblings when one is hovered */
 .modesAccordion:hover .modesAccCard {
-  flex: 0.65;
+  flex: 0.5;
 }
 
 /* Expand the hovered card */
 .modesAccordion .modesAccCard:hover {
-  flex: 2.2;
+  flex: 3.2;
 }
 
 /* Background image — grayscale by default */
 .modesAccImgWrap {
   position: absolute;
   inset: 0;
-  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    filter 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
   filter: grayscale(100%) contrast(0.85) brightness(0.45);
 }
 
@@ -964,7 +963,7 @@
       rgba(8, 12, 16, 0.2) 0%,
       rgba(8, 12, 16, 0.8) 100%);
   z-index: 1;
-  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 .modesAccCard:hover .modesAccOverlay {
@@ -982,8 +981,7 @@
   gap: 8px;
   z-index: 3;
   pointer-events: none;
-  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 .modesAccCard:hover .modesAccHeader {
@@ -1000,8 +998,7 @@
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35);
   letter-spacing: -2px;
-  transition: -webkit-text-stroke 500ms cubic-bezier(0.4, 0, 0.2, 1),
-    color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
 }
 
 /* Number glows accent orange on hover */
@@ -1039,7 +1036,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: 48%;
+  width: 480px;
   padding: 40px;
   z-index: 3;
   display: flex;
@@ -1052,8 +1049,7 @@
       rgba(8, 12, 16, 0) 100%);
   opacity: 0;
   transform: translateX(-30px);
-  transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
   pointer-events: none;
 }
 
@@ -1277,7 +1273,7 @@
   .modesAccContent {
     padding: 32px;
     gap: 12px;
-    width: 55%;
+    width: 400px;
   }
 
   .modesAccHeader {
