@@ -313,14 +313,8 @@ export default function LaserTagClient({ testimonials }: Props) {
           <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Tag</h1>
           <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">Where strategy meets adrenaline.</p>
           <div className={styles.heroBtns} data-reveal data-reveal-delay="0.32">
-            <button
-              className={`${styles.hbtn} ${styles.hbtnSolid}`}
-              onClick={() => document.getElementById('why-fog-lasertag')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Explore &#x2192;
-            </button>
-            <button className={`${styles.hbtn} ${styles.hbtnGhost} ${styles.heroBtnWatch}`} onClick={openVideo}>
-              &#x25B6;&nbsp; Video
+            <button className={`${styles.hbtn} ${styles.hbtnSolid} ${styles.heroBtnWatch}`} onClick={openVideo}>
+              &#x25B6;&nbsp; WATCH
             </button>
           </div>
         </div>
