@@ -143,16 +143,30 @@
   gap: 18px;
 }
 
+.itemContainer {
+  perspective: 1000px;
+  width: 100%;
+}
+
 /* Custom premium card design for FAQ items */
 .item {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
+  background: #f1f3f4;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 0;
   padding: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
-  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: background 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.1s ease-out,
+    box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    filter 400ms cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  will-change: transform;
 }
 
 .item::before {
@@ -166,23 +180,37 @@
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
 }
 
-.item:hover {
-  transform: translateY(-2px);
-  border-color: rgba(240, 80, 35, 0.2);
-  box-shadow: 0 12px 24px rgba(240, 80, 35, 0.04), 0 2px 4px rgba(0, 0, 0, 0.01);
+.item:hover:not(.itemOpen) {
+  filter: grayscale(50%);
+  opacity: 0.85;
+  background: #f8f9fa;
+  border-color: rgba(0, 0, 0, 0.1);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(3px);
 }
 
 .itemOpen {
-  border-color: rgba(240, 80, 35, 0.3);
-  background: #fafafa;
-  box-shadow: 0 16px 32px rgba(240, 80, 35, 0.06);
+  filter: grayscale(0%);
+  opacity: 1;
+  background: #ffffff;
+  border-color: rgba(240, 80, 35, 0.25);
+  box-shadow: 0 12px 28px rgba(240, 80, 35, 0.08), 0 2px 4px rgba(240, 80, 35, 0.03);
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(5px);
 }
 
 .itemOpen::before {
   transform: scaleY(1);
   transform-origin: top;
+}
+
+.itemInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transform: translateZ(6px);
+  transform-style: preserve-3d;
 }
 
 .head {
