@@ -27,9 +27,32 @@ const FAQ_ITEMS = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
+
+  // 3D Card Tilt Effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const maxTilt = 4; // Max tilt angle in degrees
+    const percentX = (x - centerX) / centerX;
+    const percentY = (y - centerY) / centerY;
+    const tiltX = -percentY * maxTilt;
+    const tiltY = percentX * maxTilt;
+    card.style.setProperty('--rx', `${tiltX}deg`);
+    card.style.setProperty('--ry', `${tiltY}deg`);
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  };
 
   return (
     <section className={styles.section} data-nav-theme="light">
@@ -48,26 +71,28 @@ export default function FaqSection() {
           {FAQ_ITEMS.map((item, i) => {
             const open = openIndex === i;
             return (
-              <div
-                key={i}
-                className={`${styles.item} ${open ? styles.itemOpen : ''}`}
-              >
-                <button
-                  type="button"
-                  className={styles.head}
-                  aria-expanded={open}
-                  onClick={() => toggle(i)}
+              <div key={i} className={styles.itemContainer}>
+                <div
+                  className={`${styles.item} ${open ? styles.itemOpen : ''}`}
+                  onMouseEnter={() => setOpenIndex(i)}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  <span className={styles.q}>{item.q}</span>
-                  <span className={styles.icon} aria-hidden="true">
-                    <span className={`${styles.bar} ${styles.barH}`} />
-                    <span className={`${styles.bar} ${styles.barV}`} />
-                  </span>
-                </button>
+                  <div className={styles.itemInner}>
+                    <button
+                      type="button"
+                      className={styles.head}
+                      aria-expanded={open}
+                      onClick={() => toggle(i)}
+                    >
+                      <span className={styles.q}>{item.q}</span>
+                    </button>
 
-                <div className={styles.answer}>
-                  <div className={styles.answerClip}>
-                    <p className={styles.a}>{item.a}</p>
+                    <div className={styles.answer}>
+                      <div className={styles.answerClip}>
+                        <p className={styles.a}>{item.a}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
