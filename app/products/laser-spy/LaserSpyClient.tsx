@@ -218,6 +218,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
   // 3D Card Tilt Effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;

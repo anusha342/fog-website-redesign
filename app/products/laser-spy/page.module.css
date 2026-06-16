@@ -593,11 +593,13 @@
   will-change: transform;
 }
 
-.card3d:hover {
-  filter: grayscale(50%);
-  opacity: 0.85;
-  background: #f8f9fa;
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(10px);
+@media (hover: hover) {
+  .card3d:hover {
+    filter: grayscale(50%);
+    opacity: 0.85;
+    background: #f8f9fa;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(10px);
+  }
 }
 
 .uspSelectorAccentLine {

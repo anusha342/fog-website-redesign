@@ -167,6 +167,7 @@ function MomentCard({ step, idx }: { step: typeof MOMENTS[0]; idx: number }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
