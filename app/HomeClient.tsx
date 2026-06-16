@@ -55,7 +55,7 @@ const PRODUCTS = [
     href: '/products/laser-tag',
     sectionCls: styles.prodLasertag,
     thumbs: [
-      { bg: '/images/laser-tag/laser-tag-1.png', pos: 'center top',    alt: 'Laser Tag arena' },
+      { bg: '/images/laser-tag/laser-tag-1.png', pos: 'center top', alt: 'Laser Tag arena' },
       { bg: '/images/laser-tag/laser-tag-1.png', pos: 'center center', alt: 'Laser Tag gameplay' },
       { bg: '/images/laser-tag/laser-tag-1.png', pos: 'center bottom', alt: 'Laser Tag action' },
     ],
@@ -70,7 +70,7 @@ const PRODUCTS = [
     href: '/products/laser-spy',
     sectionCls: styles.prodLasermaze,
     thumbs: [
-      { bg: '/images/laser-spy/laser-spy-1.jpg', pos: 'center top',  alt: 'Laser Maze entrance' },
+      { bg: '/images/laser-spy/laser-spy-1.jpg', pos: 'center top', alt: 'Laser Maze entrance' },
       { bg: '/images/laser-spy/laser-spy-1.jpg', pos: 'center center', alt: 'Laser Maze beams' },
       { bg: '/images/laser-spy/laser-spy-1.jpg', pos: 'right center', alt: 'Laser Maze challenge' },
     ],
@@ -92,19 +92,19 @@ export default function HomeClient({
   initialPosts,
   initialTestimonials,
 }: {
-  initialPosts:        BlogPost[];
+  initialPosts: BlogPost[];
   initialTestimonials: Testimonial[];
 }) {
-  const canvasRef    = useRef<HTMLCanvasElement>(null);
-  const heroRef      = useRef<HTMLElement>(null);
-  const globeRef     = useRef<HTMLDivElement>(null);
-  const aboutRef     = useRef<HTMLElement>(null);
-  const mbBreakRef   = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const globeRef = useRef<HTMLDivElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const mbBreakRef = useRef<HTMLElement>(null);
 
   // FOG text state
-  const [scattered,    setScattered]    = useState(false);
+  const [scattered, setScattered] = useState(false);
   const [futureActive, setFutureActive] = useState(false);
-  const [glitchIdx,    setGlitchIdx]    = useState<number | null>(null);
+  const [glitchIdx, setGlitchIdx] = useState<number | null>(null);
 
   // Moments AI Break
   const [mbActivated, setMbActivated] = useState(false);
@@ -115,8 +115,8 @@ export default function HomeClient({
   });
   const [bgStates, setBgStates] = useState<Record<string, { bg: string; pos: string }>>({
     hypergrid: { bg: '/images/hyper-grid/hyper-grid-1.png', pos: 'center' },
-    lasertag:  { bg: '/images/laser-tag/laser-tag-1.png',  pos: 'center top' },
-    lasermaze: { bg: '/images/laser-spy/laser-spy-1.jpg',  pos: 'center top' },
+    lasertag: { bg: '/images/laser-tag/laser-tag-1.png', pos: 'center top' },
+    lasermaze: { bg: '/images/laser-spy/laser-spy-1.jpg', pos: 'center top' },
   });
 
   // Counts
@@ -140,7 +140,7 @@ export default function HomeClient({
         animId = requestAnimationFrame(raf);
         (window as any).__fogLenis = lenis;
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => {
       cancelAnimationFrame(animId);
       (window as any).__fogLenis?.destroy?.();
@@ -466,7 +466,7 @@ export default function HomeClient({
       if (isRevealed) concealTimer = setTimeout(conceal, 1000);
     };
     const onClick = () => {
-      if (revealTimer)  { clearTimeout(revealTimer);  revealTimer  = null; }
+      if (revealTimer) { clearTimeout(revealTimer); revealTimer = null; }
       if (concealTimer) { clearTimeout(concealTimer); concealTimer = null; }
       if (isRevealed) conceal(); else reveal();
     };
@@ -476,8 +476,8 @@ export default function HomeClient({
     fogZone.addEventListener('click', onClick);
 
     return () => {
-      if (glitchTimer)  clearTimeout(glitchTimer);
-      if (revealTimer)  clearTimeout(revealTimer);
+      if (glitchTimer) clearTimeout(glitchTimer);
+      if (revealTimer) clearTimeout(revealTimer);
       if (concealTimer) clearTimeout(concealTimer);
       fogZone.removeEventListener('mouseenter', onEnter);
       fogZone.removeEventListener('mouseleave', onLeave);
@@ -632,16 +632,16 @@ export default function HomeClient({
           });
 
           pointSeries.data.setAll([
-            { title: 'India',      latitude: 20.5,  longitude: 78.9  },
-            { title: 'Bangalore',  latitude: 12.9,  longitude: 77.5  },
-            { title: 'Mumbai',     latitude: 19.0,  longitude: 72.8  },
-            { title: 'Delhi',      latitude: 28.6,  longitude: 77.2  },
-            { title: 'Hyderabad',  latitude: 17.3,  longitude: 78.4  },
-            { title: 'Sydney',     latitude: -33.8, longitude: 151.2 },
-            { title: 'Melbourne',  latitude: -37.8, longitude: 144.9 },
-            { title: 'Singapore',  latitude: 1.35,  longitude: 103.8 },
-            { title: 'Dubai',      latitude: 25.2,  longitude: 55.2  },
-            { title: 'London',     latitude: 51.5,  longitude: -0.1  },
+            { title: 'India', latitude: 20.5, longitude: 78.9 },
+            { title: 'Bangalore', latitude: 12.9, longitude: 77.5 },
+            { title: 'Mumbai', latitude: 19.0, longitude: 72.8 },
+            { title: 'Delhi', latitude: 28.6, longitude: 77.2 },
+            { title: 'Hyderabad', latitude: 17.3, longitude: 78.4 },
+            { title: 'Sydney', latitude: -33.8, longitude: 151.2 },
+            { title: 'Melbourne', latitude: -37.8, longitude: 144.9 },
+            { title: 'Singapore', latitude: 1.35, longitude: 103.8 },
+            { title: 'Dubai', latitude: 25.2, longitude: 55.2 },
+            { title: 'London', latitude: 51.5, longitude: -0.1 },
           ]);
 
           let rotAnim: any = null;
@@ -660,7 +660,7 @@ export default function HomeClient({
       })
       .catch((e) => console.warn('amCharts load failed', e));
 
-    return () => { try { root?.dispose(); } catch (_) {} };
+    return () => { try { root?.dispose(); } catch (_) { } };
   }, []);
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -721,14 +721,14 @@ export default function HomeClient({
               aria-hidden="true"
             >
               <div className={`${styles.fwRow} ${styles.fwRow1}`}>
-                {['F','U','T','U','R','E',' ','O','F'].map((ch, i) =>
+                {['F', 'U', 'T', 'U', 'R', 'E', ' ', 'O', 'F'].map((ch, i) =>
                   ch === ' '
                     ? <span key={i} className={styles.fwSpace}>&nbsp;</span>
                     : <span key={i} className={styles.fwChar}>{ch}</span>
                 )}
               </div>
               <div className={`${styles.fwRow} ${styles.fwRow2}`}>
-                {['G','A','M','I','N','G'].map((ch, i) => (
+                {['G', 'A', 'M', 'I', 'N', 'G'].map((ch, i) => (
                   <span key={i} className={styles.fwChar}>{ch}</span>
                 ))}
               </div>
@@ -760,10 +760,10 @@ export default function HomeClient({
           <div className={styles.marqueeTrack} aria-hidden="true">
             {[...Array(4)].flatMap(() => [
               { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
-              { src: '/images/gamezones_logo/timezone-logo.png',  alt: 'Timezone' },
-              { src: '/images/gamezones_logo/xplore-logo.png',    alt: 'Xplore' },
-              { src: '/images/gamezones_logo/rebounce-logo.png',  alt: 'Rebounce' },
-              { src: '/images/gamezones_logo/hopup-logo.png',     alt: 'Hopup' },
+              { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
+              { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
+              { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
+              { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
               { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
             ]).map((logo, i) => (
               <Image
@@ -913,7 +913,7 @@ export default function HomeClient({
             <div className={styles.mbEyebrowWrap} aria-hidden="true">
               <span className={styles.mbDash}>&mdash;</span>
               <p className={styles.mbEyebrow}>
-                {['P','O','W','E','R','E','D',' ',' ','B','Y'].map((ch, i) => (
+                {['P', 'O', 'W', 'E', 'R', 'E', 'D', ' ', ' ', 'B', 'Y'].map((ch, i) => (
                   <span key={i} style={{ ['--i' as string]: i }}>{ch === ' ' ? '\u00A0\u00A0' : ch}</span>
                 ))}
               </p>
@@ -953,7 +953,7 @@ export default function HomeClient({
           <div className={styles.prodText}>
             {/* <span className={styles.prodNum}>04</span> */}
             <h2 className={styles.prodName}>Moments</h2>
-            <p className={styles.prodDesc}>AI-powered highlight capture. <br/> Every player leaves with their story.</p>
+            <p className={styles.prodDesc}>AI-powered highlight capture. <br /> Every player leaves with their story.</p>
             {/* <Link href="/products/moments" className={styles.prodBtn}>
               Learn More &#x2192;
             </Link> */}
@@ -961,7 +961,7 @@ export default function HomeClient({
           <div className={styles.momentsVideoStrip} aria-label="Moments highlights reel">
             <div className={styles.momentsVideoTrack} aria-hidden="true">
               {[...Array(2)].flatMap((_, outerIdx) =>
-                ['clip1.mp4','clip2.mp4','clip3.mp4','clip4.mp4','clip5.mp4'].map((clip, innerIdx) => (
+                ['clip1.mp4', 'clip2.mp4', 'clip3.mp4', 'clip4.mp4', 'clip5.mp4'].map((clip, innerIdx) => (
                   <div key={`${outerIdx}-${clip}-${innerIdx}`} className={styles.momentsVideoCard}>
                     <video autoPlay muted loop playsInline>
                       <source src={`/videos/${clip}`} type="video/mp4" />
