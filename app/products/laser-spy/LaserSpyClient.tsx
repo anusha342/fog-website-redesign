@@ -198,7 +198,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
   const [activeStep, setActiveStep] = useState(0);
 
   // Active USP Tab State
-  const [activeUsp, setActiveUsp] = useState(0);
+  const [activeUsp, setActiveUsp] = useState<number | null>(0);
 
   // ROI Calculator State
   const [floor, setFloor] = useState(300);
@@ -238,6 +238,13 @@ export default function LaserSpyClient({ testimonials }: Props) {
     const card = e.currentTarget;
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
+  };
+
+  const handleUspMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+    setActiveUsp(0);
   };
 
   // Testimonials Carousel State
@@ -406,7 +413,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
                   className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
                   onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseLeave={handleUspMouseLeave}
                   onClick={() => setActiveUsp(idx)}
                 >
                   <div className={styles.card3d}>

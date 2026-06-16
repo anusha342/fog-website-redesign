@@ -308,6 +308,13 @@ export default function LaserTagClient({ testimonials }: Props) {
     card.style.setProperty('--ry', '0deg');
   };
 
+  const handleUspMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+    setActiveUsp(0);
+  };
+
   return (
     <main className={styles.lasertagPage}>
 
@@ -444,7 +451,7 @@ export default function LaserTagClient({ testimonials }: Props) {
                   className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
                   onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseLeave={handleUspMouseLeave}
                   onClick={() => setActiveUsp(idx)}
                 >
                   <div className={styles.card3d}>

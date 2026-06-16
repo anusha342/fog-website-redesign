@@ -53,6 +53,7 @@ export default function FaqSection() {
     const card = e.currentTarget;
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
+    setOpenIndex(0);
   };
 
   return (
