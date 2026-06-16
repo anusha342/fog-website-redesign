@@ -154,18 +154,13 @@
 
 .testZoneLogo {
   height: 48px;
-  /* Scaled up logo height */
   width: auto;
   max-width: 120px;
   object-fit: contain;
   display: block;
-  filter: grayscale(1) brightness(0.55);
-  transition: filter 250ms;
 }
 
-.testZoneLogo:hover {
-  filter: grayscale(0) brightness(1);
-}
+
 
 /* Slide transitions */
 .testimonialContent {
@@ -249,7 +244,10 @@
 
 @media (max-width: 767px) {
   .testImage {
-    display: none;
+    display: block;
+    width: 140px;
+    height: 185px;
+    margin: 0 auto 20px;
   }
 
   .testQuote {
