@@ -603,8 +603,21 @@
   height: 100%;
 }
 
-.uspSelectorCard {
+.card3dContainer {
   flex: 1;
+  perspective: 1000px;
+  width: 100%;
+}
+
+.uspSelectorCard {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.card3d {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -615,15 +628,25 @@
   cursor: pointer;
   filter: grayscale(100%);
   opacity: 0.65;
-  transition: all 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: background 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 400ms cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.1s ease-out,
+    box-shadow 400ms cubic-bezier(0.25, 1, 0.5, 1);
   overflow: hidden;
   border-radius: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  will-change: transform;
 }
 
-.uspSelectorCard:hover {
-  filter: grayscale(50%);
-  opacity: 0.85;
-  background: #f8f9fa;
+@media (hover: hover) {
+  .card3d:hover {
+    filter: grayscale(50%);
+    opacity: 0.85;
+    background: #f8f9fa;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(10px);
+  }
 }
 
 .uspSelectorAccentLine {
@@ -636,10 +659,11 @@
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 400ms cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
 }
 
-.uspSelectorActive,
-.uspSelectorActive:hover {
+.uspSelectorActive .card3d,
+.uspSelectorActive:hover .card3d {
   filter: grayscale(0%);
   opacity: 1;
   background: #ffffff;
@@ -650,6 +674,15 @@
 .uspSelectorActive .uspSelectorAccentLine {
   transform: scaleY(1);
   transform-origin: top;
+}
+
+.card3dInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  transform: translateZ(15px);
+  transform-style: preserve-3d;
 }
 
 .uspSelectorContent {
@@ -1398,10 +1431,12 @@
     gap: 32px;
     align-items: start;
     height: auto;
+    min-height: auto;
+    max-height: none;
   }
 
   .uspShowcasePane {
-    order: 2;
+    order: 1;
     aspect-ratio: 16/10;
     min-height: 280px;
     max-width: 500px;
@@ -1410,17 +1445,28 @@
   }
 
   .uspSelectorsPane {
-    order: 1;
+    order: 2;
     height: auto;
   }
 
   .uspSelectorCard {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+  }
+
+  .card3dContainer {
     flex: none;
     height: auto;
   }
 
-  .uspSelectorDesc {
-    max-height: unset;
+  .card3d {
+    min-height: auto;
+    padding: 20px 24px;
+  }
+
+  .uspSelectorActive .uspSelectorDesc {
+    max-height: 300px;
     opacity: 1;
     margin-top: 4px;
   }

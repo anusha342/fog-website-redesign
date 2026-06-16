@@ -284,6 +284,30 @@ export default function LaserTagClient({ testimonials }: Props) {
 
   const [activeUsp, setActiveUsp] = useState(0);
 
+  // 3D Card Tilt Effect
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const maxTilt = 10; // Max tilt angle in degrees
+    const percentX = (x - centerX) / centerX;
+    const percentY = (y - centerY) / centerY;
+    const tiltX = -percentY * maxTilt;
+    const tiltY = percentX * maxTilt;
+    card.style.setProperty('--rx', `${tiltX}deg`);
+    card.style.setProperty('--ry', `${tiltY}deg`);
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  };
+
   return (
     <main className={styles.lasertagPage}>
 
@@ -417,18 +441,22 @@ export default function LaserTagClient({ testimonials }: Props) {
               {USPS_DATA.map((usp, idx) => (
                 <div
                   key={idx}
-                  className={`${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
+                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
                   onClick={() => setActiveUsp(idx)}
                 >
-                  <div className={styles.uspSelectorAccentLine} />
-                  <div className={styles.uspSelectorContent}>
-                    <div className={styles.uspSelectorHeader}>
-                      <span className={styles.uspSelectorNum}>{usp.num}</span>
-                      <span className={styles.uspSelectorCategory}>{usp.category}</span>
+                  <div className={styles.card3d}>
+                    <div className={styles.uspSelectorAccentLine} />
+                    <div className={`${styles.card3dInner} ${styles.uspSelectorContent}`}>
+                      <div className={styles.uspSelectorHeader}>
+                        <span className={styles.uspSelectorNum}>{usp.num}</span>
+                        <span className={styles.uspSelectorCategory}>{usp.category}</span>
+                      </div>
+                      <h3 className={styles.uspSelectorTitle}>{usp.title.toUpperCase()}</h3>
+                      <p className={styles.uspSelectorDesc}>{usp.body}</p>
                     </div>
-                    <h3 className={styles.uspSelectorTitle}>{usp.title.toUpperCase()}</h3>
-                    <p className={styles.uspSelectorDesc}>{usp.body}</p>
                   </div>
                 </div>
               ))}
