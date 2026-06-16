@@ -88,30 +88,64 @@ export default function Navbar() {
         aria-modal="true"
         aria-label="Navigation menu"
       >
-        <button
-          className="mobile-close"
-          id="mobile-close-btn"
-          aria-label="Close menu"
-          onClick={() => setMenuOpen(false)}
-        >
-          &#x2715;
-        </button>
-        <Link href="/about" className={pathname === '/about' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>About</Link>
-        <button
-          type="button"
-          className={`mobile-menu-trigger${mobileProductsOpen ? ' open' : ''}`}
-          aria-expanded={mobileProductsOpen}
-          onClick={() => setMobileProductsOpen((prev) => !prev)}
-        >
-          Products
-        </button>
-        <div className={`mobile-submenu${mobileProductsOpen ? ' open' : ''}`}>
-          <Link href="/products/hyper-grid" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>HyperGrid</Link>
-          <Link href="/products/laser-tag" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>Laser Tag</Link>
-          <Link href="/products/laser-spy" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>Laser Spy</Link>
+        <div className="mobile-menu-header">
+          <Link href="/" className="nav-logo" aria-label="FOG Technologies home" onClick={() => setMenuOpen(false)}>
+            <Image
+              src="/images/company_logo.png"
+              alt="FOG Technologies"
+              className="nav-logo-img"
+              width={120}
+              height={34}
+              priority
+            />
+          </Link>
+          <button
+            className="mobile-close"
+            id="mobile-close-btn"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+          >
+            &#x2715;
+          </button>
         </div>
-        <Link href="/blog" className={pathname.startsWith('/blog') ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Blog</Link>
-        <Link href="/contact" className={pathname === '/contact' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Contact</Link>
+
+        <div className="mobile-menu-links">
+          <Link href="/about" className={pathname === '/about' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>About</Link>
+          <button
+            type="button"
+            className={`mobile-menu-trigger${mobileProductsOpen ? ' open' : ''}`}
+            aria-expanded={mobileProductsOpen}
+            onClick={() => setMobileProductsOpen((prev) => !prev)}
+          >
+            Products
+            <svg
+              className="mobile-chevron"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{
+                marginLeft: '8px',
+                transition: 'transform 200ms ease',
+                transform: mobileProductsOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}
+              aria-hidden="true"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+          <div className={`mobile-submenu${mobileProductsOpen ? ' open' : ''}`}>
+            <Link href="/products/hyper-grid" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>HyperGrid</Link>
+            <Link href="/products/laser-tag" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>Laser Tag</Link>
+            <Link href="/products/laser-spy" onClick={() => { setMenuOpen(false); setMobileProductsOpen(false); }}>Laser Spy</Link>
+          </div>
+          <Link href="/blog" className={pathname.startsWith('/blog') ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Blog</Link>
+          <Link href="/contact" className={pathname === '/contact' ? 'nav-active' : ''} onClick={() => setMenuOpen(false)}>Contact</Link>
+        </div>
       </div>
 
       {/* NAVBAR */}
