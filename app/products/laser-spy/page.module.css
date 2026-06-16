@@ -382,7 +382,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   text-align: left;
 }
 
@@ -419,7 +419,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   display: flex;
   flex-direction: column;
 }
@@ -724,6 +724,10 @@
     padding: 64px 0;
   }
 
+  .uspHeader {
+    padding: 0 24px;
+  }
+
   .uspInner {
     padding: 0 24px;
   }
@@ -772,10 +776,10 @@
 }
 
 .modesHeader {
-  max-width: 100%;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 4vw, 60px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   text-align: left;
 }
 
@@ -791,11 +795,11 @@
 }
 
 .modesInner {
-  max-width: 100%;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 4vw, 60px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
 }
 
 .modesAccordion {
@@ -1072,6 +1076,18 @@
 }
 
 @media (max-width: 640px) {
+  .uspHeader,
+  .uspInner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .modesHeader,
+  .modesInner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .modesAccordion {
     height: 680px;
   }
@@ -1544,7 +1560,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 80px 0px;
+  padding: 80px clamp(24px, 3.5vw, 40px);
 }
 
 .calcHeader {
@@ -1768,6 +1784,12 @@
 }
 
 @media (max-width: 1023px) {
+  .modesHeader,
+  .modesInner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .calcSection {
     height: auto;
   }

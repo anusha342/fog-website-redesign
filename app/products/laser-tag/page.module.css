@@ -450,7 +450,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   text-align: left;
 }
 
@@ -470,7 +470,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   display: flex;
   flex-direction: column;
 }
@@ -736,7 +736,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   text-align: left;
 }
 
@@ -756,7 +756,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   display: flex;
   flex-direction: column;
 }
@@ -958,10 +958,10 @@
 
 /* Heading — sits on white, aligned with panel contents */
 .modesHeader {
-  max-width: 100%;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 4vw, 60px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
   text-align: left;
 }
 
@@ -978,11 +978,11 @@
 
 /* Gray panel — identical to .uspInner and .equipInner */
 .modesInner {
-  max-width: 100%;
+  max-width: 1440px;
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 4vw, 60px);
+  padding: 0 clamp(24px, 3.5vw, 40px);
 }
 
 /* Horizontal accordion inside the panel */
@@ -1743,12 +1743,11 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 clamp(24px, 5vw, 80px) 16px;
+  padding: 0 clamp(24px, 3.5vw, 40px) 16px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 40px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .momentsHeaderLeft {
@@ -1796,7 +1795,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 24px clamp(24px, 5vw, 80px) 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px clamp(24px, 3.5vw, 40px) 32px;
   position: relative;
   z-index: 1;
 }
@@ -2101,7 +2102,7 @@
 /* ── Responsive breakpoints ── */
 @media (max-width: 1200px) {
   .momentsGridContainer {
-    padding: 40px clamp(24px, 5vw, 60px) 64px;
+    padding: 40px clamp(24px, 3.5vw, 40px) 64px;
   }
 
   .momentsGrid {
