@@ -27,7 +27,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
 
@@ -53,7 +53,7 @@ export default function FaqSection() {
     const card = e.currentTarget;
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
-    setOpenIndex(0);
+    setOpenIndex(null);
   };
 
   return (
