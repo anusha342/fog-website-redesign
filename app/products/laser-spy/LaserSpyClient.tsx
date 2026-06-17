@@ -198,7 +198,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
   const [activeStep, setActiveStep] = useState(0);
 
   // Active USP Tab State
-  const [activeUsp, setActiveUsp] = useState<number | null>(0);
+  const [activeUsp, setActiveUsp] = useState<number | null>(null);
 
   // ROI Calculator State
   const [floor, setFloor] = useState(300);
@@ -244,7 +244,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
     const card = e.currentTarget;
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
-    setActiveUsp(0);
+    setActiveUsp(null);
   };
 
   // Testimonials Carousel State
@@ -410,7 +410,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
               {USPS_DATA.map((usp, idx) => (
                 <div
                   key={idx}
-                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
+                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${(activeUsp === idx || (activeUsp === null && idx === 0)) ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleUspMouseLeave}
@@ -437,7 +437,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
                 {USPS_DATA.map((usp, idx) => (
                   <div
                     key={idx}
-                    className={`${styles.uspImageItem} ${activeUsp === idx ? styles.uspImageActive : ''}`}
+                    className={`${styles.uspImageItem} ${(activeUsp === idx || (activeUsp === null && idx === 0)) ? styles.uspImageActive : ''}`}
                   >
                     <Image
                       src={usp.img}

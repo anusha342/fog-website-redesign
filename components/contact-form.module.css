@@ -22,13 +22,13 @@
   inset: 0;
   background-image:
     /* Glow */
-    radial-gradient(circle at 10% 20%, rgba(240, 80, 35, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 10% 20%, rgba(240, 80, 35, 0) 0%, transparent 60%),
     /* Dots */
     radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
     /* Grid horizontal lines */
-    linear-gradient(rgba(240, 80, 35, 0.015) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0) 1px, transparent 1px),
     /* Grid vertical lines */
-    linear-gradient(90deg, rgba(240, 80, 35, 0.015) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(0, 0, 0, 0) 1px, transparent 1px);
   background-size: auto, 28px 28px, 44px 44px, 44px 44px;
   background-repeat: no-repeat, repeat, repeat, repeat;
   pointer-events: none;
@@ -438,10 +438,10 @@
   .left {
     background-color: #f9f9f9;
     background-image:
-      radial-gradient(circle at 10% 20%, rgba(240, 80, 35, 0.04) 0%, transparent 60%),
+      radial-gradient(circle at 10% 20%, rgba(240, 80, 35, 0) 0%, transparent 60%),
       radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(rgba(240, 80, 35, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(240, 80, 35, 0.015) 1px, transparent 1px);
+      linear-gradient(rgba(0, 0, 0, 0) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0) 1px, transparent 1px);
     background-size: auto, 28px 28px, 44px 44px, 44px 44px;
     background-repeat: no-repeat, repeat, repeat, repeat;
     border-right: none;

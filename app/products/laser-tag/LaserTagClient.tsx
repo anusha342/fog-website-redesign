@@ -282,7 +282,7 @@ export default function LaserTagClient({ testimonials }: Props) {
     }, 2000);
   };
 
-  const [activeUsp, setActiveUsp] = useState(0);
+  const [activeUsp, setActiveUsp] = useState<number | null>(null);
 
   // 3D Card Tilt Effect
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -312,7 +312,7 @@ export default function LaserTagClient({ testimonials }: Props) {
     const card = e.currentTarget;
     card.style.setProperty('--rx', '0deg');
     card.style.setProperty('--ry', '0deg');
-    setActiveUsp(0);
+    setActiveUsp(null);
   };
 
   return (
@@ -448,7 +448,7 @@ export default function LaserTagClient({ testimonials }: Props) {
               {USPS_DATA.map((usp, idx) => (
                 <div
                   key={idx}
-                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${activeUsp === idx ? styles.uspSelectorActive : ''}`}
+                  className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${(activeUsp === idx || (activeUsp === null && idx === 0)) ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleUspMouseLeave}
@@ -475,7 +475,7 @@ export default function LaserTagClient({ testimonials }: Props) {
                 {USPS_DATA.map((usp, idx) => (
                   <div
                     key={idx}
-                    className={`${styles.uspImageItem} ${activeUsp === idx ? styles.uspImageActive : ''}`}
+                    className={`${styles.uspImageItem} ${(activeUsp === idx || (activeUsp === null && idx === 0)) ? styles.uspImageActive : ''}`}
                   >
                     <Image
                       src={usp.img}
