@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import FaqSection from '@/components/FaqSection';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -127,116 +128,6 @@ const MODES = [
   },
 ];
 
-const MOMENTS = [
-  {
-    label: 'Suit Up & Play',
-    title: 'Suit up & enter the arena',
-    desc: 'Gear up with combat vests and phasers, select your game mode, and start the battle.',
-    tags: ['Under 2 min setup', 'Up to 30 players'],
-    img: '/images/laser-tag/laser-tag-1.png',
-    imgAlt: 'Players suiting up in laser tag arena',
-  },
-  {
-    label: 'AI Captures You',
-    title: 'AI captures every highlight',
-    desc: 'Overhead AI cameras automatically detect and record key eliminations, streaks, and victories.',
-    tags: ['Auto-clip', 'Real-time', 'Zero setup'],
-    img: '/images/laser-tag/arena.png',
-    imgAlt: 'AI cameras tracking every move in the arena',
-  },
-  {
-    label: 'Scan QR Code',
-    title: 'Scan QR, claim your clip',
-    desc: 'Scan the QR code at the arena exit to claim your personal highlight reel instantly.',
-    tags: ['No app needed', 'Instant access'],
-    img: '/images/laser-tag/vest-description.png',
-    imgAlt: 'QR code scanning at exit kiosk',
-  },
-  {
-    label: 'Download & Share',
-    title: 'Download & share instantly',
-    desc: 'Download your automated gameplay video and share it instantly to Instagram or WhatsApp.',
-    tags: ['1-tap share', 'Viral ready'],
-    img: '/images/laser-tag/gun.png',
-    imgAlt: 'Sharing highlight clip on phone',
-  },
-];
-
-/* ── MOMENT CARD COMPONENT ── */
-function MomentCard({ step, idx }: { step: typeof MOMENTS[0]; idx: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const px = (x / rect.width - 0.5) * 2;
-    const py = (y / rect.height - 0.5) * 2;
-    const maxRotation = 8;
-    const rx = -py * maxRotation;
-    const ry = px * maxRotation;
-    card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.25, 1.25, 1.25)`;
-    card.style.setProperty('--mx', `${x}px`);
-    card.style.setProperty('--my', `${y}px`);
-    card.style.setProperty('--opacity', '1');
-  };
-
-  const handleMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    card.style.setProperty('--opacity', '0');
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      className={styles.momentsCard}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      role="article"
-      aria-label={`Step ${idx + 1}: ${step.label}`}
-    >
-      <div className={`${styles.momentsCardBg} ${styles.momentsCardBgCover}`}>
-        <Image
-          src={step.img}
-          alt={step.imgAlt}
-          fill
-          loading="lazy"
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
-      </div>
-      <div className={`${styles.momentsCardBg} ${styles.momentsCardBgContain}`}>
-        <Image
-          src={step.img}
-          alt={step.imgAlt}
-          fill
-          loading="lazy"
-          style={{ objectFit: 'contain', objectPosition: 'center' }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
-      </div>
-      <div className={styles.momentsCardOverlay} aria-hidden="true" />
-      <div className={styles.momentsHoloOverlay} aria-hidden="true" />
-      <div className={styles.momentsHoloScanline} aria-hidden="true" />
-      <span className={styles.momentsCardWatermark} aria-hidden="true">0{idx + 1}</span>
-      <span className={styles.momentsCardStep} aria-hidden="true">[ • STEP 0{idx + 1} ]</span>
-      <div className={styles.momentsCardContent}>
-        <h3 className={styles.momentsCardTitle}>{step.title}</h3>
-        <p className={styles.momentsCardDesc}>{step.desc}</p>
-        <div className={styles.momentsCardTags}>
-          {step.tags.map(t => (
-            <span key={t} className={styles.momentsCardTag}>{t}</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 interface Props {
   testimonials: Testimonial[];
@@ -624,29 +515,64 @@ export default function LaserTagClient({ testimonials }: Props) {
       </section>
 
       {/* ── 5. MOMENTS IN LASER TAG ── */}
-      <section
-        id="lt-moments"
-        className={styles.momentsSection}
-        data-nav-theme="light"
-      >
-
-        {/* Header */}
-        <div className={styles.momentsHeader} data-reveal>
-          <div className={styles.momentsHeaderLeft}>
-            <span className={styles.momentsEyebrow}>05 — Moments AI</span>
+      <section id="lt-moments" className={styles.momentsSection} data-nav-theme="light">
+        <div className={styles.momentsInner}>
+          <div className={styles.momentsTop} data-reveal>
             <h2 className={styles.momentsTitle}>Moments in Laser Tag</h2>
           </div>
-        </div>
 
-        {/* Cinematic grid container */}
-        <div className={styles.momentsGridContainer}>
-          <div className={styles.momentsGrid}>
-            {MOMENTS.map((step, idx) => (
-              <MomentCard key={idx} step={step} idx={idx} />
-            ))}
+          <div className={styles.momentsBento}>
+
+            {/* Step 1 */}
+            <div className={styles.momentsCard} data-reveal data-reveal-delay="0.1">
+              <div className={styles.momentsCardImg}>
+                <Image src="/images/laser-tag/laser-tag-1.png" alt="Players suiting up in laser tag arena" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>01</span>
+                <h3 className={styles.momentsCardH}>Camera positions in arena</h3>
+                <p className={styles.momentsCardP}>Overhead AI cameras auto-track every player through the combat zone.</p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className={`${styles.momentsCard} ${styles.momentsCardDark}`} data-reveal data-reveal-delay="0.2">
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>02</span>
+                <h3 className={styles.momentsCardH}>Play — AI captures every highlight</h3>
+                <p className={styles.momentsCardP}>Every elimination, streak, and victory is recorded automatically. Your best moments are clipped in real-time.</p>
+                <ul className={styles.momentsList}>
+                  <li>Suit up with vest &amp; phaser</li>
+                  <li>Select game mode at kiosk</li>
+                  <li>AI capture starts automatically</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`} data-reveal data-reveal-delay="0.3">
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>03</span>
+                <h3 className={styles.momentsCardH}>Scan QR at exit</h3>
+                <p className={styles.momentsCardP}>Walk out and scan the exit kiosk QR — your highlight clip is ready instantly.</p>
+                <span className={styles.momentsBadge}>No app needed</span>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className={styles.momentsCard} data-reveal data-reveal-delay="0.4">
+              <div className={styles.momentsCardImg}>
+                <Image src="/images/laser-tag/arena.png" alt="Laser tag arena gameplay" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>04</span>
+                <h3 className={styles.momentsCardH}>Download &amp; share instantly</h3>
+                <p className={styles.momentsCardP}>1-tap share to Instagram, WhatsApp, or TikTok — built-in viral loop for your venue.</p>
+              </div>
+            </div>
+
           </div>
         </div>
-
       </section>
 
       {/* ── 6. ARENA DESIGN ── */}
@@ -775,10 +701,41 @@ export default function LaserTagClient({ testimonials }: Props) {
 
       </section>
 
-      {/* ── 8. TESTIMONIALS ── */}
+      {/* ── 8. FAQ ── */}
+      <FaqSection
+        lede="Everything operators and venue owners need to know about running a FOG Laser Tag arena."
+        items={[
+          {
+            q: "How many players can play Laser Tag at the same time?",
+            a: "FOG Laser Tag arenas are designed for 10 to 30 simultaneous players. Team sizes and match formats are fully configurable through the FOG Control Suite, supporting Team Deathmatch, Solo, and Save the President modes out of the box.",
+          },
+          {
+            q: "What age group is Laser Tag suitable for?",
+            a: "Laser Tag is suitable for players aged 6 and above. Equipment is available in adult and junior sizing. The system automatically adjusts difficulty and scoring based on the selected age bracket at the kiosk, making it family-friendly without compromising the competitive experience for older players.",
+          },
+          {
+            q: "What equipment is included in the installation?",
+            a: "Each installation includes Combat Phasers, 8-zone haptic vests, a central game server, an automated entry kiosk, ambient arena lighting, and the full FOG Control Suite software license. Spare parts kit and on-site training for your staff are included at no extra cost.",
+          },
+          {
+            q: "How long does a typical session last?",
+            a: "Standard sessions run 10 to 15 minutes, fully configurable from 5 to 30 minutes via the kiosk. The system automatically handles countdown, briefing audio, game start, and score display — no operator needed on the floor during a match.",
+          },
+          {
+            q: "How much space is required for an arena?",
+            a: "A functional arena requires a minimum of 1,500 sq ft, with 2,500 to 5,000 sq ft being the sweet spot for 10–20 players. We design arena layouts to fit your exact space, including multi-level and obstacle configurations.",
+          },
+          {
+            q: "What maintenance and support do you provide?",
+            a: "FOG provides a 2-year warranty on all hardware, quarterly preventive maintenance visits, and 24/7 remote support. Phaser and vest components are modular for quick in-field replacement. The FOG Control Suite also includes a live equipment health dashboard.",
+          },
+        ]}
+      />
+
+      {/* ── 9. TESTIMONIALS ── */}
       <TestimonialsCarousel testimonials={testimonials} />
 
-      {/* ── 9. CONTACT FORM ── */}
+      {/* ── 10. CONTACT FORM ── */}
       <ContactForm defaultProduct="lasertag" />
 
     </main>

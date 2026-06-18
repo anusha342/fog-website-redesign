@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
@@ -105,10 +105,12 @@ export default function HomeClient({
   const [glitchIdx, setGlitchIdx] = useState<number | null>(null);
   const [fogExiting, setFogExiting] = useState(false);
   const isHoveringRef = useRef(false);
+  const hazeRef = useRef<HTMLDivElement>(null);
 
   // Hero phase: 'fog' = logo + FOG letters, 'future' = FUTURE OF GAMING + buttons
   const [heroPhase, setHeroPhase] = useState<'fog' | 'future'>('fog');
   const [heroTransitioning, setHeroTransitioning] = useState(false);
+  const [fogRevealKey, setFogRevealKey] = useState(0);
 
   // Moments AI Break
   const [mbActivated, setMbActivated] = useState(false);
@@ -437,56 +439,58 @@ export default function HomeClient({
     return () => clearTimeout(timer);
   }, []);
 
-  // ── Hover: FOG → FUTURE OF GAMING ────────────────────────────────────────
+  const cycleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // ── Auto-cycle: FOG (4s) ↔ FUTURE OF GAMING (4s), pauses on hover ──────────
+  const scheduleSwitch = useCallback((currentPhase: 'fog' | 'future') => {
+    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
+    cycleTimerRef.current = setTimeout(() => {
+      if (isHoveringRef.current) return; // paused — resume happens on mouse leave
+      const next = currentPhase === 'fog' ? 'future' : 'fog';
+      setHeroTransitioning(true);
+      setTimeout(() => {
+        setHeroPhase(next);
+        if (next === 'fog') setFogRevealKey(k => k + 1);
+        setHeroTransitioning(false);
+        scheduleSwitch(next);
+      }, 400);
+    }, 4000);
+  }, []);
+
+  useEffect(() => {
+    scheduleSwitch('fog');
+    return () => { if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current); };
+  }, [scheduleSwitch]);
+
+  // ── Haze mouse parallax ───────────────────────────────────────────────────
+  useEffect(() => {
+    const hero = heroRef.current;
+    const haze = hazeRef.current;
+    if (!hero || !haze) return;
+    function onMove(e: MouseEvent) {
+      const { left, top, width, height } = hero!.getBoundingClientRect();
+      const nx = (e.clientX - left) / width  - 0.5;
+      const ny = (e.clientY - top)  / height - 0.5;
+      haze!.style.transform = `translate(${nx * -30}px, ${ny * -20}px)`;
+    }
+    hero.addEventListener('mousemove', onMove);
+    return () => hero.removeEventListener('mousemove', onMove);
+  }, []);
+
+  // ── Hover: pause cycle while cursor is over the hero text ────────────────
   function handleFogHoverEnter() {
     if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
-    if (isHoveringRef.current) return;
     isHoveringRef.current = true;
-    setFogExiting(true);
-    setTimeout(() => {
-      if (!isHoveringRef.current) return;
-      setHeroPhase('future');
-      setHeroTransitioning(false);
-      setTimeout(() => setFogExiting(false), 700);
-    }, 380);
+    if (cycleTimerRef.current) clearTimeout(cycleTimerRef.current);
   }
 
-  // Mouse leaves FUTURE area → briefly show FOG, then return to FUTURE
   function handleFutureHoverLeave() {
     if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
     isHoveringRef.current = false;
-    setHeroPhase('fog');
-    setHeroTransitioning(false);
-    // Auto-return to FUTURE after 1.5 s (unless user re-hovers FOG)
-    setTimeout(() => {
-      if (isHoveringRef.current) return;
-      setHeroTransitioning(true);
-      setTimeout(() => {
-        setHeroPhase('future');
-        setHeroTransitioning(false);
-      }, 450);
-    }, 1500);
+    // resume cycle from current phase
+    scheduleSwitch(heroPhase);
   }
 
-  // ── One-time intro: FOG splash → FUTURE OF GAMING (stays) ────────────────
-  useEffect(() => {
-    const INTRO_DELAY   = 2200; // how long FOG shows on first load
-    const TRANSITION_MS = 450;
-
-    // Only auto-switch if user hasn't already hovered
-    const t1 = setTimeout(() => {
-      if (isHoveringRef.current) return;
-      setHeroTransitioning(true);
-      const t2 = setTimeout(() => {
-        if (isHoveringRef.current) { setHeroTransitioning(false); return; }
-        setHeroPhase('future');
-        setHeroTransitioning(false);
-      }, TRANSITION_MS);
-      return () => clearTimeout(t2);
-    }, INTRO_DELAY);
-
-    return () => clearTimeout(t1);
-  }, []);
 
   // ── Count-up ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -688,10 +692,27 @@ export default function HomeClient({
       <section id="hero" className={styles.hero} ref={heroRef} aria-label="Hero">
         <h1 className="sr-only">FOG Technologies — Future of Gaming</h1>
         <canvas ref={canvasRef} className={styles.heroCanvas} aria-hidden="true" />
-        <div className={styles.heroGlow} aria-hidden="true" />
-        <div className={styles.heroGridWrap} aria-hidden="true">
-          <div className={styles.heroGridPlane} />
+
+        {/* L1 — Ambient orange center glow */}
+        <div className={styles.bgAmbientGlow} aria-hidden="true" />
+
+        {/* L2 — Volumetric haze blobs */}
+        <div className={styles.bgHaze} aria-hidden="true" ref={hazeRef}>
+          <div className={styles.hazeBlob1} />
+          <div className={styles.hazeBlob2} />
+          <div className={styles.hazeBlob3} />
         </div>
+
+        {/* L3 — Infinite perspective grid floor */}
+        <div className={styles.bgGridFloor} aria-hidden="true">
+          <div className={styles.bgGridPlane} />
+        </div>
+
+        {/* L5 — Diagonal light beam */}
+        <div className={styles.bgBeams} aria-hidden="true">
+          <div className={styles.beam} />
+        </div>
+
         <div className={styles.scanlines} aria-hidden="true" />
 
         <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
@@ -700,31 +721,22 @@ export default function HomeClient({
         <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
 
         {/* ── Hero content — two phases, auto-cycling ── */}
-        <div className={`${styles.heroContent} ${heroTransitioning ? styles.heroTransitioning : ''}`}>
+        <div
+          className={`${styles.heroContent} ${heroTransitioning ? styles.heroTransitioning : ''}`}
+          onMouseEnter={handleFogHoverEnter}
+          onMouseLeave={handleFutureHoverLeave}
+        >
 
           {/* ── PHASE A: Logo + FOG ── */}
           <div
             className={`${styles.heroPhaseA} ${heroPhase === 'fog' ? styles.phaseVisible : styles.phaseHidden} ${fogExiting ? styles.fogExiting : ''}`}
             aria-hidden={heroPhase !== 'fog'}
-            onMouseEnter={handleFogHoverEnter}
           >
-            {/* Floating 3D logo */}
-            <div className={styles.heroLogoMark}>
-              <Image
-                src="/images/fog-logo-glass.png"
-                alt="FOG Technologies"
-                width={96}
-                height={96}
-                className={styles.heroLogoImg}
-                priority
-              />
-            </div>
-
             {/* Big FOG letters */}
             <div className={styles.fogWord} aria-label="FOG">
               {(['F', 'O', 'G'] as const).map((letter, i) => (
                 <span
-                  key={letter}
+                  key={`${letter}-${fogRevealKey}`}
                   className={[
                     styles.fogLtr,
                     glitchIdx === i ? styles.glitch : '',
@@ -741,7 +753,6 @@ export default function HomeClient({
           <div
             className={`${styles.heroPhaseB} ${heroPhase === 'future' ? styles.phaseVisible : styles.phaseHidden}`}
             aria-hidden={heroPhase !== 'future'}
-            onMouseLeave={handleFutureHoverLeave}
           >
             {/* Headline — "FUTURE OF" / "GAMING" */}
             <div className={`${styles.futureWord} ${heroPhase === 'future' && !heroTransitioning ? styles.active : ''}`}>

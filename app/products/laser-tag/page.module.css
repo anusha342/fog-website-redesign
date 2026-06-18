@@ -1796,40 +1796,28 @@
    ══════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════
-   5. MOMENTS IN LASER TAG — Interactive 3D Grid
+   5. MOMENTS IN LASER TAG — Bento Grid
    ══════════════════════════════════════════ */
 
 .momentsSection {
-  background: #ffffff;
-  padding: 15px 0 100px 0;
-}
-
-/* ── Header ── */
-.momentsHeader {
-  max-width: 1440px;
+  background: var(--surface);
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.momentsInner {
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 clamp(24px, 3.5vw, 40px) 16px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
+  padding: 48px clamp(24px, 4vw, 80px);
 }
 
-.momentsHeaderLeft {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.momentsEyebrow {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: var(--accent);
+.momentsTop {
+  text-align: left;
+  max-width: 100%;
+  margin-bottom: 36px;
 }
 
 .momentsTitle {
@@ -1837,380 +1825,171 @@
   font-weight: 700;
   font-size: var(--fs-heading-1);
   text-transform: uppercase;
-  color: #0a0a0a;
-  letter-spacing: -0.5px;
+  color: var(--dark);
   line-height: 1.05;
   margin: 0;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
-.momentsSub {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(0, 0, 0, 0.45);
-  line-height: 1.6;
-  margin: 0;
-  max-width: 300px;
-  text-align: right;
-}
-
-/* ── Grid Container ── */
-.momentsGridContainer {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px clamp(24px, 3.5vw, 40px) 32px;
-  position: relative;
-  z-index: 1;
-}
-
-.momentsGrid {
-  max-width: 1440px;
-  width: 100%;
+/* 4-card grid */
+.momentsBento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  align-items: stretch;
+  gap: 20px;
 }
 
-/* ── Card Styling ── */
+/* Base card */
 .momentsCard {
-  position: relative;
-  height: 420px;
-  background: #080c10;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  border: 1px solid rgba(19, 19, 19, 0.09);
   overflow: hidden;
-  cursor: pointer;
-  transform-style: preserve-3d;
-  transition:
-    border-color 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.momentsCard::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  background: radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%),
-      rgba(255, 255, 255, 0.14) 0%,
-      transparent 100%);
-  opacity: var(--opacity, 0);
-  transition: opacity 300ms ease;
-  pointer-events: none;
-}
-
-.momentsCardBg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-  filter: grayscale(15%) brightness(0.65) contrast(1.05);
-  transition:
-    filter 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99),
-    opacity 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99),
-    transform 600ms cubic-bezier(0.03, 0.98, 0.52, 0.99);
-}
-
-.momentsCardBg img {
-  width: 100% !important;
-  height: 100% !important;
-  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.momentsCardBgCover {
-  opacity: 1;
-}
-
-.momentsCardBgContain {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.momentsCardBgCover img {
-  object-fit: cover !important;
-}
-
-.momentsCardBgContain img {
-  object-fit: contain !important;
-}
-
-.momentsCardOverlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(to bottom,
-      rgba(8, 12, 16, 0.05) 0%,
-      rgba(8, 12, 16, 0.35) 60%,
-      rgba(8, 12, 16, 0.92) 100%);
-}
-
-/* ── Holographic overlays ── */
-.momentsHoloOverlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(240, 80, 35, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(240, 80, 35, 0.04) 1px, transparent 1px);
-  background-size: 16px 16px;
-  z-index: 3;
-  opacity: 0;
-  mix-blend-mode: color-dodge;
-  pointer-events: none;
-  transform: translateZ(10px);
-  transition: opacity 400ms ease;
-}
-
-@keyframes holoScroll {
-  0% {
-    background-position: 0 0;
-  }
-
-  100% {
-    background-position: 0 200px;
-  }
-}
-
-.momentsHoloScanline {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom,
-      rgba(240, 80, 35, 0) 0%,
-      rgba(240, 80, 35, 0.08) 10%,
-      rgba(240, 80, 35, 0) 20%);
-  background-size: 100% 200px;
-  z-index: 4;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateZ(15px);
-  transition: opacity 400ms ease;
-}
-
-/* ── Giant ghost watermark ── */
-.momentsCardWatermark {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 96px;
-  line-height: 0.8;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
-  z-index: 2;
-  user-select: none;
-  pointer-events: none;
-  transition:
-    opacity 400ms ease,
-    color 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    -webkit-text-stroke 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    text-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ── Step Indicator ── */
-.momentsCardStep {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  z-index: 6;
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-body);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.6);
-  background: rgba(8, 12, 16, 0.45);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 4px 8px;
-  opacity: 1;
-  transition:
-    opacity 300ms ease,
-    color 400ms ease,
-    border-color 400ms ease,
-    background 400ms ease,
-    text-shadow 400ms ease;
-}
-
-
-
-/* ── Content container ── */
-.momentsCardContent {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px 18px;
-  z-index: 6;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  transform: translateZ(40px);
-}
-
-.momentsCardTitle {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 17px;
-  text-transform: uppercase;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: -0.2px;
-  line-height: 1.2;
-  transition: color 400ms ease, text-shadow 400ms ease;
-}
-
-.momentsCardDesc {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.momentsCardTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.momentsCardTag {
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.04);
-  transition:
-    color 400ms ease,
-    border-color 400ms ease,
-    background 400ms ease;
-}
-
-/* ── Interactive Hovers ── */
-@keyframes neonPulse {
-  0% {
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.45),
-      0 0 20px rgba(240, 80, 35, 0.2);
-  }
-
-  100% {
-    box-shadow:
-      0 20px 50px rgba(0, 0, 0, 0.6),
-      0 0 35px rgba(240, 80, 35, 0.45);
-  }
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
 .momentsCard:hover {
-  z-index: 10;
-  border-color: rgba(240, 80, 35, 0.65);
-  animation: neonPulse 1.2s infinite alternate ease-in-out;
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(240, 80, 35, 0.3);
 }
 
-.momentsCard:hover .momentsCardBg {
-  filter: grayscale(0%) brightness(0.98) contrast(1.02);
+.momentsCardDark {
+  background: var(--dark);
+  border-color: transparent;
 }
 
-.momentsCard:hover .momentsCardBgCover {
-  opacity: 0;
+.momentsCardAccent {
+  background: linear-gradient(160deg, #1a0a05 0%, #7a2308 55%, var(--accent) 100%);
+  border-color: transparent;
 }
 
-.momentsCard:hover .momentsCardBgContain {
-  opacity: 1;
-  transform: scale(1);
+.momentsCardImg {
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.momentsCard:hover .momentsHoloOverlay {
-  opacity: 0.25;
+.momentsCardImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-.momentsCard:hover .momentsHoloScanline {
-  opacity: 0.35;
-  animation: holoScroll 6s linear infinite;
+.momentsCard:hover .momentsCardImg img {
+  transform: scale(1.04);
 }
 
-.momentsCard:hover .momentsCardWatermark {
-  color: rgba(240, 80, 35, 0.12);
-  -webkit-text-stroke: 1px var(--accent);
-  text-shadow: 0 0 15px rgba(240, 80, 35, 0.25);
+.momentsCardContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 }
 
-.momentsCard:hover .momentsCardStep {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.momentsCard:hover .momentsCardTitle {
+.momentsStepTag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
   color: var(--accent);
-  text-shadow: 0 0 8px rgba(240, 80, 35, 0.25);
+  border: 1px solid rgba(240, 80, 35, 0.35);
+  padding: 3px 10px;
+  align-self: flex-start;
 }
 
-.momentsCard:hover .momentsCardTag {
+.momentsCardDark .momentsStepTag,
+.momentsCardAccent .momentsStepTag {
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.momentsCardH {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-body-p2);
+  text-transform: uppercase;
+  color: var(--dark);
+  margin: 0;
+  letter-spacing: 0.2px;
+  line-height: 1.25;
+}
+
+.momentsCardDark .momentsCardH,
+.momentsCardAccent .momentsCardH {
+  color: #ffffff;
+}
+
+.momentsCardP {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  line-height: 1.6;
+  color: var(--gray);
+  margin: 0;
+}
+
+.momentsCardDark .momentsCardP,
+.momentsCardAccent .momentsCardP {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.momentsList {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.momentsList li {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  color: rgba(255, 255, 255, 0.5);
+  padding-left: 16px;
+  position: relative;
+}
+
+.momentsList li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
   color: var(--accent);
-  border-color: rgba(240, 80, 35, 0.4);
-  background: rgba(240, 80, 35, 0.06);
 }
 
-/* ── Responsive breakpoints ── */
-@media (max-width: 1200px) {
-  .momentsGridContainer {
-    padding: 40px clamp(24px, 3.5vw, 40px) 64px;
-  }
-
-  .momentsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .momentsCard {
-    height: 390px;
-  }
+.momentsBadge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 4px 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.7);
+  align-self: flex-start;
+  margin-top: auto;
 }
 
-@media (max-width: 768px) {
-  .momentsGridContainer {
-    padding: 24px 24px 64px;
-  }
+@media (max-width: 1023px) {
+  .momentsInner { padding: 48px var(--sp-48); }
+  .momentsTitle { white-space: normal; }
+  .momentsBento { grid-template-columns: repeat(2, 1fr); }
+}
 
-  .momentsGrid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .momentsCard {
-    height: 360px;
-  }
-
-  .momentsHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    text-align: left;
-    padding-bottom: 24px;
-  }
-
-  .momentsSub {
-    text-align: left;
-    max-width: 100%;
-  }
+@media (max-width: 767px) {
+  .momentsInner { padding: 48px var(--sp-24); }
+  .momentsTop { margin-bottom: 28px; }
+  .momentsTitle { white-space: normal; }
+  .momentsBento { grid-template-columns: 1fr; }
 }
 
 /* ══════════════════════════════════════════
