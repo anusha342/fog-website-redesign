@@ -575,11 +575,20 @@ html {
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 80px;
+  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  gap: 40px;
   align-items: flex-start;
   padding-bottom: var(--sp-48);
   border-bottom: 1px solid var(--divider);
+}
+
+.footer-col-head {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p3);
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 4px;
 }
 
 .footer-brand {
@@ -673,10 +682,7 @@ html {
 }
 
 .footer-nav-block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 150px;
-  padding-top: 4px;
+  display: contents;
 }
 
 .footer-nav-col {
