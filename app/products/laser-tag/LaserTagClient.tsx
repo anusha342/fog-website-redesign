@@ -330,13 +330,7 @@ export default function LaserTagClient({ testimonials }: Props) {
         <div className={`${styles.hudCorner} ${styles.hudCornerBl}`} aria-hidden="true" />
         <div className={`${styles.hudCorner} ${styles.hudCornerBr}`} aria-hidden="true" />
 
-        <div className={styles.reticle} aria-hidden="true">
-          <div className={styles.reticleRing} />
-          <div className={`${styles.reticleCross} ${styles.reticleCrossH}`} />
-          <div className={`${styles.reticleCross} ${styles.reticleCrossV}`} />
-        </div>
-
-        <div className={styles.heroScroll} aria-hidden="true">
+<div className={styles.heroScroll} aria-hidden="true">
           <div className={styles.heroScrollChevron} />
         </div>
 
@@ -353,20 +347,6 @@ export default function LaserTagClient({ testimonials }: Props) {
 
         {/* ── HERO STATS HUD — visible immediately, no scroll required ── */}
         <div className={styles.heroStats} aria-label="Laser Tag at a glance">
-          <div className={styles.heroStatsTicker} aria-hidden="true">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className={styles.heroStatsTickerGroup}>
-                <span>LASER TAG COMBAT SYSTEM</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>FOG TECHNOLOGIES</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>ARENA-GRADE EQUIPMENT</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>INDIA&apos;S PREMIUM LBE</span>
-                <span className={styles.heroStatsTickerDot} />
-              </div>
-            ))}
-          </div>
           <div className={styles.heroStatsGrid}>
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.4">
               <div className={styles.heroStatTop}>
@@ -399,6 +379,20 @@ export default function LaserTagClient({ testimonials }: Props) {
               </div>
               <span className={styles.heroStatNum}>24<span className={styles.heroStatUnit}>mo</span></span>
             </div>
+          </div>
+          <div className={styles.heroStatsTicker} aria-hidden="true">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className={styles.heroStatsTickerGroup}>
+                <span>LASER TAG COMBAT SYSTEM</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>FOG TECHNOLOGIES</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>ARENA-GRADE EQUIPMENT</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>INDIA&apos;S PREMIUM LBE</span>
+                <span className={styles.heroStatsTickerDot} />
+              </div>
+            ))}
           </div>
         </div>
 

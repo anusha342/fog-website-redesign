@@ -319,7 +319,13 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Laser Beam Maze Attraction</span>
-          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Spy</h1>
+          <h1 className={styles.heroTitle} aria-label="LASER SPY">
+            {'LASER SPY'.split('').map((ch, i) =>
+              ch === ' '
+                ? <span key={i} className={styles.heroTitleSpace} aria-hidden="true" />
+                : <span key={i} className={styles.heroTitleLetter} aria-hidden="true" style={{ animationDelay: `${i * 0.1}s` }}>{ch}</span>
+            )}
+          </h1>
           <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">
             Navigate the beam maze. Beat the clock. Own the leaderboard.
           </p>
@@ -330,20 +336,6 @@ export default function LaserSpyClient({ testimonials }: Props) {
 
         {/* ── HERO STATS HUD — visible immediately, no scroll required ── */}
         <div className={styles.heroStats} aria-label="Laser Spy at a glance">
-          <div className={styles.heroStatsTicker} aria-hidden="true">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className={styles.heroStatsTickerGroup}>
-                <span>LASER BEAM MAZE SYSTEM</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>FOG TECHNOLOGIES</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>STEALTH SECURITY GRID</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>INDIA&apos;S PREMIUM LBE</span>
-                <span className={styles.heroStatsTickerDot} />
-              </div>
-            ))}
-          </div>
           <div className={styles.heroStatsGrid}>
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.4">
               <div className={styles.heroStatTop}>
@@ -376,6 +368,20 @@ export default function LaserSpyClient({ testimonials }: Props) {
               </div>
               <span className={styles.heroStatNum}>12<span className={styles.heroStatUnit}>mo</span></span>
             </div>
+          </div>
+          <div className={styles.heroStatsTicker} aria-hidden="true">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className={styles.heroStatsTickerGroup}>
+                <span>LASER BEAM MAZE SYSTEM</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>FOG TECHNOLOGIES</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>STEALTH SECURITY GRID</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>INDIA&apos;S PREMIUM LBE</span>
+                <span className={styles.heroStatsTickerDot} />
+              </div>
+            ))}
           </div>
         </div>
 

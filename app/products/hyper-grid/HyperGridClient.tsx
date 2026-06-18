@@ -258,20 +258,6 @@ export default function HyperGridClient({ testimonials }: Props) {
 
         {/* ── HERO STATS HUD — visible immediately, no scroll required ── */}
         <div className={styles.heroStats} aria-label="HyperGrid at a glance">
-          <div className={styles.heroStatsTicker} aria-hidden="true">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className={styles.heroStatsTickerGroup}>
-                <span>HYPERGRID LED PLAYGROUND</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>FOG TECHNOLOGIES</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>INTERACTIVE FLOOR GRID</span>
-                <span className={styles.heroStatsTickerDot} />
-                <span>INDIA&apos;S PREMIUM LBE</span>
-                <span className={styles.heroStatsTickerDot} />
-              </div>
-            ))}
-          </div>
           <div className={styles.heroStatsGrid}>
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.4">
               <div className={styles.heroStatTop}>
@@ -304,6 +290,20 @@ export default function HyperGridClient({ testimonials }: Props) {
               </div>
               <span className={styles.heroStatNum}>18<span className={styles.heroStatUnit}>mo</span></span>
             </div>
+          </div>
+          <div className={styles.heroStatsTicker} aria-hidden="true">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className={styles.heroStatsTickerGroup}>
+                <span>HYPERGRID LED PLAYGROUND</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>FOG TECHNOLOGIES</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>INTERACTIVE FLOOR GRID</span>
+                <span className={styles.heroStatsTickerDot} />
+                <span>INDIA&apos;S PREMIUM LBE</span>
+                <span className={styles.heroStatsTickerDot} />
+              </div>
+            ))}
           </div>
         </div>
       </header>
