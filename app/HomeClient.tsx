@@ -102,9 +102,13 @@ export default function HomeClient({
   const mbBreakRef = useRef<HTMLElement>(null);
 
   // FOG text state
-  const [scattered, setScattered] = useState(false);
-  const [futureActive, setFutureActive] = useState(false);
   const [glitchIdx, setGlitchIdx] = useState<number | null>(null);
+  const [fogExiting, setFogExiting] = useState(false);
+  const isHoveringRef = useRef(false);
+
+  // Hero phase: 'fog' = logo + FOG letters, 'future' = FUTURE OF GAMING + buttons
+  const [heroPhase, setHeroPhase] = useState<'fog' | 'future'>('fog');
+  const [heroTransitioning, setHeroTransitioning] = useState(false);
 
   // Moments AI Break
   const [mbActivated, setMbActivated] = useState(false);
@@ -419,70 +423,69 @@ export default function HomeClient({
   }, []);
   THREE.JS ANIMATION COMMENTED OUT */
 
-  // ── FOG text animation ───────────────────────────────────────────────────
+  // ── Periodic glitch on FOG letters ───────────────────────────────────────
   useEffect(() => {
-    let revealTimer: ReturnType<typeof setTimeout> | null = null;
-    let concealTimer: ReturnType<typeof setTimeout> | null = null;
-    let glitchTimer: ReturnType<typeof setTimeout> | null = null;
-    let isRevealed = false;
-
-    function scheduleGlitch() {
-      glitchTimer = setTimeout(() => {
-        if (!isRevealed) {
-          const idx = Math.floor(Math.random() * 3);
-          setGlitchIdx(idx);
-          setTimeout(() => setGlitchIdx(null), 220);
-        }
-        scheduleGlitch();
-      }, 2800 + Math.random() * 4000);
+    let timer: ReturnType<typeof setTimeout>;
+    function schedule() {
+      timer = setTimeout(() => {
+        setGlitchIdx(Math.floor(Math.random() * 3));
+        setTimeout(() => setGlitchIdx(null), 180);
+        schedule();
+      }, 3000 + Math.random() * 4000);
     }
-    scheduleGlitch();
+    schedule();
+    return () => clearTimeout(timer);
+  }, []);
 
-    function reveal() {
-      if (isRevealed) return;
-      isRevealed = true;
-      setScattered(true);
-      setTimeout(() => setFutureActive(true), 160);
-    }
+  // ── Hover: FOG → FUTURE OF GAMING ────────────────────────────────────────
+  function handleFogHoverEnter() {
+    if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
+    if (isHoveringRef.current) return;
+    isHoveringRef.current = true;
+    setFogExiting(true);
+    setTimeout(() => {
+      if (!isHoveringRef.current) return;
+      setHeroPhase('future');
+      setHeroTransitioning(false);
+      setTimeout(() => setFogExiting(false), 700);
+    }, 380);
+  }
 
-    function conceal() {
-      if (!isRevealed) return;
-      isRevealed = false;
-      setFutureActive(false);
-      setTimeout(() => setScattered(false), 380);
-    }
+  // Mouse leaves FUTURE area → briefly show FOG, then return to FUTURE
+  function handleFutureHoverLeave() {
+    if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
+    isHoveringRef.current = false;
+    setHeroPhase('fog');
+    setHeroTransitioning(false);
+    // Auto-return to FUTURE after 1.5 s (unless user re-hovers FOG)
+    setTimeout(() => {
+      if (isHoveringRef.current) return;
+      setHeroTransitioning(true);
+      setTimeout(() => {
+        setHeroPhase('future');
+        setHeroTransitioning(false);
+      }, 450);
+    }, 1500);
+  }
 
-    const fogZone = document.getElementById('fog-zone');
-    if (!fogZone) return;
+  // ── One-time intro: FOG splash → FUTURE OF GAMING (stays) ────────────────
+  useEffect(() => {
+    const INTRO_DELAY   = 2200; // how long FOG shows on first load
+    const TRANSITION_MS = 450;
 
-    const onEnter = () => {
-      if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
-      if (concealTimer) { clearTimeout(concealTimer); concealTimer = null; }
-      if (!isRevealed) revealTimer = setTimeout(reveal, 1000);
-    };
-    const onLeave = () => {
-      if (typeof window !== 'undefined' && !window.matchMedia('(hover: hover)').matches) return;
-      if (revealTimer) { clearTimeout(revealTimer); revealTimer = null; }
-      if (isRevealed) concealTimer = setTimeout(conceal, 1000);
-    };
-    const onClick = () => {
-      if (revealTimer) { clearTimeout(revealTimer); revealTimer = null; }
-      if (concealTimer) { clearTimeout(concealTimer); concealTimer = null; }
-      if (isRevealed) conceal(); else reveal();
-    };
+    // Only auto-switch if user hasn't already hovered
+    const t1 = setTimeout(() => {
+      if (isHoveringRef.current) return;
+      setHeroTransitioning(true);
+      const t2 = setTimeout(() => {
+        if (isHoveringRef.current) { setHeroTransitioning(false); return; }
+        setHeroPhase('future');
+        setHeroTransitioning(false);
+      }, TRANSITION_MS);
+      return () => clearTimeout(t2);
+    }, INTRO_DELAY);
 
-    fogZone.addEventListener('mouseenter', onEnter);
-    fogZone.addEventListener('mouseleave', onLeave);
-    fogZone.addEventListener('click', onClick);
-
-    return () => {
-      if (glitchTimer) clearTimeout(glitchTimer);
-      if (revealTimer) clearTimeout(revealTimer);
-      if (concealTimer) clearTimeout(concealTimer);
-      fogZone.removeEventListener('mouseenter', onEnter);
-      fogZone.removeEventListener('mouseleave', onLeave);
-      fogZone.removeEventListener('click', onClick);
-    };
+    return () => clearTimeout(t1);
   }, []);
 
   // ── Count-up ─────────────────────────────────────────────────────────────
@@ -685,6 +688,10 @@ export default function HomeClient({
       <section id="hero" className={styles.hero} ref={heroRef} aria-label="Hero">
         <h1 className="sr-only">FOG Technologies — Future of Gaming</h1>
         <canvas ref={canvasRef} className={styles.heroCanvas} aria-hidden="true" />
+        <div className={styles.heroGlow} aria-hidden="true" />
+        <div className={styles.heroGridWrap} aria-hidden="true">
+          <div className={styles.heroGridPlane} />
+        </div>
         <div className={styles.scanlines} aria-hidden="true" />
 
         <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
@@ -692,21 +699,34 @@ export default function HomeClient({
         <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
         <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
 
-        <div className={styles.heroCenter}>
-          {/* FOG ↔ FUTURE OF GAMING */}
+        {/* ── Hero content — two phases, auto-cycling ── */}
+        <div className={`${styles.heroContent} ${heroTransitioning ? styles.heroTransitioning : ''}`}>
+
+          {/* ── PHASE A: Logo + FOG ── */}
           <div
-            id="fog-zone"
-            className={styles.fogZone}
-            role="img"
-            aria-label="FOG — hover to reveal Future of Gaming"
+            className={`${styles.heroPhaseA} ${heroPhase === 'fog' ? styles.phaseVisible : styles.phaseHidden} ${fogExiting ? styles.fogExiting : ''}`}
+            aria-hidden={heroPhase !== 'fog'}
+            onMouseEnter={handleFogHoverEnter}
           >
-            <div className={styles.fogWord} aria-hidden="true">
-              {['F', 'O', 'G'].map((letter, i) => (
+            {/* Floating 3D logo */}
+            <div className={styles.heroLogoMark}>
+              <Image
+                src="/images/fog-logo-glass.png"
+                alt="FOG Technologies"
+                width={96}
+                height={96}
+                className={styles.heroLogoImg}
+                priority
+              />
+            </div>
+
+            {/* Big FOG letters */}
+            <div className={styles.fogWord} aria-label="FOG">
+              {(['F', 'O', 'G'] as const).map((letter, i) => (
                 <span
-                  key={i}
+                  key={letter}
                   className={[
                     styles.fogLtr,
-                    scattered ? styles.scatter : '',
                     glitchIdx === i ? styles.glitch : '',
                   ].filter(Boolean).join(' ')}
                   data-idx={i}
@@ -715,68 +735,69 @@ export default function HomeClient({
                 </span>
               ))}
             </div>
+          </div>
 
-            <div
-              className={`${styles.futureWord} ${futureActive ? styles.active : ''}`}
-              aria-hidden="true"
-            >
+          {/* ── PHASE B: FUTURE OF GAMING + buttons ── */}
+          <div
+            className={`${styles.heroPhaseB} ${heroPhase === 'future' ? styles.phaseVisible : styles.phaseHidden}`}
+            aria-hidden={heroPhase !== 'future'}
+            onMouseLeave={handleFutureHoverLeave}
+          >
+            {/* Headline — "FUTURE OF" / "GAMING" */}
+            <div className={`${styles.futureWord} ${heroPhase === 'future' && !heroTransitioning ? styles.active : ''}`}>
               <div className={`${styles.fwRow} ${styles.fwRow1}`}>
-                {['F', 'U', 'T', 'U', 'R', 'E', ' ', 'O', 'F'].map((ch, i) =>
+                {['F','U','T','U','R','E',' ','O','F'].map((ch, i) =>
                   ch === ' '
                     ? <span key={i} className={styles.fwSpace}>&nbsp;</span>
                     : <span key={i} className={styles.fwChar}>{ch}</span>
                 )}
               </div>
               <div className={`${styles.fwRow} ${styles.fwRow2}`}>
-                {['G', 'A', 'M', 'I', 'N', 'G'].map((ch, i) => (
+                {['G','A','M','I','N','G'].map((ch, i) => (
                   <span key={i} className={styles.fwChar}>{ch}</span>
                 ))}
               </div>
             </div>
+
+            {/* CTA buttons */}
+            <div className={styles.heroBtns}>
+              <a href="#" className={`${styles.hbtn} ${styles.hbtnGhost}`}>
+                &#x2913;&nbsp; Download Brochure
+              </a>
+              <a href="#products-wrapper" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
+                Explore Products &nbsp;&#x2192;
+              </a>
+            </div>
           </div>
 
-          {/* CTA buttons */}
-          <div className={styles.heroBtns}>
-            <a href="#" className={`${styles.hbtn} ${styles.hbtnGhost}`}>
-              &#x2913;&nbsp; Download Brochure
-            </a>
-            <a href="#products-wrapper" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
-              Explore Products &nbsp;&#x2192;
-            </a>
-          </div>
         </div>
 
-        <div className={styles.scrollIndicator} aria-hidden="true">
-          <span className={styles.scrollLabel}>Scroll</span>
-          <div className={styles.scrollLine}>
-            <div className={styles.scrollDot} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── LOGO STRIP ────────────────────────────────────────────────── */}
-      <section id="logo-strip" className={styles.logoStrip} aria-label="Our venues" data-nav-theme="dark">
-        <div className={styles.marqueeWrap} aria-label="Venue partners">
-          <div className={styles.marqueeTrack} aria-hidden="true">
-            {[...Array(4)].flatMap(() => [
-              { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
-              { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
-              { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
-              { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
-              { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
-              { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
-            ]).map((logo, i) => (
-              <Image
-                key={i}
-                src={logo.src}
-                alt={logo.alt}
-                width={200}
-                height={120}
-                className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
-                style={{ objectFit: 'contain' }}
-                loading="lazy"
-              />
-            ))}
+        {/* ── LOGO STRIP — pinned to bottom of hero ── */}
+        <div className={styles.logoStripInHero} aria-label="Our venues">
+          <span className={styles.logoStripLabel}>TRUSTED BY</span>
+          <div className={styles.logoStripDivider} aria-hidden="true" />
+          <div className={styles.marqueeWrap} aria-label="Venue partners">
+            <div className={styles.marqueeTrack} aria-hidden="true">
+              {[...Array(4)].flatMap(() => [
+                { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
+                { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
+                { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
+                { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
+                { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
+                { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
+              ]).map((logo, i) => (
+                <Image
+                  key={i}
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={200}
+                  height={120}
+                  className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
+                  style={{ objectFit: 'contain' }}
+                  loading="lazy"
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
