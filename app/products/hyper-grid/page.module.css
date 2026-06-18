@@ -381,7 +381,7 @@
 .whatCards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: 24px;
   align-items: start;
 }
 
@@ -414,7 +414,7 @@
 /* Polaroid frame */
 .whatPolaroid {
   background: #f8f8f0;
-  padding: 10px 10px 48px;
+  padding: 6px 6px 20px;
   width: 100%;
   box-shadow:
     0 16px 48px rgba(0, 0, 0, 0.75),
@@ -423,8 +423,7 @@
 
 .whatPolaroidImg {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  height: auto;
   display: block;
 }
 
@@ -437,7 +436,7 @@
   color: var(--white);
   letter-spacing: 1px;
   line-height: 1.4;
-  margin: 20px 0 0;
+  margin: 14px 0 0;
   padding: 0 4px;
 }
 
@@ -446,6 +445,7 @@
   .whatFrame { padding: 44px 20px 40px; }
   .whatFrame::before { display: none; }
   .whatCards { grid-template-columns: 1fr; gap: 48px; }
+  .whatPolaroidImg { aspect-ratio: 3 / 2; }
   .whatCardWrap1,
   .whatCardWrap2,
   .whatCardWrap3 { transform: rotate(0deg); }
@@ -453,7 +453,7 @@
 
 @media (min-width: 768px) and (max-width: 1023px) {
   .whatInner { padding: 80px 32px; }
-  .whatCards { gap: 20px; }
+  .whatCards { gap: 16px; }
 }
 
 /* ── GAME MODES V2 ── */
