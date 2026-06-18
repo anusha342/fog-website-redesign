@@ -10,14 +10,16 @@ export default function Navbar() {
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [productsActive, setProductsActive] = useState(false);
   const lastScrollY = useRef(0);
   const productsMenuRef = useRef<HTMLLIElement>(null);
   const pathname = usePathname();
 
-  // Hide navbar on scroll down, show on scroll up
+  // Hide navbar on scroll down, show on scroll up; transparent at top
   const handleScroll = useCallback(() => {
     const currentY = window.scrollY;
+    setScrolled(currentY > 60);
     if (currentY > lastScrollY.current && currentY > 80) {
       setNavHidden(true);
     } else {
@@ -151,7 +153,10 @@ export default function Navbar() {
       {/* NAVBAR */}
       <nav
         id="navbar"
-        className={navHidden ? 'nav-hidden' : ''}
+        className={[
+          navHidden ? 'nav-hidden' : '',
+          (scrolled || pathname === '/contact') ? 'nav-scrolled' : ''
+        ].filter(Boolean).join(' ')}
         aria-label="Main navigation"
       >
         <div className="nav-inner">
