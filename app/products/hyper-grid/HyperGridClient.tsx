@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import FaqSection from '@/components/FaqSection';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -459,110 +460,50 @@ export default function HyperGridClient({ testimonials }: Props) {
           <div className={styles.momentsBento}>
 
             {/* Step 1 */}
-            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.1">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true"></span>
-                <span className={styles.momentsStepText}>Step 01</span>
+            <div className={styles.momentsCard} data-reveal data-reveal-delay="0.1">
+              <div className={styles.momentsCardImg}>
+                <Image src="/images/hyper-grid/hyper-grid-1.png" alt="HyperGrid floor in action" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-                <div className={styles.momentsCardVisual}>
-                  <Image
-                    src="/images/hyper-grid/hyper-grid-1.png"
-                    alt="HyperGrid floor in action"
-                    width={400}
-                    height={300}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                </div>
-                <div className={styles.momentsCardBody}>
-                  <h3 className={styles.momentsCardH}>Camera positions on hypergrid</h3>
-                </div>
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>01</span>
+                <h3 className={styles.momentsCardH}>Camera positions on HyperGrid</h3>
+                <p className={styles.momentsCardP}>Overhead AI cameras auto-track every player across the grid.</p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.2">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true"></span>
-                <span className={styles.momentsStepText}>Step 02</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardLight}`}>
-                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyFull}`}>
-                  <h3 className={styles.momentsCardH}>After play scan QR code</h3>
-                  <div className={styles.momentsAvatars}>
-                    <span className={styles.momentsAvatar}>EL</span>
-                    <span className={styles.momentsAvatar}>FC</span>
-                    <span className={styles.momentsAvatar}>SS</span>
-                    <span className={styles.momentsAvatar}>RL</span>
-                  </div>
-                  <div className={styles.momentsChecklist}>
-                    <p className={styles.momentsChecklistTitle}>Player Journey</p>
-                    {[
-                      { label: 'Tap to pay & start game',          done: true },
-                      { label: 'Select game mode on screen',       done: true },
-                      { label: 'Auto-capture begins on grid entry', done: true },
-                      { label: 'AI highlight clip ready to share', done: false },
-                      { label: 'Score synced to leaderboard',      done: false },
-                    ].map((item, i) => (
-                      <div key={i} className={`${styles.momentsCheck} ${item.done ? styles.momentsCheckDone : ''}`}>
-                        <span className={`${styles.momentsCheckIcon} ${item.done ? '' : styles.momentsCheckIconEmpty}`}>
-                          {item.done && (
-                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                              <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          )}
-                        </span>
-                        <span>{item.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            <div className={`${styles.momentsCard} ${styles.momentsCardDark}`} data-reveal data-reveal-delay="0.2">
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>02</span>
+                <h3 className={styles.momentsCardH}>Play — AI captures your highlight</h3>
+                <p className={styles.momentsCardP}>Every move is recorded in real-time. The AI auto-cuts your best 30-second clip during gameplay.</p>
+                <ul className={styles.momentsList}>
+                  <li>Tap to pay &amp; select game mode</li>
+                  <li>Step on grid to begin</li>
+                  <li>AI capture starts automatically</li>
+                </ul>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className={styles.momentsStep} data-reveal data-reveal-delay="0.3">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true"></span>
-                <span className={styles.momentsStepText}>Step 03</span>
-              </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardDark}`}>
-                <div className={`${styles.momentsCardBody} ${styles.momentsCardBodyCenter}`}>
-                  <div className={styles.momentsIconCircle} aria-hidden="true">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                      <path d="M14 8v10M10 14.5l4 4.5 4-4.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                      <circle cx="14" cy="14" r="11" stroke="white" strokeWidth="1.5"/>
-                    </svg>
-                  </div>
-                  <p className={styles.momentsCardEyebrow}>Shareable instantly</p>
-                  <h3 className={styles.momentsCardH}>Moments gets downloaded locally</h3>
-                </div>
+            <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`} data-reveal data-reveal-delay="0.3">
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>03</span>
+                <h3 className={styles.momentsCardH}>Scan QR at exit</h3>
+                <p className={styles.momentsCardP}>Walk out and scan the exit kiosk QR — your highlight clip is waiting instantly.</p>
+                <span className={styles.momentsBadge}>No app needed</span>
               </div>
             </div>
 
             {/* Step 4 */}
-            <div className={`${styles.momentsStep} ${styles.momentsStepOffset}`} data-reveal data-reveal-delay="0.4">
-              <div className={styles.momentsStepLabel}>
-                <span className={styles.momentsStepDot} aria-hidden="true"></span>
-                <span className={styles.momentsStepText}>Step 04</span>
+            <div className={styles.momentsCard} data-reveal data-reveal-delay="0.4">
+              <div className={styles.momentsCardImg}>
+                <Image src="/images/hyper-grid/hyper-grid-2.png" alt="HyperGrid gameplay highlight" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <div className={`${styles.momentsCard} ${styles.momentsCardAccent}`}>
-                <div className={styles.momentsCardMedia}>
-                  <Image
-                    src="/images/hyper-grid/hyper-grid-2.png"
-                    alt="HyperGrid gameplay"
-                    width={400}
-                    height={300}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, mixBlendMode: 'luminosity' }}
-                  />
-                </div>
-                <div className={styles.momentsCardBody}>
-                  <h3 className={styles.momentsCardH}>Sharable game highlights</h3>
-                  <span className={styles.momentsBadge}>Real-Time Highlights</span>
-                </div>
-                <div className={styles.momentsMadeIn}>
-                  <span>By FOG Technologies</span>
-                </div>
+              <div className={styles.momentsCardContent}>
+                <span className={styles.momentsStepTag}>04</span>
+                <h3 className={styles.momentsCardH}>Download &amp; share instantly</h3>
+                <p className={styles.momentsCardP}>1-tap share to Instagram, WhatsApp, or TikTok — built-in viral loop for your venue.</p>
               </div>
             </div>
 
@@ -875,6 +816,37 @@ export default function HyperGridClient({ testimonials }: Props) {
           </div>
         </div>
       </section>
+
+      {/* ── FAQ ── */}
+      <FaqSection
+        lede="Common questions from venue owners and operators about the HyperGrid LED gaming floor."
+        items={[
+          {
+            q: "How much floor space does HyperGrid need?",
+            a: "The standard HyperGrid installation covers 270 sq ft (25 sqm) — 20.3 ft × 13.3 ft. The modular tile system means we can adapt the footprint to fit irregular or smaller spaces, with a practical minimum of around 150 sq ft for a functional play area.",
+          },
+          {
+            q: "Can HyperGrid be installed on any existing floor?",
+            a: "Yes. HyperGrid tiles sit on top of your existing floor with no permanent modifications. They are self-levelling on flat surfaces and require no adhesives or subfloor work. Installation typically completes in one day for a standard-sized arena.",
+          },
+          {
+            q: "How many players can use HyperGrid simultaneously?",
+            a: "HyperGrid supports up to 20 simultaneous players in team-vs-team modes, with the system dynamically partitioning the floor into zones. Solo, duo, and small-group modes are also available, making it versatile for all crowd sizes.",
+          },
+          {
+            q: "What game modes are available?",
+            a: "HyperGrid ships with over 12 built-in game modes including Step Battle, Team Zone, Reaction Sprint, and Dance Floor. The FOG Control Suite lets operators create and schedule custom modes without any coding. New modes are added with every software update.",
+          },
+          {
+            q: "What does routine maintenance involve?",
+            a: "HyperGrid is engineered for high-traffic commercial use. Daily maintenance is just a standard dry or damp mop. Sensor tiles are sealed to IP54 standard. FOG provides a remote diagnostic dashboard that flags any tile anomalies before they affect gameplay.",
+          },
+          {
+            q: "What warranty and after-sales support do you offer?",
+            a: "Every HyperGrid installation comes with a 2-year hardware warranty on tiles and sensor boards, lifetime software updates, and 24/7 technical support. On-site service visits are available within 72 hours across all major Indian cities.",
+          },
+        ]}
+      />
 
       {/* ── TESTIMONIALS ── */}
       <TestimonialsCarousel testimonials={testimonials} />

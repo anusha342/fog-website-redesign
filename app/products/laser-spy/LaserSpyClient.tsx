@@ -7,7 +7,7 @@ import Script from 'next/script';
 import ContactForm from '@/components/ContactForm';
 import TestimonialsCarousel from '@/components/TestimonialsCarousel';
 import GallerySection from './GallerySection';
-import FaqSection from './FaqSection';
+import FaqSection from '@/components/FaqSection';
 import styles from './page.module.css';
 import type { Testimonial } from '@/lib/testimonials';
 
@@ -793,7 +793,31 @@ export default function LaserSpyClient({ testimonials }: Props) {
       </section> */}
 
       {/* FAQ SECTION */}
-      <FaqSection />
+      <FaqSection
+        lede="Everything you need to know before installing the Laser Spy attraction at your venue."
+        items={[
+          {
+            q: "How much space does Laser Spy require?",
+            a: "Laser Spy is highly modular. The ideal room size is 200 to 1,200 sq ft, with 300 to 600 sq ft being the standard layout. A minimum ceiling height of 8.5 ft is recommended to accommodate the overhead sensor arrays and laser grid mounts.",
+          },
+          {
+            q: "Does it need a dedicated operator to run?",
+            a: "No. Laser Spy is designed as a fully autonomous attraction. The integrated entry kiosk handles ticketing, game mode selection (Recruit to Elite), safety briefings, and automatic startup without requiring any active floor staff.",
+          },
+          {
+            q: "Can we customize the laser layouts and difficulty?",
+            a: "Yes. Through the FOG Control Suite, operators can customize individual laser paths, timing configurations, and game modes. We provide 4 standard themes (Laser Wars, Laser Ship, Laser Lab, and Laser Spy) pre-installed.",
+          },
+          {
+            q: "How do players get their highlight videos?",
+            a: "Our overhead AI-driven cameras track the player's movement in real-time, auto-cutting a high-definition 30-second action clip. At the exit, players simply scan the kiosk QR code to instantly share their video on Instagram, TikTok, or YouTube.",
+          },
+          {
+            q: "What support and hardware warranty are included?",
+            a: "We provide a 3-year warranty on all laser modules and sensor hardware, lifetime software updates, and 24/7 remote technical support. All key components are hot-swappable, allowing swaps in under 15 minutes to prevent downtime.",
+          },
+        ]}
+      />
 
       {/* 7. TESTIMONIALS */}
       <TestimonialsCarousel testimonials={testimonials} />
