@@ -1390,21 +1390,16 @@
 
 .calcSection {
   background: #fff;
-  /* width: 100%; */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  width: 100%;
 }
 
 .calcWrap {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  width: 100%;
   max-width: 1440px;
-  margin: 0 240px;
-  padding: 80px 0px;
+  margin: 0 auto;
+  padding: 80px clamp(24px, 4vw, 80px);
   box-sizing: border-box;
 }
 
@@ -1437,12 +1432,10 @@
 
 /* ── Body: 2-column ── */
 .calcBody {
-  flex: 1;
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 32px;
-  min-height: 0;
-  align-items: stretch;
+  align-items: start;
 }
 
 /* Left: input panel */
@@ -1452,7 +1445,6 @@
   background: #f7f7f7;
   border: 1px solid rgba(19,19,19,0.07);
   padding: 24px;
-  overflow-y: auto;
   gap: 0;
 }
 
@@ -1538,7 +1530,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 0;
 }
 
 /* KPI strip — 4 metric chips */
@@ -1592,12 +1583,10 @@
   color: #22c55e;
 }
 
-/* Chart area — fills remaining height */
+/* Chart area */
 .calcChartArea {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
   background: #f7f7f7;
   border: 1px solid rgba(19,19,19,0.07);
   padding: 20px 24px;
@@ -1627,9 +1616,8 @@
 }
 
 .calcChartWrap {
-  flex: 1;
   position: relative;
-  min-height: 0;
+  min-height: 280px;
 }
 
 /* Footer */
@@ -1680,7 +1668,7 @@
 
 @media (max-width: 767px) {
   .calcWrap {
-    padding: 48px 20px 28px;
+    padding: 48px 24px;
   }
   .calcKpis {
     grid-template-columns: repeat(2, 1fr);
