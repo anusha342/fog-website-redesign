@@ -352,6 +352,120 @@
   z-index: 2;
 }
 
+/* Custom interactive red map marker */
+.mapMarker {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -100%);
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Pulsing neon red aura */
+.pinGlow {
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 6px;
+  background: rgba(240, 80, 35, 0.4);
+  border-radius: 50%;
+  transform: scale(1);
+  animation: markerPulse 1.8s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes markerPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2.4);
+    opacity: 0.3;
+    background: rgba(240, 80, 35, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+.pinIcon {
+  width: 36px;
+  height: 36px;
+  color: var(--accent, #f05023);
+  filter: drop-shadow(0 2px 6px rgba(240, 80, 35, 0.45));
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.mapMarker:hover .pinIcon {
+  transform: scale(1.15);
+  color: #ff3c00;
+}
+
+/* Address Tooltip */
+.mapTooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 14px 18px;
+  width: max-content;
+  max-width: 280px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms cubic-bezier(0.25, 1, 0.5, 1),
+              transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 0;
+}
+
+/* Tooltip Arrow */
+.mapTooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.96) transparent transparent transparent;
+}
+
+.mapMarker:hover .mapTooltip {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.tooltipHeader {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: #141414;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tooltipAddress {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: #666666;
+  line-height: 1.4;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .infoStrip {
