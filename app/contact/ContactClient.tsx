@@ -180,9 +180,6 @@ export default function ContactClient() {
         </div>
       </div>
 
-      {/* ── GET IN TOUCH FORM ── */}
-      <ContactForm />
-
       {/* ── LOCATION MAP ── */}
       <section className={styles.mapSection} aria-label="Our location on the map">
         <div className={styles.mapInner}>
@@ -195,9 +192,25 @@ export default function ContactClient() {
               className={styles.mapIframe}
             />
           </div>
+
+          {/* Custom Interactive Red Map Marker */}
+          <div className={styles.mapMarker}>
+            <div className={styles.pinGlow} />
+            <svg className={styles.pinIcon} viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+            </svg>
+            <div className={styles.mapTooltip}>
+              <div className={styles.tooltipHeader}>FOG Technologies</div>
+              <div className={styles.tooltipAddress}>4QPF+6P, Vesu Canal Road, Surat, Gujarat, India</div>
+            </div>
+          </div>
+
           <div className={styles.mapOverlay} aria-hidden="true" />
         </div>
       </section>
+
+      {/* ── GET IN TOUCH FORM ── */}
+      <ContactForm />
 
     </main>
   );
