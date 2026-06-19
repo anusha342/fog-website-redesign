@@ -45,7 +45,7 @@ const jsonLd = {
 
 export default async function BlogPage() {
   const allPosts = await getAllPostsFromS3();
-  const recentPosts = allPosts.slice(0, 3);
+  const recentPosts = allPosts.slice(0, 6);
   const allCategories = [
     ...new Set(allPosts.map((p) => p.category).filter(Boolean)),
   ] as string[];
@@ -62,38 +62,47 @@ export default async function BlogPage() {
         {/* Background photo */}
         <div className={styles.blogHeroBgImg} aria-hidden="true">
           <Image
-            src="/images/about-us/about-us1.jpg"
-            alt="FOG Technologies team"
+            src="/images/Blog/blog2.jpg"
+            alt="FOG Technologies Blog"
             fill
-            style={{ objectFit: 'cover', objectPosition: 'center 22%' }}
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
             priority
           />
         </div>
 
-        {/* Dark gradient scrim */}
+        {/* Tech scanlines and ambient overlay */}
+        <div className={styles.scanlines} aria-hidden="true" />
         <div className={styles.blogHeroOverlay} aria-hidden="true" />
+
+        {/* HUD Corners for futuristic aesthetic */}
+        <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
+        <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true" />
+        <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
+        <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
 
         {/* Centered text */}
         <div className={styles.blogHeroContent}>
-          {/* <p className={styles.blogHeroEyebrow}>Insights &amp; Updates</p> */}
-          <h1 className={styles.blogHeroTitle}>News &amp; Blogs</h1>
+          <p className={styles.blogHeroEyebrow} data-reveal data-reveal-delay="0">Insights &amp; Intel</p>
+          <h1 className={styles.blogHeroTitle} data-reveal data-reveal-delay="0.12">News &amp; Blogs</h1>
         </div>
 
         {/* Scroll cue */}
-        {/* <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
+        <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
           <div className={styles.blogScrollLine}>
             <div className={styles.blogScrollDot} />
           </div>
-        </div> */}
+        </div>
       </header>
 
       <section className={styles.blogSection}>
-        {/* Posts + sidebar — client component handles search/filter interactivity */}
-        <BlogListingClient
-          posts={allPosts}
-          recentPosts={recentPosts}
-          allCategories={allCategories}
-        />
+        <div className={styles.blogContainer}>
+          {/* Posts + sidebar — client component handles search/filter interactivity */}
+          <BlogListingClient
+            posts={allPosts}
+            recentPosts={recentPosts}
+            allCategories={allCategories}
+          />
+        </div>
       </section>
     </>
   );
