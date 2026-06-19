@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="footer-brand">
             <div className="footer-logo-box">
               <Image
-                src="/images/company_logo.png"
+                src="/images/company_logo_black_version.png"
                 alt="FOG Technologies"
                 className="footer-logo-img"
                 width={120}
