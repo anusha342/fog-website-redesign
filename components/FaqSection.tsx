@@ -43,7 +43,13 @@ export default function FaqSection({ items, lede }: Props) {
     <section className={styles.section} data-nav-theme="light">
       <div className={styles.faq}>
         <div className={styles.intro}>
-          <h2 className={styles.title}>FAQ</h2>
+          <h2 className={styles.title} aria-label="FAQ">
+            {'FAQ'.split('').map((ch, i) =>
+              ch === ' '
+                ? <span key={i} className={styles.titleSpace} aria-hidden="true" />
+                : <span key={i} className={styles.titleLetter} style={{ animationDelay: `${i * 0.15}s` }}>{ch}</span>
+            )}
+          </h2>
           {lede && <p className={styles.lede}>{lede}</p>}
           <button type="button" className={styles.ask}>
             <span>Ask a question</span>

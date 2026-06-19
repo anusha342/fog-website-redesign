@@ -46,6 +46,7 @@ const jsonLd = {
 export default async function BlogPage() {
   const allPosts = await getAllPostsFromS3();
   const recentPosts = allPosts.slice(0, 6);
+  
   const allCategories = [
     ...new Set(allPosts.map((p) => p.category).filter(Boolean)),
   ] as string[];
@@ -80,10 +81,18 @@ export default async function BlogPage() {
         <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
         <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
 
-        {/* Centered text */}
+        {/* Centered content */}
         <div className={styles.blogHeroContent}>
-          <p className={styles.blogHeroEyebrow} data-reveal data-reveal-delay="0">Insights &amp; Intel</p>
-          <h1 className={styles.blogHeroTitle} data-reveal data-reveal-delay="0.12">News &amp; Blogs</h1>
+          <h1 className={styles.blogHeroTitle} aria-label="Blog &amp; News">
+            {'Blog & News'.split('').map((ch, i) =>
+              ch === ' '
+                ? <span key={i} className={styles.blogHeroTitleSpace} aria-hidden="true" />
+                : <span key={i} className={styles.blogHeroTitleLetter} style={{ animationDelay: `${i * 0.12}s` }}>{ch}</span>
+            )}
+          </h1>
+          <p className={styles.blogHeroSubCentered} data-reveal data-reveal-delay="0.2">
+            Engineering breakdowns, operator case studies, and design strategies from the team building the future of location-based entertainment.
+          </p>
         </div>
 
         {/* Scroll cue */}

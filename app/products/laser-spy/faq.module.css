@@ -55,11 +55,33 @@
   text-transform: uppercase;
   color: #141414;
   letter-spacing: -2px;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
 }
 
 .title::after {
   content: '.';
   color: var(--accent);
+}
+
+.titleLetter {
+  display: inline-block;
+  animation: faqWave 2s ease-in-out infinite;
+}
+
+.titleSpace {
+  display: inline-block;
+  width: 0.28em;
+}
+
+@keyframes faqWave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .lede {

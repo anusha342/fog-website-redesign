@@ -185,7 +185,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
         <section className={styles.recentSection} data-reveal>
           <div className={styles.recentSectionHeader}>
             <div>
-              <span className={styles.recentEyebrow}>01 — LATEST INTEL</span>
+              <span className={styles.recentEyebrow}>LATEST INTEL</span>
               <h2 className={styles.recentSectionTitle}>RECENT INSIGHTS</h2>
             </div>
           </div>
@@ -238,7 +238,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
       <section className={styles.allArticlesSection} data-reveal data-reveal-delay="0.1">
         <div className={styles.allArticlesHeader}>
           <div>
-            <span className={styles.allArticlesEyebrow}>02 — EXPLORE FEED</span>
+            <span className={styles.allArticlesEyebrow}>EXPLORE FEED</span>
             <h2 className={styles.allArticlesTitle}>ALL ARTICLES</h2>
           </div>
           <Link href="/contact" className={styles.allArticlesCta}>Get In Touch &rarr;</Link>

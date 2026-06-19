@@ -60,7 +60,13 @@ export default function FaqSection() {
     <section className={styles.section} data-nav-theme="light">
       <div className={styles.faq}>
         <div className={styles.intro}>
-          <h2 className={styles.title}>FAQ</h2>
+          <h2 className={styles.title} aria-label="FAQ">
+            {'FAQ'.split('').map((ch, i) =>
+              ch === ' '
+                ? <span key={i} className={styles.titleSpace} aria-hidden="true" />
+                : <span key={i} className={styles.titleLetter} style={{ animationDelay: `${i * 0.15}s` }}>{ch}</span>
+            )}
+          </h2>
           <p className={styles.lede}>
             Everything you need to know before installing the Laser Spy attraction at your venue.
           </p>

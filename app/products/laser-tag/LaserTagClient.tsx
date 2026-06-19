@@ -617,7 +617,7 @@ export default function LaserTagClient({ testimonials }: Props) {
 
           {/* TOP: eyebrow + single-line heading + description + CTA */}
           <div className={styles.arenaTopBar} data-reveal>
-            <span className={styles.arenaEyebrow}>06 — Arena Design</span>
+            <span className={styles.arenaEyebrow}>Arena Design</span>
             <h2 className={styles.arenaTitle}>IMMERSIVE ARENA DESIGN</h2>
             <p className={styles.arenaDesc}>
               Every arena is a custom 3D-engineered battleground. Ramps, tunnels, cover walls —
