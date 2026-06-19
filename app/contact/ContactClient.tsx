@@ -26,7 +26,7 @@ function useLenis() {
         animId = requestAnimationFrame(raf);
         (window as any).__fogLenis = lenis;
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => { cancelAnimationFrame(animId); };
   }, []);
 }
@@ -78,12 +78,12 @@ export default function ContactClient() {
 
   return (
     <main className={styles.contactPage}>
-      
+
       {/* ── HERO ── */}
       <header className={styles.hero}>
         {/* Futuristic tech scanlines & overlays */}
         <div className={styles.scanlines} aria-hidden="true" />
-        
+
         {/* HUD Corners for futuristic light aesthetic */}
         <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
         <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true" />
@@ -93,7 +93,7 @@ export default function ContactClient() {
         {/* Centered text content */}
         <div className={styles.heroContent}>
           <p className={styles.heroEyebrow} data-reveal>Get In Touch</p>
-          <h1 className={styles.heroTitle}>Contact Us</h1>
+          <h1 className={styles.heroTitle}>Contact & Location</h1>
           <p className={styles.heroSub} data-reveal>
             Have questions about our location-based entertainment systems? Our engineering and support teams are here to help.
           </p>
@@ -122,7 +122,7 @@ export default function ContactClient() {
               <div className={styles.infoCardAccentLine} />
               <div className={styles.infoCardInner}>
                 <div className={styles.infoIcon} aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
                 </div>
                 <div className={styles.infoText}>
                   <span className={styles.infoLabel}>Email</span>
@@ -144,11 +144,14 @@ export default function ContactClient() {
               <div className={styles.infoCardAccentLine} />
               <div className={styles.infoCardInner}>
                 <div className={styles.infoIcon} aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z" /><circle cx="12" cy="10" r="3" /></svg>
                 </div>
                 <div className={styles.infoText}>
                   <span className={styles.infoLabel}>Address</span>
-                  <span className={styles.infoVal}>Surat, Gujarat, India</span>
+                  <span className={styles.infoVal}>
+                    D-203, Aagam Shopping World,<br />
+                    Vesu Canal Rd, Surat, Gujarat 395007
+                  </span>
                 </div>
               </div>
             </div>
@@ -167,7 +170,7 @@ export default function ContactClient() {
               <div className={styles.infoCardAccentLine} />
               <div className={styles.infoCardInner}>
                 <div className={styles.infoIcon} aria-hidden="true">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                 </div>
                 <div className={styles.infoText}>
                   <span className={styles.infoLabel}>Phone</span>
@@ -182,30 +185,20 @@ export default function ContactClient() {
 
       {/* ── LOCATION MAP ── */}
       <section className={styles.mapSection} aria-label="Our location on the map">
+        <div className={styles.mapHeader} data-reveal>
+          <span className={styles.mapEyebrow}>Find Us</span>
+          <h2 className={styles.mapTitle}>Our Location</h2>
+        </div>
         <div className={styles.mapInner}>
           <div className={styles.mapFrame}>
             <iframe
-              src="https://maps.google.com/maps?q=4QPF%2B6P+Surat+Gujarat+India&z=16&output=embed"
-              title="FOG Technologies office location — Surat, Gujarat, India"
+              src="https://maps.google.com/maps?q=21.1355816,72.7744391(FOG+Technologies)&z=16&output=embed"
+              title="FOG Technologies office location — Surat, Gujarat"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className={styles.mapIframe}
             />
           </div>
-
-          {/* Custom Interactive Red Map Marker */}
-          <div className={styles.mapMarker}>
-            <div className={styles.pinGlow} />
-            <svg className={styles.pinIcon} viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-            </svg>
-            <div className={styles.mapTooltip}>
-              <div className={styles.tooltipHeader}>FOG Technologies</div>
-              <div className={styles.tooltipAddress}>4QPF+6P, Vesu Canal Road, Surat, Gujarat, India</div>
-            </div>
-          </div>
-
-          <div className={styles.mapOverlay} aria-hidden="true" />
         </div>
       </section>
 
