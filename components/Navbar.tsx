@@ -80,6 +80,11 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [productsDropdownOpen]);
 
+  const isWhiteTheme =
+    pathname === '/about' ||
+    pathname === '/contact' ||
+    pathname.startsWith('/blog');
+
   return (
     <>
       {/* MOBILE MENU */}
@@ -155,7 +160,7 @@ export default function Navbar() {
         id="navbar"
         className={[
           navHidden ? 'nav-hidden' : '',
-          (scrolled || pathname === '/contact') ? 'nav-scrolled' : ''
+          isWhiteTheme ? 'nav-scrolled' : ''
         ].filter(Boolean).join(' ')}
         aria-label="Main navigation"
       >

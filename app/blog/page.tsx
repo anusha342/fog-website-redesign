@@ -62,7 +62,7 @@ export default async function BlogPage() {
         {/* Background photo */}
         <div className={styles.blogHeroBgImg} aria-hidden="true">
           <Image
-            src="/images/about-us/about-us.jpg"
+            src="/images/about-us/about-us1.jpg"
             alt="FOG Technologies team"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center 22%' }}
