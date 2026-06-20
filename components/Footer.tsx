@@ -56,7 +56,7 @@ export default function Footer() {
             <span className="footer-col-head">Company</span>
             <Link href="/about">About Us</Link>
             <Link href="/blog">Blog</Link>
-            <Link href="/#globe-section">Locations</Link>
+            <Link href="/contact#our-location">Location</Link>
             <Link href="/#get-in-touch">Contact</Link>
           </div>
 

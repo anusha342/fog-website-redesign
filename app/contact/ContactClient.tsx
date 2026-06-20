@@ -81,19 +81,10 @@ export default function ContactClient() {
 
       {/* ── HERO ── */}
       <header className={styles.hero}>
-        {/* Futuristic tech scanlines & overlays */}
-        <div className={styles.scanlines} aria-hidden="true" />
-
-        {/* HUD Corners for futuristic light aesthetic */}
-        <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
-
         {/* Centered text content */}
         <div className={styles.heroContent}>
           <p className={styles.heroEyebrow} data-reveal>Get In Touch</p>
-          <h1 className={styles.heroTitle}>Contact & Location</h1>
+          <h1 className={styles.heroTitle}>Contact Us</h1>
           <p className={styles.heroSub} data-reveal>
             Have questions about our location-based entertainment systems? Our engineering and support teams are here to help.
           </p>
@@ -184,21 +175,59 @@ export default function ContactClient() {
       </div>
 
       {/* ── LOCATION MAP ── */}
-      <section className={styles.mapSection} aria-label="Our location on the map">
-        <div className={styles.mapHeader} data-reveal>
-          <span className={styles.mapEyebrow}>Find Us</span>
-          <h2 className={styles.mapTitle}>Our Location</h2>
-        </div>
+      <section id="our-location" className={styles.mapSection} aria-label="Our location on the map">
         <div className={styles.mapInner}>
+
+          {/* Left — map panel */}
           <div className={styles.mapFrame}>
             <iframe
-              src="https://maps.google.com/maps?q=FOG+Technologies,+Aagam+Shopping+World,+D-203,+Vesu+Canal+Rd,+Near+Agarwal+School,+Surat,+Gujarat+395007&z=16&output=embed"
+              src="https://maps.google.com/maps?q=FOG+Technologies,+D-203,+Aagam+Shopping+World,+Vesu+Canal+Rd,+Near+Agarwal+School,+Surat,+Gujarat+395007&z=17&iwloc=&output=embed"
               title="FOG Technologies office location — Surat, Gujarat"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className={styles.mapIframe}
             />
           </div>
+
+          {/* Right — location photo card */}
+          <div
+            className={styles.mapRight}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img
+              src="/images/contact/FOG Location.png"
+              alt="FOG Technologies location"
+              className={styles.mapPhoto}
+            />
+            <div className={styles.mapOverlay} />
+            <div className={styles.mapInfo}>
+              <div className={styles.mapInfoCenter}>
+                <span className={styles.mapInfoEyebrow}>Our Location</span>
+                <h3 className={styles.mapInfoTitle}>Our Location</h3>
+                <div className={styles.mapAddress}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span>D-203, Aagam Shopping World,<br />Vesu Canal Rd, Surat, Gujarat 395007</span>
+                </div>
+              </div>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=FOG+Technologies,+D-203,+Aagam+Shopping+World,+Vesu+Canal+Rd,+Surat,+Gujarat+395007"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.mapBtn}
+              >
+                Get Directions
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
         </div>
       </section>
 
