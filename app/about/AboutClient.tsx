@@ -27,7 +27,7 @@ function useLenis() {
         animId = requestAnimationFrame(raf);
         (window as any).__fogLenis = lenis;
       })
-      .catch(() => {});
+      .catch(() => { });
     return () => { cancelAnimationFrame(animId); };
   }, []);
 }
@@ -49,12 +49,12 @@ function useScrollReveal() {
 }
 
 const AWARDS = [
-  { year: '2024', name: 'Best Immersive Entertainment Product', org: 'IAAPA Expo Asia — Singapore',              desc: 'HyperGrid recognised as the most innovative sensor-activated gaming floor at Asia\'s largest attractions trade event.' },
-  { year: '2023', name: 'Top 10 LBE Innovators',               org: 'Location-Based Entertainment Report',       desc: 'Named among the world\'s top 10 location-based entertainment companies redefining the guest experience.' },
-  { year: '2023', name: 'FEC Innovation Award',                 org: 'Family Entertainment Centre Summit — Dubai', desc: 'Laser Spy honoured for delivering the highest ROI payback of any new attraction category in the FEC sector.' },
-  { year: '2022', name: 'AI in Entertainment Pioneer Award',    org: 'Gulf Games & Entertainment Show',           desc: 'Moments AI recognised for transforming guest highlights into shareable content, driving measurable repeat visit growth.' },
-  { year: '2022', name: 'Best New Laser Tag System',            org: 'IAAPA Expo — Orlando',                      desc: 'FOG Laser Tag awarded best-in-class for smart vest technology, real-time scoring, and seamless Moments AI integration.' },
-  { year: '2021', name: 'Emerging Tech Company of the Year',    org: 'Middle East Entertainment & Leisure Awards', desc: 'FOG Technologies awarded for rapid regional expansion and introducing world-class gaming experiences across 10+ countries.' },
+  { year: '2024', name: 'Best Immersive Entertainment Product', org: 'IAAPA Expo Asia — Singapore', desc: 'HyperGrid recognised as the most innovative sensor-activated gaming floor at Asia\'s largest attractions trade event.' },
+  { year: '2023', name: 'Top 10 LBE Innovators', org: 'Location-Based Entertainment Report', desc: 'Named among the world\'s top 10 location-based entertainment companies redefining the guest experience.' },
+  { year: '2023', name: 'FEC Innovation Award', org: 'Family Entertainment Centre Summit — Dubai', desc: 'Laser Spy honoured for delivering the highest ROI payback of any new attraction category in the FEC sector.' },
+  { year: '2022', name: 'AI in Entertainment Pioneer Award', org: 'Gulf Games & Entertainment Show', desc: 'Moments AI recognised for transforming guest highlights into shareable content, driving measurable repeat visit growth.' },
+  { year: '2022', name: 'Best New Laser Tag System', org: 'IAAPA Expo — Orlando', desc: 'FOG Laser Tag awarded best-in-class for smart vest technology, real-time scoring, and seamless Moments AI integration.' },
+  { year: '2021', name: 'Emerging Tech Company of the Year', org: 'Middle East Entertainment & Leisure Awards', desc: 'FOG Technologies awarded for rapid regional expansion and introducing world-class gaming experiences across 10+ countries.' },
 ];
 
 const VALUES = [
@@ -62,35 +62,35 @@ const VALUES = [
     num: '01',
     title: 'Innovation',
     body: 'We push the boundaries of what\'s possible in interactive entertainment technology.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L15 17H9l-.7-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L15 17H9l-.7-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z" /></svg>,
   },
   {
     num: '02',
     title: 'Reliability',
     body: 'Our attractions are built to perform, with 99.9% uptime and rapid support response.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
   },
   {
     num: '03',
     title: 'Speed',
     body: 'From consultation to go-live in weeks, not months. We respect your timeline.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>,
   },
   {
     num: '04',
     title: 'Partnership',
     body: 'We\'re not just vendors — we\'re partners invested in your venue\'s long-term success.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
   },
 ];
 
 const TIMELINE = [
-  { year: '2019', title: 'Founded',        desc: 'FOG Technologies born in Surat with a vision to revolutionize family entertainment centres across the world.' },
-  { year: '2020', title: 'First Product',  desc: 'HyperGrid prototype completed and installed in the first beta venue. The floor that started it all.' },
-  { year: '2021', title: 'Expansion',      desc: 'Reached 10 installations across 5 cities in India. Operators saw ROI in under 6 months.' },
+  { year: '2019', title: 'Founded', desc: 'FOG Technologies born in Surat with a vision to revolutionize family entertainment centres across the world.' },
+  { year: '2020', title: 'First Product', desc: 'HyperGrid prototype completed and installed in the first beta venue. The floor that started it all.' },
+  { year: '2021', title: 'Expansion', desc: 'Reached 10 installations across 5 cities in India. Operators saw ROI in under 6 months.' },
   { year: '2022', title: 'Full Ecosystem', desc: 'Launched Infinity Laser Tag and Laser Spy — completing the FOG product ecosystem.' },
   { year: '2023', title: 'AI Integration', desc: 'Introduced Moments AI — real-time computer vision that turns every game into a shareable highlight.' },
-  { year: '2024', title: 'Global Reach',   desc: 'Expansion into UAE, Singapore, and UK — bringing FOG experiences to 3 new continents.' },
+  { year: '2024', title: 'Global Reach', desc: 'Expansion into UAE, Singapore, and UK — bringing FOG experiences to 3 new continents.' },
 ];
 
 export default function AboutClient() {
@@ -127,7 +127,7 @@ export default function AboutClient() {
           <div className={styles.heroStatsGrid}>
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.1">
               <div className={styles.heroStatTop}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                 <span className={styles.heroStatLabel}>Installations</span>
               </div>
               <span className={styles.heroStatNum}>100<span className={styles.heroStatUnit}>+</span></span>
@@ -135,7 +135,7 @@ export default function AboutClient() {
             <div className={styles.heroStatDivider} aria-hidden="true" />
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.18">
               <div className={styles.heroStatTop}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
                 <span className={styles.heroStatLabel}>Countries</span>
               </div>
               <span className={styles.heroStatNum}>15<span className={styles.heroStatUnit}>+</span></span>
@@ -143,7 +143,7 @@ export default function AboutClient() {
             <div className={styles.heroStatDivider} aria-hidden="true" />
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.26">
               <div className={styles.heroStatTop}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" /></svg>
                 <span className={styles.heroStatLabel}>Industry Awards</span>
               </div>
               <span className={styles.heroStatNum}>06</span>
@@ -151,7 +151,7 @@ export default function AboutClient() {
             <div className={styles.heroStatDivider} aria-hidden="true" />
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.34">
               <div className={styles.heroStatTop}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
                 <span className={styles.heroStatLabel}>Founded in Surat</span>
               </div>
               <span className={styles.heroStatNum}>2019</span>
@@ -249,20 +249,30 @@ export default function AboutClient() {
             </h2>
           </div>
 
-          <div className={styles.tlGrid}>
-            {TIMELINE.map((item, i) => (
-              <div key={i} className={styles.tlItem} data-reveal data-reveal-delay={`${i * 0.07}`}>
-                <div className={styles.tlSpine}>
-                  <span className={styles.tlDot} aria-hidden="true" />
-                  {i < TIMELINE.length - 1 && <span className={styles.tlLine} aria-hidden="true" />}
-                </div>
-                <div className={styles.tlContent}>
-                  <span className={styles.tlYear}>{item.year}</span>
-                  <h3 className={styles.tlTitle}>{item.title}</h3>
-                  <p className={styles.tlDesc}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
+          <div className={styles.tlContainer}>
+            <div className={styles.tlMainSpine} aria-hidden="true" />
+            <div className={styles.tlList}>
+              {TIMELINE.map((item, i) => {
+                const isEven = i % 2 === 0;
+                return (
+                  <div
+                    key={i}
+                    className={`${styles.tlItemNew} ${isEven ? styles.tlItemLeft : styles.tlItemRight}`}
+                    data-reveal
+                    data-reveal-delay={`${i * 0.08}`}
+                  >
+                    <div className={styles.tlDotContainer} aria-hidden="true">
+                      <span className={styles.tlDotNew} />
+                    </div>
+                    <div className={styles.tlCard}>
+                      <span className={styles.tlYearNew}>{item.year}</span>
+                      <h3 className={styles.tlTitleNew}>{item.title}</h3>
+                      <p className={styles.tlDescNew}>{item.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>

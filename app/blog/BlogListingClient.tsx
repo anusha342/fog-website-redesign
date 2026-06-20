@@ -190,7 +190,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
             </div>
           </div>
           <div ref={recentScrollRef} className={styles.recentHorizontalScroll}>
-            {recentPosts.map((post) => (
+            {recentPosts.slice(0, 3).map((post) => (
               <div key={post.slug} className={`${styles.blogCard} ${styles.recentCard}`}>
                 <Link href={`/blog/${post.slug}`} className={styles.blogCardLink}>
                   <div className={styles.blogCardImgWrap}>
