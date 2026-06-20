@@ -370,7 +370,6 @@
   pointer-events: auto;
 }
 
-
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .infoStrip {

@@ -192,7 +192,7 @@ export default function ContactClient() {
         <div className={styles.mapInner}>
           <div className={styles.mapFrame}>
             <iframe
-              src="https://maps.google.com/maps?q=21.1355816,72.7744391(FOG+Technologies)&z=16&output=embed"
+              src="https://maps.google.com/maps?q=FOG+Technologies,+Aagam+Shopping+World,+D-203,+Vesu+Canal+Rd,+Near+Agarwal+School,+Surat,+Gujarat+395007&z=16&output=embed"
               title="FOG Technologies office location — Surat, Gujarat"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
