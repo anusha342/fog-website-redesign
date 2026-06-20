@@ -45,7 +45,7 @@ const jsonLd = {
 
 export default async function BlogPage() {
   const allPosts = await getAllPostsFromS3();
-  const recentPosts = allPosts.slice(0, 6);
+  const recentPosts = allPosts.slice(0, 3);
   
   const allCategories = [
     ...new Set(allPosts.map((p) => p.category).filter(Boolean)),
