@@ -83,18 +83,10 @@ export default function ContactClient() {
       <header className={styles.hero}>
         {/* Centered text content */}
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow} data-reveal>Get In Touch</p>
           <h1 className={styles.heroTitle}>Contact Us</h1>
           <p className={styles.heroSub} data-reveal>
             Have questions about our location-based entertainment systems? Our engineering and support teams are here to help.
           </p>
-        </div>
-
-        {/* Scroll cue */}
-        <div className={styles.heroScrollIndicator} aria-hidden="true">
-          <div className={styles.heroScrollLine}>
-            <div className={styles.heroScrollDot} />
-          </div>
         </div>
       </header>
 
@@ -203,7 +195,6 @@ export default function ContactClient() {
             <div className={styles.mapOverlay} />
             <div className={styles.mapInfo}>
               <div className={styles.mapInfoCenter}>
-                <span className={styles.mapInfoEyebrow}>Our Location</span>
                 <h3 className={styles.mapInfoTitle}>Our Location</h3>
                 <div className={styles.mapAddress}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
