@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import styles from './about.module.css';
@@ -111,6 +111,7 @@ const FOUNDERS = [
 ];
 
 export default function AboutClient() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   useLenis();
   useScrollReveal();
 
@@ -134,9 +135,17 @@ export default function AboutClient() {
               <span>We Build Tomorrow&apos;s</span>
               <span>Entertainment</span>
             </h1>
-            <p className={styles.heroDesc} data-reveal data-reveal-delay="0.12">
-              Premium interactive entertainment — engineered<br />for operators, designed for players.
-            </p>
+            <button
+              className={styles.watchBtn}
+              onClick={() => setIsVideoOpen(true)}
+              data-reveal
+              data-reveal-delay="0.12"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '8px' }}>
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Watch Video
+            </button>
           </div>
         </header>
 
@@ -318,6 +327,24 @@ export default function AboutClient() {
 
       {/* ── 7. GET IN TOUCH ── */}
       <ContactForm />
+
+      {/* ── VIDEO MODAL ── */}
+      {isVideoOpen && (
+        <div className={styles.modalOverlay} onClick={() => setIsVideoOpen(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeBtn} onClick={() => setIsVideoOpen(false)}>
+              &times;
+            </button>
+            <video
+              className={styles.modalVideo}
+              src="/videos/About-us/Inside FOG - What It Takes to Build an Attraction - TRIM - Videobolt.net.mp4"
+              autoPlay
+              controls
+              playsInline
+            />
+          </div>
+        </div>
+      )}
 
     </div>
   );
