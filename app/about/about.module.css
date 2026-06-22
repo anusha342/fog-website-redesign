@@ -733,7 +733,8 @@
 .valueCard {
   position: relative;
   overflow: hidden;
-  padding: clamp(32px, 5vh, 48px) 28px;
+  padding: clamp(36px, 6vh, 52px) 28px;
+  min-height: clamp(330px, 35vw, 360px);
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -773,8 +774,8 @@
 
 .valueNum {
   position: absolute;
-  top: -15px;
-  right: 16px;
+  top: 10px;
+  right: 20px;
   font-family: var(--font-display);
   font-size: 96px;
   font-weight: 800;
