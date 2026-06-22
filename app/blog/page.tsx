@@ -71,8 +71,6 @@ export default async function BlogPage() {
           />
         </div>
 
-        {/* Tech scanlines and ambient overlay */}
-        <div className={styles.scanlines} aria-hidden="true" />
         <div className={styles.blogHeroOverlay} aria-hidden="true" />
 
         {/* HUD Corners for futuristic aesthetic */}
@@ -83,12 +81,8 @@ export default async function BlogPage() {
 
         {/* Centered content */}
         <div className={styles.blogHeroContent}>
-          <h1 className={styles.blogHeroTitle} aria-label="Blog &amp; News">
-            {'Blog & News'.split('').map((ch, i) =>
-              ch === ' '
-                ? <span key={i} className={styles.blogHeroTitleSpace} aria-hidden="true" />
-                : <span key={i} className={styles.blogHeroTitleLetter} style={{ animationDelay: `${i * 0.12}s` }}>{ch}</span>
-            )}
+          <h1 className={styles.blogHeroTitle}>
+            Blog &amp; News
           </h1>
           <p className={styles.blogHeroSubCentered} data-reveal data-reveal-delay="0.2">
             Engineering breakdowns, operator case studies, and design strategies from the team building the future of location-based entertainment.
