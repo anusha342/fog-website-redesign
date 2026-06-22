@@ -139,8 +139,8 @@
 }
 
 .infoCard {
-  background: #f8f9fa;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   gap: 24px;
@@ -263,34 +263,6 @@
   overflow: hidden;
 }
 
-/* Futuristic background ambient glow blobs */
-.mapSection::before {
-  content: '';
-  position: absolute;
-  left: 15%;
-  top: 40%;
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, rgba(240, 80, 35, 0.1) 0%, rgba(240, 80, 35, 0.04) 40%, transparent 70%);
-  transform: translate(-50%, -50%);
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.mapSection::after {
-  content: '';
-  position: absolute;
-  right: 10%;
-  top: 30%;
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle, rgba(240, 80, 35, 0.07) 0%, rgba(240, 80, 35, 0.02) 50%, transparent 70%);
-  transform: translate(50%, -50%);
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-}
 
 /* Container — side-by-side inside the original padded/bordered frame */
 .mapInner {
@@ -315,7 +287,7 @@
   background: #ffffff;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(240, 80, 35, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
@@ -346,7 +318,7 @@
   border: 2px solid var(--accent, #f05023);
   background: #131313;
   height: 100%;
-  box-shadow: 0 12px 32px rgba(240, 80, 35, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   perspective: 1000px;
   transform-style: preserve-3d;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
