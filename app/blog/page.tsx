@@ -62,7 +62,7 @@ export default async function BlogPage() {
         {/* Background photo */}
         <div className={styles.blogHeroBgImg} aria-hidden="true">
           <Image
-            src="/images/Blog/blog2.jpg"
+            src="/images/Blog/blog3.jpeg"
             alt="FOG Technologies Blog"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center' }}
@@ -72,12 +72,6 @@ export default async function BlogPage() {
 
         <div className={styles.blogHeroOverlay} aria-hidden="true" />
 
-        {/* HUD Corners for futuristic aesthetic */}
-        <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
-
         {/* Centered content */}
         <div className={styles.blogHeroContent}>
           <h1 className={styles.blogHeroTitle}>
@@ -86,13 +80,6 @@ export default async function BlogPage() {
           <p className={styles.blogHeroSubCentered} data-reveal data-reveal-delay="0.2">
             Engineering breakdowns, operator case studies, and design strategies from the team building the future of location-based entertainment.
           </p>
-        </div>
-
-        {/* Scroll cue */}
-        <div className={styles.blogHeroScrollIndicator} aria-hidden="true">
-          <div className={styles.blogScrollLine}>
-            <div className={styles.blogScrollDot} />
-          </div>
         </div>
       </header>
 
