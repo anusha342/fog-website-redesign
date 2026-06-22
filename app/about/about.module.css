@@ -40,6 +40,16 @@
   overflow: hidden;
 }
 
+.heroBgVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
 .heroOverlay {
   position: absolute;
   inset: 0;
@@ -166,7 +176,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .heroStatLabel {
@@ -175,7 +185,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1;
 }
 
@@ -187,7 +197,7 @@
   color: #ffffff;
   letter-spacing: -1px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   gap: 4px;
   position: relative;
@@ -195,9 +205,10 @@
 
 .heroStatUnit {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--accent, #f05023);
+  vertical-align: middle;
   letter-spacing: 0.5px;
   position: absolute;
   left: 100%;

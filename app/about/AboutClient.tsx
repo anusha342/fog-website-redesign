@@ -108,15 +108,16 @@ export default function AboutClient() {
   return (
     <div className={styles.page}>
 
-      {/* ── 1. HERO — photo + stats locked to one screen ── */}
+      {/* ── 1. HERO — video bg + stats locked to one screen ── */}
       <div className={styles.heroWrap}>
         <header className={styles.hero}>
-          <Image
-            src="/images/about-us/about-us1.jpg"
-            alt="FOG Technologies team at IAAPI National Awards for Excellence 2026"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center center' }}
-            priority
+          <video
+            className={styles.heroBgVideo}
+            src="/videos/About-us/Inside FOG - What It Takes to Build an Attraction - TRIM - Videobolt.net.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
           />
           <div className={styles.heroOverlay} aria-hidden="true" />
           <div className={styles.heroContent}>
@@ -138,7 +139,7 @@ export default function AboutClient() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
                 <span className={styles.heroStatLabel}>Installations</span>
               </div>
-              <span className={styles.heroStatNum}>100<span className={styles.heroStatUnit}>+</span></span>
+              <span className={styles.heroStatNum}>150<span className={styles.heroStatUnit}>+</span></span>
             </div>
             <div className={styles.heroStatDivider} aria-hidden="true" />
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.18">
@@ -154,7 +155,7 @@ export default function AboutClient() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" /></svg>
                 <span className={styles.heroStatLabel}>Industry Awards</span>
               </div>
-              <span className={styles.heroStatNum}>06</span>
+              <span className={styles.heroStatNum}>03</span>
             </div>
             <div className={styles.heroStatDivider} aria-hidden="true" />
             <div className={styles.heroStatItem} data-reveal data-reveal-delay="0.34">
