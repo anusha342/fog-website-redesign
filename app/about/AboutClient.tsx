@@ -93,12 +93,21 @@ const TIMELINE = [
   { year: '2024', title: 'Global Reach', desc: 'Expansion into UAE, Singapore, and UK — bringing FOG experiences to 3 new continents.' },
 ];
 
-const TEAM_MEMBERS = [
-  { name: 'Raj Mehta', role: 'CEO & Founder', image: '/images/about-us/img1.jpeg', bio: 'Pioneering the vision of sensor-activated gaming environments globally.' },
-  { name: 'Priya Sharma', role: 'Head of Business Development', image: '/images/about-us/img2.jpeg', bio: 'Forging partnerships that drive venue profitability and footprint expansion.' },
-  { name: 'Amit Patel', role: 'CTO', image: '/images/about-us/img3.jpeg', bio: 'Engineering robust hardware-software architectures with 99.9% uptime.' },
-  { name: 'Neha Gupta', role: 'Head of Operations', image: '/images/about-us/img4.jpeg', bio: 'Streamlining delivery and scaling local integrations across 15+ countries.' },
-  { name: 'Vikram Malhotra', role: 'Head of Product', image: '/images/about-us/img5.jpeg', bio: 'Designing immersive game mechanics and player-centric experiences.' },
+const FOUNDERS = [
+  {
+    name: 'Vishal Mehta',
+    role: 'CEO',
+    credentials: 'IIT Delhi | Ex - Meesho, Flipkart',
+    image: '/images/about-us/Vishal sir.png',
+    bio: 'Strategic visionary, transforming play into performance with a track record in e-commerce innovation.'
+  },
+  {
+    name: 'Aditya Bagrecha',
+    role: 'CTO',
+    credentials: 'IIT Bombay | Ex - Turing, Qualcomm',
+    image: '/images/about-us/Aditya Sir.jfif',
+    bio: 'Tech architect, fusing algorithms and creativity to redefine the gaming landscape for the future.'
+  }
 ];
 
 export default function AboutClient() {
@@ -278,65 +287,31 @@ export default function AboutClient() {
       <section id="team" className={styles.team}>
         <div className={styles.teamInner}>
           <div className={styles.teamHeader}>
-            <p className={styles.sectionEyebrow} data-reveal>The Creators</p>
             <h2 className={styles.teamTitle} data-reveal data-reveal-delay="0.08">
-              Meet The Team
+              Meet The Founders
             </h2>
           </div>
-          <div className={styles.teamTickerContainer} data-reveal data-reveal-delay="0.1">
-            <div className={styles.teamTickerTrack}>
-              {/* Group 1 */}
-              <div className={styles.teamTickerGroup}>
-                {TEAM_MEMBERS.map((member, i) => (
-                  <div key={`g1-${i}`} className={styles.teamCard}>
-                    <div className={styles.teamAvatarWrap}>
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 640px) 240px, 300px"
-                        className={styles.teamAvatar}
-                      />
-                      <div className={styles.teamCardHoverOverlay}>
-                        <div className={styles.teamCardHoverContent}>
-                          <p className={styles.teamCardBio}>{member.bio}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className={styles.teamCardMainInfo}>
-                      <h3 className={styles.teamName}>{member.name}</h3>
-                      <p className={styles.teamRole}>{member.role}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
 
-              {/* Group 2 */}
-              <div className={styles.teamTickerGroup}>
-                {TEAM_MEMBERS.map((member, i) => (
-                  <div key={`g2-${i}`} className={styles.teamCard}>
-                    <div className={styles.teamAvatarWrap}>
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 640px) 240px, 300px"
-                        className={styles.teamAvatar}
-                      />
-                      <div className={styles.teamCardHoverOverlay}>
-                        <div className={styles.teamCardHoverContent}>
-                          <p className={styles.teamCardBio}>{member.bio}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className={styles.teamCardMainInfo}>
-                      <h3 className={styles.teamName}>{member.name}</h3>
-                      <p className={styles.teamRole}>{member.role}</p>
-                    </div>
-                  </div>
-                ))}
+          <div className={styles.teamGrid} data-reveal data-reveal-delay="0.12">
+            {FOUNDERS.map((founder, i) => (
+              <div key={i} className={styles.founderCard}>
+                <div className={styles.founderAvatarWrap}>
+                  <Image
+                    src={founder.image}
+                    alt={founder.name}
+                    fill
+                    sizes="(max-width: 640px) 240px, 300px"
+                    className={styles.founderAvatar}
+                    priority
+                  />
+                </div>
+                <h3 className={styles.founderName}>
+                  {founder.name} &ndash; {founder.role}
+                </h3>
+                <p className={styles.founderCredentials}>{founder.credentials}</p>
+                <p className={styles.founderBio}>{founder.bio}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
