@@ -93,6 +93,14 @@ const TIMELINE = [
   { year: '2024', title: 'Global Reach', desc: 'Expansion into UAE, Singapore, and UK — bringing FOG experiences to 3 new continents.' },
 ];
 
+const TEAM_MEMBERS = [
+  { name: 'Raj Mehta', role: 'CEO & Founder', image: '/images/about-us/img1.jpeg', bio: 'Pioneering the vision of sensor-activated gaming environments globally.' },
+  { name: 'Priya Sharma', role: 'Head of Business Development', image: '/images/about-us/img2.jpeg', bio: 'Forging partnerships that drive venue profitability and footprint expansion.' },
+  { name: 'Amit Patel', role: 'CTO', image: '/images/about-us/img3.jpeg', bio: 'Engineering robust hardware-software architectures with 99.9% uptime.' },
+  { name: 'Neha Gupta', role: 'Head of Operations', image: '/images/about-us/img4.jpeg', bio: 'Streamlining delivery and scaling local integrations across 15+ countries.' },
+  { name: 'Vikram Malhotra', role: 'Head of Product', image: '/images/about-us/img5.jpeg', bio: 'Designing immersive game mechanics and player-centric experiences.' },
+];
+
 export default function AboutClient() {
   useLenis();
   useScrollReveal();
@@ -160,19 +168,7 @@ export default function AboutClient() {
         </div>
       </div>
 
-      {/* ── 2. MANIFESTO ── */}
-      <section className={styles.manifesto}>
-        <div className={styles.manifestoInner}>
-          <p className={styles.manifestoEyebrow} data-reveal>Our Mission</p>
-          <blockquote className={styles.manifestoQuote} data-reveal data-reveal-delay="0.1">
-            Operators invest in FOG products for the{' '}
-            <span className={styles.manifestoAccent}>ROI</span>. Their players return for the{' '}
-            <span className={styles.manifestoAccent}>experience</span>. That gap between investment and love —
-            that&rsquo;s what we build.
-          </blockquote>
-          <div className={styles.manifestoDivider} aria-hidden="true" />
-        </div>
-      </section>
+
 
       {/* ── 3. AWARDS ── */}
       <section id="achievement" className={styles.awards}>
@@ -220,7 +216,7 @@ export default function AboutClient() {
           <div className={styles.valuesHeader}>
             <p className={styles.sectionEyebrow} data-reveal>What Drives Us</p>
             <h2 className={styles.valuesTitle} data-reveal data-reveal-delay="0.08">
-              Built on Four<br />Principles
+              Built on Four Principles
             </h2>
           </div>
           <div className={styles.valuesGrid}>
@@ -277,7 +273,74 @@ export default function AboutClient() {
         </div>
       </section>
 
-      {/* ── 6. GET IN TOUCH ── */}
+      {/* ── 6. TEAM ── */}
+      <section id="team" className={styles.team}>
+        <div className={styles.teamInner}>
+          <div className={styles.teamHeader}>
+            <p className={styles.sectionEyebrow} data-reveal>The Creators</p>
+            <h2 className={styles.teamTitle} data-reveal data-reveal-delay="0.08">
+              Meet The Team
+            </h2>
+          </div>
+          <div className={styles.teamTickerContainer} data-reveal data-reveal-delay="0.1">
+            <div className={styles.teamTickerTrack}>
+              {/* Group 1 */}
+              <div className={styles.teamTickerGroup}>
+                {TEAM_MEMBERS.map((member, i) => (
+                  <div key={`g1-${i}`} className={styles.teamCard}>
+                    <div className={styles.teamAvatarWrap}>
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 640px) 240px, 300px"
+                        className={styles.teamAvatar}
+                      />
+                      <div className={styles.teamCardHoverOverlay}>
+                        <div className={styles.teamCardHoverContent}>
+                          <p className={styles.teamCardBio}>{member.bio}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.teamCardMainInfo}>
+                      <h3 className={styles.teamName}>{member.name}</h3>
+                      <p className={styles.teamRole}>{member.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Group 2 */}
+              <div className={styles.teamTickerGroup}>
+                {TEAM_MEMBERS.map((member, i) => (
+                  <div key={`g2-${i}`} className={styles.teamCard}>
+                    <div className={styles.teamAvatarWrap}>
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 640px) 240px, 300px"
+                        className={styles.teamAvatar}
+                      />
+                      <div className={styles.teamCardHoverOverlay}>
+                        <div className={styles.teamCardHoverContent}>
+                          <p className={styles.teamCardBio}>{member.bio}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.teamCardMainInfo}>
+                      <h3 className={styles.teamName}>{member.name}</h3>
+                      <p className={styles.teamRole}>{member.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. GET IN TOUCH ── */}
       <ContactForm />
 
     </div>
