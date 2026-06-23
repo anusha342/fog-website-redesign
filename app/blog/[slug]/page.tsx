@@ -86,7 +86,9 @@ export default async function BlogPostPage(
   const allPosts = await getAllPostsFromS3();
   const morePosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
-  const processedHtml = injectHeadingIds(post.contentHtml).replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*?Want to know more about deploying[\s\S]*?<\/p>/gi, '');
+  const processedHtml = injectHeadingIds(post.contentHtml)
+    .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*?(?:Want to know more about deploying|Ready to run the numbers|Questions about the upgrade)[\s\S]*?<\/p>/gi, '')
+    .replace(/\s*<hr>\s*$/i, '');
   const headings = extractHeadings(post.contentHtml);
 
   const jsonLd = {
@@ -165,7 +167,7 @@ export default async function BlogPostPage(
                 className={styles.postBody}
                 dangerouslySetInnerHTML={{ __html: processedHtml }}
               />
-
+              <hr className={styles.postDivider} />
             </article>
 
             {/* Right panel — ToC + progress + share + CTA */}
