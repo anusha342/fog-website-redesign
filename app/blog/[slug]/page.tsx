@@ -7,7 +7,7 @@ import PostTocClient from './PostTocClient';
 import styles from './page.module.css';
 
 // ISR: re-render on demand, cache for 60s — new posts appear without a redeploy
-export const revalidate    = 60;
+export const revalidate = 60;
 export const dynamicParams = true;
 
 // Per-post metadata from frontmatter
@@ -86,7 +86,7 @@ export default async function BlogPostPage(
   const allPosts = await getAllPostsFromS3();
   const morePosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
-  const processedHtml = injectHeadingIds(post.contentHtml);
+  const processedHtml = injectHeadingIds(post.contentHtml).replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*?Want to know more about deploying[\s\S]*?<\/p>/gi, '');
   const headings = extractHeadings(post.contentHtml);
 
   const jsonLd = {
@@ -159,25 +159,17 @@ export default async function BlogPostPage(
           {/* ── TWO-COLUMN LAYOUT ── */}
           <div className={styles.postLayout}>
 
-            {/* Left panel — ToC + progress + share + CTA */}
-            <PostTocClient headings={headings} slug={slug} />
-
-            {/* Right — prose + end CTA */}
+            {/* Left — prose + end CTA */}
             <article className={styles.prose}>
               <div
                 className={styles.postBody}
                 dangerouslySetInnerHTML={{ __html: processedHtml }}
               />
 
-              {/* <div className={styles.postCta}>
-                <p className={styles.ctaLabel}>
-                  Ready to bring FOG to your venue?
-                </p>
-                <Link href="/#get-in-touch" className={styles.ctaBtn}>
-                  Get In Touch &#x2192;
-                </Link>
-              </div> */}
             </article>
+
+            {/* Right panel — ToC + progress + share + CTA */}
+            <PostTocClient headings={headings} slug={slug} />
 
           </div>
 
