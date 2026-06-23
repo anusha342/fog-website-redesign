@@ -1860,6 +1860,8 @@
   transition: transform 380ms cubic-bezier(0.165, 0.84, 0.44, 1), 
               box-shadow 380ms ease, 
               border-color 380ms ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .blogCard:hover {
@@ -1869,7 +1871,8 @@
 }
 
 .blogCardLink {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
   height: 100%;
@@ -1892,6 +1895,9 @@
 
 .blogBody {
   padding: 32px var(--sp-24) var(--sp-24);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .blogCat {
@@ -1951,9 +1957,10 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: var(--sp-24);
+  margin-top: auto;
   position: relative;
   transition: gap 250ms ease;
+  align-self: flex-start;
 }
 
 .blogRead::after {

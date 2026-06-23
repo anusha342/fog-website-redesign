@@ -478,7 +478,9 @@
 }
 
 .morePostCard {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   text-decoration: none;
   color: inherit;
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -512,6 +514,9 @@
 
 .morePostBody {
   padding: 20px 24px 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .morePostCategory {
@@ -543,6 +548,9 @@
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--accent, #F05023);
+  display: block;
+  text-align: right;
+  margin-top: auto;
 }
 
 /* ════════════════════════════════════════════
