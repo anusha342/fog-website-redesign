@@ -45,6 +45,18 @@ function formatDate(iso: string) {
   }
 }
 
+function formatDateNumeric(iso: string) {
+  try {
+    const d = new Date(iso);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+  } catch {
+    return iso;
+  }
+}
+
 /** Extract h2/h3 headings from rendered HTML, returning slug-safe IDs + text */
 function extractHeadings(html: string) {
   const headings: { id: string; text: string; level: number }[] = [];
@@ -178,7 +190,15 @@ export default async function BlogPostPage(
           {/* ── MORE POSTS ── */}
           {morePosts.length > 0 && (
             <section className={styles.morePosts} aria-label="More articles">
-              <h2 className={styles.morePostsTitle}>More from the Blog</h2>
+              <div className={styles.morePostsHeader}>
+                <h2 className={styles.morePostsTitle}>More from the Blog</h2>
+                <Link href="/blog" className={styles.morePostsViewAll}>
+                  View all
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: '4px' }}>
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </Link>
+              </div>
               <div className={styles.morePostsGrid}>
                 {morePosts.map((p) => (
                   <Link
@@ -199,11 +219,16 @@ export default async function BlogPostPage(
                       )}
                     </div>
                     <div className={styles.morePostBody}>
-                      {p.category && (
-                        <span className={styles.morePostCategory}>{p.category}</span>
-                      )}
                       <h3 className={styles.morePostTitle}>{p.title}</h3>
-                      <span className={styles.morePostReadMore}>Read More &rarr;</span>
+                      <div className={styles.morePostMeta}>
+                        <span>{formatDateNumeric(p.date)}</span>
+                        {p.readTime && (
+                          <>
+                            <span className={styles.morePostMetaDot}>&bull;</span>
+                            <span>{p.readTime} MIN. READ</span>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </Link>
                 ))}
