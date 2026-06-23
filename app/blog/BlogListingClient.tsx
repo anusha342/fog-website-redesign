@@ -188,11 +188,18 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
 
               {/* Right: content */}
               <div className={styles.articleRowContent}>
-                <h3 className={styles.articleRowTitle}>{post.title}</h3>
+                <div className={styles.articleRowBody}>
+                  <div className={styles.articleRowHeader}>
+                    <h3 className={styles.articleRowTitle}>{post.title}</h3>
+                    {post.category && (
+                      <span className={styles.articleCat}>{post.category}</span>
+                    )}
+                  </div>
 
-                {post.excerpt && (
-                  <p className={styles.articleRowExcerpt}>{post.excerpt}</p>
-                )}
+                  {post.excerpt && (
+                    <p className={styles.articleRowExcerpt}>{post.excerpt}</p>
+                  )}
+                </div>
 
                 <div className={styles.articleRowMeta}>
                   <span>{formatDate(post.date)}</span>
@@ -203,10 +210,6 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
                     </>
                   )}
                 </div>
-
-                {post.category && (
-                  <span className={styles.articleCat}>{post.category}</span>
-                )}
               </div>
             </Link>
           ))}

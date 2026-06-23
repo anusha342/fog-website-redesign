@@ -700,7 +700,7 @@
 .articleRow {
   display: grid;
   grid-template-columns: 340px 1fr;
-  align-items: center;
+  align-items: stretch;
   gap: 28px;
   padding: 18px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -737,8 +737,26 @@
 .articleRowContent {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   min-width: 0;
+  height: 100%;
+}
+
+/* Mid-body container for vertical centering */
+.articleRowBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Title & category parallel row */
+.articleRowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
 }
 
 /* Title — GoogleSans 700 (subheading font) */
@@ -755,6 +773,8 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
 }
 
 .articleRow:hover .articleRowTitle {
@@ -785,6 +805,7 @@
   font-weight: 400;
   color: rgba(0, 0, 0, 0.45);
   letter-spacing: 0.2px;
+  margin-top: 12px; /* Minimum fallback spacing from body */
 }
 
 .metaDot {
@@ -805,7 +826,7 @@
   padding: 7px 20px;
   line-height: 1;
   white-space: nowrap;
-  align-self: flex-start;
+  flex-shrink: 0;
   transition: border-color 250ms ease, color 250ms ease;
 }
 

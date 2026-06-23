@@ -63,6 +63,17 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const countryRef = useRef<HTMLDivElement>(null);
 
+  // Auto-grow textarea
+  useEffect(() => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    ta.style.height = 'auto';
+    const maxHeight = 140;
+    const nextHeight = Math.min(ta.scrollHeight, maxHeight);
+    ta.style.height = nextHeight + 'px';
+    ta.style.overflowY = ta.scrollHeight > maxHeight ? 'auto' : 'hidden';
+  }, [message]);
+
   const filtered = countrySearch.trim()
     ? COUNTRIES.filter((c) => c.toLowerCase().includes(countrySearch.toLowerCase().trim()))
     : COUNTRIES;
@@ -86,13 +97,6 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
     }, 150);
   }
 
-  // Auto-grow textarea
-  useEffect(() => {
-    const ta = textareaRef.current;
-    if (!ta) return;
-    ta.style.height = 'auto';
-    ta.style.height = ta.scrollHeight + 'px';
-  }, [message]);
 
   // Close country dropdown on outside click
   useEffect(() => {
@@ -345,9 +349,6 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
                 disabled={status === 'loading'}
               >
                 <span>{btnLabel}</span>
-                <svg width="15" height="15" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                  <path d="M3 9h12M9.5 4l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
               </button>
               {/* </div> */}
 
