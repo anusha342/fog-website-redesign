@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { hardSpamCheck, filterLeadWithGemini, postToSlack } from '@/lib/spamFilter';
 
 const CONTACT_EMAILS = process.env.CONTACT_EMAILS || '';
 
@@ -39,6 +40,72 @@ export async function POST(req: Request) {
         { error: 'Invalid email format' },
         { status: 400 }
       );
+    }
+
+    const lead = {
+      firstName,
+      lastName,
+      email,
+      phone,
+      company,
+      country,
+      product,
+      message: message || '',
+    };
+
+    // 1. Deterministic Hard Spam check
+    const hardCheck = hardSpamCheck(lead);
+    if (hardCheck.isSpam) {
+      console.log(`[Spam Filter] Deterministic spam blocked: "${hardCheck.reason}" for lead: ${email}`);
+      if (process.env.SLACK_WEBHOOK_URL) {
+        const fullName = `${firstName} ${lastName}`.trim() || 'Unknown';
+        await postToSlack(
+          `*Spam filtered (Deterministic)* — ${fullName}\n` +
+          `Email: ${email}\n` +
+          `Company: ${company || '—'}\n` +
+          `Reason: ${hardCheck.reason}`
+        );
+      }
+      return NextResponse.json({ ok: true, success: true });
+    }
+
+    // 2. Gemini soft spam check
+    const aiCheck = await filterLeadWithGemini(lead);
+    if (!aiCheck.isGenuine) {
+      console.log(`[Spam Filter] Gemini spam blocked: "${aiCheck.reason}" (Confidence: ${aiCheck.confidence}) for lead: ${email}`);
+      if (process.env.SLACK_WEBHOOK_URL) {
+        const fullName = `${firstName} ${lastName}`.trim() || 'Unknown';
+        await postToSlack(
+          `*Spam filtered (Gemini AI)* — ${fullName}\n` +
+          `Email: ${email}\n` +
+          `Company: ${company || '—'}\n` +
+          `Reason: ${aiCheck.reason} (Confidence: ${aiCheck.confidence})`
+        );
+      }
+      return NextResponse.json({ ok: true, success: true });
+    }
+
+    // Optional Slack notification for genuine leads
+    if (process.env.SLACK_WEBHOOK_URL) {
+      const fullName = `${firstName} ${lastName}`.trim() || 'Unknown';
+      const productLabels: Record<string, string> = {
+        hypergrid: 'HyperGrid',
+        lasertag: 'Laser Tag',
+        lasermaze: 'Laser Spy',
+        moments: 'Moments AI',
+        custom: 'Custom Solution',
+      };
+      const productLabel = productLabels[product] || product;
+      const slackOk = await postToSlack(
+        `*New Genuine Lead Received* — ${fullName}\n` +
+        `Product: ${productLabel}\n` +
+        `Email: ${email}\n` +
+        `Phone: ${phone}\n` +
+        `Company: ${company || '—'}\n` +
+        `Country: ${country}\n` +
+        `Message: ${message || '—'}`
+      );
+      console.log('[Slack Notification] Sent status:', slackOk);
     }
 
     if (!process.env.RESEND_API_KEY) {

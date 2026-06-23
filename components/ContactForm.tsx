@@ -115,13 +115,27 @@ export default function ContactForm({ defaultProduct = '' }: ContactFormProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus('loading');
+
+    // Resolve race condition where user submits before the country blur timeout fires
+    let resolvedCountry = countryValue;
+    if (!resolvedCountry && countrySearch) {
+      const exact = COUNTRIES.find(
+        (c) => c.toLowerCase() === countrySearch.toLowerCase().trim()
+      );
+      if (exact) {
+        resolvedCountry = exact;
+      } else {
+        resolvedCountry = countrySearch.trim();
+      }
+    }
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           firstName, lastName, email, phone, company,
-          country: countryValue, product, message,
+          country: resolvedCountry, product, message,
         }),
       });
       const data = await res.json();
