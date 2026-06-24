@@ -462,7 +462,7 @@ export default function HyperGridClient({ testimonials }: Props) {
             {/* Step 1 */}
             <div className={styles.momentsCard} data-reveal data-reveal-delay="0.1">
               <div className={styles.momentsCardImg}>
-                <Image src="/images/hyper-grid/hyper-grid-1.png" alt="HyperGrid floor in action" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Image src="/images/hyper-grid/hyper-grid-1.png" alt="HyperGrid floor in action" width={400} height={260} style={{ width: '100%', height: '100%', objectFit: 'cover' }} priority />
               </div>
               <div className={styles.momentsCardContent}>
                 <span className={styles.momentsStepTag}>01</span>

@@ -209,10 +209,6 @@
   color: rgba(0, 0, 0, 0.35);
 }
 
-/* ── Table of contents ── */
-.tocBlock {
-  /* nothing extra */
-}
 
 .tocNav {
   display: flex;
@@ -250,10 +246,6 @@
   font-weight: 500;
 }
 
-/* ── Share ── */
-.shareBlock {
-  /* nothing extra */
-}
 
 .shareRow {
   display: flex;

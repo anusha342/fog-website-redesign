@@ -25,10 +25,6 @@
   z-index: 1;
 }
 
-.blogHeroBgImg img {
-  /* No effects applied */
-}
-
 .blogHeroOverlay {
   position: absolute;
   inset: 0;
@@ -520,6 +516,7 @@
   transition: color 250ms ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -537,6 +534,7 @@
   margin: 0 0 20px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -770,6 +768,7 @@
   transition: color 250ms ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   flex: 1;
@@ -790,6 +789,7 @@
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

@@ -48,6 +48,7 @@ export default function AdminLoginPage() {
           height={36}
           className={styles.logo}
           priority
+          style={{ width: 'auto', height: 'auto' }}
         />
 
         <h1 className={styles.heading}>Admin Panel</h1>

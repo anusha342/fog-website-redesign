@@ -96,6 +96,7 @@ function VerifyForm() {
           height={36}
           className={styles.logo}
           priority
+          style={{ width: 'auto', height: 'auto' }}
         />
 
         <h1 className={styles.heading}>Check your email</h1>

@@ -19,6 +19,7 @@ export default function Footer() {
                 className="footer-logo-img"
                 width={120}
                 height={32}
+                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
             <div className="footer-contact-quick">

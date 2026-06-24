@@ -104,6 +104,7 @@ export default function Navbar() {
               width={120}
               height={34}
               priority
+              style={{ width: 'auto', height: 'auto' }}
             />
           </Link>
           <button
@@ -173,6 +174,7 @@ export default function Navbar() {
               width={120}
               height={34}
               priority
+              style={{ width: 'auto', height: 'auto' }}
             />
           </Link>
 
