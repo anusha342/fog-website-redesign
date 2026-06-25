@@ -264,30 +264,21 @@
    6. TEAM
 ══════════════════════════════════════ */
 .team {
-  background: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: clamp(40px, 8vh, 80px) 0;
+  background: var(--white);
   border-top: 1px solid rgba(0, 0, 0, 0.06);
   position: relative;
-  overflow: hidden;
-}
-
-.teamInner {
-  max-width: 1440px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 clamp(24px, 5vw, 80px);
+  height: 100vh;
+  min-height: 700px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  position: relative;
 }
 
-.teamHeader {
+.teamHeaderWrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(32px, 4vh, 48px) clamp(24px, 5vw, 80px) clamp(16px, 2vh, 24px);
   text-align: center;
-  margin-bottom: clamp(20px, 4vh, 40px);
+  flex-shrink: 0;
 }
 
 .teamTitle {
@@ -301,100 +292,302 @@
   text-transform: uppercase;
 }
 
-.teamGrid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: clamp(24px, 5vh, 120px);
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 2;
-  margin-top: clamp(20px, 3vh, 40px);
-}
-
-.founderCard {
+.foundersRows {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 360px;
+  flex: 1;
+  justify-content: stretch;
+}
+
+.founderRow {
+  position: relative;
   width: 100%;
-  position: relative;
-}
-
-.founderAvatarWrap {
-  position: relative;
-  width: clamp(160px, 24vh, 300px);
-  aspect-ratio: 4 / 5;
   overflow: hidden;
-  margin: 0 auto clamp(12px, 2.5vh, 28px);
-  background: #f5f5f5;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.05));
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  transition: background-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.founderAvatarWrap::after {
+.founderRow::before {
   content: '';
   position: absolute;
   inset: 0;
-  border: 2px solid transparent;
-  transition: border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(ellipse 70% 50% at 15% 50%, rgba(240, 80, 35, 0.24) 0%, rgba(240, 80, 35, 0) 100%);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
 }
 
-.founderCard:hover .founderAvatarWrap::after {
-  border-color: var(--accent);
+.rowGrey::before {
+  background: radial-gradient(ellipse 70% 50% at 85% 50%, rgba(240, 80, 35, 0.24) 0%, rgba(240, 80, 35, 0) 100%);
+  transform: scale(0.9);
 }
 
-.founderAvatar {
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+.rowWhite {
+  background-color: var(--white);
 }
 
-.founderCard:hover .founderAvatar {
-  transform: scale(1.06);
+.rowGrey {
+  background-color: var(--white);
 }
 
-.founderCard:hover .founderAvatarWrap {
-  transform: translateY(-6px);
-  filter: drop-shadow(0 16px 32px rgba(240, 80, 35, 0.15));
+.founderRowInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: stretch;
+  width: 100%;
+}
+
+.rowCol {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.textCol {
+  justify-content: center;
+}
+
+.rowWhite .textCol {
+  align-items: flex-start;
+}
+
+.rowWhite .imageCol {
+  align-items: flex-end;
+}
+
+.rowGrey .imageCol {
+  align-items: flex-start;
+}
+
+.rowGrey .textCol {
+  align-items: flex-end;
+}
+
+.imageCol {
+  justify-content: flex-end;
+  align-items: flex-end;
+  display: flex;
+}
+
+/* ── SPLIT REVEAL ANIMATIONS ── */
+/* White Row (Vishal) - Text slides in from Left, Image slides in from Right */
+.rowWhite .founderName[data-reveal],
+.rowWhite .founderRole[data-reveal],
+.rowWhite .founderCredentials[data-reveal],
+.rowWhite .founderBio[data-reveal] {
+  transform: translateX(-40px) translateY(0);
+}
+
+.rowWhite .founderImageWrap[data-reveal] {
+  transform: translateX(40px) translateY(0);
+}
+
+/* Grey Row (Aditya) - Image slides in from Left, Text slides in from Right */
+.rowGrey .founderImageWrap[data-reveal] {
+  transform: translateX(-40px) translateY(0);
+}
+
+.rowGrey .founderName[data-reveal],
+.rowGrey .founderRole[data-reveal],
+.rowGrey .founderCredentials[data-reveal],
+.rowGrey .founderBio[data-reveal] {
+  transform: translateX(40px) translateY(0);
+}
+
+/* Common revealed translation reset */
+.rowWhite .founderName[data-reveal].is-revealed,
+.rowWhite .founderRole[data-reveal].is-revealed,
+.rowWhite .founderCredentials[data-reveal].is-revealed,
+.rowWhite .founderBio[data-reveal].is-revealed,
+.rowWhite .founderImageWrap[data-reveal].is-revealed,
+.rowGrey .founderName[data-reveal].is-revealed,
+.rowGrey .founderRole[data-reveal].is-revealed,
+.rowGrey .founderCredentials[data-reveal].is-revealed,
+.rowGrey .founderBio[data-reveal].is-revealed,
+.rowGrey .founderImageWrap[data-reveal].is-revealed {
+  transform: translate(0, 0);
+}
+
+.founderTextWrap {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .founderName {
-  font-family: var(--font-body);
-  font-size: 15px;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.5vw, 36px);
   font-weight: 700;
   color: #131313;
-  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin: 0 0 6px 0;
-  line-height: 1.2;
-  transition: color 0.3s ease;
+  margin: 0;
+  line-height: 1.1;
 }
 
-.founderCard:hover .founderName {
+.founderRole {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
 }
 
 .founderCredentials {
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.45);
-  margin: 0 0 clamp(8px, 1.5vh, 16px) 0;
-  letter-spacing: 0.5px;
+  color: var(--gray);
+  margin: 2px 0 8px 0;
 }
 
 .founderBio {
   font-family: var(--font-body);
   font-size: 14px;
-  line-height: 1.65;
-  color: rgba(0, 0, 0, 0.6);
-  max-width: 320px;
-  margin: 0 auto;
-  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(19, 19, 19, 0.7);
+  margin: 0;
+  max-width: 520px;
+}
+
+.founderImageWrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  position: relative;
+}
+
+.founderAvatar {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-height: 38vh;
+  object-fit: contain;
+  vertical-align: bottom;
+  filter: grayscale(100%);
+  transition: filter 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media (hover: hover) {
+  .founderRow:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .founderRow:hover .founderAvatar {
+    filter: grayscale(0%);
+    transform: scale(1.03);
+  }
+
+  .founderRow:hover .founderTextWrap {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 900px) {
+  .team {
+    height: auto;
+    min-height: unset;
+  }
+
+  .teamHeaderWrap {
+    padding: 40px 24px 20px;
+  }
+
+  .founderRow {
+    flex: none;
+    padding-top: 48px;
+  }
+
+  .founderRow::before,
+  .rowGrey::before {
+    display: none !important;
+  }
+
+  .founderRowInner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .textCol {
+    order: 2;
+    padding-bottom: 48px;
+  }
+
+  .rowWhite .textCol,
+  .rowGrey .textCol {
+    align-items: center;
+  }
+
+  .imageCol {
+    order: 1;
+    justify-content: center;
+  }
+
+  .rowWhite .imageCol,
+  .rowGrey .imageCol {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founderTextWrap {
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .founderAvatar {
+    height: clamp(220px, 45vw, 320px);
+    max-height: unset;
+    filter: grayscale(0%) !important;
+  }
+
+  /* Reset horizontal slide-in reveal translations on mobile */
+  .rowWhite .founderName[data-reveal],
+  .rowWhite .founderRole[data-reveal],
+  .rowWhite .founderCredentials[data-reveal],
+  .rowWhite .founderBio[data-reveal],
+  .rowGrey .founderName[data-reveal],
+  .rowGrey .founderRole[data-reveal],
+  .rowGrey .founderCredentials[data-reveal],
+  .rowGrey .founderBio[data-reveal],
+  .rowWhite .founderImageWrap[data-reveal],
+  .rowGrey .founderImageWrap[data-reveal] {
+    transform: translateY(24px) translateX(0);
+  }
+
+  .rowWhite .founderName[data-reveal].is-revealed,
+  .rowWhite .founderRole[data-reveal].is-revealed,
+  .rowWhite .founderCredentials[data-reveal].is-revealed,
+  .rowWhite .founderBio[data-reveal].is-revealed,
+  .rowGrey .founderName[data-reveal].is-revealed,
+  .rowGrey .founderRole[data-reveal].is-revealed,
+  .rowGrey .founderCredentials[data-reveal].is-revealed,
+  .rowGrey .founderBio[data-reveal].is-revealed,
+  .rowWhite .founderImageWrap[data-reveal].is-revealed,
+  .rowGrey .founderImageWrap[data-reveal].is-revealed {
+    transform: translate(0, 0);
+  }
 }
 
 
@@ -1125,9 +1318,9 @@
   gap: 8px;
   cursor: pointer;
   margin-top: 16px;
-  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), 
-              background-color 300ms ease, 
-              box-shadow 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 300ms ease,
+    box-shadow 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .watchBtn:hover {

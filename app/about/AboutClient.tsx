@@ -98,14 +98,14 @@ const FOUNDERS = [
     name: 'Vishal Mehta',
     role: 'CEO',
     credentials: 'IIT Delhi | Ex - Meesho, Flipkart',
-    image: '/images/about-us/Vishal sir.png',
+    image: '/images/about-us/Vishalsir.png',
     bio: 'Strategic visionary, transforming play into performance with a track record in e-commerce innovation.'
   },
   {
     name: 'Aditya Bagrecha',
     role: 'CTO',
     credentials: 'IIT Bombay | Ex - Turing, Qualcomm',
-    image: '/images/about-us/Aditya Sir.jfif',
+    image: '/images/about-us/AdityaSir.jfif.png',
     bio: 'Tech architect, fusing algorithms and creativity to redefine the gaming landscape for the future.'
   }
 ];
@@ -294,34 +294,70 @@ export default function AboutClient() {
 
       {/* ── 6. TEAM ── */}
       <section id="team" className={styles.team}>
-        <div className={styles.teamInner}>
-          <div className={styles.teamHeader}>
-            <h2 className={styles.teamTitle} data-reveal data-reveal-delay="0.08">
-              Meet The Founders
-            </h2>
-          </div>
+        <div className={styles.teamHeaderWrap}>
+          <h2 className={styles.teamTitle} data-reveal data-reveal-delay="0.08">
+            Meet The Founders
+          </h2>
+        </div>
 
-          <div className={styles.teamGrid} data-reveal data-reveal-delay="0.12">
-            {FOUNDERS.map((founder, i) => (
-              <div key={i} className={styles.founderCard}>
-                <div className={styles.founderAvatarWrap}>
-                  <Image
-                    src={founder.image}
-                    alt={founder.name}
-                    fill
-                    sizes="(max-width: 640px) 240px, 300px"
-                    className={styles.founderAvatar}
-                    priority
-                  />
+        <div className={styles.foundersRows}>
+          {FOUNDERS.map((founder, i) => {
+            const isEven = i % 2 === 0;
+            return (
+              <div
+                key={i}
+                className={`${styles.founderRow} ${isEven ? styles.rowWhite : styles.rowGrey}`}
+              >
+                <div className={styles.founderRowInner}>
+                  {/* Left Column (on desktop) */}
+                  <div className={`${styles.rowCol} ${isEven ? styles.textCol : styles.imageCol}`}>
+                    {isEven ? (
+                      <div className={styles.founderTextWrap}>
+                        <h3 className={styles.founderName} data-reveal>{founder.name}</h3>
+                        <p className={styles.founderRole} data-reveal data-reveal-delay="0.06">{founder.role}</p>
+                        <p className={styles.founderCredentials} data-reveal data-reveal-delay="0.12">{founder.credentials}</p>
+                        <p className={styles.founderBio} data-reveal data-reveal-delay="0.18">{founder.bio}</p>
+                      </div>
+                    ) : (
+                      <div className={styles.founderImageWrap} data-reveal data-reveal-delay="0.1">
+                        <Image
+                          src={founder.image}
+                          alt={founder.name}
+                          width={380}
+                          height={480}
+                          className={styles.founderAvatar}
+                          priority
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right Column (on desktop) */}
+                  <div className={`${styles.rowCol} ${isEven ? styles.imageCol : styles.textCol}`}>
+                    {!isEven ? (
+                      <div className={styles.founderTextWrap}>
+                        <h3 className={styles.founderName} data-reveal>{founder.name}</h3>
+                        <p className={styles.founderRole} data-reveal data-reveal-delay="0.06">{founder.role}</p>
+                        <p className={styles.founderCredentials} data-reveal data-reveal-delay="0.12">{founder.credentials}</p>
+                        <p className={styles.founderBio} data-reveal data-reveal-delay="0.18">{founder.bio}</p>
+                      </div>
+                    ) : (
+                      <div className={styles.founderImageWrap} data-reveal data-reveal-delay="0.1">
+                        <Image
+                          src={founder.image}
+                          alt={founder.name}
+                          width={380}
+                          height={480}
+                          className={styles.founderAvatar}
+                          priority
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <h3 className={styles.founderName}>
-                  {founder.name} &ndash; {founder.role}
-                </h3>
-                <p className={styles.founderCredentials}>{founder.credentials}</p>
-                <p className={styles.founderBio}>{founder.bio}</p>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 

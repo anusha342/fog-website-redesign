@@ -814,10 +814,6 @@ html {
     padding: 48px clamp(24px, 5vw, 80px) 32px;
   }
 
-  .footer-watermark {
-    display: none;
-  }
-
   .footer-top {
     grid-template-columns: 1fr;
     gap: 36px;
