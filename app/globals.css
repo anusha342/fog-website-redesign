@@ -571,27 +571,6 @@ html {
   overflow: hidden;
 }
 
-.footer-watermark {
-  position: absolute;
-  top: 53%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 1440px;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-  font-family: var(--font-display);
-  font-size: clamp(250px, 36vw, 550px);
-  font-weight: 700;
-  color: #000000;
-  opacity: 0.03;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  white-space: nowrap;
-}
-
 #footer {
   background: none;
   padding: 72px clamp(24px, 5vw, 80px) 40px;

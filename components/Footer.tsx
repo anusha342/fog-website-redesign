@@ -6,10 +6,6 @@ export default function Footer() {
 
   return (
     <div id="footer-wrap">
-      <div className="footer-watermark" aria-hidden="true">
-        FOG
-      </div>
-
       <footer id="footer">
 
         <div className="footer-top">
