@@ -145,7 +145,7 @@ export default function ContactClient() {
           {/* Phone — right */}
           <div className={styles.infoCardContainer}>
             <a
-              href="tel:+919876543210"
+              href="tel:+919998209033"
               className={`${styles.infoCard} ${styles.infoCardRight}`}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
@@ -157,7 +157,7 @@ export default function ContactClient() {
                 </div>
                 <div className={styles.infoText}>
                   <span className={styles.infoLabel}>Phone</span>
-                  <span className={styles.infoVal}>+91 98765 43210</span>
+                  <span className={styles.infoVal}>+91 9998209033</span>
                 </div>
               </div>
             </a>

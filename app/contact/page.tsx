@@ -39,7 +39,7 @@ const jsonLd = {
         '@type': 'Organization',
         name: 'FOG Technologies Pvt. Ltd.',
         email: 'futureofgamingtech@gmail.com',
-        telephone: '+919876543210',
+        telephone: '+919998209033',
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'D-203, Aagam Shopping World, Vesu Canal Rd, Near Agarwal School',
@@ -51,7 +51,7 @@ const jsonLd = {
         contactPoint: [
           {
             '@type': 'ContactPoint',
-            telephone: '+919876543210',
+            telephone: '+919998209033',
             contactType: 'customer service',
             email: 'futureofgamingtech@gmail.com',
             availableLanguage: 'English',
