@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ContactForm from '@/components/ContactForm';
 import styles from './contact.module.css';
 
@@ -33,6 +33,25 @@ function useLenis() {
 
 export default function ContactClient() {
   useLenis();
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      setIsPlaying(!videoRef.current.paused);
+    }
+  }, []);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  };
 
   // Scroll reveal
   useEffect(() => {
@@ -81,12 +100,60 @@ export default function ContactClient() {
 
       {/* ── HERO ── */}
       <header className={styles.hero}>
-        {/* Centered text content */}
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Contact Us</h1>
-          <p className={styles.heroSub} data-reveal>
-            Have questions about our location-based entertainment systems? Our engineering and support teams are here to help.
-          </p>
+        <div className={styles.heroInner}>
+          
+          {/* Left Column */}
+          <div className={styles.heroLeft} data-reveal>
+            <span className={styles.heroEyebrow}>Get In Touch</span>
+            <h1 className={styles.heroTitle}>
+              Every Great Journey Starts with a <span className={styles.gradientText}>Conversation</span>
+            </h1>
+            <div className={styles.heroBtns}>
+              <a href="#get-in-touch" className={styles.btnSolid}>
+                Contact Us <span className={styles.arrow}>&rsaquo;</span>
+              </a>
+              <a href="tel:+919998209033" className={styles.btnOutline}>
+                Give Us A Call <span className={styles.arrow}>&rsaquo;</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column */}
+          <div className={styles.heroRight} data-reveal data-reveal-delay="0.15">
+            <div
+              className={styles.videoWrapper}
+              onClick={togglePlay}
+              role="button"
+              aria-label="Toggle video play/pause"
+            >
+              <video
+                ref={videoRef}
+                src="/videos/Contact-Us/ContactUsVideo.mp4"
+                className={styles.heroVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+              <div className={`${styles.playPauseOverlay} ${!isPlaying ? styles.isPaused : ''}`}>
+                <button className={styles.playPauseBtn} aria-label={isPlaying ? 'Pause video' : 'Play video'}>
+                  {isPlaying ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <rect x="5" y="4" width="4" height="16" />
+                      <rect x="15" y="4" width="4" height="16" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style={{ transform: 'translateX(1.5px)' }}>
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </header>
 

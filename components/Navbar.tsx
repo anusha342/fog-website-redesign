@@ -82,7 +82,6 @@ export default function Navbar() {
 
   const isWhiteTheme =
     pathname === '/about' ||
-    pathname === '/contact' ||
     pathname.startsWith('/blog');
 
   return (
