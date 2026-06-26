@@ -155,12 +155,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* NAVBAR */}
       <nav
         id="navbar"
         className={[
           navHidden ? 'nav-hidden' : '',
-          isWhiteTheme ? 'nav-scrolled' : ''
+          'nav-scrolled'
         ].filter(Boolean).join(' ')}
         aria-label="Main navigation"
       >
