@@ -35,6 +35,7 @@ export default function ContactClient() {
   useLenis();
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isCallOpen, setIsCallOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -123,9 +124,37 @@ export default function ContactClient() {
               <a href="#get-in-touch" className={styles.btnSolid}>
                 Contact Us <span className={styles.arrow}>&rsaquo;</span>
               </a>
-              <a href="tel:+919998209033" className={styles.btnOutline}>
-                Give Us A Call <span className={styles.arrow}>&rsaquo;</span>
-              </a>
+              <div 
+                className={styles.callButtonWrapper}
+                onMouseEnter={() => setIsCallOpen(true)}
+                onMouseLeave={() => setIsCallOpen(false)}
+              >
+                <button 
+                  className={styles.btnOutline}
+                  onClick={() => setIsCallOpen(!isCallOpen)}
+                  aria-expanded={isCallOpen}
+                  aria-haspopup="true"
+                  type="button"
+                >
+                  Give Us A Call <span className={styles.arrow}>&rsaquo;</span>
+                </button>
+                {isCallOpen && (
+                  <div className={styles.callDropdown}>
+                    <a href="tel:+919998209033" className={styles.dropdownItem}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.dropdownIcon}>
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                      <span>Call Now</span>
+                    </a>
+                    <a href="https://wa.me/919998209033" target="_blank" rel="noopener noreferrer" className={styles.dropdownItem}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className={styles.dropdownIcon}>
+                        <path d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01zm-7.01 15.24c-1.48 0-2.93-.4-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.214 8.214 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.177 8.177 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.66.83-.81.99-.15.17-.3.19-.55.07-1.09-.55-1.81-.92-2.52-2.14-.19-.32-.19-.55.01-.75.18-.18.4-.47.6-.7.2-.23.27-.39.41-.65.13-.26.07-.49-.03-.7-.1-.21-.88-2.13-1.21-2.92-.32-.77-.64-.66-.88-.68-.22-.01-.48-.01-.74-.01-.26 0-.68.1-1 .44-.33.34-1.26 1.24-1.26 3.02s1.3 3.5 1.48 3.75c.19.25 2.56 3.9 6.2 5.48.86.37 1.54.6 2.07.76.87.27 1.66.24 2.28.14.69-.1 2.13-.87 2.43-1.72.3-1 .3-1.86.21-2.02-.09-.17-.3-.27-.55-.39z" />
+                      </svg>
+                      <span>WhatsApp Us</span>
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           {/* Right Column */}
