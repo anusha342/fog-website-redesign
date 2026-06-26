@@ -166,13 +166,12 @@
   z-index: 5;
 }
 
-.videoWrapper:hover .playPauseOverlay,
-.playPauseOverlay.isPaused {
+.videoWrapper:hover .playPauseOverlay {
   opacity: 1;
 }
 
 .playPauseBtn {
-  background: var(--accent, #f05023);
+  background: transparent;
   color: #ffffff;
   border: none;
   width: 56px;
@@ -181,13 +180,11 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(240, 80, 35, 0.4);
-  transition: transform 200ms cubic-bezier(.4, 0, .2, 1), background-color 200ms ease;
+  transition: transform 200ms cubic-bezier(.4, 0, .2, 1);
 }
 
 .playPauseBtn:hover {
   transform: scale(1.1);
-  background-color: #d84315;
 }
 
 .playPauseBtn svg {

@@ -53,6 +53,18 @@ export default function ContactClient() {
     }
   };
 
+  const handleVideoMouseEnter = () => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleVideoMouseLeave = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
   // Scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll('[data-reveal]');
@@ -117,12 +129,13 @@ export default function ContactClient() {
               </a>
             </div>
           </div>
-
           {/* Right Column */}
           <div className={styles.heroRight} data-reveal data-reveal-delay="0.15">
             <div
               className={styles.videoWrapper}
               onClick={togglePlay}
+              onMouseEnter={handleVideoMouseEnter}
+              onMouseLeave={handleVideoMouseLeave}
               role="button"
               aria-label="Toggle video play/pause"
             >
@@ -130,7 +143,6 @@ export default function ContactClient() {
                 ref={videoRef}
                 src="/videos/Contact-Us/ContactUsVideo.mp4"
                 className={styles.heroVideo}
-                autoPlay
                 loop
                 muted
                 playsInline
@@ -153,7 +165,6 @@ export default function ContactClient() {
               </div>
             </div>
           </div>
-
         </div>
       </header>
 
