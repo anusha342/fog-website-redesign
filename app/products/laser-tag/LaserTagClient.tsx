@@ -216,14 +216,9 @@ export default function LaserTagClient({ testimonials }: Props) {
         </video>
         <div className={styles.heroOverlay} aria-hidden="true" />
 
-        <div className={`${styles.hudCorner} ${styles.hudCornerTl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudCornerTr}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudCornerBl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudCornerBr}`} aria-hidden="true" />
 
-<div className={styles.heroScroll} aria-hidden="true">
-          <div className={styles.heroScrollChevron} />
-        </div>
+
+
 
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Multi-Player Laser Combat</span>
@@ -287,24 +282,7 @@ export default function LaserTagClient({ testimonials }: Props) {
           </div>
         </div>
 
-        <div className={styles.heroQr} aria-hidden="true">
-          <div className={styles.qrBox}>
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-              <rect x="4" y="4" width="16" height="16" rx="1" stroke="white" strokeWidth="1.5" />
-              <rect x="8" y="8" width="8" height="8" fill="white" />
-              <rect x="28" y="4" width="16" height="16" rx="1" stroke="white" strokeWidth="1.5" />
-              <rect x="32" y="8" width="8" height="8" fill="white" />
-              <rect x="4" y="28" width="16" height="16" rx="1" stroke="white" strokeWidth="1.5" />
-              <rect x="8" y="32" width="8" height="8" fill="white" />
-              <rect x="28" y="28" width="4" height="4" fill="white" />
-              <rect x="36" y="28" width="4" height="4" fill="white" />
-              <rect x="28" y="36" width="4" height="4" fill="white" />
-              <rect x="36" y="36" width="4" height="4" fill="white" />
-              <rect x="32" y="32" width="4" height="4" fill="white" />
-            </svg>
-          </div>
-          <span className={styles.qrLabel}>Scan Me</span>
-        </div>
+
       </header>
 
       {/* ── VIDEO MODAL ── */}

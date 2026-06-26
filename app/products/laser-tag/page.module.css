@@ -168,7 +168,7 @@
 .heroContent {
   position: absolute;
   left: clamp(40px, 5.5vw, 80px);
-  bottom: 140px;
+  bottom: 220px;
   z-index: 5;
   max-width: min(560px, calc(100vw - 80px));
   display: flex;
