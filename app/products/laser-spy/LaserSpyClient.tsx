@@ -312,20 +312,11 @@ export default function LaserSpyClient({ testimonials }: Props) {
         </video>
         <div className={styles.heroOverlay}></div>
 
-        <div className={`${styles.hudCorner} ${styles.hudCornerTl}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudCornerTr}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudCornerBl}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudCornerBr}`} aria-hidden="true"></div>
+
 
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">Laser Beam Maze Attraction</span>
-          <h1 className={styles.heroTitle} aria-label="LASER SPY">
-            {'LASER SPY'.split('').map((ch, i) =>
-              ch === ' '
-                ? <span key={i} className={styles.heroTitleSpace} aria-hidden="true" />
-                : <span key={i} className={styles.heroTitleLetter} aria-hidden="true" style={{ animationDelay: `${i * 0.1}s` }}>{ch}</span>
-            )}
-          </h1>
+          <h1 className={styles.heroTitle} data-reveal data-reveal-delay="0.12">Laser Spy</h1>
           <p className={styles.heroSub} data-reveal data-reveal-delay="0.22">
             Navigate the beam maze. Beat the clock. Own the leaderboard.
           </p>
@@ -385,9 +376,7 @@ export default function LaserSpyClient({ testimonials }: Props) {
           </div>
         </div>
 
-        <div className={styles.heroScroll} aria-hidden="true">
-          <div className={styles.heroScrollChevron}></div>
-        </div>
+
       </header>
 
       {/* VIDEO MODAL */}

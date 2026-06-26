@@ -82,76 +82,53 @@
 
 .heroContent {
   position: absolute;
-  top: 70px;
-  left: 0;
-  right: 0;
-  bottom: 120px;
+  left: clamp(40px, 5.5vw, 80px);
+  bottom: 220px;
   z-index: 5;
+  max-width: min(560px, calc(100vw - 80px));
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   gap: 20px;
-  padding: 0 clamp(24px, 4vw, 60px);
-  text-align: center;
+  text-align: left;
 }
 
 .heroEyebrow {
   font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 6px;
+  font-size: var(--fs-body-p4);
+  font-weight: 500;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  animation: lsEyebrowIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+  color: var(--hg-neon-orange);
 }
 
 .heroTitle {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(72px, 11vw, 160px);
-  line-height: 0.92;
+  font-size: clamp(3.2rem, 7vw, 5.5rem);
+  line-height: 0.9;
   text-transform: uppercase;
   color: var(--white);
-  letter-spacing: 0.1px;
-  word-spacing: 2px;
+  letter-spacing: -1px;
   margin: 0;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0;
-}
-
-.heroTitleLetter {
-  display: inline-block;
-  animation: lsWave 2s ease-in-out infinite;
-}
-
-.heroTitleSpace {
-  display: inline-block;
-  width: 0.35em;
+  text-align: left;
 }
 
 .heroSub {
   font-family: var(--font-body);
-  font-size: clamp(14px, 1.4vw, 18px);
+  font-size: var(--fs-body-p1);
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.55);
-  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.65;
   margin: 0;
-  max-width: none;
-  white-space: nowrap;
-  text-align: center;
-  animation: lsSubIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
+  max-width: 100%;
+  text-align: left;
 }
 
 .heroBtns {
   display: flex;
-  gap: var(--sp-16);
-  animation: lsBtnIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both;
-  margin-top: 8px;
-  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .heroBtnWatch {

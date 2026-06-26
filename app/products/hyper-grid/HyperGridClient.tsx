@@ -237,14 +237,9 @@ export default function HyperGridClient({ testimonials }: Props) {
         </video>
         <div className={styles.heroOverlay}></div>
 
-        <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true"></div>
-        <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true"></div>
 
-        <div className={styles.heroScroll} aria-hidden="true">
-          <div className={styles.heroScrollChevron}></div>
-        </div>
+
+
 
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow} data-reveal data-reveal-delay="0">LED Interactive Floor Gaming</span>
