@@ -301,10 +301,11 @@
 
 /* ── CTA pill ── */
 .tocCta {
-  font-family: var(--font-body);
-  font-size: var(--fs-body-p4);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
   letter-spacing: 2px;
+  word-spacing: 2px;
   text-transform: uppercase;
   color: #ffffff;
   background: var(--accent, #F05023);
@@ -463,9 +464,10 @@
   padding: 14px 32px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 2px;
+  word-spacing: 2px;
   text-decoration: none;
   white-space: nowrap;
   transition: background 220ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);

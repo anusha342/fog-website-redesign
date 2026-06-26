@@ -206,7 +206,7 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
                   {post.readTime && (
                     <>
                       <span className={styles.metaDot} aria-hidden="true">•</span>
-                      <span>{post.readTime} MIN. READ</span>
+                      <span>{post.readTime} MIN READ</span>
                     </>
                   )}
                 </div>

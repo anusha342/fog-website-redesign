@@ -225,7 +225,7 @@ export default async function BlogPostPage(
                         {p.readTime && (
                           <>
                             <span className={styles.morePostMetaDot}>&bull;</span>
-                            <span>{p.readTime} MIN. READ</span>
+                            <span>{p.readTime} MIN READ</span>
                           </>
                         )}
                       </div>

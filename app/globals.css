@@ -450,11 +450,12 @@ html {
 .nav-cta {
   background: var(--accent);
   color: var(--white);
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: var(--fs-body-p4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
+  word-spacing: 2px;
   height: 44px;
   padding: 0 20px;
   display: flex;
