@@ -47,6 +47,21 @@ export default function PostTocClient({ headings, slug }: Props) {
   const [activeId, setActiveId] = useState('');
   const [progress, setProgress] = useState(0);
   const [activeSectionProgress, setActiveSectionProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Sidebar visibility scroll trigger (based on prose section entering viewport)
+  useEffect(() => {
+    const handleScrollVisibility = () => {
+      const el = document.querySelector(`.${styles.prose}`);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      // Show when the top of the prose section enters the screen (e.g. within 200px of the top)
+      setIsVisible(rect.top <= 200);
+    };
+    window.addEventListener('scroll', handleScrollVisibility, { passive: true });
+    handleScrollVisibility();
+    return () => window.removeEventListener('scroll', handleScrollVisibility);
+  }, []);
 
   // Scroll progress
   useEffect(() => {
@@ -218,7 +233,7 @@ export default function PostTocClient({ headings, slug }: Props) {
         <div className={styles.topProgressBar} style={{ width: `${progress}%` }} />
       </div>
 
-      <aside className={styles.tocPanel} aria-label="Article navigation">
+      <aside className={`${styles.tocPanel} ${isVisible ? styles.tocPanelVisible : ''}`} aria-label="Article navigation">
 
         {/* Reading progress sidebar indicator */}
         <div className={styles.progressBlock}>

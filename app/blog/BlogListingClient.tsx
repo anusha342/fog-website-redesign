@@ -189,12 +189,10 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
               {/* Right: content */}
               <div className={styles.articleRowContent}>
                 <div className={styles.articleRowBody}>
-                  <div className={styles.articleRowHeader}>
-                    <h3 className={styles.articleRowTitle}>{post.title}</h3>
-                    {post.category && (
-                      <span className={styles.articleCat}>{post.category}</span>
-                    )}
-                  </div>
+                  {post.category && (
+                    <span className={styles.articleCat}>{post.category}</span>
+                  )}
+                  <h3 className={styles.articleRowTitle}>{post.title}</h3>
 
                   {post.excerpt && (
                     <p className={styles.articleRowExcerpt}>{post.excerpt}</p>
