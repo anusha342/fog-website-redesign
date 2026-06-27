@@ -185,7 +185,7 @@ export default function LaserTagClient({ testimonials }: Props) {
       {/* ── 1. HERO ── */}
       <header className={styles.hero} data-nav-theme="dark">
         <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/lasertag-bg-video.mp4" type="video/mp4" />
+          <source src="/videos/Laser Tag_animation.mp4" type="video/mp4" />
         </video>
         <div className={styles.heroOverlay} aria-hidden="true" />
 

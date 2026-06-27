@@ -276,7 +276,7 @@
 .teamHeaderWrap {
   max-width: 1440px;
   margin: 0 auto;
-  padding: clamp(32px, 4vh, 48px) clamp(24px, 5vw, 80px) clamp(16px, 2vh, 24px);
+  padding: clamp(32px, 4vh, 48px) clamp(16px, 2.5vw, 40px) clamp(16px, 2vh, 24px);
   text-align: center;
   flex-shrink: 0;
 }
@@ -341,7 +341,7 @@
   z-index: 1;
   max-width: 1150px;
   margin: 0 auto;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(16px, 2.5vw, 40px);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(24px, 4vw, 48px);
@@ -602,8 +602,8 @@
   align-items: center;
   padding-top: clamp(80px, 8vw, 120px);
   padding-bottom: clamp(80px, 8vw, 120px);
-  padding-right: clamp(32px, 6vw, 100px);
-  padding-left: clamp(24px, 4vw, 64px);
+  padding-right: clamp(16px, 2.5vw, 40px);
+  padding-left: clamp(16px, 2.5vw, 40px);
   gap: clamp(40px, 6vw, 100px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   position: relative;
@@ -787,8 +787,8 @@
     grid-template-columns: 1fr;
     padding-top: clamp(60px, 10vw, 80px);
     padding-bottom: clamp(60px, 10vw, 80px);
-    padding-right: clamp(24px, 5vw, 48px);
-    padding-left: clamp(24px, 6vw, 60px);
+    padding-right: clamp(16px, 2.5vw, 40px);
+    padding-left: clamp(16px, 2.5vw, 40px);
     gap: 40px;
     background: #ffffff;
   }
@@ -823,13 +823,14 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 80px clamp(24px, 3.5vw, 40px);
+  padding: 80px 0;
 }
 
 .awardsInner {
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+  padding: 0 clamp(16px, 2.5vw, 40px);
 }
 
 .awardsHeader {
@@ -1068,7 +1069,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: clamp(60px, 8vh, 100px) clamp(24px, 3.5vw, 40px);
+  padding: clamp(60px, 8vh, 100px) 0;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -1076,6 +1077,7 @@
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+  padding: 0 clamp(16px, 2.5vw, 40px);
 }
 
 .valuesHeader {
@@ -1253,7 +1255,7 @@
 ══════════════════════════════════════ */
 .timeline {
   background: #ffffff;
-  padding: 80px clamp(24px, 3.5vw, 40px);
+  padding: 80px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -1261,6 +1263,7 @@
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+  padding: 0 clamp(16px, 2.5vw, 40px);
 }
 
 .tlHeader {
