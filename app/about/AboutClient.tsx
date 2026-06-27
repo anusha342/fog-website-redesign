@@ -191,12 +191,35 @@ export default function AboutClient() {
 
       {/* ── 2. WHO ARE WE ── */}
       <section className={styles.whoSection}>
-        <h2 className={styles.whoTitle} data-reveal>Who<br />are we?</h2>
-        <div className={styles.whoTextBlock}>
-          <p className={styles.whoBody} data-reveal data-reveal-delay="0.08">
-            FOG — Future of Gaming, is India&apos;s largest manufacturer and exporter of attraction games for the indoor amusement industry.
+        {/* 3D Animated Background Scene */}
+        <div className={styles.who3dContainer} aria-hidden="true">
+          <div className={styles.who3dScene}>
+            {/* Ambient Light sources */}
+            <div className={styles.lightNeon} />
+            <div className={styles.lightPink} />
+            
+            {/* Clay platforms (Slabs simulating the 3D surface) */}
+            <div className={`${styles.slab} ${styles.slabLeft}`} />
+            <div className={`${styles.slab} ${styles.slabRight}`} />
+            
+            {/* Neon Glow laser path/crevice */}
+            <div className={styles.neonPath} />
+            
+            {/* Circular cut-out background layer */}
+            <div className={styles.circleCutout} />
+          </div>
+        </div>
+
+        <h2 className={styles.whoTitle} data-reveal>
+          <span>Who</span>
+          <span>Are</span>
+          <span>We ??</span>
+        </h2>
+        <div className={styles.whoContent} data-reveal data-reveal-delay="0.1">
+          <p className={styles.whoBodyLead}>
+            FOG - Future of Gaming, is India&apos;s largest manufacturer and exporter of attraction games for the indoor amusement industry.
           </p>
-          <p className={styles.whoBody} data-reveal data-reveal-delay="0.16">
+          <p className={styles.whoBodySub}>
             Established in 2019 by two IIT alumni, we make games like next-gen laser tags, interactive colour grid, mission based laser-mazes, etc. We blend physical gameplay with cutting-edge technology to create unforgettable experiences.
           </p>
         </div>
