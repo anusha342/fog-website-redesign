@@ -242,7 +242,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 clamp(24px, 5vw, 80px);
+  padding: 0 clamp(16px, 2.5vw, 40px);
 }
 
 .nav-logo {
