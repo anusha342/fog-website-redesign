@@ -49,38 +49,38 @@ function useScrollReveal() {
 }
 
 const AWARDS = [
-  { year: '2024', name: 'Best Immersive Entertainment Product', org: 'IAAPA Expo Asia — Singapore', desc: 'HyperGrid recognised as the most innovative sensor-activated gaming floor at Asia\'s largest attractions trade event.' },
-  { year: '2023', name: 'Top 10 LBE Innovators', org: 'Location-Based Entertainment Report', desc: 'Named among the world\'s top 10 location-based entertainment companies redefining the guest experience.' },
-  { year: '2023', name: 'FEC Innovation Award', org: 'Family Entertainment Centre Summit — Dubai', desc: 'Laser Spy honoured for delivering the highest ROI payback of any new attraction category in the FEC sector.' },
-  { year: '2022', name: 'AI in Entertainment Pioneer Award', org: 'Gulf Games & Entertainment Show', desc: 'Moments AI recognised for transforming guest highlights into shareable content, driving measurable repeat visit growth.' },
-  { year: '2022', name: 'Best New Laser Tag System', org: 'IAAPA Expo — Orlando', desc: 'FOG Laser Tag awarded best-in-class for smart vest technology, real-time scoring, and seamless Moments AI integration.' },
-  { year: '2021', name: 'Emerging Tech Company of the Year', org: 'Middle East Entertainment & Leisure Awards', desc: 'FOG Technologies awarded for rapid regional expansion and introducing world-class gaming experiences across 10+ countries.' },
+  { year: '2023', name: 'Best Manufacturer Award', org: 'IAAPI — \'23, \'25 & \'26', desc: 'Recognised as Best Manufacturer at IAAPI — the premier attractions industry event — three times across 2023, 2025, and 2026.' },
+  { year: '2024', name: 'First Indian Exporter', org: 'Indoor Attraction Games', desc: 'FOG became the first Indian company to export indoor attraction games globally, reaching operators across 4 continents.' },
+  { year: '2024', name: '100+ Installations', org: 'Global Footprint — 10+ Countries', desc: 'Over 100 successful installations across game zones, FECs, and entertainment venues worldwide including UAE, Singapore, and the UK.' },
+  { year: '2024', name: '1 Million+ Players', org: 'Player Engagement', desc: 'More than one million players have experienced FOG products, generating massive social media reach and high repeat-visit rates.' },
+  { year: '2023', name: '92% Net Promoter Score', org: 'Customer Satisfaction Index', desc: 'An industry-leading NPS of 92% — driven by exceptional product quality and round-the-clock after-sales support.' },
+  { year: '2023', name: '24×7 After Sales Service', org: 'Operator Support Program', desc: 'Round-the-clock remote diagnostics and hot-swappable components ensuring near-zero downtime for every venue partner.' },
 ];
 
 const VALUES = [
   {
     num: '01',
-    title: 'Innovation',
-    body: 'We push the boundaries of what\'s possible in interactive entertainment technology.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L15 17H9l-.7-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z" /></svg>,
+    title: 'Experiential Game Design',
+    body: 'From the drawing board to the play floor, our games are designed to bring people together and deliver unforgettable moments.',
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M8 12h.01M16 12h.01M6 9v6M10 9v6"/></svg>,
   },
   {
     num: '02',
-    title: 'Reliability',
-    body: 'Our attractions are built to perform, with 99.9% uptime and rapid support response.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
+    title: 'In-house Technology',
+    body: 'We engineer software and hardware in-house, ensuring cutting-edge gaming solutions that deliver the ultimate experience.',
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M7 9H5M7 12H3M7 15H5M17 9h2M17 12h4M17 15h2M9 7V5M12 7V3M15 7V5M9 17v2M12 17v4M15 17v2"/></svg>,
   },
   {
     num: '03',
-    title: 'Speed',
-    body: 'From consultation to go-live in weeks, not months. We respect your timeline.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>,
+    title: 'Real-world Innovation',
+    body: 'At FOG, we\'re not just building games — we\'re crafting the future of entertainment with each line of code, circuit, and sensor.',
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L15 17H9l-.7-2C6.3 13.7 5 11.5 5 9a7 7 0 0 1 7-7z"/></svg>,
   },
   {
     num: '04',
-    title: 'Partnership',
-    body: 'We\'re not just vendors — we\'re partners invested in your venue\'s long-term success.',
-    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
+    title: 'Partner with Top Clients',
+    body: 'Our clients include the best game zone operators in India and beyond — Timezone, Fun City, Shott, Rebounce, SkyJumper, and many more.',
+    icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
   },
 ];
 
@@ -212,8 +212,8 @@ export default function AboutClient() {
 
         <h2 className={styles.whoTitle} data-reveal>
           <span>Who</span>
-          <span>Are</span>
-          <span>We ??</span>
+          <span>We</span>
+          <span>Are ??</span>
         </h2>
         <div className={styles.whoContent} data-reveal data-reveal-delay="0.1">
           <p className={styles.whoBodyLead}>
@@ -234,10 +234,6 @@ export default function AboutClient() {
               <h2 className={styles.awardsTitle} data-reveal data-reveal-delay="0.08">
                 Our Achievements
               </h2>
-            </div>
-            <div className={styles.awardsStat} data-reveal data-reveal-delay="0.12">
-              <span className={styles.awardsStatNum}>06</span>
-              <span className={styles.awardsStatLabel}>Awards Won</span>
             </div>
           </div>
 
@@ -290,6 +286,7 @@ export default function AboutClient() {
         </div>
       </section>
 
+      {/* ── 5. JOURNEY ── */}
       {/* ── 5. TIMELINE ── */}
       <section id="timeline" className={styles.timeline}>
         <div className={styles.timelineInner}>
