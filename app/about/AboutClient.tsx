@@ -189,6 +189,19 @@ export default function AboutClient() {
 
 
 
+      {/* ── 2. WHO ARE WE ── */}
+      <section className={styles.whoSection}>
+        <h2 className={styles.whoTitle} data-reveal>Who<br />are we?</h2>
+        <div className={styles.whoTextBlock}>
+          <p className={styles.whoBody} data-reveal data-reveal-delay="0.08">
+            FOG — Future of Gaming, is India&apos;s largest manufacturer and exporter of attraction games for the indoor amusement industry.
+          </p>
+          <p className={styles.whoBody} data-reveal data-reveal-delay="0.16">
+            Established in 2019 by two IIT alumni, we make games like next-gen laser tags, interactive colour grid, mission based laser-mazes, etc. We blend physical gameplay with cutting-edge technology to create unforgettable experiences.
+          </p>
+        </div>
+      </section>
+
       {/* ── 3. AWARDS ── */}
       <section id="achievement" className={styles.awards}>
         <div className={styles.awardsInner}>

@@ -175,34 +175,7 @@ export default function LaserTagClient({ testimonials }: Props) {
 
   const [activeUsp, setActiveUsp] = useState<number | null>(null);
 
-  // 3D Card Tilt Effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const maxTilt = 10; // Max tilt angle in degrees
-    const percentX = (x - centerX) / centerX;
-    const percentY = (y - centerY) / centerY;
-    const tiltX = -percentY * maxTilt;
-    const tiltY = percentX * maxTilt;
-    card.style.setProperty('--rx', `${tiltX}deg`);
-    card.style.setProperty('--ry', `${tiltY}deg`);
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    card.style.setProperty('--rx', '0deg');
-    card.style.setProperty('--ry', '0deg');
-  };
-
-  const handleUspMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    card.style.setProperty('--rx', '0deg');
-    card.style.setProperty('--ry', '0deg');
+  const handleUspMouseLeave = () => {
     setActiveUsp(null);
   };
 
@@ -313,7 +286,6 @@ export default function LaserTagClient({ testimonials }: Props) {
                   key={idx}
                   className={`${styles.card3dContainer} ${styles.uspSelectorCard} ${(activeUsp === idx || (activeUsp === null && idx === 0)) ? styles.uspSelectorActive : ''}`}
                   onMouseEnter={() => setActiveUsp(idx)}
-                  onMouseMove={handleMouseMove}
                   onMouseLeave={handleUspMouseLeave}
                   onClick={() => setActiveUsp(idx)}
                 >

@@ -593,6 +593,40 @@
 
 
 /* ══════════════════════════════════════
+   2. WHO ARE WE
+══════════════════════════════════════ */
+.whoSection {
+  background: #ffffff;
+  width: 100%;
+  padding: clamp(64px, 8vw, 120px) clamp(32px, 6vw, 96px);
+}
+
+.whoTitle {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 132px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: #131313;
+  margin: 0 0 clamp(36px, 4vw, 60px);
+}
+
+.whoTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 860px;
+}
+
+.whoBody {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.85;
+  color: rgba(19, 19, 19, 0.65);
+  margin: 0;
+}
+
+/* ══════════════════════════════════════
    3. AWARDS
 ══════════════════════════════════════ */
 .awards {

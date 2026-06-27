@@ -86,16 +86,72 @@ function formatDate(iso: string) {
   }
 }
 
-export default function BlogListingClient({ posts, allCategories }: Props) {
+function BlogCard({ post, idx }: { post: Post; idx: number }) {
+  return (
+    <div
+      className={styles.articleCard}
+      data-reveal
+      data-reveal-delay={String((idx % 2) * 0.12)}
+    >
+      <Link href={`/blog/${post.slug}`} className={styles.cardLink}>
+        <div className={styles.cardImgWrap}>
+          {post.coverImage ? (
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              sizes="(max-width: 767px) 100vw, 35vw"
+              priority={idx < 2}
+            />
+          ) : (
+            <div className={styles.cardImgFallback} />
+          )}
+        </div>
+        <div className={styles.cardBody}>
+          {post.category && (
+            <span className={styles.cardCategory}>{post.category}</span>
+          )}
+          <h3 className={styles.cardTitle}>{post.title}</h3>
+          {post.excerpt && (
+            <p className={styles.cardExcerpt}>{post.excerpt}</p>
+          )}
+          
+          <div className={styles.cardFooter}>
+            <div className={styles.authorBox}>
+              <div className={styles.authorAvatar}>
+                {post.author ? post.author.charAt(0).toUpperCase() : 'F'}
+              </div>
+              <div className={styles.authorMeta}>
+                <span className={styles.authorName}>{post.author || 'FOG Team'}</span>
+                <span className={styles.postDate}>
+                  {formatDate(post.date)}
+                  {post.readTime ? ` • ${post.readTime} MIN READ` : ''}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+export default function BlogListingClient({ posts, recentPosts, allCategories }: Props) {
   useLenis();
   const [query, setQuery] = useState('');
   const [activeTag, setActiveTag] = useState('');
-  const [visibleCount, setVisibleCount] = useState(9);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Fallback to slice first posts if recentPosts is empty
+  const finalRecentPosts = useMemo(() => {
+    if (recentPosts && recentPosts.length > 0) return recentPosts;
+    return posts.slice(0, 3);
+  }, [recentPosts, posts]);
+
   useEffect(() => {
-    setVisibleCount(9);
+    setVisibleCount(6);
   }, [query, activeTag]);
 
   useEffect(() => {
@@ -117,6 +173,15 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
   }, [posts, query, activeTag]);
 
   useScrollReveal(filtered);
+
+  // Split into left and right columns for masonry layout
+  const leftColPosts = useMemo(() => {
+    return filtered.slice(0, visibleCount).filter((_, idx) => idx % 2 === 0);
+  }, [filtered, visibleCount]);
+
+  const rightColPosts = useMemo(() => {
+    return filtered.slice(0, visibleCount).filter((_, idx) => idx % 2 === 1);
+  }, [filtered, visibleCount]);
 
   return (
     <div className={styles.blogWrapper}>
@@ -164,67 +229,113 @@ export default function BlogListingClient({ posts, allCategories }: Props) {
         </div>
       </div>
 
-      {/* ── ARTICLE LIST ── */}
-      {filtered.length === 0 ? (
-        <p className={styles.empty}>
-          {query || activeTag ? `No posts match "${query || activeTag}".` : 'No posts yet — check back soon.'}
-        </p>
-      ) : (
-        <div className={styles.articleList}>
-          {filtered.slice(0, visibleCount).map((post, idx) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className={styles.articleRow}
-              data-reveal
-              data-reveal-delay={(idx % 4) * 0.06}
-            >
-              {/* Left: large rectangle image */}
-              <div className={styles.articleRowImg}>
-                {post.coverImage
-                  ? <Image src={post.coverImage} alt={post.title} fill sizes="(max-width: 767px) 100vw, 55vw" style={{ objectFit: 'cover' }} />
-                  : <div className={styles.blogCardImgFallback} />}
-              </div>
-
-              {/* Right: content */}
-              <div className={styles.articleRowContent}>
-                <div className={styles.articleRowBody}>
-                  {post.category && (
-                    <span className={styles.articleCat}>{post.category}</span>
-                  )}
-                  <h3 className={styles.articleRowTitle}>{post.title}</h3>
-
-                  {post.excerpt && (
-                    <p className={styles.articleRowExcerpt}>{post.excerpt}</p>
-                  )}
+      {/* ── GRID + SIDEBAR LAYOUT ── */}
+      <div className={styles.blogLayout}>
+        {/* Left: Articles Column */}
+        <div className={styles.articlesColumn}>
+          {filtered.length === 0 ? (
+            <p className={styles.empty}>
+              {query || activeTag ? `No posts match "${query || activeTag}".` : 'No posts yet — check back soon.'}
+            </p>
+          ) : (
+            <>
+              {/* Desktop Masonry: visible on desktop/tablet */}
+              <div className={styles.desktopMasonry}>
+                <div className={styles.masonryCol}>
+                  {leftColPosts.map((post, idx) => (
+                    <BlogCard key={post.slug} post={post} idx={idx * 2} />
+                  ))}
                 </div>
-
-                <div className={styles.articleRowMeta}>
-                  <span>{formatDate(post.date)}</span>
-                  {post.readTime && (
-                    <>
-                      <span className={styles.metaDot} aria-hidden="true">•</span>
-                      <span>{post.readTime} MIN READ</span>
-                    </>
-                  )}
+                <div className={styles.masonryCol}>
+                  {rightColPosts.map((post, idx) => (
+                    <BlogCard key={post.slug} post={post} idx={idx * 2 + 1} />
+                  ))}
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
-      )}
 
-      {filtered.length > visibleCount && (
-        <div className={styles.showMoreWrapper}>
-          <button
-            type="button"
-            onClick={() => setVisibleCount((prev) => prev + 9)}
-            className={styles.showMoreBtn}
-          >
-            Show More Articles
-          </button>
+              {/* Mobile List: visible on mobile only */}
+              <div className={styles.mobileList}>
+                {filtered.slice(0, visibleCount).map((post, idx) => (
+                  <BlogCard key={post.slug} post={post} idx={idx} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {filtered.length > visibleCount && (
+            <div className={styles.showMoreWrapper}>
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + 6)}
+                className={styles.showMoreBtn}
+              >
+                Show More Articles
+              </button>
+            </div>
+          )}
         </div>
-      )}
+
+        {/* Right: Sidebar */}
+        <aside className={styles.blogSidebar}>
+          {/* Recent Posts widget */}
+          {finalRecentPosts.length > 0 && (
+            <div className={styles.sidebarWidget}>
+              <h3 className={styles.widgetTitle}>Recent Posts</h3>
+              <div className={styles.recentPostsList}>
+                {finalRecentPosts.map((post) => (
+                  <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.recentPostItem}>
+                    <div className={styles.recentPostThumb}>
+                      {post.coverImage ? (
+                        <Image
+                          src={post.coverImage}
+                          alt={post.title}
+                          fill
+                          sizes="64px"
+                        />
+                      ) : (
+                        <div className={styles.recentPostThumbFallback} />
+                      )}
+                    </div>
+                    <div className={styles.recentPostMeta}>
+                      <h4 className={styles.recentPostTitle}>{post.title}</h4>
+                      <span className={styles.recentPostDate}>{formatDate(post.date)}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Categories widget */}
+          {allCategories.length > 0 && (
+            <div className={styles.sidebarWidget}>
+              <h3 className={styles.widgetTitle}>Categories</h3>
+              <ul className={styles.categoriesList}>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setActiveTag(''); setQuery(''); }}
+                    className={`${styles.categoryLink} ${!activeTag ? styles.categoryLinkActive : ''}`}
+                  >
+                    All
+                  </button>
+                </li>
+                {allCategories.map((cat) => (
+                  <li key={cat}>
+                    <button
+                      type="button"
+                      onClick={() => { setActiveTag(cat); setQuery(''); }}
+                      className={`${styles.categoryLink} ${activeTag === cat ? styles.categoryLinkActive : ''}`}
+                    >
+                      {cat}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </aside>
+      </div>
 
     </div>
   );

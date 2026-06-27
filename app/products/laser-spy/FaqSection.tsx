@@ -31,28 +31,7 @@ export default function FaqSection() {
 
   const toggle = (i: number) => setOpenIndex((prev) => (prev === i ? null : i));
 
-  // 3D Card Tilt Effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const maxTilt = 4; // Max tilt angle in degrees
-    const percentX = (x - centerX) / centerX;
-    const percentY = (y - centerY) / centerY;
-    const tiltX = -percentY * maxTilt;
-    const tiltY = percentX * maxTilt;
-    card.style.setProperty('--rx', `${tiltX}deg`);
-    card.style.setProperty('--ry', `${tiltY}deg`);
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget;
-    card.style.setProperty('--rx', '0deg');
-    card.style.setProperty('--ry', '0deg');
+  const handleMouseLeave = () => {
     setOpenIndex(null);
   };
 
@@ -83,7 +62,6 @@ export default function FaqSection() {
                 <div
                   className={`${styles.item} ${open ? styles.itemOpen : ''}`}
                   onMouseEnter={() => setOpenIndex(i)}
-                  onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                 >
                   <div className={styles.itemInner}>
