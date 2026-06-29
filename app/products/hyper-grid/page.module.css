@@ -1048,7 +1048,8 @@
 
 /* ── HOW IT WORKS / PROCESS STEPS SECTION ── */
 .processSection {
-  background: #ffffff;
+  background: #080c10;
+  background: linear-gradient(135deg, #080c10 0%, #1a0b07 60%, #050505 100%);
   overflow: hidden;
   padding: 80px 0;
   margin: 0 auto;
@@ -1059,8 +1060,8 @@
   /* width: 100%; */
   max-width: 1440px;
   margin: 0 auto;
-  background: #ffffff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .processHeaderInner {
@@ -1108,7 +1109,7 @@
   font-weight: 700;
   font-size: var(--fs-heading-1);
   text-transform: uppercase;
-  color: #0a0a0a;
+  color: #ffffff;
   letter-spacing: -0.5px;
   margin: 0 0 8px;
   line-height: 1.0;
@@ -1120,7 +1121,7 @@
   font-weight: 300;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.42);
+  color: rgba(255, 255, 255, 0.55);
   margin: 0;
 }
 
@@ -1141,8 +1142,8 @@
   gap: 10px;
   padding: 0px 20px;
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.22);
-  color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
   font-family: var(--font-body);
   font-size: var(--fs-body-p4);
   font-weight: 500;
@@ -1386,8 +1387,8 @@
   }
 
   .mobileStepCard {
-    background: var(--surface);
-    border: 1px solid rgba(19, 19, 19, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -1408,7 +1409,7 @@
     font-size: var(--fs-heading-3);
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--dark);
+    color: var(--white);
     margin: 0;
     line-height: 1.2;
   }
@@ -1417,7 +1418,7 @@
     font-family: var(--font-body);
     font-size: var(--fs-body-p4);
     font-weight: 400;
-    color: var(--gray);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.6;
     margin: 0;
   }
@@ -1448,79 +1449,92 @@
 }
 
 
-/* ── SPECS MODEL SECTION ── */
-.speModelSection {
-  background: radial-gradient(ellipse 120% 80% at 50% 0%, #c73d12 0%, #7a2308 30%, #090909 70%);
+/* ── COMBINED SPECIFICATIONS SECTION ── */
+.speSection {
+  background: #0d0d0d;
+  background-image:
+    radial-gradient(circle at 30% 50%, rgba(240, 80, 35, 0.12) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100%, 40px 40px, 40px 40px;
   width: 100%;
-  padding: 0;
-}
-
-.speModelInner {
-  max-width: 1440px;
-  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
   padding: 80px 0;
+  overflow: hidden;
 }
 
-.speModelTitle {
+.speInner {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+.speTitle {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--fs-heading-1);
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 48px;
+  margin-bottom: 40px;
   line-height: 1.05;
+  flex-shrink: 0;
+}
+
+.speContent {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: center;
+  width: 100%;
+}
+
+.speModelColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .speModelImgWrap {
   width: 100%;
+  max-width: 780px;
+  position: relative;
   line-height: 0;
 }
 
 .speModelImg {
   width: 100%;
-  max-width: 900px;
   height: auto;
   display: block;
-  margin: 0 auto;
 }
 
-/* ── SPECS DATA SECTION ── */
-.speDataSection {
-  background: #0d0d0d;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-  width: 100%;
-  padding: 0;
-}
-
-.speDataInner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 80px 0px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: stretch;
+.speDataColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .speDimsCard {
-  background: rgba(30, 30, 30, 0.9);
+  background: rgba(30, 30, 30, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 40px 40px 36px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  padding: 36px 36px 32px;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 .speAreaTitle {
   font-family: var(--font-display);
-  font-size: var(--fs-heading-3);
   font-weight: 700;
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   line-height: 1.2;
 }
 
@@ -1538,14 +1552,12 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  flex: 1;
-  justify-content: center;
 }
 
 .speDimsRow {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 14px 0;
+  padding: 12px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   font-size: var(--fs-body-p4);
   text-transform: uppercase;
@@ -1558,24 +1570,21 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 100%;
 }
 
 .speInfoCard {
-  background: rgba(30, 30, 30, 0.9);
+  background: rgba(30, 30, 30, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 28px 32px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 24px 28px;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
 }
 
 .speInfoHeader {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -1599,32 +1608,56 @@
   font-weight: 600;
 }
 
+@media (max-width: 1199px) {
+  .speContent {
+    gap: 32px;
+  }
+}
+
 @media (max-width: 1023px) {
-  .speDataInner {
-    grid-template-columns: 1fr;
-    padding: 56px var(--sp-48);
+  .speSection {
+    height: auto;
+    min-height: auto;
+    padding: 72px 0;
   }
 
-  .speModelInner {
-    padding: 56px var(--sp-48) 0;
+  .speInner {
+    padding: 0 32px;
+  }
+
+  .speContent {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .speModelColumn {
+    order: 1;
+  }
+
+  .speDataColumn {
+    order: 2;
+  }
+
+  .speDimsCard {
+    padding: 32px;
+  }
+
+  .speInfoCard {
+    padding: 20px 24px;
   }
 }
 
 @media (max-width: 767px) {
-  .speModelInner {
-    padding: 48px var(--sp-24) 0;
-  }
-
-  .speDataInner {
-    padding: 48px var(--sp-24);
+  .speInner {
+    padding: 0 20px;
   }
 
   .speDimsCard {
-    padding: 28px 24px;
+    padding: 24px;
   }
 
   .speInfoCard {
-    padding: 24px 20px;
+    padding: 16px 20px;
   }
 }
 

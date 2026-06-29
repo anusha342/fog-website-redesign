@@ -748,65 +748,70 @@ export default function HyperGridClient({ testimonials }: Props) {
         </div>
       </section>
 
-      {/* ── SPECS — MODEL ── */}
-      <section id="specs-roi" className={styles.speModelSection}>
-        <div className={styles.speModelInner}>
-          <h2 className={styles.speModelTitle} data-reveal>Specifications</h2>
-          <div className={styles.speModelImgWrap} data-reveal>
-            <Image
-              src="/images/hyper-grid/specs/specs-1.png"
-              alt="HyperGrid 3D model with dimensions"
-              className={styles.speModelImg}
-              width={839}
-              height={500}
-              sizes="(max-width: 839px) 100vw, 839px"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── SPECS — DATA ── */}
-      <section className={styles.speDataSection}>
-        <div className={styles.speDataInner}>
-          <div className={styles.speDimsCard} data-reveal>
-            <h3 className={styles.speAreaTitle}>
-              <span className={styles.speAreaLabel}>Area</span>
-              <span className={styles.speAreaNum}>270</span> sqft /&nbsp;
-              <span className={styles.speAreaNum}>25</span> sqm
-            </h3>
-            <div className={styles.speDimsTable}>
-              <div className={styles.speDimsRow}><span>Length</span><span>20.3 FT</span><span>6.4 M</span></div>
-              <div className={styles.speDimsRow}><span>Depth</span><span>13.3 FT</span><span>4.1 M</span></div>
-              <div className={styles.speDimsRow}><span>Height</span><span>9.2 FT</span><span>2.8 M</span></div>
-            </div>
-          </div>
-
-          <div className={styles.speInfoCards} data-reveal data-reveal-delay="0.1">
-            <div className={styles.speInfoCard}>
-              <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                  <path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span className={styles.speInfoTitle}>Power</span>
+      {/* ── SPECIFICATIONS ── */}
+      <section id="specs-roi" className={styles.speSection} data-nav-theme="dark">
+        <div className={styles.speInner}>
+          <h2 className={styles.speTitle} data-reveal>Specifications</h2>
+          
+          <div className={styles.speContent}>
+            {/* Left Column: 3D Model */}
+            <div className={styles.speModelColumn} data-reveal>
+              <div className={styles.speModelImgWrap}>
+                <Image
+                  src="/images/hyper-grid/specs/specs-1.png"
+                  alt="HyperGrid 3D model with dimensions"
+                  className={styles.speModelImg}
+                  width={839}
+                  height={500}
+                  sizes="(max-width: 839px) 100vw, 839px"
+                  style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                />
               </div>
-              <p className={styles.speInfoText}>Average <strong>1.5 KW</strong> and Max 4.5 KW</p>
             </div>
-            <div className={styles.speInfoCard}>
-              <div className={styles.speInfoHeader}>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                  <rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                  <rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
-                </svg>
-                <span className={styles.speInfoTitle}>Structure</span>
+
+            {/* Right Column: Data & Cards */}
+            <div className={styles.speDataColumn} data-reveal data-reveal-delay="0.1">
+              <div className={styles.speDimsCard}>
+                <h3 className={styles.speAreaTitle}>
+                  <span className={styles.speAreaLabel}>Area</span>
+                  <span className={styles.speAreaNum}>270</span> sqft /&nbsp;
+                  <span className={styles.speAreaNum}>25</span> sqm
+                </h3>
+                <div className={styles.speDimsTable}>
+                  <div className={styles.speDimsRow}><span>Length</span><span>20.3 FT</span><span>6.4 M</span></div>
+                  <div className={styles.speDimsRow}><span>Depth</span><span>13.3 FT</span><span>4.1 M</span></div>
+                  <div className={styles.speDimsRow}><span>Height</span><span>9.2 FT</span><span>2.8 M</span></div>
+                </div>
               </div>
-              <p className={styles.speInfoText}>Strong and safe, made with heavy gauge MS and plywood.</p>
+
+              <div className={styles.speInfoCards}>
+                <div className={styles.speInfoCard}>
+                  <div className={styles.speInfoHeader}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <path d="M10 2L4 10h6l-2 6 8-10h-6l2-6z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span className={styles.speInfoTitle}>Power</span>
+                  </div>
+                  <p className={styles.speInfoText}>Average <strong>1.5 KW</strong> and Max 4.5 KW</p>
+                </div>
+                <div className={styles.speInfoCard}>
+                  <div className={styles.speInfoHeader}>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                      <rect x="2" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="7" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="12" y="2" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="2" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="7" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="12" y="7" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="2" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="7" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                      <rect x="12" y="12" width="4" height="4" rx="1" stroke="currentColor" strokeWidth="1.5"/>
+                    </svg>
+                    <span className={styles.speInfoTitle}>Structure</span>
+                  </div>
+                  <p className={styles.speInfoText}>Strong and safe, made with heavy gauge MS and plywood.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
