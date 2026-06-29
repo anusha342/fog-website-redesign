@@ -691,127 +691,52 @@ export default function HomeClient({
       {/* ── HERO ──────────────────────────────────────────────────────── */}
       <section id="hero" className={styles.hero} ref={heroRef} aria-label="Hero">
         <h1 className="sr-only">FOG Technologies — Future of Gaming</h1>
-        <canvas ref={canvasRef} className={styles.heroCanvas} aria-hidden="true" />
+        
+        <video className={styles.heroVideo} autoPlay muted loop playsInline>
+          <source src="/videos/Landing Page.mp4" type="video/mp4" />
+        </video>
+        
+        {/* L1: Premium color tint grading filter */}
+        <div className={styles.heroFilter} aria-hidden="true" />
+        <div className={styles.heroOverlay} aria-hidden="true" />
 
-        {/* L1 — Ambient orange center glow */}
-        <div className={styles.bgAmbientGlow} aria-hidden="true" />
-
-        {/* L2 — Volumetric haze blobs */}
-        <div className={styles.bgHaze} aria-hidden="true" ref={hazeRef}>
-          <div className={styles.hazeBlob1} />
-          <div className={styles.hazeBlob2} />
-          <div className={styles.hazeBlob3} />
-        </div>
-
-        {/* L3 — Infinite perspective grid floor */}
-        <div className={styles.bgGridFloor} aria-hidden="true">
-          <div className={styles.bgGridPlane} />
-        </div>
-
-        {/* L5 — Diagonal light beam */}
-        <div className={styles.bgBeams} aria-hidden="true">
-          <div className={styles.beam} />
-        </div>
-
-        <div className={styles.scanlines} aria-hidden="true" />
-
-        <div className={`${styles.hudCorner} ${styles.hudTl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudTr}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBl}`} aria-hidden="true" />
-        <div className={`${styles.hudCorner} ${styles.hudBr}`} aria-hidden="true" />
-
-        {/* ── Hero content — two phases, auto-cycling ── */}
-        <div
-          className={`${styles.heroContent} ${heroTransitioning ? styles.heroTransitioning : ''}`}
-          onMouseEnter={handleFogHoverEnter}
-          onMouseLeave={handleFutureHoverLeave}
-        >
-
-          {/* ── PHASE A: Logo + FOG ── */}
-          <div
-            className={`${styles.heroPhaseA} ${heroPhase === 'fog' ? styles.phaseVisible : styles.phaseHidden} ${fogExiting ? styles.fogExiting : ''}`}
-            aria-hidden={heroPhase !== 'fog'}
-          >
-            {/* Big FOG letters */}
-            <div className={styles.fogWord} aria-label="FOG">
-              {(['F', 'O', 'G'] as const).map((letter, i) => (
-                <span
-                  key={`${letter}-${fogRevealKey}`}
-                  className={[
-                    styles.fogLtr,
-                    glitchIdx === i ? styles.glitch : '',
-                  ].filter(Boolean).join(' ')}
-                  data-idx={i}
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* ── PHASE B: FUTURE OF GAMING + buttons ── */}
-          <div
-            className={`${styles.heroPhaseB} ${heroPhase === 'future' ? styles.phaseVisible : styles.phaseHidden}`}
-            aria-hidden={heroPhase !== 'future'}
-          >
-            {/* Headline — "FUTURE OF" / "GAMING" */}
-            <div className={`${styles.futureWord} ${heroPhase === 'future' && !heroTransitioning ? styles.active : ''}`}>
-              <div className={`${styles.fwRow} ${styles.fwRow1}`}>
-                {['F','U','T','U','R','E',' ','O','F'].map((ch, i) =>
-                  ch === ' '
-                    ? <span key={i} className={styles.fwSpace}>&nbsp;</span>
-                    : <span key={i} className={styles.fwChar}>{ch}</span>
-                )}
-              </div>
-              <div className={`${styles.fwRow} ${styles.fwRow2}`}>
-                {['G','A','M','I','N','G'].map((ch, i) => (
-                  <span key={i} className={styles.fwChar}>{ch}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* CTA buttons */}
-            <div className={styles.heroBtns}>
-              <a href="#" className={`${styles.hbtn} ${styles.hbtnGhost}`}>
-                &#x2913;&nbsp; Download Brochure
-              </a>
-              <a href="#products-wrapper" className={`${styles.hbtn} ${styles.hbtnSolid}`}>
-                Explore Products &nbsp;&#x2192;
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-        {/* ── LOGO STRIP — pinned to bottom of hero ── */}
-        <div className={styles.logoStripInHero} aria-label="Our venues">
-          <span className={styles.logoStripLabel}>TRUSTED BY</span>
-          <div className={styles.logoStripDivider} aria-hidden="true" />
-          <div className={styles.marqueeWrap} aria-label="Venue partners">
-            <div className={styles.marqueeTrack} aria-hidden="true">
-              {[...Array(4)].flatMap(() => [
-                { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
-                { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
-                { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
-                { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
-                { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
-                { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
-              ]).map((logo, i) => (
-                <Image
-                  key={i}
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={200}
-                  height={120}
-                  className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
-                  style={{ objectFit: 'contain' }}
-                  loading="lazy"
-                />
-              ))}
-            </div>
-          </div>
+        {/* Hero text overlay - aligned left, style inspired by Bolt */}
+        <div className={styles.heroTextContainer}>
+          <h2 className={styles.heroHeadline}>
+            The Future of <br />
+            <span className={styles.highlightText}>Gaming</span>
+          </h2>
         </div>
       </section>
+
+      {/* ── LOGO STRIP — positioned just below the hero section ── */}
+      <div className={styles.logoStripBelowHero} aria-label="Our venues">
+        <span className={styles.logoStripLabel}>TRUSTED BY</span>
+        <div className={styles.logoStripDivider} aria-hidden="true" />
+        <div className={styles.marqueeWrap} aria-label="Venue partners">
+          <div className={styles.marqueeTrack} aria-hidden="true">
+            {[...Array(4)].flatMap(() => [
+              { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
+              { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
+              { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
+              { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
+              { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
+              { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
+            ]).map((logo, i) => (
+              <Image
+                key={i}
+                src={logo.src}
+                alt={logo.alt}
+                width={200}
+                height={120}
+                className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
+                style={{ objectFit: 'contain' }}
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* ── ABOUT & NUMBERS ───────────────────────────────────────────── */}
       <section
