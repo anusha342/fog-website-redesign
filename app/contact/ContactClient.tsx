@@ -316,8 +316,8 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
                 <div className={styles.updateCardBody}>
                   <h3 className={styles.updateCardTitle}>{latestAnnouncement.title}</h3>
                   <p className={styles.updateCardExcerpt}>{latestAnnouncement.excerpt}</p>
-                  <a href={`/blog/${latestAnnouncement.slug}`} className={styles.updateCardBtn}>
-                    Read Announcement <span className={styles.btnArrow}>&rsaquo;</span>
+                  <a href="#get-in-touch" className={styles.updateCardBtn}>
+                    Contact Us <span className={styles.btnArrow}>&rsaquo;</span>
                   </a>
                 </div>
               </>
