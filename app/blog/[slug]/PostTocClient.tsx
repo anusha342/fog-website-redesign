@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 function loadScript(src: string): Promise<void> {
@@ -37,12 +38,24 @@ interface Heading {
   level: number;
 }
 
+interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt?: string;
+  author?: string;
+  coverImage?: string;
+  category?: string;
+  readTime?: number;
+}
+
 interface Props {
   headings: Heading[];
   slug: string;
+  latestAnnouncement?: Post | null;
 }
 
-export default function PostTocClient({ headings, slug }: Props) {
+export default function PostTocClient({ headings, slug, latestAnnouncement }: Props) {
   useLenis();
   const [activeId, setActiveId] = useState('');
   const [progress, setProgress] = useState(0);
@@ -306,10 +319,55 @@ export default function PostTocClient({ headings, slug }: Props) {
           </div>
         </div>
 
-        {/* CTA */}
-        <Link href="/#get-in-touch" className={styles.tocCta}>
-          Get In Touch
-        </Link>
+        {/* Latest Announcement Card */}
+        {latestAnnouncement !== undefined && (
+          latestAnnouncement ? (
+            <div className={styles.announcementWidget}>
+              <div className={styles.announcementMedia}>
+                {latestAnnouncement.coverImage ? (
+                  <Image
+                    src={latestAnnouncement.coverImage}
+                    alt={latestAnnouncement.title}
+                    fill
+                    sizes="220px"
+                    className={styles.announcementImg}
+                  />
+                ) : (
+                  <div className={styles.announcementImgPlaceholder} />
+                )}
+                <span className={styles.announcementTag}>NEW ANNOUNCEMENT</span>
+              </div>
+              <div className={styles.announcementBody}>
+                <h3 className={styles.announcementTitle}>{latestAnnouncement.title}</h3>
+                <p className={styles.announcementExcerpt}>{latestAnnouncement.excerpt}</p>
+                <Link href="/contact#get-in-touch" className={styles.announcementBtn}>
+                  Contact Us <span className={styles.btnArrow}>&rsaquo;</span>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.announcementWidget}>
+              <div className={styles.announcementMedia}>
+                <Image
+                  src="/images/Blog/blog3.jpeg"
+                  alt="FOG Technologies Blog"
+                  fill
+                  sizes="220px"
+                  className={styles.announcementImg}
+                />
+              </div>
+              <div className={styles.announcementBody}>
+                <h3 className={styles.announcementTitle}>Request a Quote for HyperGrid</h3>
+                <p className={styles.announcementExcerpt}>
+                  Learn more about the Future of Location-Based Entertainment and how our premium attractions fit your business model!
+                </p>
+                <Link href="/contact#get-in-touch" className={styles.announcementBtn}>
+                  Contact Us! <span className={styles.btnArrow}>&rsaquo;</span>
+                </Link>
+              </div>
+            </div>
+          )
+        )}
 
       </aside>
     </>

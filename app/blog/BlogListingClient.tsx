@@ -155,6 +155,13 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
   const [searchOpen, setSearchOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  const latestAnnouncement = useMemo(() => {
+    return posts.find((post) => {
+      const cat = post.category ? post.category.toLowerCase().trim() : '';
+      return cat === 'announcement' || cat === 'announcements';
+    }) || null;
+  }, [posts]);
+
   const isTabActive = (catName: string) => {
     const current = activeCategory.toLowerCase();
     const target = catName.toLowerCase();
@@ -391,6 +398,54 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {/* Latest Announcement Card */}
+          {latestAnnouncement ? (
+            <div className={styles.announcementWidget}>
+              <div className={styles.announcementMedia}>
+                {latestAnnouncement.coverImage ? (
+                  <Image
+                    src={latestAnnouncement.coverImage}
+                    alt={latestAnnouncement.title}
+                    fill
+                    sizes="280px"
+                    className={styles.announcementImg}
+                  />
+                ) : (
+                  <div className={styles.announcementImgPlaceholder} />
+                )}
+                <span className={styles.announcementTag}>NEW ANNOUNCEMENT</span>
+              </div>
+              <div className={styles.announcementBody}>
+                <h3 className={styles.announcementTitle}>{latestAnnouncement.title}</h3>
+                <p className={styles.announcementExcerpt}>{latestAnnouncement.excerpt}</p>
+                <Link href="/contact#get-in-touch" className={styles.announcementBtn}>
+                  Contact Us <span className={styles.btnArrow}>&rsaquo;</span>
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.announcementWidget}>
+              <div className={styles.announcementMedia}>
+                <Image
+                  src="/images/Blog/blog3.jpeg"
+                  alt="FOG Technologies Blog"
+                  fill
+                  sizes="280px"
+                  className={styles.announcementImg}
+                />
+              </div>
+              <div className={styles.announcementBody}>
+                <h3 className={styles.announcementTitle}>Request a Quote for HyperGrid</h3>
+                <p className={styles.announcementExcerpt}>
+                  Learn more about the Future of Location-Based Entertainment and how our premium attractions fit your business model!
+                </p>
+                <Link href="/contact#get-in-touch" className={styles.announcementBtn}>
+                  Contact Us! <span className={styles.btnArrow}>&rsaquo;</span>
+                </Link>
+              </div>
             </div>
           )}
         </aside>

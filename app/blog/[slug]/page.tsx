@@ -119,6 +119,11 @@ export default async function BlogPostPage(
   const allPosts = await getAllPostsFromS3();
   const morePosts = allPosts.filter((p) => p.slug !== slug).slice(0, 3);
 
+  const latestAnnouncement = allPosts.find((post) => {
+    const cat = post.category ? post.category.toLowerCase().trim() : '';
+    return cat === 'announcement' || cat === 'announcements';
+  }) || null;
+
   const processedHtml = injectHeadingIds(post.contentHtml)
     .replace(/<p[^>]*>(?:(?!<\/p>)[\s\S])*?(?:Want to know more about deploying|Ready to run the numbers|Questions about the upgrade)[\s\S]*?<\/p>/gi, '')
     .replace(/\s*<hr>\s*$/i, '');
@@ -204,7 +209,7 @@ export default async function BlogPostPage(
             </article>
 
             {/* Right panel — ToC + progress + share + CTA */}
-            <PostTocClient headings={headings} slug={slug} />
+            <PostTocClient headings={headings} slug={slug} latestAnnouncement={latestAnnouncement} />
 
           </div>
 
