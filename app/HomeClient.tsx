@@ -692,9 +692,49 @@ export default function HomeClient({
       <section id="hero" className={styles.hero} ref={heroRef} aria-label="Hero">
         <h1 className="sr-only">FOG Technologies — Future of Gaming</h1>
         
-        <video className={styles.heroVideo} autoPlay muted loop playsInline>
-          <source src="/videos/Landing Page.mp4" type="video/mp4" />
-        </video>
+        {/* Three interactive product panels */}
+        <div className={styles.heroPanels}>
+          
+          {/* Panel 1: Laser Spy */}
+          <div className={styles.heroPanel}>
+            <Image 
+              src="/images/Landing Page/spy.jpg" 
+              alt="Laser Spy attraction" 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              priority
+            />
+            <div className={styles.panelOverlay} />
+          </div>
+
+          {/* Panel 2: HyperGrid */}
+          <div className={styles.heroPanel}>
+            <Image 
+              src="/images/Landing Page/hypergrid.png" 
+              alt="HyperGrid attraction" 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              priority
+            />
+            <div className={styles.panelOverlay} />
+          </div>
+
+          {/* Panel 3: Laser Tag */}
+          <div className={styles.heroPanel}>
+            <Image 
+              src="/images/Landing Page/lasertag.png" 
+              alt="Laser Tag attraction" 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, 33vw"
+              priority
+            />
+            <div className={styles.panelOverlay} />
+          </div>
+
+        </div>
         
         {/* L1: Premium color tint grading filter */}
         <div className={styles.heroFilter} aria-hidden="true" />
@@ -703,40 +743,40 @@ export default function HomeClient({
         {/* Hero text overlay - aligned left, style inspired by Bolt */}
         <div className={styles.heroTextContainer}>
           <h2 className={styles.heroHeadline}>
-            The Future of <br />
-            <span className={styles.highlightText}>Gaming</span>
+            <span className={styles.revealLine} style={{ animationDelay: '0.2s' }}>Future of</span> <br />
+            <span className={`${styles.revealLine} ${styles.highlightText}`} style={{ animationDelay: '0.5s' }}>Gaming</span>
           </h2>
         </div>
-      </section>
 
-      {/* ── LOGO STRIP — positioned just below the hero section ── */}
-      <div className={styles.logoStripBelowHero} aria-label="Our venues">
-        <span className={styles.logoStripLabel}>TRUSTED BY</span>
-        <div className={styles.logoStripDivider} aria-hidden="true" />
-        <div className={styles.marqueeWrap} aria-label="Venue partners">
-          <div className={styles.marqueeTrack} aria-hidden="true">
-            {[...Array(4)].flatMap(() => [
-              { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
-              { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
-              { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
-              { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
-              { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
-              { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
-            ]).map((logo, i) => (
-              <Image
-                key={i}
-                src={logo.src}
-                alt={logo.alt}
-                width={200}
-                height={120}
-                className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
-                style={{ objectFit: 'contain' }}
-                loading="lazy"
-              />
-            ))}
+        {/* ── LOGO STRIP — pinned to bottom of hero ── */}
+        <div className={styles.logoStripInHero} aria-label="Our venues">
+          <span className={styles.logoStripLabel}>TRUSTED BY</span>
+          <div className={styles.logoStripDivider} aria-hidden="true" />
+          <div className={styles.marqueeWrap} aria-label="Venue partners">
+            <div className={styles.marqueeTrack} aria-hidden="true">
+              {[...Array(4)].flatMap(() => [
+                { src: '/images/gamezones_logo/skyjumper-logo.png', alt: 'Sky Jumper' },
+                { src: '/images/gamezones_logo/timezone-logo.png', alt: 'Timezone' },
+                { src: '/images/gamezones_logo/xplore-logo.png', alt: 'Xplore' },
+                { src: '/images/gamezones_logo/rebounce-logo.png', alt: 'Rebounce' },
+                { src: '/images/gamezones_logo/hopup-logo.png', alt: 'Hopup' },
+                { src: '/images/gamezones_logo/mastizone-logo.png', alt: 'Mastizone' },
+              ]).map((logo, i) => (
+                <Image
+                  key={i}
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={200}
+                  height={120}
+                  className={logo.alt === 'Xplore' ? styles.xploreLogo : undefined}
+                  style={{ objectFit: 'contain' }}
+                  loading="lazy"
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ── ABOUT & NUMBERS ───────────────────────────────────────────── */}
       <section
