@@ -737,8 +737,8 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  background: #d4ff00;
-  color: #000000;
+  background: var(--accent, #f05023);
+  color: #ffffff;
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
@@ -911,6 +911,10 @@
   justify-content: center;
   cursor: pointer;
   transition: color 200ms ease, transform 200ms ease;
+}
+
+.subscribeSendBtn svg {
+  transform: rotate(45deg);
 }
 
 .subscribeSendBtn:hover {

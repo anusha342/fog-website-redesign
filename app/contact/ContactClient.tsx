@@ -161,12 +161,12 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
               <a href="#get-in-touch" className={styles.btnSolid}>
                 Contact Us <span className={styles.arrow}>&rsaquo;</span>
               </a>
-              <div 
+              <div
                 className={styles.callButtonWrapper}
                 onMouseEnter={() => setIsCallOpen(true)}
                 onMouseLeave={() => setIsCallOpen(false)}
               >
-                <button 
+                <button
                   className={styles.btnOutline}
                   onClick={() => setIsCallOpen(!isCallOpen)}
                   aria-expanded={isCallOpen}
@@ -179,7 +179,7 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
                   <div className={styles.callDropdown}>
                     <a href="tel:+919998209033" className={styles.dropdownItem}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={styles.dropdownIcon}>
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                       </svg>
                       <span>Call Now</span>
                     </a>
@@ -294,22 +294,24 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
       {/* ── ANNOUNCEMENTS & NEWSLETTER SECTION ── */}
       <section className={styles.updateSection} aria-label="Announcements and Newsletter subscription">
         <div className={styles.updateInner}>
-          
+
           {/* Left card: Latest announcement or generic promo */}
           <div className={styles.updateCard} data-reveal>
             {latestAnnouncement ? (
               <>
                 <div className={styles.updateCardMedia}>
                   {latestAnnouncement.coverImage ? (
-                    <img 
-                      src={latestAnnouncement.coverImage} 
-                      alt={latestAnnouncement.title} 
+                    <img
+                      src={latestAnnouncement.coverImage}
+                      alt={latestAnnouncement.title}
                       className={styles.updateCardImg}
                     />
                   ) : (
                     <div className={styles.updateCardImgPlaceholder} />
                   )}
-                  <span className={styles.cardTag}>NEW UPDATE</span>
+                  <span className={styles.cardTag}>
+                    NEW ANNOUNCEMENT
+                  </span>
                 </div>
                 <div className={styles.updateCardBody}>
                   <h3 className={styles.updateCardTitle}>{latestAnnouncement.title}</h3>
@@ -322,9 +324,9 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
             ) : (
               <>
                 <div className={styles.updateCardMedia}>
-                  <img 
-                    src="/images/Blog/blog3.jpeg" 
-                    alt="FOG Technologies Blog" 
+                  <img
+                    src="/images/Blog/blog3.jpeg"
+                    alt="FOG Technologies Blog"
                     className={styles.updateCardImg}
                   />
                 </div>
@@ -349,9 +351,9 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
                 Get the Best Updates and Announcements in your inbox!
               </h3>
               <p className={styles.subscribeDesc}>
-                Sign up with your email to receive direct updates whenever we publish new products, features, and blog announcements.
+                Subscribe with your email to receive direct updates whenever we publish new products, features, and blog announcements.
               </p>
-              
+
               <form onSubmit={handleSubscribe} className={styles.subscribeForm} noValidate>
                 <div className={styles.subscribeFormGroup}>
                   <input
@@ -363,8 +365,8 @@ export default function ContactClient({ latestAnnouncement }: ContactClientProps
                     disabled={subStatus === 'loading'}
                     className={styles.subscribeInput}
                   />
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={subStatus === 'loading'}
                     className={styles.subscribeSendBtn}
                     aria-label="Subscribe"

@@ -51,7 +51,11 @@ export async function POST(req: Request) {
 
     const category = String(body.category).trim();
     const catLower = category.toLowerCase();
-    const isAnnouncement = catLower === 'announcement' || catLower === 'announcements';
+    const isAnnouncementOrUpdate = 
+      catLower === 'announcement' || 
+      catLower === 'announcements' || 
+      catLower === 'updates' || 
+      catLower === 'update';
 
     const meta: PostMeta = {
       slug,
@@ -63,13 +67,13 @@ export async function POST(req: Request) {
       coverImage: String(body.coverImage ?? '').trim(),
       tags:       Array.isArray(body.tags) ? (body.tags as string[]).map(String) : [],
       readTime:   Number(body.readTime),
-      broadcasted: isAnnouncement,
+      broadcasted: isAnnouncementOrUpdate,
     };
 
     const bodyHtml = String(body.bodyHtml ?? '');
     await putPostToS3(meta, bodyHtml);
 
-    if (isAnnouncement) {
+    if (isAnnouncementOrUpdate) {
       // Trigger broadcast asynchronously so it does not hold up admin UI redirect
       broadcastAnnouncement(meta).catch((err) => {
         console.error('Failed to broadcast newly created blog post:', err);

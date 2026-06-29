@@ -52,11 +52,15 @@ export async function PUT(req: Request, { params }: Params) {
 
     const category = String(body.category).trim();
     const catLower = category.toLowerCase();
-    const isAnnouncement = catLower === 'announcement' || catLower === 'announcements';
+    const isAnnouncementOrUpdate = 
+      catLower === 'announcement' || 
+      catLower === 'announcements' || 
+      catLower === 'updates' || 
+      catLower === 'update';
 
     // If it was already broadcasted, keep it as broadcasted.
-    // If it is an announcement now, but wasn't broadcasted before, we will broadcast it.
-    const shouldBroadcast = isAnnouncement && !existing.broadcasted;
+    // If it is an announcement/update now, but wasn't broadcasted before, we will broadcast it.
+    const shouldBroadcast = isAnnouncementOrUpdate && !existing.broadcasted;
     const broadcasted = existing.broadcasted || shouldBroadcast;
 
     const meta: PostMeta = {
