@@ -8,6 +8,7 @@ export interface PostMeta {
   category: string;
   tags: string[];
   readTime: number;
+  broadcasted?: boolean;
 }
 
 export interface Post extends PostMeta {

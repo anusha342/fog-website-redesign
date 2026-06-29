@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getPostBySlugFromS3, deletePostFromS3, putPostToS3 } from '@/lib/s3';
+import { broadcastAnnouncement } from '@/lib/broadcast';
 import type { PostMeta } from '@/lib/blog';
 
 type Params = { params: Promise<{ slug: string }> };
@@ -49,20 +50,37 @@ export async function PUT(req: Request, { params }: Params) {
       return NextResponse.json({ error: 'Post not found.' }, { status: 404 });
     }
 
+    const category = String(body.category).trim();
+    const catLower = category.toLowerCase();
+    const isAnnouncement = catLower === 'announcement' || catLower === 'announcements';
+
+    // If it was already broadcasted, keep it as broadcasted.
+    // If it is an announcement now, but wasn't broadcasted before, we will broadcast it.
+    const shouldBroadcast = isAnnouncement && !existing.broadcasted;
+    const broadcasted = existing.broadcasted || shouldBroadcast;
+
     const meta: PostMeta = {
       slug,
       title:      String(body.title).trim(),
       date:       String(body.date).trim(),
       author:     String(body.author).trim(),
-      category:   String(body.category).trim(),
+      category,
       excerpt:    String(body.excerpt).trim(),
       coverImage: String(body.coverImage ?? '').trim(),
       tags:       Array.isArray(body.tags) ? (body.tags as string[]).map(String) : [],
       readTime:   Number(body.readTime),
+      broadcasted,
     };
 
     const bodyHtml = String(body.bodyHtml ?? '');
     await putPostToS3(meta, bodyHtml);
+
+    if (shouldBroadcast) {
+      // Trigger broadcast asynchronously so it does not block user redirect
+      broadcastAnnouncement(meta).catch((err) => {
+        console.error('Failed to broadcast updated blog post announcement:', err);
+      });
+    }
 
     return NextResponse.json({ ok: true, slug });
   } catch (err: unknown) {

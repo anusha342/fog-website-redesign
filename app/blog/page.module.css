@@ -753,10 +753,17 @@
 
 .cardImgWrap {
   width: 100%;
-  aspect-ratio: 16 / 10;
   position: relative;
   overflow: hidden;
   background: #f4f4f6;
+}
+
+.cardImgLarge {
+  aspect-ratio: 1.15 / 1; /* Subtle tall size */
+}
+
+.cardImgSmall {
+  aspect-ratio: 1.45 / 1; /* Subtle short size */
 }
 
 .cardImgWrap img {
@@ -1105,4 +1112,66 @@
     grid-template-columns: 1fr;
     gap: 24px;
   }
+}
+
+/* ── PAGINATION ── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 56px;
+  width: 100%;
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  color: #555555;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.pageBtn:hover {
+  border-color: var(--accent, #f05023);
+  color: var(--accent, #f05023);
+}
+
+.pageBtnActive {
+  background: #0ea5e9 !important; /* sky blue matching mockup */
+  border-color: #0ea5e9 !important;
+  color: #ffffff !important;
+}
+
+.pageDots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  color: rgba(0, 0, 0, 0.4);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+/* ── SCROLL REVEAL ANIMATIONS ── */
+.articleCard[data-reveal] {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.articleCard[data-reveal]:global(.revealed) {
+  opacity: 1;
+  transform: translateY(0);
 }

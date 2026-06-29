@@ -51,7 +51,7 @@ function emptyForm(): FormValues {
     slug:       '',
     date:       today(),
     author:     'FOG Technologies',
-    category:   '',
+    category:   'Default',
     tags:       '',
     readTime:   '5',
     excerpt:    '',
@@ -382,15 +382,17 @@ export default function BlogForm({ mode, initialPost }: Props) {
                 <label htmlFor="field-category" className={styles.label}>
                   Category <span className={styles.req}>*</span>
                 </label>
-                <input
+                <select
                   id="field-category"
                   name="category"
-                  type="text"
                   value={values.category}
                   onChange={handleChange}
-                  placeholder="Industry Insights"
                   className={`${styles.input} ${errors.category ? styles.inputErr : ''}`}
-                />
+                >
+                  <option value="Default">Default</option>
+                  <option value="Announcement">Announcement</option>
+                  <option value="Updates">Updates</option>
+                </select>
                 {errors.category && <p className={styles.err}>{errors.category}</p>}
               </div>
 
@@ -405,7 +407,7 @@ export default function BlogForm({ mode, initialPost }: Props) {
                   type="text"
                   value={values.tags}
                   onChange={handleChange}
-                  placeholder="HyperGrid, ROI, FEC, LED Gaming"
+                  placeholder="Engineering, ROI & Business, Product, Industry Insights"
                   className={styles.input}
                 />
               </div>

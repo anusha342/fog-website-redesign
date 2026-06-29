@@ -47,23 +47,9 @@ export default function PostTocClient({ headings, slug }: Props) {
   const [activeId, setActiveId] = useState('');
   const [progress, setProgress] = useState(0);
   const [activeSectionProgress, setActiveSectionProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
-  // Sidebar visibility scroll trigger (based on prose section entering viewport)
-  useEffect(() => {
-    const handleScrollVisibility = () => {
-      const el = document.querySelector(`.${styles.prose}`);
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      // Show when the top of the prose section enters the screen (e.g. within 200px of the top)
-      setIsVisible(rect.top <= 200);
-    };
-    window.addEventListener('scroll', handleScrollVisibility, { passive: true });
-    handleScrollVisibility();
-    return () => window.removeEventListener('scroll', handleScrollVisibility);
-  }, []);
-
-  // Scroll progress
+  // Scroll progress based on page-level scroll percentage (0 to 100, snaps to 100 on last section)
   useEffect(() => {
     const onScroll = () => {
       const doc = document.documentElement;
@@ -77,15 +63,18 @@ export default function PostTocClient({ headings, slug }: Props) {
         return;
       }
       
-      // Snap to 100% when last section is active, or we are about to end the page (e.g. within 120px of the bottom)
+      // Ensure that if the user scrolls close to the bottom, progress is exactly 100%
+      const isNearBottom = scrollY + clientHeight >= scrollHeight - 20;
+      
+      // Check if the last heading is active
       const lastHeadingId = headings.length > 0 ? headings[headings.length - 1].id : null;
       const isLastSectionActive = lastHeadingId && activeId === lastHeadingId;
-      const isNearBottom = scrollY + clientHeight >= scrollHeight - 120;
-      
-      if (isLastSectionActive || isNearBottom) {
+
+      if (isNearBottom || isLastSectionActive) {
         setProgress(100);
       } else {
-        setProgress(Math.min(100, Math.max(0, (scrollY / total) * 100)));
+        const pct = (scrollY / total) * 100;
+        setProgress(pct);
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });

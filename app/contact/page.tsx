@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import ContactClient from './ContactClient';
+import { getAllPostsFromS3 } from '@/lib/s3';
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Contact FOG Technologies | Build Your Vision',
@@ -62,14 +65,25 @@ const jsonLd = {
   ],
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  let latestAnnouncement = null;
+  try {
+    const allPosts = await getAllPostsFromS3();
+    latestAnnouncement = allPosts.find((post) => {
+      const cat = post.category ? post.category.toLowerCase().trim() : '';
+      return cat === 'announcement' || cat === 'announcements';
+    }) || null;
+  } catch (err) {
+    console.error('Failed to load announcements for contact page:', err);
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ContactClient />
+      <ContactClient latestAnnouncement={latestAnnouncement} />
     </>
   );
 }

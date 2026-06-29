@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAllPostsFromS3, putPostToS3, slugExistsInS3 } from '@/lib/s3';
+import { broadcastAnnouncement } from '@/lib/broadcast';
 import type { PostMeta } from '@/lib/blog';
 
 // ── Shared server-side validation ─────────────────────────────────────────────
@@ -48,20 +49,32 @@ export async function POST(req: Request) {
       );
     }
 
+    const category = String(body.category).trim();
+    const catLower = category.toLowerCase();
+    const isAnnouncement = catLower === 'announcement' || catLower === 'announcements';
+
     const meta: PostMeta = {
       slug,
       title:      String(body.title).trim(),
       date:       String(body.date).trim(),
       author:     String(body.author).trim(),
-      category:   String(body.category).trim(),
+      category,
       excerpt:    String(body.excerpt).trim(),
       coverImage: String(body.coverImage ?? '').trim(),
       tags:       Array.isArray(body.tags) ? (body.tags as string[]).map(String) : [],
       readTime:   Number(body.readTime),
+      broadcasted: isAnnouncement,
     };
 
     const bodyHtml = String(body.bodyHtml ?? '');
     await putPostToS3(meta, bodyHtml);
+
+    if (isAnnouncement) {
+      // Trigger broadcast asynchronously so it does not hold up admin UI redirect
+      broadcastAnnouncement(meta).catch((err) => {
+        console.error('Failed to broadcast newly created blog post:', err);
+      });
+    }
 
     return NextResponse.json({ ok: true, slug }, { status: 201 });
   } catch (err: unknown) {

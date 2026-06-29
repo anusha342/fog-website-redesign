@@ -86,7 +86,18 @@ function formatDate(iso: string) {
   }
 }
 
-function BlogCard({ post, idx }: { post: Post; idx: number }) {
+function BlogCard({ post, idx, isMobile = false }: { post: Post; idx: number; isMobile?: boolean }) {
+  // Alternating masonry sizes patterns (balanced row-by-row):
+  // Row 1: Left (idx 0) is Large, Right (idx 1) is Small
+  // Row 2: Left (idx 2) is Small, Right (idx 3) is Large
+  // Row 3: Left (idx 4) is Large, Right (idx 5) is Small
+  // Row 4: Left (idx 6) is Small, Right (idx 7) is Large
+  const isLarge = useMemo(() => {
+    if (isMobile) return false;
+    const pos = idx % 4;
+    return pos === 0 || pos === 3;
+  }, [idx, isMobile]);
+
   return (
     <div
       className={styles.articleCard}
@@ -94,7 +105,7 @@ function BlogCard({ post, idx }: { post: Post; idx: number }) {
       data-reveal-delay={String((idx % 2) * 0.12)}
     >
       <Link href={`/blog/${post.slug}`} className={styles.cardLink}>
-        <div className={styles.cardImgWrap}>
+        <div className={`${styles.cardImgWrap} ${isLarge ? styles.cardImgLarge : styles.cardImgSmall}`}>
           {post.coverImage ? (
             <Image
               src={post.coverImage}
@@ -139,10 +150,20 @@ function BlogCard({ post, idx }: { post: Post; idx: number }) {
 export default function BlogListingClient({ posts, recentPosts, allCategories }: Props) {
   useLenis();
   const [query, setQuery] = useState('');
-  const [activeTag, setActiveTag] = useState('');
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [activeCategory, setActiveCategory] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchOpen, setSearchOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const isTabActive = (catName: string) => {
+    const current = activeCategory.toLowerCase();
+    const target = catName.toLowerCase();
+    if (!current && !target) return true;
+    if (current === target) return true;
+    if (current === 'announcements' && target === 'announcement') return true;
+    if (current === 'announcement' && target === 'announcements') return true;
+    return false;
+  };
 
   // Fallback to slice first posts if recentPosts is empty
   const finalRecentPosts = useMemo(() => {
@@ -151,8 +172,8 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
   }, [recentPosts, posts]);
 
   useEffect(() => {
-    setVisibleCount(6);
-  }, [query, activeTag]);
+    setCurrentPage(1);
+  }, [query, activeCategory]);
 
   useEffect(() => {
     if (searchOpen) searchInputRef.current?.focus();
@@ -160,28 +181,44 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const tag = activeTag.toLowerCase();
+    const cat = activeCategory.toLowerCase();
     return posts.filter((p) => {
       const matchesQuery =
         !q ||
         p.title.toLowerCase().includes(q) ||
         (p.excerpt ?? '').toLowerCase().includes(q) ||
-        (p.category ?? '').toLowerCase().includes(q);
-      const matchesTag = !tag || (p.category ?? '').toLowerCase() === tag;
-      return matchesQuery && matchesTag;
-    });
-  }, [posts, query, activeTag]);
+        (p.category ?? '').toLowerCase().includes(q) ||
+        (p.tags || []).some((t) => t.toLowerCase().includes(q));
 
-  useScrollReveal(filtered);
+      // Match category tab (handles Announcements -> announcement singular/plural)
+      const matchesCategory =
+        !cat ||
+        (p.category ?? '').toLowerCase() === cat ||
+        ((p.category ?? '').toLowerCase() === 'announcement' && cat === 'announcements');
+
+      return matchesQuery && matchesCategory;
+    });
+  }, [posts, query, activeCategory]);
+
+  // Pagination math
+  const POSTS_PER_PAGE = 6;
+  const totalPages = Math.ceil(filtered.length / POSTS_PER_PAGE);
+
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    return filtered.slice(start, start + POSTS_PER_PAGE);
+  }, [filtered, currentPage]);
 
   // Split into left and right columns for masonry layout
   const leftColPosts = useMemo(() => {
-    return filtered.slice(0, visibleCount).filter((_, idx) => idx % 2 === 0);
-  }, [filtered, visibleCount]);
+    return paginatedPosts.filter((_, idx) => idx % 2 === 0);
+  }, [paginatedPosts]);
 
   const rightColPosts = useMemo(() => {
-    return filtered.slice(0, visibleCount).filter((_, idx) => idx % 2 === 1);
-  }, [filtered, visibleCount]);
+    return paginatedPosts.filter((_, idx) => idx % 2 === 1);
+  }, [paginatedPosts]);
+
+  useScrollReveal(paginatedPosts);
 
   return (
     <div className={styles.blogWrapper}>
@@ -194,8 +231,8 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
             <button
               key={tab || 'all'}
               type="button"
-              onClick={() => { setActiveTag(tab); setQuery(''); setSearchOpen(false); }}
-              className={`${styles.filterTab}${activeTag === tab && !query ? ` ${styles.filterTabActive}` : ''}`}
+              onClick={() => { setActiveCategory(tab); setQuery(''); setSearchOpen(false); }}
+              className={`${styles.filterTab}${isTabActive(tab) && !query ? ` ${styles.filterTabActive}` : ''}`}
             >
               {tab || 'All'}
             </button>
@@ -209,7 +246,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
               ref={searchInputRef}
               type="text"
               value={query}
-              onChange={(e) => { setQuery(e.target.value); setActiveTag(''); }}
+              onChange={(e) => { setQuery(e.target.value); setActiveCategory(''); }}
               placeholder="Search..."
               className={styles.filterSearchInput}
               aria-label="Search blog posts"
@@ -235,7 +272,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
         <div className={styles.articlesColumn}>
           {filtered.length === 0 ? (
             <p className={styles.empty}>
-              {query || activeTag ? `No posts match "${query || activeTag}".` : 'No posts yet — check back soon.'}
+              {query ? `No posts match "${query}".` : 'No posts yet — check back soon.'}
             </p>
           ) : (
             <>
@@ -243,35 +280,57 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
               <div className={styles.desktopMasonry}>
                 <div className={styles.masonryCol}>
                   {leftColPosts.map((post, idx) => (
-                    <BlogCard key={post.slug} post={post} idx={idx * 2} />
+                    <BlogCard key={post.slug} post={post} idx={(currentPage - 1) * POSTS_PER_PAGE + idx * 2} />
                   ))}
                 </div>
                 <div className={styles.masonryCol}>
                   {rightColPosts.map((post, idx) => (
-                    <BlogCard key={post.slug} post={post} idx={idx * 2 + 1} />
+                    <BlogCard key={post.slug} post={post} idx={(currentPage - 1) * POSTS_PER_PAGE + idx * 2 + 1} />
                   ))}
                 </div>
               </div>
 
               {/* Mobile List: visible on mobile only */}
               <div className={styles.mobileList}>
-                {filtered.slice(0, visibleCount).map((post, idx) => (
-                  <BlogCard key={post.slug} post={post} idx={idx} />
+                {paginatedPosts.map((post, idx) => (
+                  <BlogCard key={post.slug} post={post} idx={(currentPage - 1) * POSTS_PER_PAGE + idx} isMobile={true} />
                 ))}
               </div>
-            </>
-          )}
 
-          {filtered.length > visibleCount && (
-            <div className={styles.showMoreWrapper}>
-              <button
-                type="button"
-                onClick={() => setVisibleCount((prev) => prev + 6)}
-                className={styles.showMoreBtn}
-              >
-                Show More Articles
-              </button>
-            </div>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className={styles.pagination}>
+                  {currentPage > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => { setCurrentPage(prev => prev - 1); window.scrollTo({ top: 400, behavior: 'smooth' }); }}
+                      className={styles.pageBtn}
+                    >
+                      Prev
+                    </button>
+                  )}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                    <button
+                      key={p}
+                      type="button"
+                      onClick={() => { setCurrentPage(p); window.scrollTo({ top: 400, behavior: 'smooth' }); }}
+                      className={`${styles.pageBtn} ${currentPage === p ? styles.pageBtnActive : ''}`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                  {currentPage < totalPages && (
+                    <button
+                      type="button"
+                      onClick={() => { setCurrentPage(prev => prev + 1); window.scrollTo({ top: 400, behavior: 'smooth' }); }}
+                      className={styles.pageBtn}
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -314,8 +373,8 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
                 <li>
                   <button
                     type="button"
-                    onClick={() => { setActiveTag(''); setQuery(''); }}
-                    className={`${styles.categoryLink} ${!activeTag ? styles.categoryLinkActive : ''}`}
+                    onClick={() => { setActiveCategory(''); setQuery(''); }}
+                    className={`${styles.categoryLink} ${!activeCategory ? styles.categoryLinkActive : ''}`}
                   >
                     All
                   </button>
@@ -324,8 +383,8 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
                   <li key={cat}>
                     <button
                       type="button"
-                      onClick={() => { setActiveTag(cat); setQuery(''); }}
-                      className={`${styles.categoryLink} ${activeTag === cat ? styles.categoryLinkActive : ''}`}
+                      onClick={() => { setActiveCategory(cat); setQuery(''); }}
+                      className={`${styles.categoryLink} ${isTabActive(cat) ? styles.categoryLinkActive : ''}`}
                     >
                       {cat}
                     </button>

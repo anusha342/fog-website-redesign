@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import ContactForm from '@/components/ContactForm';
+import type { PostMeta } from '@/lib/blog';
 import styles from './contact.module.css';
 
 function loadScript(src: string): Promise<void> {
@@ -31,12 +32,48 @@ function useLenis() {
   }, []);
 }
 
-export default function ContactClient() {
+interface ContactClientProps {
+  latestAnnouncement?: PostMeta | null;
+}
+
+export default function ContactClient({ latestAnnouncement }: ContactClientProps) {
   useLenis();
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isCallOpen, setIsCallOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [subEmail, setSubEmail] = useState('');
+  const [subStatus, setSubStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subMessage, setSubMessage] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!subEmail) return;
+    setSubStatus('loading');
+    setSubMessage('');
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: subEmail }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setSubStatus('success');
+        setSubMessage(data.message || 'Subscribed successfully!');
+        setSubEmail('');
+      } else {
+        setSubStatus('error');
+        setSubMessage(data.error || 'Failed to subscribe.');
+      }
+    } catch (err) {
+      console.error(err);
+      setSubStatus('error');
+      setSubMessage('An error occurred. Please try again.');
+    }
+  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -248,6 +285,107 @@ export default function ContactClient() {
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── ANNOUNCEMENTS & NEWSLETTER SECTION ── */}
+      <section className={styles.updateSection} aria-label="Announcements and Newsletter subscription">
+        <div className={styles.updateInner}>
+          
+          {/* Left card: Latest announcement or generic promo */}
+          <div className={styles.updateCard} data-reveal>
+            {latestAnnouncement ? (
+              <>
+                <div className={styles.updateCardMedia}>
+                  {latestAnnouncement.coverImage ? (
+                    <img 
+                      src={latestAnnouncement.coverImage} 
+                      alt={latestAnnouncement.title} 
+                      className={styles.updateCardImg}
+                    />
+                  ) : (
+                    <div className={styles.updateCardImgPlaceholder} />
+                  )}
+                  <span className={styles.cardTag}>NEW UPDATE</span>
+                </div>
+                <div className={styles.updateCardBody}>
+                  <h3 className={styles.updateCardTitle}>{latestAnnouncement.title}</h3>
+                  <p className={styles.updateCardExcerpt}>{latestAnnouncement.excerpt}</p>
+                  <a href={`/blog/${latestAnnouncement.slug}`} className={styles.updateCardBtn}>
+                    Read Announcement <span className={styles.btnArrow}>&rsaquo;</span>
+                  </a>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.updateCardMedia}>
+                  <img 
+                    src="/images/Blog/blog3.jpeg" 
+                    alt="FOG Technologies Blog" 
+                    className={styles.updateCardImg}
+                  />
+                </div>
+                <div className={styles.updateCardBody}>
+                  <h3 className={styles.updateCardTitle}>Request a Quote for HyperGrid</h3>
+                  <p className={styles.updateCardExcerpt}>
+                    Learn more about the Future of Location-Based Entertainment and how our premium attractions fit your business model!
+                  </p>
+                  <a href="#get-in-touch" className={styles.updateCardBtn}>
+                    Contact Us! <span className={styles.btnArrow}>&rsaquo;</span>
+                  </a>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* Right card: Subscription Form */}
+          <div className={`${styles.updateCard} ${styles.subscribeCard}`} data-reveal data-reveal-delay="0.15">
+            <div className={styles.subscribeBgGlow} />
+            <div className={styles.subscribeContent}>
+              <h3 className={styles.subscribeTitle}>
+                Get the Best Updates and Announcements in your inbox!
+              </h3>
+              <p className={styles.subscribeDesc}>
+                Sign up with your email to receive direct updates whenever we publish new products, features, and blog announcements.
+              </p>
+              
+              <form onSubmit={handleSubscribe} className={styles.subscribeForm} noValidate>
+                <div className={styles.subscribeFormGroup}>
+                  <input
+                    type="email"
+                    required
+                    placeholder="Your Email"
+                    value={subEmail}
+                    onChange={(e) => setSubEmail(e.target.value)}
+                    disabled={subStatus === 'loading'}
+                    className={styles.subscribeInput}
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={subStatus === 'loading'}
+                    className={styles.subscribeSendBtn}
+                    aria-label="Subscribe"
+                  >
+                    {subStatus === 'loading' ? (
+                      <div className={styles.spinner} />
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </form>
+
+              {subMessage && (
+                <div className={`${styles.subscribeMsg} ${subStatus === 'success' ? styles.subMsgSuccess : styles.subMsgError}`}>
+                  {subMessage}
+                </div>
+              )}
             </div>
           </div>
 

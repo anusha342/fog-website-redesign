@@ -225,3 +225,35 @@ export async function testimonialSlugExistsInS3(slug: string): Promise<boolean> 
     throw err;
   }
 }
+
+// ── Subscribers helpers ─────────────────────────────────────────────────────
+
+export async function getSubscribers(): Promise<string[]> {
+  const s3 = getS3();
+  try {
+    const res = await s3.send(new GetObjectCommand({
+      Bucket: bucket(),
+      Key: 'subscribers/list.json',
+    }));
+    const text = await streamToString(res.Body as NodeJS.ReadableStream);
+    const emails = JSON.parse(text);
+    if (Array.isArray(emails)) {
+      return emails.map(String).map(e => e.trim().toLowerCase()).filter(Boolean);
+    }
+    return [];
+  } catch (err: unknown) {
+    if ((err as { name?: string }).name === 'NoSuchKey') return [];
+    throw err;
+  }
+}
+
+export async function saveSubscribers(emails: string[]): Promise<void> {
+  const s3 = getS3();
+  const normalised = Array.from(new Set(emails.map(e => e.trim().toLowerCase()).filter(Boolean)));
+  await s3.send(new PutObjectCommand({
+    Bucket: bucket(),
+    Key: 'subscribers/list.json',
+    Body: JSON.stringify(normalised, null, 2),
+    ContentType: 'application/json',
+  }));
+}

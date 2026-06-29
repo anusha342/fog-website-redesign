@@ -62,28 +62,49 @@ function extractHeadings(html: string) {
   const headings: { id: string; text: string; level: number }[] = [];
   const re = /<h([23])[^>]*>([\s\S]*?)<\/h[23]>/gi;
   let match;
+  const seenIds = new Map<string, number>();
+
   while ((match = re.exec(html)) !== null) {
     const level = parseInt(match[1], 10);
     const text = match[2].replace(/<[^>]+>/g, '').trim();
-    const id = text
+    const baseId = text
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .trim()
       .replace(/\s+/g, '-');
-    if (id) headings.push({ id, text, level });
+    
+    if (baseId) {
+      let id = baseId;
+      const count = seenIds.get(baseId) || 0;
+      if (count > 0) {
+        id = `${baseId}-${count}`;
+      }
+      seenIds.set(baseId, count + 1);
+      headings.push({ id, text, level });
+    }
   }
   return headings;
 }
 
 /** Inject id attributes into h2/h3 tags so anchor links resolve */
 function injectHeadingIds(html: string): string {
+  const seenIds = new Map<string, number>();
   return html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/gi, (_, level, attrs, content) => {
     const text = content.replace(/<[^>]+>/g, '').trim();
-    const id = text
+    const baseId = text
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
       .trim()
       .replace(/\s+/g, '-');
+    
+    let id = baseId;
+    if (baseId) {
+      const count = seenIds.get(baseId) || 0;
+      if (count > 0) {
+        id = `${baseId}-${count}`;
+      }
+      seenIds.set(baseId, count + 1);
+    }
     return `<h${level}${attrs} id="${id}">${content}</h${level}>`;
   });
 }
