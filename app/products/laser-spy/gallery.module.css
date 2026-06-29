@@ -10,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center content vertically inside 100vh screen */
-  padding: 40px clamp(12px, 2.5vw, 32px); /* Reduced padding to save vertical space */
+  padding: 40px clamp(24px, 4vw, 80px);
   font-family: var(--font-body);
 }
 

@@ -60,7 +60,7 @@
 .leftInner {
   position: relative;
   z-index: 1;
-  padding: 80px clamp(16px, 2.5vw, 40px);
+  padding: 80px clamp(24px, 4vw, 80px);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -130,7 +130,7 @@
 
 .formWrap {
   width: 100%;
-  padding: 80px clamp(16px, 2.5vw, 40px);
+  padding: 80px clamp(24px, 4vw, 80px);
   display: flex;
   flex-direction: column;
   justify-content: center;

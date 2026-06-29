@@ -396,7 +396,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 3.5vw, 40px);
+  padding: 0 clamp(24px, 4vw, 80px);
   text-align: left;
 }
 
@@ -433,7 +433,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 3.5vw, 40px);
+  padding: 0 clamp(24px, 4vw, 80px);
   display: flex;
   flex-direction: column;
 }
@@ -786,7 +786,7 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto 20px auto;
-  padding: 0 clamp(24px, 3.5vw, 40px);
+  padding: 0 clamp(24px, 4vw, 80px);
   text-align: left;
 }
 
@@ -806,7 +806,7 @@
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  padding: 0 clamp(24px, 3.5vw, 40px);
+  padding: 0 clamp(24px, 4vw, 80px);
 }
 
 .modesAccordion {
@@ -1567,7 +1567,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
-  padding: 80px clamp(24px, 3.5vw, 40px);
+  padding: 80px clamp(24px, 4vw, 80px);
 }
 
 .calcHeader {
