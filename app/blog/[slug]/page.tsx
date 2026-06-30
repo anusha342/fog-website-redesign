@@ -255,6 +255,7 @@ export default async function BlogPostPage(
                           </>
                         )}
                       </div>
+                      <span className={styles.morePostRead}>Read More</span>
                     </div>
                   </Link>
                 ))}

@@ -590,7 +590,7 @@
 }
 
 .morePostBody {
-  padding: 24px 20px 28px;
+  padding: 24px 20px 12px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -621,13 +621,27 @@
   letter-spacing: 1.5px;
   display: flex;
   align-items: center;
-  margin-top: auto;
+  margin-top: 12px;
 }
 
 .morePostMetaDot {
   color: var(--accent, #F05023);
   margin: 0 8px;
   font-weight: bold;
+}
+
+.morePostRead {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-p4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent, #F05023);
+  display: inline-flex;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 16px;
+  align-self: flex-end;
 }
 
 /* ════════════════════════════════════════════

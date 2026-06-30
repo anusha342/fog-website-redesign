@@ -1040,7 +1040,7 @@ export default function HomeClient({
                       {formatDate(post.date)} &middot; {post.readTime} min read
                     </p>
                     <p className={styles.blogExcerpt}>{post.excerpt}</p>
-                    <span className={styles.blogRead}>Read More &#x2192;</span>
+                    <span className={styles.blogRead}>Read More</span>
                   </div>
                 </Link>
               </article>
