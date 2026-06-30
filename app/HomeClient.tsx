@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from '@/components/ContactForm';
@@ -114,6 +114,103 @@ export default function HomeClient({
 
   // Moments AI Break
   const [mbActivated, setMbActivated] = useState(false);
+
+  // Typewriter and scatter loop effect state
+  const [animationMode, setAnimationMode] = useState<'typing' | 'idle' | 'scatterOut' | 'assembleIn'>('typing');
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  const chars1 = useMemo(() => {
+    return 'Future of'.split('').map((char) => {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 120 + Math.random() * 150;
+      return {
+        char,
+        tx: Math.cos(angle) * dist,
+        ty: Math.sin(angle) * dist,
+        tr: (Math.random() - 0.5) * 120,
+      };
+    });
+  }, []);
+
+  const chars2 = useMemo(() => {
+    return 'Gaming'.split('').map((char) => {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 120 + Math.random() * 150;
+      return {
+        char,
+        tx: Math.cos(angle) * dist,
+        ty: Math.sin(angle) * dist,
+        tr: (Math.random() - 0.5) * 120,
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    setIsMounted(true);
+    let active = true;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const runLoop = () => {
+      if (!active) return;
+
+      // ── PHASE 1: TYPING ──
+      setAnimationMode('typing');
+      setVisibleCount(0);
+      let count = 0;
+      const totalChars = chars1.length + chars2.length;
+
+      interval = setInterval(() => {
+        if (!active) return;
+        count++;
+        setVisibleCount(count);
+        if (count >= totalChars) {
+          if (interval) clearInterval(interval);
+
+          // ── PHASE 2: IDLE (after typing) ──
+          setAnimationMode('idle');
+          timer = setTimeout(() => {
+            if (!active) return;
+
+            // ── PHASE 3: SCATTER OUT ──
+            setAnimationMode('scatterOut');
+            timer = setTimeout(() => {
+              if (!active) return;
+
+              // ── PHASE 4: ASSEMBLE IN ──
+              setAnimationMode('assembleIn');
+              timer = setTimeout(() => {
+                if (!active) return;
+
+                // ── PHASE 5: IDLE (after assembly) ──
+                setAnimationMode('idle');
+                timer = setTimeout(() => {
+                  if (!active) return;
+
+                  // ── PHASE 6: SCATTER OUT (before typing again) ──
+                  setAnimationMode('scatterOut');
+                  timer = setTimeout(() => {
+                    if (!active) return;
+                    runLoop(); // restart the whole loop!
+                  }, 1400); // scatter out duration
+                }, 3000); // idle duration
+              }, 1600); // assembly fly-in duration
+            }, 1400); // scatter out duration
+          }, 3000); // idle duration
+        }
+      }, 100); // typing speed
+    };
+
+    // Delay start of first loop slightly
+    timer = setTimeout(runLoop, 400);
+
+    return () => {
+      active = false;
+      if (timer) clearTimeout(timer);
+      if (interval) clearInterval(interval);
+    };
+  }, [chars1.length, chars2.length]);
 
   // Product thumb state
   const [activeThumbs, setActiveThumbs] = useState<Record<string, number>>({
@@ -743,8 +840,65 @@ export default function HomeClient({
         {/* Hero text overlay - aligned left, style inspired by Bolt */}
         <div className={styles.heroTextContainer}>
           <h2 className={styles.heroHeadline}>
-            <span className={styles.revealLine} style={{ animationDelay: '0.2s' }}>Future of</span> <br />
-            <span className={`${styles.revealLine} ${styles.highlightText}`} style={{ animationDelay: '0.5s' }}>Gaming</span>
+            {!isMounted ? (
+              <>
+                <span className={styles.typewriterLine}>Future of</span> <br />
+                <span className={`${styles.typewriterLine} ${styles.highlightText}`}>Gaming</span>
+              </>
+            ) : (
+              <>
+                <span className={styles.typewriterLine}>
+                  {chars1.map((c, idx) => {
+                    let charClass = styles.charNormal;
+                    if (animationMode === 'scatterOut') charClass = styles.charScattered;
+                    else if (animationMode === 'typing' && idx >= visibleCount) charClass = styles.charHidden;
+
+                    return (
+                      <span
+                        key={`l1-${idx}`}
+                        className={charClass}
+                        style={{
+                          '--tx': `${c.tx}px`,
+                          '--ty': `${c.ty}px`,
+                          '--tr': `${c.tr}deg`,
+                        } as React.CSSProperties}
+                      >
+                        {c.char === ' ' ? '\u00A0' : c.char}
+                      </span>
+                    );
+                  })}
+                  {animationMode === 'typing' && visibleCount < chars1.length && (
+                    <span className={styles.typingCursor}>|</span>
+                  )}
+                </span> 
+                <br />
+                <span className={`${styles.typewriterLine} ${styles.highlightText}`}>
+                  {chars2.map((c, idx) => {
+                    const overallIdx = chars1.length + idx;
+                    let charClass = styles.charNormal;
+                    if (animationMode === 'scatterOut') charClass = styles.charScattered;
+                    else if (animationMode === 'typing' && overallIdx >= visibleCount) charClass = styles.charHidden;
+
+                    return (
+                      <span
+                        key={`l2-${idx}`}
+                        className={charClass}
+                        style={{
+                          '--tx': `${c.tx}px`,
+                          '--ty': `${c.ty}px`,
+                          '--tr': `${c.tr}deg`,
+                        } as React.CSSProperties}
+                      >
+                        {c.char === ' ' ? '\u00A0' : c.char}
+                      </span>
+                    );
+                  })}
+                  {((animationMode === 'typing' && visibleCount >= chars1.length) || animationMode === 'idle') && (
+                    <span className={styles.typingCursor}>|</span>
+                  )}
+                </span>
+              </>
+            )}
           </h2>
         </div>
 

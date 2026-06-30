@@ -2799,9 +2799,9 @@
 
 .heroHeadline {
   font-family: var(--font-display);
-  font-size: 72px;
+  font-size: clamp(64px, 7.5vw, 108px); /* Guidelines large scale */
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 0.95; /* Condensed display line-height */
   color: #ffffff;
   margin: 0 0 20px 0;
   letter-spacing: 1px;
@@ -2824,6 +2824,56 @@
   letter-spacing: 16px;
   animation: revealCinematic 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: transform, opacity, filter, letter-spacing;
+}
+
+.typewriterLine {
+  display: inline-block;
+  letter-spacing: 1px;
+  will-change: opacity;
+}
+
+.typingCursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blinkCursor 0.8s step-end infinite;
+  color: var(--accent, #f05023);
+  font-weight: 300;
+  text-shadow: none;
+}
+
+@keyframes blinkCursor {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.charNormal {
+  display: inline-block;
+  transform: translate(0, 0) rotate(0deg);
+  opacity: 1;
+  filter: blur(0px);
+  transition: 
+    transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1.0s ease-out,
+    filter 1.0s ease-out;
+  will-change: transform, opacity, filter;
+}
+
+.charScattered {
+  display: inline-block;
+  transform: translate(var(--tx), var(--ty)) rotate(var(--tr));
+  opacity: 0;
+  filter: blur(10px);
+  transition: 
+    transform 1.4s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 1.3s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, opacity, filter;
+}
+
+.charHidden {
+  display: inline-block;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .highlightText {
@@ -2971,7 +3021,7 @@
   }
   
   .heroHeadline {
-    font-size: 44px;
+    font-size: clamp(40px, 8.5vw, 56px);
   }
   
   .heroDescription {
