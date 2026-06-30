@@ -137,7 +137,7 @@ export default function BlogForm({ mode, initialPost }: Props) {
   }, [values.slug, mode, checkSlug]);
 
   // ── Field change ──────────────────────────────────────────────────────────
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target;
     setValues((prev) => ({ ...prev, [name]: value }));
     if (errors[name as keyof FormValues]) {
