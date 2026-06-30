@@ -194,8 +194,7 @@ export default function BlogListingClient({ posts, recentPosts, allCategories }:
         !q ||
         p.title.toLowerCase().includes(q) ||
         (p.excerpt ?? '').toLowerCase().includes(q) ||
-        (p.category ?? '').toLowerCase().includes(q) ||
-        (p.tags || []).some((t) => t.toLowerCase().includes(q));
+        (p.category ?? '').toLowerCase().includes(q);
 
       // Match category tab (handles Announcements -> announcement singular/plural)
       const matchesCategory =

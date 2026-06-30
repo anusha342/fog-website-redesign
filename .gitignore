@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vscode
+
+# Large media files
+*.mp4
+*.pdf
+public/videos/
+

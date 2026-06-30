@@ -18,7 +18,8 @@
       "Bash(awk 'NR>=532 && NR<=633' \"C:/Users/yashm/desktop/website/app/products/hyper-grid/HyperGridClient.tsx\")",
       "Bash(awk 'NR>=532 && NR<=633 {printf \"%d: %s\\\\n\", NR, $0}' \"C:/Users/yashm/desktop/website/app/products/hyper-grid/HyperGridClient.tsx\")",
       "Bash(awk 'NR>=532 && NR<=635' \"C:/Users/yashm/desktop/website/app/products/hyper-grid/HyperGridClient.tsx\")",
-      "Bash(python3 -c ':*)"
+      "Bash(python3 -c ':*)",
+      "Bash(npx tsc *)"
     ]
   }
 }
